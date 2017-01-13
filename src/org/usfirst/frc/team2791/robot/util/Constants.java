@@ -8,10 +8,14 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
  * This class holds all important ports and constants that are used throughout the code
  * This is rarely changed, only when ports are switched or pid's are re-tuned
  */
-public class Constants {
+public class Constants { //for constants ONLY; ports are in RobotMap
 
 	// JOYSTICK CONSTANTS
 	public static final double DEADZONE = 0.08;
+	
+	public double driveEncoderTicks = 128;
+	
+	public static final WHEEL_DIAMETER = 5.0;
 
 	/* 2016 Constants = can be changed as needed
 	// PID VALUES
