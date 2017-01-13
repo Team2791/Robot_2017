@@ -11,10 +11,10 @@ import org.usfirst.frc.team2791.robot.commands.ExampleCommand;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	Joystick driver = new Joystick(0);
-	Joystick operator = new Joystick(1);
+	Driver driver = new Driver();
+	Operator operator = new Operator();
 	
-	Button leftTrigger = new JoystickButton(driver, 1);//what number button?
+	//Button button = new JoystickButton(driver, buttonNumber);
 
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to
