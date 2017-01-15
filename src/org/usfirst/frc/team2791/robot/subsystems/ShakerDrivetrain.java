@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2791.robot.subsystems;
 
+import static org.usfirst.frc.team2791.robot.Robot.driverJoystick;
+
 import org.usfirst.frc.team2791.util.Constants;
 import org.usfirst.frc.team2791.util.ShakerGyro;
 
@@ -56,11 +58,41 @@ public class ShakerDrivetrain extends Subsystem{
 		leftDriveEncoder.setDistancePerPulse(Util.tickToFeet(driveEncoderTicks, Constants.WHEEL_DIAMETER)); 
 		rightDriveEncoder.setDistancePerPulse(-Util.tickToFeet(driveEncoderTicks, Constants.WHEEL_DIAMETER)); 
 
-		gyro = new ShakerGyro(SPI.Port.kOnboardCS1);
-		(new Thread(gyro)).start();
+//		gyro = new ShakerGyro(SPI.Port.kOnboardCS1);
+//		(new Thread(gyro)).start();
 		
 	}
 	
+	public void driveWithJoystick(){
+		if(driver.getButtonRB())
+			shakyDrive.setLeftRightMotorOutputs(0.35+driverJoystick.getAxisLeftX()/3,0.35-driverJoystick.getAxisLeftX()/3);
+		else{
+			double leftAxis;//this sets the amount of power for the left side
+	        if (super.getAxisLeftX() < 0)
+	            leftAxis = -Math.pow(super.getAxisLeftX(), 2) - offset;
+	        else
+	            leftAxis = Math.pow(super.getAxisLeftX(), 2) + offset;
+	        double combinedLeft = leftAxis + super.getAxisRT() - super.getAxisLT();
+	        
+	        if (combinedLeft > 1.0)
+	            combinedLeft = 1.0;
+	        else if (combinedLeft < -1.0)
+	            combinedLeft = -1.0;
+	        
+	        double rightAxis;//this sets the amount of power for the right side
+	        if (super.getAxisLeftX() < 0)
+	            rightAxis = -Math.pow(super.getAxisLeftX(), 2) - offset;
+	        else
+	            rightAxis = Math.pow(super.getAxisLeftX(), 2) + offset;
+	        double combinedRight = -rightAxis + super.getAxisRT() - super.getAxisLT();
+	        if (combinedRight > 1.0)
+	            combinedRight = 1.0;
+	        else if (combinedRight < -1.0)
+	            combinedRight = -1.0;
+	        
+			shakyDrive.setLeftRightMotorOutputs(combinedLeft,combinedRight);//the motor output method is part of the RobotDrive class
+		}
+	}
 
 	public void forward(double distance) {
 		

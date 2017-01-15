@@ -142,7 +142,7 @@ public class ShakerCamera implements Runnable {
 								new NIVision.Point(0, x.height / 2), new NIVision.Point(x.width, x.height / 2), 100f);
 						CameraServer.getInstance().setImage(binaryFrame);
 					}
-				 else if(AutoLineUpShot.isRunning()){
+				 //else if(AutoLineUpShot.isRunning()){
 					 //if autolineup is running do nothing
 				 }
 				 else {
