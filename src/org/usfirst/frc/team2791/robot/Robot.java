@@ -20,7 +20,7 @@ import org.usfirst.frc.team2791.robot.subsystems.ExampleSubsystem;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	public static final ShakerDrivetrain drivetrain = new ShakerDrivetrain();
 	public static OI oi;
 
 	Command autonomousCommand;

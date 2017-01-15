@@ -35,7 +35,9 @@ public class OI {
 	if(driver.getButtonY()){}
 	
 	if(driver.getButtonLB()){}
-	if(driver.getButtonRB()){}
+	if(driver.getButtonRB()){
+		new DriveWithJoystick();
+	}
 	
 	if(driver.getButtonLS()){}
 	if(driver.getButtonRS()){}
