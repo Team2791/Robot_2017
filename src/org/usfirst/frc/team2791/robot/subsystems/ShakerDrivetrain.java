@@ -12,12 +12,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShakerDrivetrain extends Subsystem{
 	
-	protected Encoder leftDriveEncoder = null;
-	protected Encoder rightDriveEncoder = null;
+    protected Encoder leftDriveEncoder = null;
+    protected Encoder rightDriveEncoder = null;
+     	
+    protected ShakerGyro gyro;
 	
-	protected ShakerGyro gyro;
-	
-	protected RobotDrive shakyDrive = null;
+    protected RobotDrive shakyDrive = null;
 
     private Talon leftTalonA;
     private Talon leftTalonB;
@@ -27,13 +27,13 @@ public class ShakerDrivetrain extends Subsystem{
     private Talon rightTalonB;
     private Talon rightTalonC;
     
-	public void initDefaultCommand() {
-		//is there where I declare a drivetrain or will it reset a drivetrain every single time?
+    public void initDefaultCommand() {
+	//is there where I declare a drivetrain or will it reset a drivetrain every single time?
 		
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
+	// Set the default command for a subsystem here.
+	// setDefaultCommand(new MySpecialCommand());
 		
-		this.leftTalonA = new Talon(Constants.DRIVE_TALON_LEFT_PORT_FRONT);
+	this.leftTalonA = new Talon(Constants.DRIVE_TALON_LEFT_PORT_FRONT);
         this.leftTalonB = new Talon(Constants.DRIVE_TALON_LEFT_PORT_BACK);
         this.leftTalonC = new Talon(Constants.DRIVE_TALON_LEFT_PORT_C);
 
@@ -52,48 +52,58 @@ public class ShakerDrivetrain extends Subsystem{
         // stop all motors right away just in case
         shakyDrive.stopMotor();
 
-		leftDriveEncoder.reset();
-		rightDriveEncoder.reset();
+	leftDriveEncoder.reset();
+	rightDriveEncoder.reset();
 		
-		leftDriveEncoder.setDistancePerPulse(Util.tickToFeet(driveEncoderTicks, Constants.WHEEL_DIAMETER)); 
-		rightDriveEncoder.setDistancePerPulse(-Util.tickToFeet(driveEncoderTicks, Constants.WHEEL_DIAMETER)); 
+	leftDriveEncoder.setDistancePerPulse(Util.tickToFeet(driveEncoderTicks, Constants.WHEEL_DIAMETER)); 
+	rightDriveEncoder.setDistancePerPulse(-Util.tickToFeet(driveEncoderTicks, Constants.WHEEL_DIAMETER)); 
 
-//		gyro = new ShakerGyro(SPI.Port.kOnboardCS1);
-//		(new Thread(gyro)).start();
+//	gyro = new ShakerGyro(SPI.Port.kOnboardCS1);
+//	(new Thread(gyro)).start();
 		
 	}
 	
+	//this should be "joystickInterpreter" or something
 	public void driveWithJoystick(){
-		if(driver.getButtonRB())
-			shakyDrive.setLeftRightMotorOutputs(0.35+driverJoystick.getAxisLeftX()/3,0.35-driverJoystick.getAxisLeftX()/3);
-		else{
-			double leftAxis;//this sets the amount of power for the left side
+	    //logic interprets driver Joystick position for motor outputs 
+	    if(driver.getButtonRB())
+		shakyDrive.setLeftRightMotorOutputs(0.35+driverJoystick.getAxisLeftX()/3,0.35-driverJoystick.getAxisLeftX()/3); //if we need to change the speed we can change the .35 FIRST and then the /3 ONLY if thats not enough
+	    else{
+		double leftAxis;//this sets the amount of power for the left side for GTA
 	        if (super.getAxisLeftX() < 0)
-	            leftAxis = -Math.pow(super.getAxisLeftX(), 2) - offset;
+	            	leftAxis = -Math.pow(super.getAxisLeftX(), 2) - offset;
 	        else
-	            leftAxis = Math.pow(super.getAxisLeftX(), 2) + offset;
+	          	leftAxis = Math.pow(super.getAxisLeftX(), 2) + offset;
 	        double combinedLeft = leftAxis + super.getAxisRT() - super.getAxisLT();
 	        
 	        if (combinedLeft > 1.0)
-	            combinedLeft = 1.0;
+	           	combinedLeft = 1.0;
 	        else if (combinedLeft < -1.0)
-	            combinedLeft = -1.0;
+	            	combinedLeft = -1.0;
 	        
-	        double rightAxis;//this sets the amount of power for the right side
+	        double rightAxis;//this sets the amount of power for the right side for GTA
 	        if (super.getAxisLeftX() < 0)
-	            rightAxis = -Math.pow(super.getAxisLeftX(), 2) - offset;
-	        else
-	            rightAxis = Math.pow(super.getAxisLeftX(), 2) + offset;
-	        double combinedRight = -rightAxis + super.getAxisRT() - super.getAxisLT();
+	            	rightAxis = -Math.pow(super.getAxisLeftX(), 2) - offset;
+	       	else
+	            	rightAxis = Math.pow(super.getAxisLeftX(), 2) + offset;
+	       	double combinedRight = -rightAxis + super.getAxisRT() - super.getAxisLT();
 	        if (combinedRight > 1.0)
-	            combinedRight = 1.0;
-	        else if (combinedRight < -1.0)
-	            combinedRight = -1.0;
+	           	combinedRight = 1.0;
+	       	else if (combinedRight < -1.0)
+	            	combinedRight = -1.0;
 	        
-			shakyDrive.setLeftRightMotorOutputs(combinedLeft,combinedRight);//the motor output method is part of the RobotDrive class
-		}
-	}
+	    }
+	    shakerDrive(combinedLeft,combinedRight);
 
+	}
+	
+	//set motor output according to above interpretation
+	public void shakerDrive(double left, double right){
+		shakyDrive.setLeftRightMotorOutput(left, right);
+	}
+	
+	//don't need any of this stuff below b/c of the interpreter
+	/*
 	public void forward(double distance) {
 		
 	}
@@ -109,5 +119,6 @@ public class ShakerDrivetrain extends Subsystem{
 	public void back(double distance) {
 		
 	}
+	*/
 	
 }
