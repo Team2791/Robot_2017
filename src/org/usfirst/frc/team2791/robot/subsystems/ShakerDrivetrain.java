@@ -62,14 +62,14 @@ public class ShakerDrivetrain extends Subsystem{
 //	(new Thread(gyro)).start();
 		
 	}
-	//this should be "joystickInterpreter" or something -UH
+	
+	//this should be "joystickInterpreter" or something
 	public void driveWithJoystick(){
 	    //logic interprets driver Joystick position for motor outputs 
 	    if(driver.getButtonRB())
-		shakyDrive.setLeftRightMotorOutputs(0.35+driverJoystick.getAxisLeftX()/3,0.35-driverJoystick.getAxisLeftX()/3);
-		//if we need to change the speed we can change the .35 FIRST and then the /3 ONLY if thats not enough
+		shakyDrive.setLeftRightMotorOutputs(0.35+driverJoystick.getAxisLeftX()/3,0.35-driverJoystick.getAxisLeftX()/3); //if we need to change the speed we can change the .35 FIRST and then the /3 ONLY if thats not enough
 	    else{
-		double leftAxis;//this sets the amount of power for the left side
+		double leftAxis;//this sets the amount of power for the left side for GTA
 	        if (super.getAxisLeftX() < 0)
 	            	leftAxis = -Math.pow(super.getAxisLeftX(), 2) - offset;
 	        else
@@ -81,7 +81,7 @@ public class ShakerDrivetrain extends Subsystem{
 	        else if (combinedLeft < -1.0)
 	            	combinedLeft = -1.0;
 	        
-	        double rightAxis;//this sets the amount of power for the right side
+	        double rightAxis;//this sets the amount of power for the right side for GTA
 	        if (super.getAxisLeftX() < 0)
 	            	rightAxis = -Math.pow(super.getAxisLeftX(), 2) - offset;
 	       	else
@@ -98,7 +98,6 @@ public class ShakerDrivetrain extends Subsystem{
 	}
 	
 	//set motor output according to above interpretation
-	//i wanted this to be it's own thing b/c it will make it easier for spline drive
 	public void shakerDrive(double left, double right){
 		shakyDrive.setLeftRightMotorOutput(left, right);
 	}
