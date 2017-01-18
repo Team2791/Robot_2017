@@ -13,7 +13,7 @@ import org.usfirst.frc.team2791.robot.commands.ExampleCommand;
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
-public class OI {
+public class OI {//joystick layout pic with Gaurab
 	Driver driver = new Driver();
 	Operator operator = new Operator();
 	
@@ -58,8 +58,8 @@ public class OI {
 	if(driver.getAxisRightX()){//right joystick
 		new DriveWithJoystick();
 	}
-	if(driver.getAxisRightY()){
-		new DriveWithJoystick();
+	if(driver.getAxisRightY()){//check to see if get AxisRightX does trick, otherwise switch to getAxisRightY
+//		new DriveWithJoystick();
 	}	
 	
 	
