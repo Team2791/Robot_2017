@@ -34,14 +34,12 @@ public class OI {
 	if(driver.getButtonX()){}
 	if(driver.getButtonY()){}
 	
-	if(driver.getButtonLB()){
-		new DriveWithJoystick();
-	}
-	if(driver.getButtonRB()){
+	if(driver.getButtonLB()){}
+	if(driver.getButtonRB()){//creep forward button (right button back)
 		new DriveWithJoystick();
 	}
 	
-	if(driver.getButtonLS()){}
+	if(driver.getButtonLS()){}//stick buttons - pushing joysticks in
 	if(driver.getButtonRS()){}
 	
 	if(driver.getButtonSel()){}
@@ -50,10 +48,14 @@ public class OI {
 	if(driver.getAxisLeftX()){}	
 	if(driver.getAxisLeftY()){}	
 	
-	if(driver.getAxisLT()){}
-	if(driver.getAxisLeftRT()){}
+	if(driver.getAxisLT()){//left trigger and right triggers
+		new DriveWithJoystick();
+	}
+	if(driver.getAxisLeftRT()){
+		new DriveWithJoystick();
+	}
 	
-	if(driver.getAxisRightX()){
+	if(driver.getAxisRightX()){//right joystick
 		new DriveWithJoystick();
 	}
 	if(driver.getAxisRightY()){
