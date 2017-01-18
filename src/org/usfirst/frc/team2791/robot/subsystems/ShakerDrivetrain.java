@@ -65,37 +65,39 @@ public class ShakerDrivetrain extends Subsystem{
 		
 	}
 	
-	//this should be "joystickInterpreter" or something
-	public void driveWithJoystick(){
+    public void driveWithJoystick(){
 	    //logic interprets driver Joystick position for motor outputs 
-	    if(OI.driver.getButtonRB())
-	    	shakerDrive(0.35+driverJoystick.getAxisLeftX()/3,0.35-driverJoystick.getAxisLeftX()/3); //if we need to change the speed we can change the .35 FIRST and then the /3 ONLY if thats not enough
-	    else
-	    	shakerDrive(Driver.getGtaDriveRight(),Driver.getGtaDriveLeft());
+	    double combinedLeft, cominedRight;
+	    //if we need to change the speed we can change the .35 FIRST and then the /3 ONLY if thats not enough
+	    if(OI.driver.getButtonRB()){
+		combinedLeft=0.35+driverJoystick.getAxisLeftX()/3;
+		combinedRight=0.35-driverJoystick.getAxisLeftX()/3;
+	    }
+	    else if(OI.driver.getButtonLB()){
+		combinedLeft=-1*(0.35+driverJoystick.getAxisLeftX()/3);
+		combinedRight=-1*(0.35-driverJoystick.getAxisLeftX()/3);
+	    }
+	    else{
+	 	combinedLeft=Driver.getGtaDriveLeft();
+		combinedRight=Driver.getGtaDriveRight();
+	    }
+	    shakerDrive(combinedLeft,combinedRight);
 	}
 	
-	//set motor output according to above interpretation
-	public void shakerDrive(double left, double right){
-		shakyDrive.setLeftRightMotorOutputs(left, right);
-	}
+    //set motor output according to above interpretation
+    public void shakerDrive(double left, double right){
+    	shakyDrive.setLeftRightMotorOutputs(left, right);
+    }
 	
-	//don't need any of this stuff below b/c of the interpreter
-	/*
-	public void forward(double distance) {
-		
-	}
+    //don't need any of this stuff below b/c of the interpreter
+    /*
+    public void forward(double distance) {}
 	
-	public void left(double distance) {
-		
-	}
+    public void left(double distance) {}
 	
-	public void right(double distance) {
-		
-	}
+    public void right(double distance) {}
 	
-	public void back(double distance) {
-		
-	}
-	*/
+    public void back(double distance) {}
+    */
 	
 }
