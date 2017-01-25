@@ -1,11 +1,14 @@
 package org.usfirst.frc.team2791.robot.subsystems;
 
-import static org.usfirst.frc.team2791.robot.Robot.driverJoystick;
-
 import org.usfirst.frc.team2791.robot.OI;
-import org.usfirst.frc.team2791.shakerJoystick.Driver;
-import org.usfirst.frc.team2791.util.Constants;
-import org.usfirst.frc.team2791.util.ShakerGyro;
+import org.usfirst.frc.team2791.robot.RobotMap;
+import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
+import org.usfirst.frc.team2791.robot.util.CONSTANTS;
+import org.usfirst.frc.team2791.robot.util.Util;
+import org.usfirst.frc.team2791.robot.util.TalonSet;
+//import org.usfirst.frc.team2791.shakerJoystick.ShakerDriver;
+//import org.usfirst.frc.team2791.util.RobotMap;
+import org.usfirst.frc.team2791.robot.util.ShakerGyro;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -35,17 +38,17 @@ public class ShakerDrivetrain extends Subsystem{
 	// Set the default command for a subsystem here.
 	// setDefaultCommand(new MySpecialCommand());
 		
-	this.leftTalonA = new Talon(Constants.DRIVE_TALON_LEFT_PORT_FRONT);
-        this.leftTalonB = new Talon(Constants.DRIVE_TALON_LEFT_PORT_BACK);
-        this.leftTalonC = new Talon(Constants.DRIVE_TALON_LEFT_PORT_C);
+	this.leftTalonA = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT_FRONT);
+        this.leftTalonB = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT_BACK);
+        this.leftTalonC = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT_C);
 
-        this.rightTalonA = new Talon(Constants.DRIVE_TALON_RIGHT_PORT_FRONT);
-        this.rightTalonB = new Talon(Constants.DRIVE_TALON_RIGHT_PORT_BACK);
-        this.rightTalonC = new Talon(Constants.DRIVE_TALON_RIGHT_PORT_C);
+        this.rightTalonA = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT_FRONT);
+        this.rightTalonB = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT_BACK);
+        this.rightTalonC = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT_C);
 
-        this.leftDriveEncoder = new Encoder(Constants.LEFT_DRIVE_ENCODER_PORT_A, Constants.LEFT_DRIVE_ENCODER_PORT_B);
-        this.rightDriveEncoder = new Encoder(Constants.RIGHT_DRIVE_ENCOODER_PORT_A,
-                Constants.RIGHT_DRIVE_ENCODER_PORT_B);
+        this.leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
+        this.rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCOODER_PORT_A,
+                RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
         
         // use the talons to create a roboDrive (it has methods that allow for easier control)
         this.shakyDrive = new RobotDrive(new TalonSet(leftTalonA, leftTalonB, leftTalonC),
@@ -57,8 +60,8 @@ public class ShakerDrivetrain extends Subsystem{
 	leftDriveEncoder.reset();
 	rightDriveEncoder.reset();
 		
-	leftDriveEncoder.setDistancePerPulse(Util.tickToFeet(driveEncoderTicks, Constants.WHEEL_DIAMETER)); 
-	rightDriveEncoder.setDistancePerPulse(-Util.tickToFeet(driveEncoderTicks, Constants.WHEEL_DIAMETER)); 
+	leftDriveEncoder.setDistancePerPulse(Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
+	rightDriveEncoder.setDistancePerPulse(-Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
 
 //	gyro = new ShakerGyro(SPI.Port.kOnboardCS1);
 //	(new Thread(gyro)).start();
@@ -67,19 +70,19 @@ public class ShakerDrivetrain extends Subsystem{
 	
     public void driveWithJoystick(){
 	    //logic interprets driver Joystick position for motor outputs 
-	    double combinedLeft, cominedRight;
+	    double combinedLeft, combinedRight;
 	    //if we need to change the speed we can change the .35 FIRST and then the /3 ONLY if thats not enough
 	    if(OI.driver.getButtonRB()){
-		combinedLeft=0.35+driverJoystick.getAxisLeftX()/3;
-		combinedRight=0.35-driverJoystick.getAxisLeftX()/3;
+		combinedLeft=0.35+OI.driver.getAxisLeftX()/3;
+		combinedRight=0.35-(double) (OI.driver.getAxisLeftX())/3.0;
 	    }
 	    else if(OI.driver.getButtonLB()){
-		combinedLeft=-1*(0.35+driverJoystick.getAxisLeftX()/3);
-		combinedRight=-1*(0.35-driverJoystick.getAxisLeftX()/3);
+		combinedLeft=-1*(0.35+OI.driver.getAxisLeftX()/3);
+		combinedRight=-1*(0.35-OI.driver.getAxisLeftX()/3);
 	    }
 	    else{
-	 	combinedLeft=Driver.getGtaDriveLeft();
-		combinedRight=Driver.getGtaDriveRight();
+	 	combinedLeft=OI.driver.getGtaDriveLeft();
+		combinedRight=OI.driver.getGtaDriveRight();
 	    }
 	    shakerDrive(combinedLeft,combinedRight);
 	}

@@ -1,17 +1,18 @@
-package org.usfirst.frc.team2791.shakerJoystick;
+package org.usfirst.frc.team2791.robot.ShakerJoystick;
 
-import org.usfirst.frc.team2791.util.Constants;
+import org.usfirst.frc.team2791.robot.RobotMap;
+import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 
-public class Operator extends OverriddenJoystick {
-    private static Operator operatorJoystickInstance;
+public class ShakerOperator extends OverriddenJoystick {
+    private static ShakerOperator operatorJoystickInstance;
 
-    private Operator() {
-        super(Constants.JOYSTICK_OPERATOR_PORT);
+    public ShakerOperator() {
+        super(RobotMap.JOYSTICK_OPERATOR_PORT);
     }
 
-    public static Operator getInstance() {
+    public static ShakerOperator getInstance() {
         if (operatorJoystickInstance == null)
-            operatorJoystickInstance = new Operator();
+            operatorJoystickInstance = new ShakerOperator();
         return operatorJoystickInstance;
 
     }

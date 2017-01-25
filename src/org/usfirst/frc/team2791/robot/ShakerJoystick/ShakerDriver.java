@@ -1,19 +1,20 @@
-package org.usfirst.frc.team2791.shakerJoystick;
+package org.usfirst.frc.team2791.robot.ShakerJoystick;
 
-import org.usfirst.frc.team2791.util.Constants;
+import org.usfirst.frc.team2791.robot.RobotMap;
+import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 
-public class Driver extends OverriddenJoystick {
-    private static Driver driverJoystickInstance;
+public class ShakerDriver extends OverriddenJoystick {
+    private static ShakerDriver driverJoystickInstance;
     // this is to account for any slack in the drive train
-    private double offset = 0;
+    private static double offset = 0;
 
-    private Driver() {
-        super(Constants.JOYSTICK_DRIVER_PORT);
+    public ShakerDriver() {
+        super(RobotMap.JOYSTICK_DRIVER_PORT);
     }
 
-    public static Driver getInstance() {
+    public static ShakerDriver getInstance() {
         if (driverJoystickInstance == null)
-            driverJoystickInstance = new Driver();
+            driverJoystickInstance = new ShakerDriver();
         return driverJoystickInstance;
     }
 

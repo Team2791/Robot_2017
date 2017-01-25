@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2791.util;
+package org.usfirst.frc.team2791.robot.util;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SensorBase;

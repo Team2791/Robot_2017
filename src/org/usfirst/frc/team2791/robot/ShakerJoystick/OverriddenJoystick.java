@@ -1,8 +1,8 @@
-package org.usfirst.frc.team2791.shakerJoystick;
+package org.usfirst.frc.team2791.robot.ShakerJoystick;
 
 import edu.wpi.first.wpilibj.Joystick;
-import org.usfirst.frc.team2791.util.Constants;
-import org.usfirst.frc.team2791.util.Util;
+import org.usfirst.frc.team2791.robot.util.CONSTANTS;
+import org.usfirst.frc.team2791.robot.util.Util;
 
 public class OverriddenJoystick extends Joystick {
     public OverriddenJoystick(int port) {
@@ -10,11 +10,11 @@ public class OverriddenJoystick extends Joystick {
     }
 
     public double getXVal() {
-        return Util.deadzone(Constants.DEADZONE, super.getX(), 1.0);
+        return Util.deadzone(CONSTANTS.DEADZONE, super.getX(), 1.0);
     }
 
     public double getYVal() {
-        return Util.deadzone(Constants.DEADZONE, super.getY(), 1.0);
+        return Util.deadzone(CONSTANTS.DEADZONE, super.getY(), 1.0);
     }
 
     public boolean getDpadUp() {
@@ -90,26 +90,26 @@ public class OverriddenJoystick extends Joystick {
     }
 
     public double getAxisLeftX() {
-        return Util.deadzone(Constants.DEADZONE, super.getRawAxis(0), 1.0);
+        return Util.deadzone(CONSTANTS.DEADZONE, super.getRawAxis(0), 1.0);
     }
 
     public double getAxisLeftY() {
-        return Util.deadzone(Constants.DEADZONE, super.getRawAxis(1), 1.0);
+        return Util.deadzone(CONSTANTS.DEADZONE, super.getRawAxis(1), 1.0);
     }
 
     public double getAxisLT() {
-        return Util.deadzone(Constants.DEADZONE, super.getRawAxis(2), 1.0);
+        return Util.deadzone(CONSTANTS.DEADZONE, super.getRawAxis(2), 1.0);
     }
 
     public double getAxisRT() {
-        return Util.deadzone(Constants.DEADZONE, super.getRawAxis(3), 1.0);
+        return Util.deadzone(CONSTANTS.DEADZONE, super.getRawAxis(3), 1.0);
     }
 
     public double getAxisRightX() {
-        return Util.deadzone(Constants.DEADZONE, super.getRawAxis(4), 1.0);
+        return Util.deadzone(CONSTANTS.DEADZONE, super.getRawAxis(4), 1.0);
     }
 
     public double getAxisRightY() {
-        return Util.deadzone(Constants.DEADZONE, super.getRawAxis(5), 1.0);
+        return Util.deadzone(CONSTANTS.DEADZONE, super.getRawAxis(5), 1.0);
     }
 }

@@ -1,6 +1,6 @@
-package org.usfirst.frc.team2791.util;
+package org.usfirst.frc.team2791.robot.util;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+//import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 /**
  * Created by Gaurab on 1/12/2017.
@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
  * This class holds all important ports and constants that are used throughout the code
  * This is rarely changed, only when ports are switched or pid's are re-tuned
  */
-public class Constants { //for constants ONLY; ports are in RobotMap
+public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 
 	// JOYSTICK CONSTANTS
 	public static final double DEADZONE = 0.08;
 	
-	public double driveEncoderTicks = 128;
+	public static double driveEncoderTicks = 128;
 	
-	public static final float WHEEL_DIAMETER = 5.0;
+	public static final double WHEEL_DIAMETER = 5.0;
 
 	/* 2016 Constants = can be changed as needed
 	// PID VALUES
