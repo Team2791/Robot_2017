@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2791.robot.subsystems;
 
 import org.usfirst.frc.team2791.robot.OI;
+import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
@@ -72,17 +73,17 @@ public class ShakerDrivetrain extends Subsystem{
 	    //logic interprets driver Joystick position for motor outputs 
 	    double combinedLeft, combinedRight;
 	    //if we need to change the speed we can change the .35 FIRST and then the /3 ONLY if thats not enough
-	    if(OI.driver.getButtonRB()){
-		combinedLeft=0.35+OI.driver.getAxisLeftX()/3;
-		combinedRight=0.35-(double) (OI.driver.getAxisLeftX())/3.0;
+	    if(Robot.oi.driver.getButtonRB()){
+		combinedLeft=0.35+Robot.oi.driver.getAxisLeftX()/3;
+		combinedRight=0.35-(double) (Robot.oi.driver.getAxisLeftX())/3.0;
 	    }
-	    else if(OI.driver.getButtonLB()){
-		combinedLeft=-1*(0.35+OI.driver.getAxisLeftX()/3);
-		combinedRight=-1*(0.35-OI.driver.getAxisLeftX()/3);
+	    else if(Robot.oi.driver.getButtonLB()){
+		combinedLeft=-1*(0.35+Robot.oi.driver.getAxisLeftX()/3);
+		combinedRight=-1*(0.35-Robot.oi.driver.getAxisLeftX()/3);
 	    }
 	    else{
-	 	combinedLeft=OI.driver.getGtaDriveLeft();
-		combinedRight=OI.driver.getGtaDriveRight();
+	 	combinedLeft=Robot.oi.driver.getGtaDriveLeft();
+		combinedRight=Robot.oi.driver.getGtaDriveRight();
 	    }
 	    shakerDrive(combinedLeft,combinedRight);
 	}

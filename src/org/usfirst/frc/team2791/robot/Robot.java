@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team2791.robot.Robot.GamePeriod;
 //import org.usfirst.frc.team2791.robot.commands.ExampleCommand;
 //import org.usfirst.frc.team2791.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
@@ -23,9 +24,11 @@ public class Robot extends IterativeRobot {
 
 	public static ShakerDrivetrain drivetrain;
 	public static OI oi;
+	public Thread driveTrainThread;
+	public static GamePeriod gamePeriod;
 
 	Command autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
+	//SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -33,11 +36,17 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		System.out.println("Starting to init my systems.");
+		gamePeriod = GamePeriod.DISABLED;
 		oi = new OI();
 		drivetrain = new ShakerDrivetrain();
+		
+		//driveTrainThread = new Thread(drivetrain);
+        //driveTrainThread.start();
 		//chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", chooser);
+		SmartDashboard.putData(drivetrain);
 	}
 
 	/**
@@ -47,7 +56,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		gamePeriod = GamePeriod.DISABLED;
 	}
 
 	@Override
@@ -68,7 +77,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
+		//autonomousCommand = chooser.getSelected();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -96,8 +105,10 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
+		
+		//if (autonomousCommand != null)
+			//autonomousCommand.cancel();
+			gamePeriod = GamePeriod.TELEOP;
 	}
 
 	/**
@@ -106,6 +117,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		oi.checkForAction();
 	}
 
 	/**
@@ -115,4 +127,7 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
+	public enum GamePeriod {
+        AUTONOMOUS, TELEOP, DISABLED
+    }
 }

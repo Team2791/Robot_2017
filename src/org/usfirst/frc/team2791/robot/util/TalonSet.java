@@ -63,7 +63,7 @@ public class TalonSet implements SpeedController {
     }
     public void stopMotor(){
     	for(int i=0; i<3; i++){
-    		speedControllers[i].stopMotor();
+    		//speedControllers[i].stopMotor();
     	}
     	}
     }
