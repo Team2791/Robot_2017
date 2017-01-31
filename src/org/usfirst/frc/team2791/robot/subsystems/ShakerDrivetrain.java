@@ -48,7 +48,7 @@ public class ShakerDrivetrain extends Subsystem{
     this.rightTalonC = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT);
 
     this.leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
-    this.rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCOODER_PORT_A,
+    this.rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,
             RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
     
     // use the talons to create a roboDrive (it has methods that allow for easier control)

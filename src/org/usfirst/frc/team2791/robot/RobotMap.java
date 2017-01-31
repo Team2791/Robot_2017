@@ -13,14 +13,14 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int JOYSTICK_OPERATOR_PORT = 1;
 	
 	// DIO
-	public static final int LEFT_DRIVE_ENCODER_PORT_A = 1;
-	public static final int LEFT_DRIVE_ENCODER_PORT_B = 0;
-	public static final int RIGHT_DRIVE_ENCOODER_PORT_A = 9;
-	public static final int RIGHT_DRIVE_ENCODER_PORT_B = 8;
+	public static final int LEFT_DRIVE_ENCODER_PORT_A = 9;
+	public static final int LEFT_DRIVE_ENCODER_PORT_B = 8;
+	public static final int RIGHT_DRIVE_ENCODER_PORT_A = 7;
+	public static final int RIGHT_DRIVE_ENCODER_PORT_B = 6;
 	
 	// PWM PORTS
-	public static final int DRIVE_TALON_LEFT_PORT = 0;
-	public static final int DRIVE_TALON_RIGHT_PORT = 1;
+	public static final int DRIVE_TALON_LEFT_PORT = 9;
+	public static final int DRIVE_TALON_RIGHT_PORT = 8;
 		
 	/* Note: Constants are from 2016 - will change as needed for 2017
 	 
