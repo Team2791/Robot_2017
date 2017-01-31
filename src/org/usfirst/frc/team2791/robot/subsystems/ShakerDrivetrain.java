@@ -39,24 +39,24 @@ public class ShakerDrivetrain extends Subsystem{
 	// Set the default command for a subsystem here.
 	// setDefaultCommand(new MySpecialCommand());
 		
-	this.leftTalonA = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT_FRONT);
-        this.leftTalonB = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT_BACK);
-        this.leftTalonC = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT_C);
+	this.leftTalonA = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT);
+    this.leftTalonB = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT);
+    this.leftTalonC = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT);
 
-        this.rightTalonA = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT_FRONT);
-        this.rightTalonB = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT_BACK);
-        this.rightTalonC = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT_C);
+    this.rightTalonA = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT);
+    this.rightTalonB = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT);
+    this.rightTalonC = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT);
 
-        this.leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
-        this.rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCOODER_PORT_A,
-                RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
-        
-        // use the talons to create a roboDrive (it has methods that allow for easier control)
-        this.shakyDrive = new RobotDrive(new TalonSet(leftTalonA, leftTalonB, leftTalonC),
-                new TalonSet(rightTalonA, rightTalonB, rightTalonC));
-        //robotDrive = new RobotDrive(leftTalonA, leftTalonB, rightTalonA, rightTalonB);
-        // stop all motors right away just in case
-        shakyDrive.stopMotor();
+    this.leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
+    this.rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCOODER_PORT_A,
+            RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
+    
+    // use the talons to create a roboDrive (it has methods that allow for easier control)
+    this.shakyDrive = new RobotDrive(new TalonSet(leftTalonA, leftTalonB, leftTalonC),
+            new TalonSet(rightTalonA, rightTalonB, rightTalonC));
+    //robotDrive = new RobotDrive(leftTalonA, leftTalonB, rightTalonA, rightTalonB);
+    // stop all motors right away just in case
+    shakyDrive.stopMotor();
 
 	leftDriveEncoder.reset();
 	rightDriveEncoder.reset();
