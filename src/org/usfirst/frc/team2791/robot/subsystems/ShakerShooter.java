@@ -8,8 +8,7 @@ import edu.wpi.first.wpilibj.Encoder;
 
 public class ShakerShooter {
 
-    protected Encoder leftShooterEncoder = null;
-    protected Encoder rightShooterEncoder = null;
+    protected Encoder shooterEncoder = null;
 
     private CANTalon leftShooterTalon = null;
     private CANTalon rightShooterTalon = null;
@@ -21,14 +20,11 @@ public class ShakerShooter {
         this.leftShooterTalon = new CANTalon(RobotMap.LEFT_SHOOTER_TALON_PORT);
         this.rightShooterTalon = new CANTalon(RobotMap.RIGHT_SHOOTER_TALON_PORT);
 
-        this.leftShooterEncoder = new Encoder(RobotMap.LEFT_SHOOTER_ENCODER_PORT_A, RobotMap.LEFT_SHOOTER_ENCODER_PORT_B);
-        this.rightShooterEncoder = new Encoder(RobotMap.RIGHT_SHOOTER_ENCODER_PORT_A, RobotMap.RIGHT_SHOOTER_ENCODER_PORT_B);
+        this.shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER_PORT_A, RobotMap.SHOOTER_ENCODER_PORT_B);
 
-        leftShooterEncoder.reset();
-        rightShooterEncoder.reset();
+        shooterEncoder.reset();
 
-        leftShooterEncoder.setDistancePerPulse(Util.tickToFeet(CONSTANTS.SHOOTER_ENCODER_TICKS, CONSTANTS.SHOOTER_WHEEL_DIAMETER));
-        rightShooterEncoder.setDistancePerPulse(Util.tickToFeet(CONSTANTS.SHOOTER_ENCODER_TICKS, CONSTANTS.SHOOTER_WHEEL_DIAMETER));
+        shooterEncoder.setDistancePerPulse(Util.tickToFeet(CONSTANTS.SHOOTER_ENCODER_TICKS, CONSTANTS.SHOOTER_WHEEL_DIAMETER));
 
         leftShooterTalon.configPeakOutputVoltage(+12.0f, 0);
         rightShooterTalon.configPeakOutputVoltage(+12.0f, 0);
@@ -100,9 +96,9 @@ public class ShakerShooter {
 
     public void updateSmartDash() {
         // update the smartdashbaord with values
-        SmartDashboard.putBoolean("Does shooter have ball", hasBall());
-        SmartDashboard.putBoolean("Is auto firing", autoFire);
-        SmartDashboard.putBoolean("Is preparing shot", prepShot);
+//        SmartDashboard.putBoolean("Does shooter have ball", hasBall());
+//        SmartDashboard.putBoolean("Is auto firing", autoFire);
+//        SmartDashboard.putBoolean("Is preparing shot", prepShot);
     }
 
     public void debug() {
