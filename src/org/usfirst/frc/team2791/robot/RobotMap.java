@@ -19,12 +19,8 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int RIGHT_DRIVE_ENCODER_PORT_B = 8;
 	
 	// PWM PORTS
-	public static final int DRIVE_TALON_LEFT_PORT_FRONT = 5;
-	public static final int DRIVE_TALON_LEFT_PORT_BACK = 4;
-	public static final int DRIVE_TALON_LEFT_PORT_C = 7;
-	public static final int DRIVE_TALON_RIGHT_PORT_FRONT = 2;
-	public static final int DRIVE_TALON_RIGHT_PORT_BACK = 3;
-	public static final int DRIVE_TALON_RIGHT_PORT_C = 0;
+	public static final int DRIVE_TALON_LEFT_PORT = 0;
+	public static final int DRIVE_TALON_RIGHT_PORT = 1;
 		
 	/* Note: Constants are from 2016 - will change as needed for 2017
 	 
