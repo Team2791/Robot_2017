@@ -129,7 +129,10 @@ public class OI {//joystick layout pic with Gaurab
 		if(operator.getDpadLeft()){}
 		if(operator.getDpadUpLeft()){}
 		
-		if(operator.getButtonA()){}
+		if(operator.getButtonA()){
+			System.out.println("Operator is running the fuel intake");
+			new IntakeOn();
+		}
 		if(operator.getButtonB()){}
 		if(operator.getButtonX()){}
 		if(operator.getButtonY()){}
