@@ -93,6 +93,7 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
+		intake.wingDeployment();//opens up robot as soon as robot starts
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
@@ -107,6 +108,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+		intake.wingDeployment();//comment out when auton is runnings
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove

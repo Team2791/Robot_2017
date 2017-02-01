@@ -39,19 +39,13 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int BALL_DISTANCE_SENSOR_PORT = 0;
 	public static final int CLAMPING_SERVO_PORT = 1;
 	
-	// PCM PORTS
-	// First Pcm module
-	public static final int INTAKE_PISTON = 7;
-	public static final int LONG_PISTON_FORWARD = 2;
-	public static final int LONG_PISTON_REVERSE = 1;
-	public static final int SHORT_PISTON_FORWARD = 4;
-	public static final int SHORT_PISTON_REVERSE = 5;
-	public static final int FUN_BRIDGE_ARM_PORT = 0;
 	// CAN
 	public static final int PCM_MODULE = 20;
 	public static final int SHOOTER_TALON_RIGHT_PORT = 10;
 	public static final int SHOOTER_TALON_LEFT_PORT = 11;
 	*/
+	//PCM Ports
 	public static final int PCM_MODULE = 0;
 	public static final int SHOOTER_CHANNEL = 0;
+	public static final int WING_CHANNEL = 0;
 }

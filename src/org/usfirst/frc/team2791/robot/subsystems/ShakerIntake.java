@@ -14,6 +14,7 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 	private double climber_current;
 	
 	private Solenoid shooterSolenoid;
+	private Solenoid wingSolenoid;
 	
 	public void initDefaultCommand(){
 		System.out.println("Initiating intake");
@@ -21,8 +22,13 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 		this.intakeSpark = new Talon(RobotMap.INTAKE_TALON_PORT);
 		
 		shooterSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.SHOOTER_CHANNEL);
+		
+		wingSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.WING_CHANNEL);
 	}
 	
+	public void wingDeployment(){
+		wingSolenoid.set(true);
+	}
 	public void moveIntakeDown(boolean yes){
 		shooterSolenoid.set(yes);
 		System.out.print("The intake moved");
