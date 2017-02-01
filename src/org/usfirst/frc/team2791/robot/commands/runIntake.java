@@ -17,7 +17,9 @@ public class runIntake extends Command{
 	}
 	protected void execute(){
 		System.out.println("I'm trying to execute intake on");
+		Robot.intake.moveIntakeDown(true);
 		Robot.intake.motorOnIntake();
+		Robot.intake.moveIntakeDown(false);
 	}
 	protected boolean isFinished(){
 		return false;

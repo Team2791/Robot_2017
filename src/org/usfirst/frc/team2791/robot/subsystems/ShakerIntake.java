@@ -22,6 +22,10 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 		shooterSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.SHOOTER_CHANNEL);
 	}
 	
+	public void moveIntakeDown(boolean yes){
+		shooterSolenoid.set(yes);
+		System.out.print("The intake moved");
+	}
 	public void motorOnIntake(){
 		intakeSpark.setSpeed(1.0);
 	}
