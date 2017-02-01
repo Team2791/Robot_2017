@@ -11,6 +11,7 @@ import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
 import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
 //import org.usfirst.frc.team2791.robot.commands.ExampleCommand;
 //import org.usfirst.frc.team2791.shakerJoystick.ShakerOperator;
+import org.usfirst.frc.team2791.robot.commands.runIntake;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -71,10 +72,10 @@ public class OI {//joystick layout pic with Gaurab
 		
 		if(driver.getButtonA()){}
 		if(driver.getButtonB()){
-			System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+			System.out.println("B pressed driver");
 		}
 		if(driver.getButtonX()){
-			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+			System.out.println("X pressed driver");
 		}
 		if(driver.getButtonY()){}
 		
@@ -131,7 +132,7 @@ public class OI {//joystick layout pic with Gaurab
 		
 		if(operator.getButtonA()){
 			System.out.println("Operator is running the fuel intake");
-			new IntakeOn();
+			new runIntake();
 		}
 		if(operator.getButtonB()){}
 		if(operator.getButtonX()){}

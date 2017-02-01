@@ -4,22 +4,26 @@ import org.usfirst.frc.team2791.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class IntakeOn extends Command{
-	public IntakeOn(){
-		super("IntakeOn");
+public class runClimber extends Command{
+	public runClimber(){
+		super("runClimber");
 		requires(Robot.intake);// Use requires() here to declare subsystem dependencies
-		System.out.println("came to constructor of intake");
+		System.out.println("came to constructor of climber");
 		initialize();
 	}
 	protected void initialize(){
-		System.out.println("came to initialize of intake");
+		System.out.println("came to initialize of climber");
 		execute();
 	}
 	protected void execute(){
-		System.out.println("I'm trying to execute intake on");
-		Robot.intake.runIntake();
+		while(!Robot.intake.stopMotor()){
+			System.out.println("I'm trying to execute climbing");
+			Robot.intake.motorOnClimber();
+		}
 	}
 	protected boolean isFinished(){
+		if(Robot.intake.stopMotor())
+			return true;
 		return false;
 	}
 	protected void end(){

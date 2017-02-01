@@ -17,17 +17,22 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 		this.intakeSpark = new Talon(RobotMap.INTAKE_TALON_PORT);
 	}
 	
-	public void runIntake(){
+	public void motorOnIntake(){
 		intakeSpark.setSpeed(1.0);
+	}
+	public void motorOnClimber(){
+		intakeSpark.setSpeed(-1.0);
 	}
 	public double getClimberCurrent(){
 		climber_current = Robot.pdp.getCurrent(1);//slot number of climber motor wires
 		return climber_current;
 	}
-	public void stopMotor(){
+	public boolean stopMotor(){
 		if(getClimberCurrent()>0.0){
 			intakeSpark.stopMotor();
 			System.out.println("Climbing ceased; remove me from this rope");
+			return true;
 		}
+		return false;
 	}
 }
