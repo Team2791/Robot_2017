@@ -15,7 +15,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	
 	public static double driveEncoderTicks = 128;
 	
-	public static final double WHEEL_DIAMETER = 5.0;
+	public static final double WHEEL_DIAMETER = 4.0;
 
 	/* 2016 Constants = can be changed as needed
 	// PID VALUES
