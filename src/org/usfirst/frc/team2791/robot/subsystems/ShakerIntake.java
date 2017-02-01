@@ -28,7 +28,7 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 		return climber_current;
 	}
 	public boolean stopMotor(){
-		if(getClimberCurrent()>0.0){
+		if(getClimberCurrent()>5.0){
 			intakeSpark.stopMotor();
 			System.out.println("Climbing ceased; remove me from this rope");
 			return true;
