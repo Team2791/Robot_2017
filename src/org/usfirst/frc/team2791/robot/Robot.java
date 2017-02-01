@@ -2,6 +2,7 @@
 package org.usfirst.frc.team2791.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -12,6 +13,7 @@ import org.usfirst.frc.team2791.robot.Robot.GamePeriod;
 //import org.usfirst.frc.team2791.robot.commands.ExampleCommand;
 //import org.usfirst.frc.team2791.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
+import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,7 +28,9 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public Thread driveTrainThread;
 	public static GamePeriod gamePeriod;
-
+	public static PowerDistributionPanel pdp; //CAN ID has to be 0 for current sensing
+	public static ShakerIntake intake;
+	
 	Command autonomousCommand;
 	//SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -38,8 +42,10 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		System.out.println("Starting to init my systems.");
 		gamePeriod = GamePeriod.DISABLED;
+		pdp = new PowerDistributionPanel(); //CAN id has to be 0
 		oi = new OI();
 		drivetrain = new ShakerDrivetrain();
+		intake = new ShakerIntake();
 		
 		//driveTrainThread = new Thread(drivetrain);
         //driveTrainThread.start();
