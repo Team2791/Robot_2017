@@ -17,6 +17,7 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 	
 	public void initDefaultCommand(){
 		System.out.println("Initiating intake");
+		shooterSolenoid.set(false);//all Pistons should be closed at beginning
 		this.intakeSpark = new Talon(RobotMap.INTAKE_TALON_PORT);
 		
 		shooterSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.SHOOTER_CHANNEL);
