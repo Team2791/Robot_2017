@@ -3,36 +3,38 @@ package org.usfirst.frc.team2791.robot.subsystems;
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.Util;
-
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
-//import com.ctre.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
+//import com.ctre.CANTalon; 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.TalonSRX;
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class ShakerShooter {
+public class Shooter {
 
     protected Encoder shooterEncoder = null;
 
-    private TalonSRX leftShooterTalon = null;
-    private TalonSRX rightShooterTalon = null;
-    private TalonSRX powerShooterTalon = null; //Potential third Talon for extra shooter power
+    private CANTalon leftShooterTalon = null;
+    private CANTalon rightShooterTalon = null;
+    private CANTalon powerShooterTalon = null; //Potential third Talon for extra shooter power
 
     protected boolean prepShot = false;
+    protected boolean autoFire = false;
 
     public void initDefaultCommand() {
 
-        this.leftShooterTalon = new TalonSRX(RobotMap.LEFT_SHOOTER_TALON_PORT);
-        this.rightShooterTalon = new TalonSRX(RobotMap.RIGHT_SHOOTER_TALON_PORT);
+        this.leftShooterTalon = new CANTalon(RobotMap.LEFT_SHOOTER_TALON_PORT);
+        this.rightShooterTalon = new CANTalon(RobotMap.RIGHT_SHOOTER_TALON_PORT);
 
         this.shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER_PORT_A, RobotMap.SHOOTER_ENCODER_PORT_B);
 
         shooterEncoder.reset();
         shooterEncoder.setDistancePerPulse(Util.tickToFeet(CONSTANTS.SHOOTER_ENCODER_TICKS, CONSTANTS.SHOOTER_WHEEL_DIAMETER));
 
-        //TalonSRX objects don't have configPeakOutputVoltage method, or anything relating to voltage:
-        //leftShooterTalon.configPeakOutputVoltage(+12.0f, 0);
-        //rightShooterTalon.configPeakOutputVoltage(+12.0f, 0);
+        
+        leftShooterTalon.configPeakOutputVoltage(+12.0f, 0);
+        rightShooterTalon.configPeakOutputVoltage(+12.0f, 0);
 
         SmartDashboard.putNumber("Shooter p", CONSTANTS.SHOOTER_P);
         SmartDashboard.putNumber("Shooter I", CONSTANTS.SHOOTER_I);
@@ -67,7 +69,7 @@ public class ShakerShooter {
 
     public boolean shooterAtSpeed() {
         double total_error = Math.abs(leftShooterTalon.getError()) + Math.abs(rightShooterTalon.getError());
-        return total_error < 200
+        return total_error < 200;
     }
 
     public void setShooterSpeeds(double targetSpeed, boolean withPID) {
@@ -108,17 +110,18 @@ public class ShakerShooter {
 
     public void debug() {
     	  //2017 Debug dashboard
-//    	  SmartDashboard.putNumber("LeftShooterSpeed", leftShooterTalon.get());
-//	      SmartDashboard.putNumber("RightShooterSpeed", rightShooterTalon.get());
-//	      SmartDashboard.putNumber("Left Shooter Error", leftShooterTalon.getClosedLoopError());
-//	      SmartDashboard.putNumber("Right Shooter Error", -rightShooterTalon.getClosedLoopError());
+    	  SmartDashboard.putNumber("LeftShooterSpeed", leftShooterTalon.get());
+	      SmartDashboard.putNumber("RightShooterSpeed", rightShooterTalon.get());
+	      SmartDashboard.putNumber("Left Shooter Error", leftShooterTalon.getClosedLoopError());
+	      SmartDashboard.putNumber("Right Shooter Error", -rightShooterTalon.getClosedLoopError());
+	      //Note: Make a getShooterHeight(); method in ShakerShooter
 //	      SmartDashboard.putString("Current shooter setpoint", getShooterHeight().toString());
-//	      SmartDashboard.putNumber("left output voltage", leftShooterTalon.getOutputVoltage());
-//	      SmartDashboard.putNumber("left speed", -leftShooterTalon.getEncVelocity());
-//	      SmartDashboard.putNumber("right output voltage", rightShooterTalon.getOutputVoltage());
-//	      SmartDashboard.putNumber("right speed", rightShooterTalon.getEncVelocity());
-//	      SmartDashboard.putNumber("Right error", rightShooterTalon.getError());
-//	      SmartDashboard.putNumber("Left error", leftShooterTalon.getError());
+	      SmartDashboard.putNumber("left output voltage", leftShooterTalon.getOutputVoltage());
+	      SmartDashboard.putNumber("left speed", -leftShooterTalon.getEncVelocity());
+	      SmartDashboard.putNumber("right output voltage", rightShooterTalon.getOutputVoltage());
+	      SmartDashboard.putNumber("right speed", rightShooterTalon.getEncVelocity());
+	      SmartDashboard.putNumber("Right error", rightShooterTalon.getError());
+	      SmartDashboard.putNumber("Left error", leftShooterTalon.getError());
 	      
 	      //2016 Debug dashboard
 //        SmartDashboard.putNumber("LeftShooterSpeed", leftShooterTalon.getEncVelocity());
