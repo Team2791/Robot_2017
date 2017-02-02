@@ -151,7 +151,7 @@ public class OI {//joystick layout pic with Gaurab
 		
 		if(Math.abs(operator.getAxisRightX())>0.0){}
 		if(Math.abs(operator.getAxisRightY())>0.0){}
-	}
+		}
 	}
 	
 

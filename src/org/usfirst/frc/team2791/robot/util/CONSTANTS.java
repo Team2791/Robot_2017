@@ -16,7 +16,19 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static double driveEncoderTicks = 128;
 	
 	public static final double WHEEL_DIAMETER = 5.0;
+	
+	//2017 CONSTANTS (UPDATE THESE)
+	public static final double SHOOTER_ENCODER_TICKS = 0;
+	public static final double SHOOTER_WHEEL_DIAMETER = 0;
+	
+	public static double SHOOTER_P = 0.4;
+	public static double SHOOTER_I = 0.001;
+	public static double SHOOTER_D = 0;
+	
+	public static final double FEED_FORWARD = 0;
+	public static final String SHOOTER_I_ZONE = null;
 
+	
 	/* 2016 Constants = can be changed as needed
 	// PID VALUES
 	// Shooter PID
