@@ -29,6 +29,7 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int RIGHT_SHOOTER_TALON_PORT = 0;
 	public static final DigitalSource SHOOTER_ENCODER_PORT_A = null;
 	public static final DigitalSource SHOOTER_ENCODER_PORT_B = null;
+	public static final int CENTER_SHOOTER_TALON_PORT = 0;
 	
 		
 	/* Note: Constants are from 2016 - will change as needed for 2017

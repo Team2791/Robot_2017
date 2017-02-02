@@ -21,12 +21,13 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static final int SHOOTER_ENCODER_TICKS = 0;
 	public static final double SHOOTER_WHEEL_DIAMETER = 0;
 	
-	public static double SHOOTER_P = 0.4;
-	public static double SHOOTER_I = 0.001;
-	public static double SHOOTER_D = 0;
+	public static double SHOOTER_P = 0.8; //.85
+	public static double SHOOTER_I = 0.003;
+	public static double SHOOTER_D = 150; //79
 	
-	public static final double FEED_FORWARD = 0;
-	public static final int SHOOTER_I_ZONE = 0;
+	public static final double FEED_FORWARD = 0.1960; //0.2977
+	public static final double SHOOTER_SET_POINT = 3270; //3550
+	public static final int SHOOTER_I_ZONE = 150;
 
 	
 	/* 2016 Constants = can be changed as needed
