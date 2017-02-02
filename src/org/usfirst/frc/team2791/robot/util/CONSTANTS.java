@@ -17,7 +17,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	
 	public static final double WHEEL_DIAMETER = 5.0;
 
-	/* 2016 Constants = can be changed as needed
+	// 2016 Constants = can be changed as needed
 	// PID VALUES
 	// Shooter PID
 	public static double SHOOTER_P = 0.4;
@@ -32,5 +32,5 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static double DRIVE_DISTANCE_P = 1.3;
 	public static double DRIVE_DISTANCE_I = 0.01;
 	public static double DRIVE_DISTANCE_D = 0.2;
-*/
+
 }
