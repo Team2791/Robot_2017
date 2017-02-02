@@ -4,6 +4,7 @@ import org.usfirst.frc.team2791.robot.OI;
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
+import org.usfirst.frc.team2791.robot.util.BasicPID;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.Util;
 import org.usfirst.frc.team2791.robot.util.TalonSet;
@@ -15,6 +16,8 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+
+import edu.wpi.first.wpilibj.SPI;
 
 public class ShakerDrivetrain extends Subsystem{
 	
@@ -32,6 +35,25 @@ public class ShakerDrivetrain extends Subsystem{
     private Talon rightSparkA;
     private Talon rightSparkB;
     private Talon rightSparkC;
+    
+    protected static BasicPID movingAnglePID;
+    protected static BasicPID distancePID;
+    protected static BasicPID stationaryAnglePID;
+    
+    protected static boolean usingPID = false;
+    
+    protected double driveTimePIDGoodTime = 0;
+    protected double angleTimePIDGoodTime = 0;
+    
+    protected double previousRate = 0;
+    protected double previousRateTime = 0;
+    protected double currentRate = 0;
+    protected double currentTime = 0;
+    
+    protected double angleTarget = 0.0;
+    protected double turnPIDMaxOutput = 0.5;
+    protected boolean PIDAtTarget = false;
+    protected boolean anglePIDQuickExit = false;
     
     public void initDefaultCommand() {
 	//is there where I declare a drivetrain or will it reset a drivetrain every single time?
@@ -62,7 +84,19 @@ public class ShakerDrivetrain extends Subsystem{
 	leftDriveEncoder.setDistancePerPulse(Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
 	rightDriveEncoder.setDistancePerPulse(-Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
 
-//	gyro = new ShakerGyro(SPI.Port.kOnboardCS1);
+	movingAnglePID = new BasicPID(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
+	distancePID = new BasicPID(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);
+	stationaryAnglePID = new BasicPID(CONSTANTS.STATIONARY_ANGLE_P, CONSTANTS.STATIONARY_ANGLE_I, CONSTANTS.STATIONARY_ANGLE_D);
+	
+	movingAnglePID.setInvertOutput(true);
+	stationaryAnglePID.setInvertOutput(true);
+	movingAnglePID.setMaxOutput(0.5);
+	movingAnglePID.setMinOutput(-0.5);
+	
+	stationaryAnglePID.setIZone(6);
+	distancePID.setIZone(0.25);
+	movingAnglePID.setIZone(4);
+	gyro = new ShakerGyro(SPI.Port.kOnboardCS1);
 //	(new Thread(gyro)).start();
 		
 	}
