@@ -5,9 +5,11 @@ package org.usfirst.frc.team2791.robot.util;
 /**
  * Created by Gaurab on 1/12/2017.
  * Adapted from Akhil (2016).
+ * Remixed by Lukas (2017)
  * This class holds all important ports and constants that are used throughout the code
  * This is rarely changed, only when ports are switched or pid's are re-tuned
  */
+
 public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 
 	// JOYSTICK CONSTANTS
@@ -15,7 +17,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	
 	public static double driveEncoderTicks = 128;
 	
-<<<<<<< HEAD
+
 	public static final double WHEEL_DIAMETER = 5.0;
 	
 	//2017 CONSTANTS (UPDATE THESE)
@@ -29,27 +31,5 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static final double FEED_FORWARD = 0.1960; //0.2977
 	public static final double SHOOTER_SET_POINT = 3270; //3550
 	public static final int SHOOTER_I_ZONE = 150;
-
-	
-	/* 2016 Constants = can be changed as needed
-=======
-	public static final double WHEEL_DIAMETER = 4.0;
-
-	// 2016 Constants = can be changed as needed
->>>>>>> 4df5cbba08c968a9baf85e4acd06bb6bcb3c7f41
-	// PID VALUES
-	// Shooter PID
-	public static double SHOOTER_P = 0.4;
-	public static double SHOOTER_I = 0.001;
-	public static double SHOOTER_D = 0;
-	public static double DRIVE_ANGLE_P = 0.05;
-	public static double DRIVE_ANGLE_I = 0;
-	public static double DRIVE_ANGLE_D = 0.000;
-	public static double STATIONARY_ANGLE_P = 0.15;
-	public static double STATIONARY_ANGLE_I = 1.2;
-	public static double STATIONARY_ANGLE_D = 0.0;
-	public static double DRIVE_DISTANCE_P = 1.3;
-	public static double DRIVE_DISTANCE_I = 0.01;
-	public static double DRIVE_DISTANCE_D = 0.2;
 
 }
