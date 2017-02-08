@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2791.robot.Robot.GamePeriod;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
+import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
 //import org.usfirst.frc.team2791.robot.commands.ExampleCommand;
 //import org.usfirst.frc.team2791.robot.subsystems.ExampleSubsystem;
 //import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
@@ -34,6 +35,7 @@ public class Robot extends IterativeRobot {
 	public static ShakerGear gearMechanism;
 	public static Compressor compressor;
 	public static ShakerDrivetrain drivetrain;
+	public static ShakerHopper hopper;
 	
 	Command autonomousCommand;
 	//SendableChooser<Command> chooser = new SendableChooser<>();
@@ -52,6 +54,7 @@ public class Robot extends IterativeRobot {
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
+		hopper = new ShakerHopper();
 		oi = new OI();
 		
 		//driveTrainThread = new Thread(drivetrain);
