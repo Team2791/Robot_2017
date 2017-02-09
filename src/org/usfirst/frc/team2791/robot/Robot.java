@@ -1,4 +1,24 @@
 
+/*
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * Make sure mini piston on intake is in proper position before running intake
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
 package org.usfirst.frc.team2791.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -105,7 +125,7 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-//		intake.wingDeployment();//opens up robot as soon as robot starts
+		intake.wingDeployment();//opens up robot as soon as robot starts
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
@@ -131,7 +151,7 @@ public class Robot extends IterativeRobot {
 			gamePeriod = GamePeriod.TELEOP;
 			gearMechanism.changeGearSolenoidState(false);//makes it stay up when it turns on; just initiating it as up in the subsystem isn't working
 			intake.moveIntakeOut(false);
-//			intake.wingDeployment();
+			intake.wingDeployment();
 	}
 
 	/**
