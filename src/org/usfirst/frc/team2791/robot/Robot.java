@@ -38,6 +38,7 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
 //import org.usfirst.frc.team2791.robot.subsystems.ExampleSubsystem;
 //import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
+import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -52,6 +53,7 @@ public class Robot extends IterativeRobot {
 	public static GamePeriod gamePeriod;
 	public static PowerDistributionPanel pdp; //CAN ID has to be 0 for current sensing
 	public static ShakerIntake intake;
+	public static ShakerShooter shooter;
 	public static ShakerGear gearMechanism;
 	public static Compressor compressor;
 	public static ShakerDrivetrain drivetrain;
@@ -75,6 +77,7 @@ public class Robot extends IterativeRobot {
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
 		hopper = new ShakerHopper();
+		shooter = new ShakerShooter();
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 		
 		//driveTrainThread = new Thread(drivetrain);

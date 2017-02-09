@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2791.robot;
 
+import edu.wpi.first.wpilibj.DigitalSource;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -33,6 +35,14 @@ public class RobotMap {//to map ports; constants are in separate class
 	
 	// CAN
 	public static final int PCM_MODULE = 1;
+	
+	public static final int LEFT_SHOOTER_TALON_PORT = 0;
+	public static final int RIGHT_SHOOTER_TALON_PORT = 0;
+	public static final int CENTER_SHOOTER_TALON_PORT = 0;
+	
+	public static final int SHOOTER_ENCODER_PORT_A = 0;
+	public static final int SHOOTER_ENCODER_PORT_B = 0;
+	
 
 	//	public static final int SHOOTER_TALON_RIGHT_PORT = 10;
 //	public static final int SHOOTER_TALON_LEFT_PORT = 11;
@@ -41,5 +51,5 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int INTAKE_CHANNEL = 7;
 	public static final int WING_CHANNEL = 5;
 	public static final int GEAR_CHANNEL = 6;
-	
+	public static final int SHOOTER_CHANENL = 4;
 }
