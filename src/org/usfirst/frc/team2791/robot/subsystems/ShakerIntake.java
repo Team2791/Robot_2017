@@ -36,7 +36,7 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 		System.out.print("The intake moved");
 	}
 	public void motorOnIntake(){
-		intakeSpark.setSpeed(-1.0);
+		intakeSpark.setSpeed(-0.66);
 	}
 	public void motorOffIntake(){
 		intakeSpark.setSpeed(0.0);

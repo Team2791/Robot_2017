@@ -25,8 +25,6 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class ShakerDrivetrain extends Subsystem{
     protected Encoder leftDriveEncoder = null;
     protected Encoder rightDriveEncoder = null;
- 	
-    protected Solenoid testSolenoid;
     
  	protected ShakerGyro gyro;
 	
@@ -62,8 +60,6 @@ public class ShakerDrivetrain extends Subsystem{
     public void initDefaultCommand() {
 	// Set the default command for a subsystem here.
 	// setDefaultCommand(new MySpecialCommand());
-	testSolenoid = new Solenoid(1,7);
-	System.out.println("the solenoid is alive");
 	this.leftSparkA = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT);
     
 

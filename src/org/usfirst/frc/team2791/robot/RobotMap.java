@@ -24,6 +24,8 @@ public class RobotMap {//to map ports; constants are in separate class
 	
 	public static final int INTAKE_TALON_PORT = 6;
 	
+	public static final int HOPPER_TALON_PORT = 7;
+	
 	/* Note: Constants are from 2016 - will change as needed for 2017
 	 
 	// SHOOTER CONTANTS
@@ -47,4 +49,5 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int INTAKE_CHANNEL = 7;
 	public static final int WING_CHANNEL = 5;
 	public static final int GEAR_CHANNEL = 6;
+	
 }
