@@ -21,12 +21,11 @@ public class runHopperWithJoystick extends Command {
 	@Override
 	protected void execute() {
 		System.out.println("I'm trying to execute");
-		//logic interprets driver Joystick position for motor outputs 
-	    double combinedLeft, combinedRight;
+		//logic interprets operator Joystick position for motor outputs 
+	    double combinedLeft;
 	    
 	 	combinedLeft=Robot.oi.operator.getGtaDriveLeft();
-//		combinedRight=Robot.oi.driver.getGtaDriveRight();
-	 	Robot.hopper.setHopperOutput(combinedLeft);
+//	 	Robot.hopper.setHopperOutput(combinedLeft);
     }
 
 	// Make this return true when this Command no longer needs to run execute()

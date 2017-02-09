@@ -11,6 +11,7 @@ public class runWallShot extends Command{
 		// Use requires() here to declare subsystem dependencies
 		super("runWallShot");
 		requires(Robot.shooter);
+		requires(Robot.hopper);
 		System.out.println("Came to wall shooter constructor");
 		initialize();
 	}
@@ -26,18 +27,23 @@ public class runWallShot extends Command{
 	@Override
 	protected void execute() {
 		System.out.println("Running a wall shot");
-		Robot.shooter.setShooterSpeeds(CONSTANTS.SHOOTER_SET_POINT, true);
+		Robot.shooter.setShooterSolenoidState(false);
+		Robot.shooter.prepWallShot();
+		Robot.hopper.runHopper();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
+		if(Robot.oi.operator.getButtonX() == false)
+			return true;
 		return false;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		Robot.hopper.stopHopper();
 		Robot.shooter.disable();
 	}
 

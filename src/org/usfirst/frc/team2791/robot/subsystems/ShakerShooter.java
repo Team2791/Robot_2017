@@ -9,12 +9,15 @@ package org.usfirst.frc.team2791.robot.subsystems;
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.Util;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
+
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShakerShooter extends Subsystem{
 
@@ -24,11 +27,15 @@ public class ShakerShooter extends Subsystem{
     private CANTalon rightShooterTalon = null;
     //private CANTalon powerShooterTalon = null; //Potential third Talon for extra shooter power
 
+    private Solenoid shooterSolenoid;
+    
     protected boolean prepShot = false;
     protected boolean autoFire = false;
 
     public void initDefaultCommand() {
-
+    	shooterSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.SHOOTER_CHANNEL);
+    	shooterSolenoid.set(false);//default state
+    	
         this.leftShooterTalon = new CANTalon(RobotMap.LEFT_SHOOTER_TALON_PORT);
         this.rightShooterTalon = new CANTalon(RobotMap.RIGHT_SHOOTER_TALON_PORT);
         //this.powerShooterTalon = new CANTalon(RobotMap.CENTER_SHOOTER_TALON_PORT);
@@ -67,17 +74,21 @@ public class ShakerShooter extends Subsystem{
         leftShooterTalon.configNominalOutputVoltage(0, 0);
         rightShooterTalon.configNominalOutputVoltage(0, 0);
     }
-
-    /* public void prepWallShot() {
+    public void setShooterSolenoidState(boolean key){
+    	shooterSolenoid.set(key);
+    }
+    public void prepWallShot() {
+    	prepShot = true;
         setShooterSpeeds(CONSTANTS.SHOOTER_SET_POINT, true);
-    } */
+    }
     
     public boolean shooterAtSpeed() {
         double total_error = Math.abs(leftShooterTalon.getError()) + Math.abs(rightShooterTalon.getError());
         return total_error < 200;
     }
 
-    public void setShooterSpeeds(double targetSpeed, boolean withPID) {
+    @SuppressWarnings("deprecation")
+	public void setShooterSpeeds(double targetSpeed, boolean withPID) {
         if (withPID) {
             //If PID is used then we have to switch CANTalons to velocity mode
             leftShooterTalon.changeControlMode(TalonControlMode.Speed);
@@ -107,14 +118,9 @@ public class ShakerShooter extends Subsystem{
     }
 
     public void updateSmartDash() {
-        SmartDashboard.putBoolean("Does shooter have ball", hasBall());
         SmartDashboard.putBoolean("Is auto firing", autoFire);
         SmartDashboard.putBoolean("Is preparing shot", prepShot);
     }
-
-    private boolean hasBall() {
-		return false;
-	}
 
 	public void debug() {
     	  SmartDashboard.putNumber("LeftShooterSpeed", leftShooterTalon.getSpeed());

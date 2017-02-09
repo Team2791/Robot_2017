@@ -16,9 +16,11 @@ public class runHopper extends Command{
 		execute();
 	}
 	protected void execute(){
-		System.out.println("I'm trying to execute hopper run");
-		Robot.hopper.runHopper();
-		
+		while(Robot.hopper.moreBalls()){
+			System.out.println("I'm trying to execute hopper run");
+			Robot.hopper.runHopper();
+		}
+		//if lag still present, then use an if-else statement and say that if-true, then runHopper, else->Robot.hopper.stopMotor();
 	}
 	protected boolean isFinished(){
 		return false;

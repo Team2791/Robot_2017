@@ -51,7 +51,8 @@ public class DriveWithJoystick extends Command {
 		Robot.drivetrain.setLeftRightMotorOutputs(0.0,0.0);
 	}
 
-	protected void interrupted() {
+	protected void interrupted() {//called when another command requires the same subsystem to run itself
+		new DriveWithJoystick();
 	}
 
 }

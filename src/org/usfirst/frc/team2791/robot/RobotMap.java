@@ -47,9 +47,9 @@ public class RobotMap {//to map ports; constants are in separate class
 	//	public static final int SHOOTER_TALON_RIGHT_PORT = 10;
 //	public static final int SHOOTER_TALON_LEFT_PORT = 11;
 	
-	//PCM Ports
+	//PCM Ports--note: due to use of single solenoids, solenoids will default to false state while disabled
 	public static final int INTAKE_CHANNEL = 7;
 	public static final int WING_CHANNEL = 5;
 	public static final int GEAR_CHANNEL = 6;
-	public static final int SHOOTER_CHANENL = 4;
+	public static final int SHOOTER_CHANNEL = 4;
 }
