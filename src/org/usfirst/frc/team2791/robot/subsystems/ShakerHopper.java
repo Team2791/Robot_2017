@@ -19,6 +19,7 @@ public class ShakerHopper extends Subsystem{
 		this.ballSensor2 = new AnalogInput(1);
 	}
 	public boolean moreBalls(){
+		System.out.println("Ball sensor 1: "+ballSensor1.getVoltage()+"\tBall sensor 2: "+ballSensor2.getVoltage());
 		if(ballSensor1.getVoltage()<1.5 || ballSensor2.getVoltage()<1.5)
 			return false;
 		return true;
