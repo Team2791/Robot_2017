@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ShakerHopper extends Subsystem{
 	private Talon hopperSpark;
 	public void initDefaultCommand(){
-		this.hopperSpark = new Talon(RobotMap.HOPPER_TALON_PORT);
+		this.hopperSpark = new Talon(RobotMap.HOPPER_SPARK_PORT);
 	}
 	
 	public void runHopper(){

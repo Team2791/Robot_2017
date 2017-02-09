@@ -69,13 +69,13 @@ public class Robot extends IterativeRobot {
 		System.out.println("Starting to init my systems.");
 		gamePeriod = GamePeriod.DISABLED;
 		pdp = new PowerDistributionPanel(); //CAN id has to be 0
-		compressor = new Compressor(1);
+		compressor = new Compressor(RobotMap.PCM_MODULE);
 		compressor.setClosedLoopControl(true);
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
 		hopper = new ShakerHopper();
-		oi = new OI();
+		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 		
 		//driveTrainThread = new Thread(drivetrain);
         //driveTrainThread.start();

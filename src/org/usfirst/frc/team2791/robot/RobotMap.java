@@ -7,7 +7,7 @@ package org.usfirst.frc.team2791.robot;
  * floating around.
  */
 public class RobotMap {//to map ports; constants are in separate class
-		
+	//if all ports are not correctly throughout code (i.e. ports utilized more than once), startCompetition() error comes
 	// JOYSTICK PORTS
 	public static final int JOYSTICK_DRIVER_PORT = 0;
 	public static final int JOYSTICK_OPERATOR_PORT = 1;
@@ -19,33 +19,25 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int RIGHT_DRIVE_ENCODER_PORT_B = 6;
 	
 	// PWM PORTS
-	public static final int DRIVE_TALON_LEFT_PORT = 9;
-	public static final int DRIVE_TALON_RIGHT_PORT = 8;
+	public static final int DRIVE_SPARK_LEFT_PORT = 9;
+	public static final int DRIVE_SPARK_RIGHT_PORT = 8;
 	
-	public static final int INTAKE_TALON_PORT = 6;
+	public static final int INTAKE_SPARK_PORT = 6;
 	
-	public static final int HOPPER_TALON_PORT = 7;
-	
-	/* Note: Constants are from 2016 - will change as needed for 2017
-	 
-	// SHOOTER CONTANTS
-	public static final DoubleSolenoid.Value SMALL_PISTON_HIGH_STATE = DoubleSolenoid.Value.kReverse;
-	public static final DoubleSolenoid.Value SMALL_PISTON_LOW_STATE = DoubleSolenoid.Value.kForward;
-	public static final DoubleSolenoid.Value LARGE_PISTON_HIGH_STATE = DoubleSolenoid.Value.kReverse;
-	public static final DoubleSolenoid.Value LARGE_PISTON_LOW_STATE = DoubleSolenoid.Value.kForward;
-	
+	public static final int HOPPER_SPARK_PORT = 7;
+		 
 	// INTAKE CONSTANTS
 	// ANALOG
-	public static final int BALL_DISTANCE_SENSOR_PORT = 0;
-	public static final int CLAMPING_SERVO_PORT = 1;
+	public static final int IR_SENSOR_1 = 0;
+	public static final int IR_SENSOR_2 = 1;
 	
 	// CAN
-	public static final int PCM_MODULE = 20;
-	public static final int SHOOTER_TALON_RIGHT_PORT = 10;
-	public static final int SHOOTER_TALON_LEFT_PORT = 11;
-	*/
-	//PCM Ports
 	public static final int PCM_MODULE = 1;
+
+	//	public static final int SHOOTER_TALON_RIGHT_PORT = 10;
+//	public static final int SHOOTER_TALON_LEFT_PORT = 11;
+	
+	//PCM Ports
 	public static final int INTAKE_CHANNEL = 7;
 	public static final int WING_CHANNEL = 5;
 	public static final int GEAR_CHANNEL = 6;

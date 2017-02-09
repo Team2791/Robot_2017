@@ -19,7 +19,7 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 	
 	public void initDefaultCommand(){
 
-		this.intakeSpark = new Talon(RobotMap.INTAKE_TALON_PORT);
+		this.intakeSpark = new Talon(RobotMap.INTAKE_SPARK_PORT);
 		
 		intakeSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.INTAKE_CHANNEL);
 		wingSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.WING_CHANNEL);
@@ -35,7 +35,7 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 		intakeSolenoid.set(yes);
 		System.out.print("The intake moved");
 	}
-	public void motorOnIntake(){
+	public void motorOnIntake(){//negative is proper direction
 		intakeSpark.setSpeed(-0.66);
 	}
 	public void motorOffIntake(){
@@ -45,7 +45,7 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 		intakeSpark.setSpeed(-0.05);
 	}
 	public double getClimberCurrent(){
-		climber_current = Robot.pdp.getCurrent(1);//slot number of climber motor wires
+		climber_current = Robot.pdp.getCurrent(3);//slot number of climber motor wires
 		return climber_current;
 	}
 	public boolean stopMotor(){

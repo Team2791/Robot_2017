@@ -30,13 +30,8 @@ public class ShakerDrivetrain extends Subsystem{
 	
     protected RobotDrive shakyDrive = null;
 
-    private Talon leftSparkA;
-    private Talon leftSparkB;
-    private Talon leftSparkC;
-    
-    private Talon rightSparkA;
-    private Talon rightSparkB;
-    private Talon rightSparkC;
+	private Talon leftSpark;    
+    private Talon rightSpark;
     
     protected static BasicPID movingAnglePID;
     protected static BasicPID distancePID;
@@ -60,18 +55,18 @@ public class ShakerDrivetrain extends Subsystem{
     public void initDefaultCommand() {
 	// Set the default command for a subsystem here.
 	// setDefaultCommand(new MySpecialCommand());
-	this.leftSparkA = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT);
+	this.leftSpark = new Talon(RobotMap.DRIVE_SPARK_LEFT_PORT);
     
 
-    this.rightSparkA = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT);
+    this.rightSpark = new Talon(RobotMap.DRIVE_SPARK_RIGHT_PORT);
     
 
     this.leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
     this.rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
     
     // use the talons to create a roboDrive (it has methods that allow for easier control)
-    this.shakyDrive = new RobotDrive(rightSparkA, leftSparkA);
-    //robotDrive = new RobotDrive(leftTalonA, leftTalonB, rightTalonA, rightTalonB);
+    this.shakyDrive = new RobotDrive(rightSpark, leftSpark);
+    
     // stop all motors right away just in case
     shakyDrive.stopMotor();
 
