@@ -79,7 +79,6 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
-//		intake.moveIntakeIn(true);
 		Scheduler.getInstance().run();
 	}
 
@@ -141,7 +140,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
-		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
+//		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
 		Scheduler.getInstance().run();
 		oi.checkForAction();
 	}

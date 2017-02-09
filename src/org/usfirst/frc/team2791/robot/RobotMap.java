@@ -24,7 +24,7 @@ public class RobotMap {//to map ports; constants are in separate class
 	
 	public static final int INTAKE_TALON_PORT = 6;
 	
-	public static final int HOPPER_TALON_PORT = 4;
+	public static final int HOPPER_TALON_PORT = 7;
 	
 	/* Note: Constants are from 2016 - will change as needed for 2017
 	 

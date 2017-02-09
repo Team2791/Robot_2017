@@ -13,12 +13,16 @@ public class ShakerHopper extends Subsystem{
 	}
 	
 	public void runHopper(){
-		hopperSpark.set(1.0);
+		hopperSpark.set(0.3);
 	}
 	public void stopHopper(){
 		hopperSpark.set(0.0);
 	}
 	public void stopMotor(){
 		hopperSpark.disable();
+	}
+	public void setHopperOutput(double key){
+		System.out.println("Hopper motor output: -"+key);
+		hopperSpark.set(-key);
 	}
 }

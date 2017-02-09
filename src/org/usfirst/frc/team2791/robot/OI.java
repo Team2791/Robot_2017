@@ -13,6 +13,7 @@ import org.usfirst.frc.team2791.robot.commands.removeGear;
 import org.usfirst.frc.team2791.robot.commands.resetGear;
 import org.usfirst.frc.team2791.robot.commands.runClimber;
 import org.usfirst.frc.team2791.robot.commands.runHopper;
+import org.usfirst.frc.team2791.robot.commands.runHopperWithJoystick;
 //import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
 //import org.usfirst.frc.team2791.robot.commands.ExampleCommand;
 //import org.usfirst.frc.team2791.shakerJoystick.ShakerOperator;
@@ -177,7 +178,9 @@ public class OI {//joystick layout pic with Gaurab
 		if(Math.abs(operator.getAxisLeftY())>0.0){}	
 		
 		if(operator.getAxisLT()>0.0){}
-		if(operator.getAxisRT()>0.0){}
+		if(operator.getAxisRT()>0.0){
+			new runHopperWithJoystick();
+		}
 		
 		if(Math.abs(operator.getAxisRightX())>0.0){}
 		if(Math.abs(operator.getAxisRightY())>0.0){}
