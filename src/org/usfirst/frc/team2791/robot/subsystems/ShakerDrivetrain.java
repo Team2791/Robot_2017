@@ -26,7 +26,7 @@ public class ShakerDrivetrain extends Subsystem{
     protected Encoder leftDriveEncoder = null;
     protected Encoder rightDriveEncoder = null;
     
- 	protected ShakerGyro gyro;
+ 	public ShakerGyro gyro;
 	
     protected RobotDrive shakyDrive = null;
 
@@ -53,43 +53,43 @@ public class ShakerDrivetrain extends Subsystem{
     protected boolean anglePIDQuickExit = false;
     
     public void initDefaultCommand() {
-	// Set the default command for a subsystem here.
-	// setDefaultCommand(new MySpecialCommand());
-	this.leftSpark = new Talon(RobotMap.DRIVE_SPARK_LEFT_PORT);
-    
-
-    this.rightSpark = new Talon(RobotMap.DRIVE_SPARK_RIGHT_PORT);
-    
-
-    this.leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
-    this.rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
-    
-    // use the talons to create a roboDrive (it has methods that allow for easier control)
-    this.shakyDrive = new RobotDrive(rightSpark, leftSpark);
-    
-    // stop all motors right away just in case
-    shakyDrive.stopMotor();
-
-	leftDriveEncoder.reset();
-	rightDriveEncoder.reset();
+	
+		this.leftSpark = new Talon(RobotMap.DRIVE_SPARK_LEFT_PORT);
+	    
+	
+	    this.rightSpark = new Talon(RobotMap.DRIVE_SPARK_RIGHT_PORT);
+	    
+	
+	    this.leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
+	    this.rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
+	    
+	    // use the talons to create a roboDrive (it has methods that allow for easier control)
+	    this.shakyDrive = new RobotDrive(rightSpark, leftSpark);
+	    
+	    // stop all motors right away just in case
+	    shakyDrive.stopMotor();
+	
+		leftDriveEncoder.reset();
+		rightDriveEncoder.reset();
+			
+		leftDriveEncoder.setDistancePerPulse(Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
+		rightDriveEncoder.setDistancePerPulse(-Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
+	
+		movingAnglePID = new BasicPID(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
+		distancePID = new BasicPID(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);
+		stationaryAnglePID = new BasicPID(CONSTANTS.STATIONARY_ANGLE_P, CONSTANTS.STATIONARY_ANGLE_I, CONSTANTS.STATIONARY_ANGLE_D);
 		
-	leftDriveEncoder.setDistancePerPulse(Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
-	rightDriveEncoder.setDistancePerPulse(-Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
-
-	movingAnglePID = new BasicPID(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
-	distancePID = new BasicPID(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);
-	stationaryAnglePID = new BasicPID(CONSTANTS.STATIONARY_ANGLE_P, CONSTANTS.STATIONARY_ANGLE_I, CONSTANTS.STATIONARY_ANGLE_D);
-	
-	movingAnglePID.setInvertOutput(true);
-	stationaryAnglePID.setInvertOutput(true);
-	movingAnglePID.setMaxOutput(0.5);
-	movingAnglePID.setMinOutput(-0.5);
-	
-	stationaryAnglePID.setIZone(6);
-	distancePID.setIZone(0.25);
-	movingAnglePID.setIZone(4);
-	gyro = new ShakerGyro(SPI.Port.kOnboardCS1);
-//	(new Thread(gyro)).start();
+		movingAnglePID.setInvertOutput(true);
+		stationaryAnglePID.setInvertOutput(true);
+		movingAnglePID.setMaxOutput(0.5);
+		movingAnglePID.setMinOutput(-0.5);
+		
+		stationaryAnglePID.setIZone(6);
+		distancePID.setIZone(0.25);
+		movingAnglePID.setIZone(4);
+		gyro = new ShakerGyro(SPI.Port.kOnboardCS1);
+		gyro.reset();
+		(new Thread(gyro)).start();
 		
 	}
     @SuppressWarnings("deprecation")
@@ -122,6 +122,7 @@ public class ShakerDrivetrain extends Subsystem{
 		SmartDashboard.putNumber("Right Encoder Distance", getRightDistance());
 		SmartDashboard.putNumber("Distance PID output", distancePID.getOutput());
 		SmartDashboard.putNumber("Distance PID error", distancePID.getError());
+		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
 	}
 	public void updatePIDGains() {
 		movingAnglePID.changeGains(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
