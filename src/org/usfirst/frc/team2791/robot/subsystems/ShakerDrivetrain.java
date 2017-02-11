@@ -25,13 +25,20 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class ShakerDrivetrain extends Subsystem{
     protected Encoder leftDriveEncoder = null;
     protected Encoder rightDriveEncoder = null;
+ 	
+    protected Solenoid testSolenoid;
     
  	protected ShakerGyro gyro;
 	
-    protected RobotDrive shakyDrive = null;
+    protected static RobotDrive shakyDrive = null;
 
-	private Talon leftSpark;    
-    private Talon rightSpark;
+	private Talon leftTalonA;
+	private Talon leftTalonB;
+	private Talon leftTalonC;
+
+	private Talon rightTalonA;
+	private Talon rightTalonB;
+	private Talon rightTalonC;
     
     protected static BasicPID movingAnglePID;
     protected static BasicPID distancePID;
@@ -55,18 +62,20 @@ public class ShakerDrivetrain extends Subsystem{
     public void initDefaultCommand() {
 	// Set the default command for a subsystem here.
 	// setDefaultCommand(new MySpecialCommand());
-	this.leftSpark = new Talon(RobotMap.DRIVE_SPARK_LEFT_PORT);
+	testSolenoid = new Solenoid(1,7);
+	System.out.println("the solenoid is alive");
+	this.leftTalonA = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT);
     
 
-    this.rightSpark = new Talon(RobotMap.DRIVE_SPARK_RIGHT_PORT);
+    this.rightTalonA = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT);
     
 
     this.leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
     this.rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
     
     // use the talons to create a roboDrive (it has methods that allow for easier control)
-    this.shakyDrive = new RobotDrive(rightSpark, leftSpark);
-    
+    this.shakyDrive = new RobotDrive(rightTalonA, leftTalonA);
+    //robotDrive = new RobotDrive(leftTalonA, leftTalonB, rightTalonA, rightTalonB);
     // stop all motors right away just in case
     shakyDrive.stopMotor();
 
@@ -232,6 +241,25 @@ public class ShakerDrivetrain extends Subsystem{
     public void setLeftRightMotorOutputs(double left, double right){
     	shakyDrive.setLeftRightMotorOutputs(left, right);
     }
+    
+    public void stop(){
+		shakyDrive.setLeftRightMotorOutputs(0.0, 0.0);
+	}
+
+	public static void shakerDriveInchesPerSecond(double left_vel, double right_vel){
+		// this is a total guess
+		System.out.println("I am sending ShakyDrive some outputs");
+		shakyDrive.setLeftRightMotorOutputs(left_vel / CONSTANTS.kPathFollowingMaxVel, right_vel / CONSTANTS.kPathFollowingMaxVel);
+	}
+
+	public double getGyroAngleInRadians(){
+		return gyro.getAngle();
+	}
+
+}
+
+
+
 	
     //don't need any of this stuff below b/c of the interpreter
     /*
@@ -244,4 +272,3 @@ public class ShakerDrivetrain extends Subsystem{
     public void back(double distance) {}
     */
 	
-}

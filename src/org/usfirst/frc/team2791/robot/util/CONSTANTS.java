@@ -32,4 +32,13 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static double DRIVE_DISTANCE_P = 1.3;
 	public static double DRIVE_DISTANCE_I = 0.01;
 	public static double DRIVE_DISTANCE_D = 0.2;
+	
+	// Path following constants
+    public static double kPathFollowingLookahead = 24.0; // inches
+    public static double kPathFollowingMaxVel = 120.0; // inches/sec
+    public static double kPathFollowingMaxAccel = 80.0; // inches/sec^2
+    public static double kLooperDt = 0.01;
+    
+    public static double kTrackScrubFactor = 0.5;
+
 }

@@ -30,7 +30,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team2791.chezylib.trajectory.io.AutoPaths;
 import org.usfirst.frc.team2791.robot.Robot.GamePeriod;
+import org.usfirst.frc.team2791.robot.commands.FollowPath;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -75,6 +77,7 @@ public class Robot extends IterativeRobot {
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
 		hopper = new ShakerHopper();
+		autonomousCommand=new FollowPath(AutoPaths.get("StraightAheadPath");
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 		
 		//driveTrainThread = new Thread(drivetrain);
