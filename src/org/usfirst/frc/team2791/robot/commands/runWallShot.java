@@ -1,4 +1,6 @@
+/*
 package org.usfirst.frc.team2791.robot.commands;
+
 
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
@@ -53,3 +55,4 @@ public class runWallShot extends Command{
 	protected void interrupted() {
 	}
 }
+*/

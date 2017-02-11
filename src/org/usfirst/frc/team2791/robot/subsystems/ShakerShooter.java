@@ -1,18 +1,14 @@
-/**
-* Shooter class for Shaker Robotics' 2017 robot 
+/*
+/** Shooter class for Shaker Robotics' 2017 robot 
 *
 * @author Lukas Velikov
 * @version pre
-*/
+*
 package org.usfirst.frc.team2791.robot.subsystems;
 
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.Util;
-
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.FeedbackDevice;
-import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -162,4 +158,4 @@ public class ShakerShooter extends Subsystem{
         SmartDashboard.putNumber("right speed", rightShooterTalon.getSpeed());
         SmartDashboard.putNumber("left speed", leftShooterTalon.getSpeed());
     }
-}
+}*/

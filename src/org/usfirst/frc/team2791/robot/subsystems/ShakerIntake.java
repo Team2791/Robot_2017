@@ -15,7 +15,7 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 	private double climber_current;
 	
 	private Solenoid intakeSolenoid;
-	private Solenoid wingSolenoid;
+	public Solenoid wingSolenoid;
 	
 	public void initDefaultCommand(){
 
