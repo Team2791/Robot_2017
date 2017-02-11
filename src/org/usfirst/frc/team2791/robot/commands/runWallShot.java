@@ -5,6 +5,7 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team2791.robot.commands.runHopper;
 
 public class runWallShot extends Command{
 	public runWallShot() {
@@ -29,12 +30,23 @@ public class runWallShot extends Command{
 		System.out.println("Running a wall shot");
 		Robot.shooter.setShooterSolenoidState(false);
 		Robot.shooter.prepWallShot();
-		Robot.hopper.runHopper();
+		while(Robot.hopper.moreBalls()){
+			System.out.println("I'm trying to execute hopper run");
+			Robot.hopper.runHopper();
+		}//gets balls right up to before shooter
+		
+		if(Robot.shooter.shooterAtSpeed()){//pushes a ball into the shooter
+			while(Robot.hopper.getDistanceState()){//runs the hopper so the ball can get in but stops before next ball
+					Robot.hopper.runHopper();
+					System.out.println("ball pushed in");
+			}
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
+		System.out.println("I just shot....Woohoo!");
 		if(Robot.oi.operator.getButtonX() == false)
 			return true;
 		return false;
