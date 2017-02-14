@@ -1,18 +1,10 @@
 package org.usfirst.frc.team2791.robot.subsystems;
 
-import org.usfirst.frc.team2791.robot.OI;
-import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
-import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
 import org.usfirst.frc.team2791.robot.util.BasicPID;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.Util;
-import org.usfirst.frc.team2791.robot.util.TalonSet;
-//import org.usfirst.frc.team2791.shakerJoystick.ShakerDriver;
-//import org.usfirst.frc.team2791.util.RobotMap;
 import org.usfirst.frc.team2791.robot.util.ShakerGyro;
-
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
@@ -20,7 +12,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Solenoid;
 
 public class ShakerDrivetrain extends Subsystem{
     protected Encoder leftDriveEncoder = null;
@@ -110,7 +101,7 @@ public class ShakerDrivetrain extends Subsystem{
 		updatePIDGains();
 	}
 
-	public void debug() {
+    public void debug() {
 		SmartDashboard.putNumber("Left Drive Encoders Rate", leftDriveEncoder.getRate());
 		SmartDashboard.putNumber("Right Drive Encoders Rate", rightDriveEncoder.getRate());
 		SmartDashboard.putNumber("Encoder Angle", getAngleEncoder());
@@ -123,15 +114,18 @@ public class ShakerDrivetrain extends Subsystem{
 		SmartDashboard.putNumber("Distance PID output", distancePID.getOutput());
 		SmartDashboard.putNumber("Distance PID error", distancePID.getError());
 	}
+    
 	public void updatePIDGains() {
 		movingAnglePID.changeGains(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
 		distancePID.changeGains(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);
 		stationaryAnglePID.changeGains(CONSTANTS.STATIONARY_ANGLE_P, CONSTANTS.STATIONARY_ANGLE_I,
 				CONSTANTS.STATIONARY_ANGLE_D);
 	}
+	
 	public double getAngleEncoder() {
 		return (360 / 7.9) * (getLeftDistance() - getRightDistance()) / 2.0;
 	}
+	
 	public double getGyroAngle() {
 		return gyro.getAngle();
 //		return 0;
@@ -157,11 +151,13 @@ public class ShakerDrivetrain extends Subsystem{
 		this.rightDriveEncoder.reset();
 		this.leftDriveEncoder.reset();
 	}
+	
 	public void resetEncoders() {
 		// zero the encoders
 		leftDriveEncoder.reset();
 		rightDriveEncoder.reset();
 	}
+	
 	public double getRightDistance() {
 		// distance of right encoder
 		return rightDriveEncoder.getDistance();

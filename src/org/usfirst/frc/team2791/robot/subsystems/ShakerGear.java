@@ -4,6 +4,7 @@ import org.usfirst.frc.team2791.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShakerGear extends Subsystem{
 	private Solenoid gearSolenoid;
@@ -14,5 +15,9 @@ public class ShakerGear extends Subsystem{
 	
 	public void changeGearSolenoidState(boolean state){
 		gearSolenoid.set(state);
+	}
+	
+	public void debug(){
+		SmartDashboard.putBoolean("gear solenoid state", gearSolenoid.get());
 	}
 }
