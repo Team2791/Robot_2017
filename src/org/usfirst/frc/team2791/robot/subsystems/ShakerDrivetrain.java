@@ -74,9 +74,10 @@ public class ShakerDrivetrain extends Subsystem{
 
 		leftDriveEncoder.reset();
 		rightDriveEncoder.reset();
-			
-		leftDriveEncoder.setDistancePerPulse(Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
-		rightDriveEncoder.setDistancePerPulse(-Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
+		
+		double distancePerPulse = Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER);
+		leftDriveEncoder.setDistancePerPulse(distancePerPulse); 
+		rightDriveEncoder.setDistancePerPulse(-distancePerPulse); 
 
 		movingAnglePID = new BasicPID(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
 		distancePID = new BasicPID(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);
@@ -185,12 +186,12 @@ public class ShakerDrivetrain extends Subsystem{
 		// zero the gyro
 		gyro.reset();
 	}
-	//
+	
 	public double getGyroRate() {
 		// recalibrate the gyro for
 		return gyro.getRate();
 	}
-	//
+	
 
 	public double getLeftVelocity() {
 		return leftDriveEncoder.getRate();
