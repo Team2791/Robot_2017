@@ -123,7 +123,7 @@ public class ShakerShooter extends Subsystem{
 	      SmartDashboard.putNumber("RightShooterSpeed", rightShooterTalon.getSpeed());
 	      SmartDashboard.putNumber("Left Shooter Error", leftShooterTalon.getClosedLoopError());
 	      SmartDashboard.putNumber("Right Shooter Error", -rightShooterTalon.getClosedLoopError());
-	      SmartDashboard.putString("Current shooter setpoint", Double.toString(getShooterHeight()));
+	      SmartDashboard.putString("Current shooter setpoint", getShooterHeight());
 	      SmartDashboard.putNumber("left output voltage", leftShooterTalon.getOutputVoltage());
 	      SmartDashboard.putNumber("left speed", -leftShooterTalon.getEncVelocity());
 	      SmartDashboard.putNumber("right output voltage", rightShooterTalon.getOutputVoltage());
@@ -136,8 +136,10 @@ public class ShakerShooter extends Subsystem{
 //	      powerShooterTalon.set(SmartDashboard.getNumber("setpoint"));
     }
 
-    private double getShooterHeight() {
-		return 0;
+    private String getShooterHeight() {
+		if(shooterSolenoid.get())
+			return "far";
+    	return "close";
 	}
 
 	public void reset() {

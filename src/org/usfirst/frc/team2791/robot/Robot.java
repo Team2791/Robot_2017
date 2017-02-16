@@ -139,6 +139,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		if(Robot.hopper.moreBalls())
+			Robot.hopper.runHopper();
+		else
+			Robot.hopper.stopHopper();
 	}
 
 	@Override
@@ -165,6 +169,12 @@ public class Robot extends IterativeRobot {
 		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
 //		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
 		Scheduler.getInstance().run();
+		
+		if(Robot.hopper.moreBalls())
+			Robot.hopper.runHopper();
+		else
+			Robot.hopper.stopHopper();
+		
 		oi.checkForAction();
 	}
 

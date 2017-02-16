@@ -24,6 +24,11 @@ public class ShakerHopper extends Subsystem{
 			return false;
 		return true;
 	}
+	public boolean getDistanceState(){
+		if(ballSensor1.getVoltage()<1.5)
+			return true;
+		return false;
+	}
 	public void runHopper(){
 		hopperSpark.set(-1.0);
 	}
