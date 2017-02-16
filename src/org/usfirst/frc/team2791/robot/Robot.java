@@ -30,7 +30,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team2791.chezylib.trajectory.io.AutoPaths;
 import org.usfirst.frc.team2791.robot.Robot.GamePeriod;
 import org.usfirst.frc.team2791.robot.commands.FollowPath;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
@@ -40,6 +39,7 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
 //import org.usfirst.frc.team2791.robot.subsystems.ExampleSubsystem;
 //import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
+import org.usfirst.frc.team2791.trajectory.AutoPaths;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -77,7 +77,6 @@ public class Robot extends IterativeRobot {
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
 		hopper = new ShakerHopper();
-		autonomousCommand=new FollowPath(AutoPaths.get("StraightAheadPath");
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 		
 		//driveTrainThread = new Thread(drivetrain);
@@ -129,6 +128,7 @@ public class Robot extends IterativeRobot {
 
 		// schedule the autonomous command (example)
 		intake.wingDeployment();//opens up robot as soon as robot starts
+		autonomousCommand= new FollowPath(AutoPaths.get("StraightAheadPath"));
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}

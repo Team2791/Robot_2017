@@ -9,18 +9,18 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
 import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
-import org.usfirst.frc.team2791.robot.commands.removeGear;
-import org.usfirst.frc.team2791.robot.commands.resetGear;
-import org.usfirst.frc.team2791.robot.commands.runClimber;
-import org.usfirst.frc.team2791.robot.commands.runHopper;
-import org.usfirst.frc.team2791.robot.commands.runHopperWithJoystick;
+import org.usfirst.frc.team2791.robot.commands.RemoveGear;
+import org.usfirst.frc.team2791.robot.commands.ResetGear;
+import org.usfirst.frc.team2791.robot.commands.RunClimber;
+import org.usfirst.frc.team2791.robot.commands.RunHopper;
+import org.usfirst.frc.team2791.robot.commands.RunHopperWithJoystick;
 //import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
 //import org.usfirst.frc.team2791.robot.commands.ExampleCommand;
 //import org.usfirst.frc.team2791.shakerJoystick.ShakerOperator;
-import org.usfirst.frc.team2791.robot.commands.runIntake;
-import org.usfirst.frc.team2791.robot.commands.runIntakeBelt;
-import org.usfirst.frc.team2791.robot.commands.stopHopper;
-import org.usfirst.frc.team2791.robot.commands.turnIntakeOff;
+import org.usfirst.frc.team2791.robot.commands.RunIntake;
+import org.usfirst.frc.team2791.robot.commands.RunIntakeBelt;
+import org.usfirst.frc.team2791.robot.commands.StopHopper;
+import org.usfirst.frc.team2791.robot.commands.TurnIntakeOff;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 
 /**
@@ -132,40 +132,40 @@ public class OI {//joystick layout pic with Gaurab
 		}
 		
 		if(operator.getDpadUp()){
-			new resetGear();
+			new ResetGear();
 		}
 		if(operator.getDpadUpRight()){}
 		if(operator.getDpadRight()){
-			new stopHopper();
+			new StopHopper();
 		}
 		if(operator.getDpadDownRight()){}
 		if(operator.getDpadDown()){
-			new removeGear();
+			new RemoveGear();
 		}
 		if(operator.getDpadDownLeft()){}
 		if(operator.getDpadLeft()){
-			new runHopper();
+			new RunHopper();
 		}
 		if(operator.getDpadUpLeft()){}
 		
 		if(operator.getButtonA()){
 			System.out.println("Operator is running the fuel intake");
-			new runIntake();
+			new RunIntake();
 		}
 		if(operator.getButtonB()){
 			System.out.println("Operator is turning off fuel intake");
-			new turnIntakeOff();
+			new TurnIntakeOff();
 		}
 		if(operator.getButtonX()){}
 		if(operator.getButtonY()){
 			System.out.println("Operator is running the climber");
-			new runClimber();
+			new RunClimber();
 		}
 		
 		if(operator.getButtonLB()){}
 		if(operator.getButtonRB()){
 			System.out.println("only running intake belts");
-			new runIntakeBelt();
+			new RunIntakeBelt();
 		}
 		
 		if(operator.getButtonLS()){}
@@ -179,7 +179,7 @@ public class OI {//joystick layout pic with Gaurab
 		
 		if(operator.getAxisLT()>0.0){}
 		if(operator.getAxisRT()>0.0){
-			new runHopperWithJoystick();
+			new RunHopperWithJoystick();
 		}
 		
 		if(Math.abs(operator.getAxisRightX())>0.0){}

@@ -1,31 +1,22 @@
 
- package org.usfirst.frc.team2791.robot.commands;
+package org.usfirst.frc.team2791.robot.commands;
 
 
 import edu.wpi.first.wpilibj.command.Command;
 
-import org.usfirst.frc.team2791.chezylib.trajectory.Path;
-import org.usfirst.frc.team2791.chezylib.trajectory.TrajectoryDriveHelper;
 import org.usfirst.frc.team2791.robot.Robot;
+import org.usfirst.frc.team2791.trajectory.Path;
+import org.usfirst.frc.team2791.trajectory.TrajectoryDriveHelper;
 
-/*
- * DriveAction.java and DrivePathAction.java
- * Command to Follow a Given path
- * When you call this 
- */
 public class FollowPath extends Command {
 	protected TrajectoryDriveHelper trajHelper;
-	
+
 	double heading; //not sure where this is assigned a value
-	Path path;
-	
-	/*
-	 * @param path_ a path that is generated with the preferred AutoPaths.get() method, see AutoPath.java for more info
-	 * @param angle ??????
-	 */
+	protected Path path;
+
 	public FollowPath(Path path_, double angle) {// double angle may not be correct
-		
-		super("FollowPath");
+
+		super("DriveWithJoystick");
 		requires(Robot.drivetrain);
 		trajHelper=new TrajectoryDriveHelper();
 		path=path_;
@@ -33,18 +24,14 @@ public class FollowPath extends Command {
 		System.out.println("came to constructor FollowPath");
 		initialize();
 	}
-	
 
-	/*
-	 * @param path_ a path that is generated outside of the class and sent
-	 */
-	public FollowPath(Path path_) {
-		
-		super("FollowPath");
+	public FollowPath(Path path_) {// double angle may not be correct
+
+		super("DriveWithJoystick");
 		requires(Robot.drivetrain);
-		trajHelper=new TrajectoryDriveHelper();
-		path=path_;
-		heading=0.0;//i still don't know
+		path = path_;
+		trajHelper = new TrajectoryDriveHelper();
+		heading = 0;
 		System.out.println("came to constructor FollowPath");
 		initialize();
 	}
@@ -53,13 +40,13 @@ public class FollowPath extends Command {
 	@Override
 	protected void initialize() {
 		//System.out.println("Init Drive " + Timer.getFPGATimestamp());
-	    Robot.drivetrain.resetEncoders();
-	    trajHelper.loadProfile(path.getLeftWheelTrajectory(), path.getRightWheelTrajectory(), 1.0, heading);
-	    trajHelper.enable();
+		Robot.drivetrain.resetEncoders();
+		trajHelper.loadProfile(path.getLeftWheelTrajectory(), path.getRightWheelTrajectory(), 1.0, heading);
+		trajHelper.enable();
 		System.out.println("I have started trajHelper");
 
-	  }
-	
+	}
+
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
@@ -87,4 +74,5 @@ public class FollowPath extends Command {
 	@Override
 	protected void interrupted() {
 	}
+
 }
