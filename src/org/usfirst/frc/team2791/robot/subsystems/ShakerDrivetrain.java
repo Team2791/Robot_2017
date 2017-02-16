@@ -64,12 +64,10 @@ public class ShakerDrivetrain extends Subsystem{
 		// setDefaultCommand(new MySpecialCommand());
 		testSolenoid = new Solenoid(1,7);
 		System.out.println("the solenoid is alive");
-		this.leftSparkA = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT);
 		
-
+		this.leftSparkA = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT);
 		this.rightSparkA = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT);
 		
-
 		this.leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
 		this.rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
 		
