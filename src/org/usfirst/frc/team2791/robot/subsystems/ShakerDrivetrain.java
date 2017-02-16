@@ -60,14 +60,14 @@ public class ShakerDrivetrain extends Subsystem{
 		testSolenoid = new Solenoid(1,7);
 		System.out.println("the solenoid is alive");
 		
-		this.leftSpark = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT);
-		this.rightSpark = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT);
+		leftSpark = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT);
+		rightSpark = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT);
 		
-		this.leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
-		this.rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
+		leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
+		rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
 		
 		// use the talons to create a roboDrive (it has methods that allow for easier control)
-		this.shakyDrive = new RobotDrive(rightSpark, leftSpark);
+		shakyDrive = new RobotDrive(rightSpark, leftSpark);
 		// stop all motors right away just in case
 		shakyDrive.stopMotor();
 
@@ -147,9 +147,9 @@ public class ShakerDrivetrain extends Subsystem{
 	}
 
 	public void reset() {
-		this.disable();
-		this.rightDriveEncoder.reset();
-		this.leftDriveEncoder.reset();
+		disable();
+		rightDriveEncoder.reset();
+		leftDriveEncoder.reset();
 	}
 	
 	public void resetEncoders() {
@@ -177,7 +177,7 @@ public class ShakerDrivetrain extends Subsystem{
 	
 	public void disable() {
 		// Stops all the motors
-		this.shakyDrive.stopMotor();
+		shakyDrive.stopMotor();
 	}
 	
 	public void resetGyro() {
