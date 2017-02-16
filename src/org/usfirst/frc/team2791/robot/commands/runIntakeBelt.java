@@ -24,7 +24,7 @@ public class runIntakeBelt extends Command{
 		return false;
 	}
 	protected void end(){
-		Robot.intake.stopMotor();
+		Robot.intake.stopClimber();
 	}
 	protected void interrupted(){
 	}

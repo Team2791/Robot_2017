@@ -16,7 +16,7 @@ public class runIntake extends Command{
 		execute();
 	}
 	protected void execute(){
-		System.out.println("I'm trying to execute intake on");
+		System.out.println("I'm trying to execute intake on\tIntake Current: "+Robot.intake.getClimberCurrent());
 		Robot.intake.moveIntakeOut(true);
 		Robot.intake.motorOnIntake();
 		
@@ -25,7 +25,7 @@ public class runIntake extends Command{
 		return false;
 	}
 	protected void end(){
-		Robot.intake.stopMotor();
+		Robot.intake.stopClimber();
 	}
 	protected void interrupted(){
 	}

@@ -17,18 +17,16 @@ public class runClimber extends Command{
 		execute();
 	}
 	protected void execute(){
-		while(!Robot.intake.stopMotor() || OI.operator.getButtonB()){
-			System.out.println("I'm trying to execute climbing");
+		while(!Robot.intake.stopClimber() || OI.operator.getButtonB()){
+			System.out.println("I'm trying to execute climbing\tClimber Current: "+Robot.intake.getClimberCurrent());
 			Robot.intake.motorOnClimber();
 		}
 	}
 	protected boolean isFinished(){
-		if(Robot.intake.stopMotor())
-			return true;
-		return false;
+		return Robot.intake.stopClimber();
 	}
 	protected void end(){
-		Robot.intake.stopMotor();
+		Robot.intake.stopClimber();
 	}
 	protected void interrupted(){
 	}
