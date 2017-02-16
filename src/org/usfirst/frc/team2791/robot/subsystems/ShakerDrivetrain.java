@@ -98,9 +98,9 @@ public class ShakerDrivetrain extends Subsystem{
 		distancePID.setIZone(0.25);
 		movingAnglePID.setIZone(4);
 		gyro = new ShakerGyro(SPI.Port.kOnboardCS1);
-	//	(new Thread(gyro)).start();
-			
+	//	(new Thread(gyro)).start();		
 	}
+	
 	@SuppressWarnings("deprecation")
 	public void updateSmartDash() {
 		// put values on the smart dashboard
@@ -132,23 +132,16 @@ public class ShakerDrivetrain extends Subsystem{
 		SmartDashboard.putNumber("Distance PID output", distancePID.getOutput());
 		SmartDashboard.putNumber("Distance PID error", distancePID.getError());
 	}
+	
 	public void updatePIDGains() {
 		movingAnglePID.changeGains(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
 		distancePID.changeGains(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);
 		stationaryAnglePID.changeGains(CONSTANTS.STATIONARY_ANGLE_P, CONSTANTS.STATIONARY_ANGLE_I,
 				CONSTANTS.STATIONARY_ANGLE_D);
 	}
-	public double getAngleEncoder() {
-		return (360 / 7.9) * (getLeftDistance() - getRightDistance()) / 2.0;
-	}
+
 	public double getGyroAngle() {
 		return gyro.getAngle();
-//		return 0;
-	}
-
-	public double getEncoderAngleRate() {
-		return (360/7.9) * (leftDriveEncoder.getRate() - rightDriveEncoder.getRate()) / 2.0;
-
 	}
 
 	public double getAverageAcceleration() {
@@ -166,11 +159,13 @@ public class ShakerDrivetrain extends Subsystem{
 		this.rightDriveEncoder.reset();
 		this.leftDriveEncoder.reset();
 	}
+	
 	public void resetEncoders() {
 		// zero the encoders
 		leftDriveEncoder.reset();
 		rightDriveEncoder.reset();
 	}
+	
 	public double getRightDistance() {
 		// distance of right encoder
 		return rightDriveEncoder.getDistance();
@@ -187,16 +182,18 @@ public class ShakerDrivetrain extends Subsystem{
 	public void doneUsingPID() {
 		usingPID = false;
 	}
+	
 	public void disable() {
 		// Stops all the motors
 		this.shakyDrive.stopMotor();
 	}
-	 public void resetGyro() {
+	
+	public void resetGyro() {
 		// zero the gyro
 		gyro.reset();
 	}
 	//
-	 public double getGyroRate() {
+	public double getGyroRate() {
 		// recalibrate the gyro for
 		return gyro.getRate();
 	}
@@ -235,8 +232,8 @@ public class ShakerDrivetrain extends Subsystem{
 
 	public double getAngle() {
 		return getAngleEncoder();
-
 	}
+	
 	//set motor output according to above interpretation
 	public void setLeftRightMotorOutputs(double left, double right){
 		shakyDrive.setLeftRightMotorOutputs(left, right);
