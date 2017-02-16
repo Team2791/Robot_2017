@@ -13,17 +13,20 @@ public class runClimber extends Command{
 		initialize();
 	}
 	protected void initialize(){
+		Robot.intake.wingDeployment();
 		System.out.println("came to initialize of climber");
 		execute();
 	}
 	protected void execute(){
-		while(!Robot.intake.stopClimber() || OI.operator.getButtonB()){
+		if((Robot.intake.getClimberCurrent()<30.0) && !(OI.operator.getButtonB())){
 			System.out.println("I'm trying to execute climbing\tClimber Current: "+Robot.intake.getClimberCurrent());
 			Robot.intake.motorOnClimber();
 		}
+		else
+			Robot.intake.stopClimber();
 	}
 	protected boolean isFinished(){
-		return Robot.intake.stopClimber();
+		return false;
 	}
 	protected void end(){
 		Robot.intake.stopClimber();

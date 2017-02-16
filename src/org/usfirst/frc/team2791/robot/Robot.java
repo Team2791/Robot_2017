@@ -127,8 +127,8 @@ public class Robot extends IterativeRobot {
 		//if (autonomousCommand != null)
 			//autonomousCommand.cancel();
 			gamePeriod = GamePeriod.TELEOP;
-			gearMechanism.changeGearSolenoidState(false);//makes it stay up when it turns on; just initiating it as up in the subsystem isn't working
-			intake.moveIntakeOut(false);
+//			gearMechanism.changeGearSolenoidState(false);//makes it stay up when it turns on; just initiating it as up in the subsystem isn't working
+//			intake.moveIntakeOut(false);
 //			intake.wingDeployment();
 	}
 
@@ -137,6 +137,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		drivetrain.updateSmartDash();
 		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
 		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
 		Scheduler.getInstance().run();

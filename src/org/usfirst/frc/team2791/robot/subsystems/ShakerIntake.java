@@ -48,13 +48,9 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 		climber_current = Robot.pdp.getCurrent(1);//slot number of climber motor wires
 		return climber_current;
 	}
-	public boolean stopClimber(){
-		if(getClimberCurrent()>30.0){
-			intakeSpark.stopMotor();
-			System.out.println("Climbing ceased; remove me from this rope");
-			return true;
-		}
-		return false;
+	public void stopClimber(){
+		intakeSpark.stopMotor();
+		System.out.println("Climbing ceased; remove me from this rope");	
 	}
 	public void debug(){
 		SmartDashboard.putNumber("Intake/Climber current usage", getClimberCurrent());
