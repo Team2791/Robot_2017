@@ -163,6 +163,11 @@ public class ShakerDrivetrain extends Subsystem{
 		return rightDriveEncoder.getDistance();
 	}
 
+	public double getLeftDistance() {
+		// distance of left encoder
+		return leftDriveEncoder.getDistance(); // convert distance from feet to inches;
+	}
+
 	public boolean isUsingPID() {
 		return usingPID;
 	}
@@ -190,7 +195,6 @@ public class ShakerDrivetrain extends Subsystem{
 		return gyro.getRate();
 	}
 	
-
 	public double getLeftVelocity() {
 		return leftDriveEncoder.getRate();
 	}
@@ -214,11 +218,6 @@ public class ShakerDrivetrain extends Subsystem{
 		System.out.println("Gyro calibrating");
 		gyro.recalibrate();
 		System.out.println("Done calibrating " + " The current rate is " + gyro.getRate());
-	}
-
-	public double getLeftDistance() {
-		// distance of left encoder
-		return leftDriveEncoder.getDistance(); // convert distance from feet to inches;
 	}
 
 	public double getAngle() {
