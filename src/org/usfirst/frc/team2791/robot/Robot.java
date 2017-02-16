@@ -69,9 +69,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		
 		gamePeriod = GamePeriod.DISABLED;
-		
 	}
 
 	@Override
@@ -125,11 +123,11 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		
 		//if (autonomousCommand != null)
-			//autonomousCommand.cancel();
-			gamePeriod = GamePeriod.TELEOP;
-//			gearMechanism.changeGearSolenoidState(false);//makes it stay up when it turns on; just initiating it as up in the subsystem isn't working
-//			intake.moveIntakeOut(false);
-//			intake.wingDeployment();
+		//	autonomousCommand.cancel();
+		gamePeriod = GamePeriod.TELEOP;
+		// 	gearMechanism.changeGearSolenoidState(false);//makes it stay up when it turns on; just initiating it as up in the subsystem isn't working
+		// 	intake.moveIntakeOut(false);
+		//	intake.wingDeployment();
 	}
 
 	/**
