@@ -2,8 +2,6 @@ package org.usfirst.frc.team2791.robot.subsystems;
 
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
-
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -31,23 +29,29 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 	public void wingDeployment(){
 		wingSolenoid.set(true);
 	}
+	
 	public void moveIntakeOut(boolean yes){
 		intakeSolenoid.set(yes);
 		System.out.print("The intake moved");
 	}
+	
 	public void motorOnIntake(){//negative is proper direction
-		intakeSpark.setSpeed(-0.66);
+		intakeSpark.set(-0.66);
 	}
+	
 	public void motorOffIntake(){
-		intakeSpark.setSpeed(0.0);
+		intakeSpark.set(0.0);
 	}
+	
 	public void motorOnClimber(){//should be positive
-		intakeSpark.setSpeed(-0.05);
+		intakeSpark.set(-0.05);
 	}
+	
 	public double getClimberCurrent(){
 		climber_current = Robot.pdp.getCurrent(3);//slot number of climber motor wires
 		return climber_current;
 	}
+	
 	public boolean stopMotor(){
 		if(getClimberCurrent()>5.0){
 			intakeSpark.stopMotor();
@@ -56,8 +60,12 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 		}
 		return false;
 	}
+	
 	public void debug(){
 		SmartDashboard.putNumber("Intake/Climber current usage", getClimberCurrent());
+		SmartDashboard.putBoolean("intakeSolenoid state", intakeSolenoid.get());
+		SmartDashboard.putBoolean("wingSolenoid down", intakeSolenoid.get());
+		SmartDashboard.putNumber("intakeSpark PWM", intakeSpark.get());
 	}
 }
 
