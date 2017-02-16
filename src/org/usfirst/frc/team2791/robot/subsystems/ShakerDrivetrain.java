@@ -68,7 +68,6 @@ public class ShakerDrivetrain extends Subsystem{
 		
 		// use the talons to create a roboDrive (it has methods that allow for easier control)
 		this.shakyDrive = new RobotDrive(rightSpark, leftSpark);
-		//robotDrive = new RobotDrive(leftTalonA, leftTalonB, rightTalonA, rightTalonB);
 		// stop all motors right away just in case
 		shakyDrive.stopMotor();
 
@@ -92,7 +91,6 @@ public class ShakerDrivetrain extends Subsystem{
 		distancePID.setIZone(0.25);
 		movingAnglePID.setIZone(4);
 		gyro = new ShakerGyro(SPI.Port.kOnboardCS1);
-	//	(new Thread(gyro)).start();		
 	}
 	
 	@SuppressWarnings("deprecation")
