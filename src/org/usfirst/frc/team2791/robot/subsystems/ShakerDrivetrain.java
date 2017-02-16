@@ -23,85 +23,85 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 
 public class ShakerDrivetrain extends Subsystem{
-    protected Encoder leftDriveEncoder = null;
-    protected Encoder rightDriveEncoder = null;
- 	
-    protected Solenoid testSolenoid;
-    
- 	protected ShakerGyro gyro;
+	protected Encoder leftDriveEncoder = null;
+	protected Encoder rightDriveEncoder = null;
 	
-    protected RobotDrive shakyDrive = null;
+	protected Solenoid testSolenoid;
+	
+	protected ShakerGyro gyro;
+	
+	protected RobotDrive shakyDrive = null;
 
-    private Talon leftSparkA;
-    private Talon leftSparkB;
-    private Talon leftSparkC;
-    
-    private Talon rightSparkA;
-    private Talon rightSparkB;
-    private Talon rightSparkC;
-    
-    protected static BasicPID movingAnglePID;
-    protected static BasicPID distancePID;
-    protected static BasicPID stationaryAnglePID;
-    
-    protected static boolean usingPID = false;
-    
-    protected double driveTimePIDGoodTime = 0;
-    protected double angleTimePIDGoodTime = 0;
-    
-    protected double previousRate = 0;
-    protected double previousRateTime = 0;
-    protected double currentRate = 0;
-    protected double currentTime = 0;
-    
-    protected double angleTarget = 0.0;
-    protected double turnPIDMaxOutput = 0.5;
-    protected boolean PIDAtTarget = false;
-    protected boolean anglePIDQuickExit = false;
-    
-    public void initDefaultCommand() {
-	// Set the default command for a subsystem here.
-	// setDefaultCommand(new MySpecialCommand());
-	testSolenoid = new Solenoid(1,7);
-	System.out.println("the solenoid is alive");
-	this.leftSparkA = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT);
-    
-
-    this.rightSparkA = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT);
-    
-
-    this.leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
-    this.rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
-    
-    // use the talons to create a roboDrive (it has methods that allow for easier control)
-    this.shakyDrive = new RobotDrive(rightSparkA, leftSparkA);
-    //robotDrive = new RobotDrive(leftTalonA, leftTalonB, rightTalonA, rightTalonB);
-    // stop all motors right away just in case
-    shakyDrive.stopMotor();
-
-	leftDriveEncoder.reset();
-	rightDriveEncoder.reset();
+	private Talon leftSparkA;
+	private Talon leftSparkB;
+	private Talon leftSparkC;
+	
+	private Talon rightSparkA;
+	private Talon rightSparkB;
+	private Talon rightSparkC;
+	
+	protected static BasicPID movingAnglePID;
+	protected static BasicPID distancePID;
+	protected static BasicPID stationaryAnglePID;
+	
+	protected static boolean usingPID = false;
+	
+	protected double driveTimePIDGoodTime = 0;
+	protected double angleTimePIDGoodTime = 0;
+	
+	protected double previousRate = 0;
+	protected double previousRateTime = 0;
+	protected double currentRate = 0;
+	protected double currentTime = 0;
+	
+	protected double angleTarget = 0.0;
+	protected double turnPIDMaxOutput = 0.5;
+	protected boolean PIDAtTarget = false;
+	protected boolean anglePIDQuickExit = false;
+	
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		// setDefaultCommand(new MySpecialCommand());
+		testSolenoid = new Solenoid(1,7);
+		System.out.println("the solenoid is alive");
+		this.leftSparkA = new Talon(RobotMap.DRIVE_TALON_LEFT_PORT);
 		
-	leftDriveEncoder.setDistancePerPulse(Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
-	rightDriveEncoder.setDistancePerPulse(-Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
 
-	movingAnglePID = new BasicPID(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
-	distancePID = new BasicPID(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);
-	stationaryAnglePID = new BasicPID(CONSTANTS.STATIONARY_ANGLE_P, CONSTANTS.STATIONARY_ANGLE_I, CONSTANTS.STATIONARY_ANGLE_D);
-	
-	movingAnglePID.setInvertOutput(true);
-	stationaryAnglePID.setInvertOutput(true);
-	movingAnglePID.setMaxOutput(0.5);
-	movingAnglePID.setMinOutput(-0.5);
-	
-	stationaryAnglePID.setIZone(6);
-	distancePID.setIZone(0.25);
-	movingAnglePID.setIZone(4);
-	gyro = new ShakerGyro(SPI.Port.kOnboardCS1);
-//	(new Thread(gyro)).start();
+		this.rightSparkA = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT);
 		
+
+		this.leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
+		this.rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
+		
+		// use the talons to create a roboDrive (it has methods that allow for easier control)
+		this.shakyDrive = new RobotDrive(rightSparkA, leftSparkA);
+		//robotDrive = new RobotDrive(leftTalonA, leftTalonB, rightTalonA, rightTalonB);
+		// stop all motors right away just in case
+		shakyDrive.stopMotor();
+
+		leftDriveEncoder.reset();
+		rightDriveEncoder.reset();
+			
+		leftDriveEncoder.setDistancePerPulse(Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
+		rightDriveEncoder.setDistancePerPulse(-Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
+
+		movingAnglePID = new BasicPID(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
+		distancePID = new BasicPID(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);
+		stationaryAnglePID = new BasicPID(CONSTANTS.STATIONARY_ANGLE_P, CONSTANTS.STATIONARY_ANGLE_I, CONSTANTS.STATIONARY_ANGLE_D);
+		
+		movingAnglePID.setInvertOutput(true);
+		stationaryAnglePID.setInvertOutput(true);
+		movingAnglePID.setMaxOutput(0.5);
+		movingAnglePID.setMinOutput(-0.5);
+		
+		stationaryAnglePID.setIZone(6);
+		distancePID.setIZone(0.25);
+		movingAnglePID.setIZone(4);
+		gyro = new ShakerGyro(SPI.Port.kOnboardCS1);
+	//	(new Thread(gyro)).start();
+			
 	}
-    @SuppressWarnings("deprecation")
+	@SuppressWarnings("deprecation")
 	public void updateSmartDash() {
 		// put values on the smart dashboard
 		CONSTANTS.STATIONARY_ANGLE_P = SmartDashboard.getNumber("Stat Angle P");
@@ -192,14 +192,14 @@ public class ShakerDrivetrain extends Subsystem{
 		this.shakyDrive.stopMotor();
 	}
 	 public void resetGyro() {
-	 // zero the gyro
-		 gyro.reset();
-	 }
+		// zero the gyro
+		gyro.reset();
+	}
 	//
 	 public double getGyroRate() {
-	 // recalibrate the gyro for
-		 return gyro.getRate();
-	 }
+		// recalibrate the gyro for
+		return gyro.getRate();
+	}
 	//
 
 	public double getLeftVelocity() {
@@ -221,7 +221,7 @@ public class ShakerDrivetrain extends Subsystem{
 	}
 
 	public void calibrateGyro() {
-//		 recalibrate the gyro
+		// recalibrate the gyro
 		System.out.println("Gyro calibrating");
 		gyro.recalibrate();
 		System.out.println("Done calibrating " + " The current rate is " + gyro.getRate());
@@ -237,20 +237,20 @@ public class ShakerDrivetrain extends Subsystem{
 		return getAngleEncoder();
 
 	}
-    //set motor output according to above interpretation
-    public void setLeftRightMotorOutputs(double left, double right){
-    	shakyDrive.setLeftRightMotorOutputs(left, right);
-    }
+	//set motor output according to above interpretation
+	public void setLeftRightMotorOutputs(double left, double right){
+		shakyDrive.setLeftRightMotorOutputs(left, right);
+	}
 	
-    //don't need any of this stuff below b/c of the interpreter
-    /*
-    public void forward(double distance) {}
+	//don't need any of this stuff below b/c of the interpreter
+	/*
+	public void forward(double distance) {}
 	
-    public void left(double distance) {}
+	public void left(double distance) {}
 	
-    public void right(double distance) {}
+	public void right(double distance) {}
 	
-    public void back(double distance) {}
-    */
+	public void back(double distance) {}
+	*/
 	
 }
