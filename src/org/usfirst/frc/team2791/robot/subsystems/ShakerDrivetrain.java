@@ -220,8 +220,7 @@ public class ShakerDrivetrain extends Subsystem{
 
 	public double getLeftDistance() {
 		// distance of left encoder
-		return leftDriveEncoder.getDistance();// convert distance from feet
-		// to inches;
+		return leftDriveEncoder.getDistance(); // convert distance from feet to inches;
 	}
 
 	public double getAngle() {
@@ -232,16 +231,5 @@ public class ShakerDrivetrain extends Subsystem{
 	public void setLeftRightMotorOutputs(double left, double right){
 		shakyDrive.setLeftRightMotorOutputs(left, right);
 	}
-	
-	//don't need any of this stuff below b/c of the interpreter
-	/*
-	public void forward(double distance) {}
-	
-	public void left(double distance) {}
-	
-	public void right(double distance) {}
-	
-	public void back(double distance) {}
-	*/
-	
+		
 }
