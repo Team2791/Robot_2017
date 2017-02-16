@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShakerIntake extends Subsystem{ //code for intake and climber
 	public Talon intakeSpark;
 	
-	private double climber_current;
+	private double climberCurrent;
 	
 	private Solenoid intakeSolenoid;
 	private Solenoid wingSolenoid;
@@ -45,8 +45,8 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 		intakeSpark.setSpeed(0.10);
 	}
 	public double getClimberCurrent(){
-		climber_current = Robot.pdp.getCurrent(1);//slot number of climber motor wires
-		return climber_current;
+		climberCurrent = Robot.pdp.getCurrent(1);//slot number of climber motor wires
+		return climberCurrent;
 	}
 	public void stopClimber(){
 		intakeSpark.stopMotor();
