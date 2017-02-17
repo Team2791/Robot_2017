@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2791.robot.subsystems;
 
+import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -24,19 +25,22 @@ public class ShakerHopper extends Subsystem{
 			return false;
 		return true;
 	}
-	public boolean getDistanceState(){
-		if(ballSensor1.getVoltage()<1.5)
+	public boolean isBallAtTop(){
+		if(ballSensor1.getVoltage()<1.5 || ballSensor2.getVoltage()<1.5)
 			return true;
 		return false;
 	}
 	public void runHopper(){
-		hopperSpark.set(-1.0);
+		hopperSpark.set(-0.66);
 	}
 	public void stopHopper(){
 		hopperSpark.set(0.0);
 	}
 	public void stopMotor(){
 		hopperSpark.disable();
+	}
+	public double getCurrentUsage() {
+		return Robot.pdp.getCurrent(12);
 	}
 	
 	//made for hopper testing to check for what speed works best

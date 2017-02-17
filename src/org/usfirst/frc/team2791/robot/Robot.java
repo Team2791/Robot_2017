@@ -39,6 +39,7 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
 //import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 //import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
+import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -53,7 +54,7 @@ public class Robot extends IterativeRobot {
 	public static GamePeriod gamePeriod;
 	public static PowerDistributionPanel pdp; //CAN ID has to be 0 for current sensing
 	public static ShakerIntake intake;
-	//public static ShakerShooter shooter;
+	public static ShakerShooter shooter;
 	public static ShakerGear gearMechanism;
 	public static Compressor compressor;
 	public static ShakerDrivetrain drivetrain;
@@ -70,14 +71,14 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		System.out.println("Starting to init my systems.");
 		gamePeriod = GamePeriod.DISABLED;
-		pdp = new PowerDistributionPanel(); //CAN id has to be 0
+		pdp = new PowerDistributionPanel(0); //CAN id has to be 0
 		compressor = new Compressor(RobotMap.PCM_MODULE);
 		compressor.setClosedLoopControl(true);
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
 		hopper = new ShakerHopper();
-		//shooter = new ShakerShooter();
+		shooter = new ShakerShooter();
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 		
 		//driveTrainThread = new Thread(drivetrain);
@@ -128,7 +129,7 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		intake.wingSolenoid.set(false);//opens up robot as soon as robot starts
+//		intake.wingSolenoid.set(false);//opens up robot as soon as robot starts
 //		if (autonomousCommand != null)
 //			autonomousCommand.start();
 	}
@@ -156,9 +157,9 @@ public class Robot extends IterativeRobot {
 		//if (autonomousCommand != null)
 			//autonomousCommand.cancel();
 			gamePeriod = GamePeriod.TELEOP;
-			intake.wingSolenoid.set(false);
-			gearMechanism.changeGearSolenoidState(false);//makes it stay up when it turns on; just initiating it as up in the subsystem isn't working
-			intake.moveIntakeOut(false);
+//			intake.wingSolenoid.set(false);
+//			gearMechanism.changeGearSolenoidState(false);//makes it stay up when it turns on; just initiating it as up in the subsystem isn't working
+//			intake.moveIntakeOut(false);
 		}
 
 	/**
@@ -168,6 +169,9 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
 //		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
+		System.out.println("Hopper current draw: "+hopper.getCurrentUsage());
+		System.out.println("Intake current draw: "+intake.getCurrentUsage());
+		System.out.println("Shooter current draw: "+shooter.getCurrentUsage());
 		Scheduler.getInstance().run();
 		
 		if(Robot.hopper.moreBalls())

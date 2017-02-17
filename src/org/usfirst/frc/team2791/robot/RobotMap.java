@@ -34,10 +34,10 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int IR_SENSOR_2 = 1;
 	
 	// CAN
-	public static final int PCM_MODULE = 1;
+	public static final int PCM_MODULE = 20;
 	
-	public static final int LEFT_SHOOTER_TALON_PORT = 0;
-	public static final int RIGHT_SHOOTER_TALON_PORT = 0;
+	public static final int LEFT_SHOOTER_TALON_PORT = 11;
+	public static final int RIGHT_SHOOTER_TALON_PORT = 10;
 	public static final int CENTER_SHOOTER_TALON_PORT = 0;
 	
 	public static final int SHOOTER_ENCODER_PORT_A = 0;
@@ -52,4 +52,6 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int WING_CHANNEL = 5;
 	public static final int GEAR_CHANNEL = 6;
 	public static final int SHOOTER_CHANNEL = 4;
+	
+	//PDP Ports
 }

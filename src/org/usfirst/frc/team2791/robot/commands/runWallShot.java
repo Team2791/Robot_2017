@@ -1,4 +1,3 @@
-/*
 package org.usfirst.frc.team2791.robot.commands;
 
 
@@ -30,19 +29,19 @@ public class runWallShot extends Command{
 	@Override
 	protected void execute() {
 		System.out.println("Running a wall shot");
-		Robot.shooter.setShooterSolenoidState(false);
+//		Robot.shooter.setShooterSolenoidState(false);
 		Robot.shooter.prepWallShot();
-		while(Robot.hopper.moreBalls()){
+		/*while(Robot.hopper.moreBalls()){
 			System.out.println("I'm trying to execute hopper run");
 			Robot.hopper.runHopper();
 		}//gets balls right up to before shooter
 		
 		if(Robot.shooter.shooterAtSpeed()){//pushes a ball into the shooter
-			while(Robot.hopper.getDistanceState()){//runs the hopper so the ball can get in but stops before next ball
+			while(Robot.hopper.isBallAtTop()){//runs the hopper so the ball can get in but stops before next ball
 					Robot.hopper.runHopper();
 					System.out.println("ball pushed in");
 			}
-		}
+		}*/
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -67,4 +66,4 @@ public class runWallShot extends Command{
 	protected void interrupted() {
 	}
 }
-*/
+

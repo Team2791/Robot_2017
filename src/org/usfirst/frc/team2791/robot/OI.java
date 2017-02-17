@@ -13,12 +13,9 @@ import org.usfirst.frc.team2791.robot.commands.removeGear;
 import org.usfirst.frc.team2791.robot.commands.resetGear;
 import org.usfirst.frc.team2791.robot.commands.runClimber;
 import org.usfirst.frc.team2791.robot.commands.runHopper;
-import org.usfirst.frc.team2791.robot.commands.runHopperWithJoystick;
-//import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
-//import org.usfirst.frc.team2791.robot.commands.ExampleCommand;
-//import org.usfirst.frc.team2791.shakerJoystick.ShakerOperator;
 import org.usfirst.frc.team2791.robot.commands.runIntake;
 import org.usfirst.frc.team2791.robot.commands.runIntakeBelt;
+//import org.usfirst.frc.team2791.robot.commands.runWallShot;
 import org.usfirst.frc.team2791.robot.commands.stopHopper;
 import org.usfirst.frc.team2791.robot.commands.turnIntakeOff;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
@@ -82,10 +79,10 @@ public class OI {//joystick layout pic with Gaurab
 		
 		if(driver.getButtonA()){}
 		if(driver.getButtonB()){
-			System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+			System.out.println("BBBBB");
 		}
 		if(driver.getButtonX()){
-			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+			System.out.println("XXXXX");
 		}
 		if(driver.getButtonY()){}
 		
@@ -120,7 +117,7 @@ public class OI {//joystick layout pic with Gaurab
 		if(Math.abs(driver.getAxisRightX())>0.0){//right joystick
 		}
 		if(Math.abs(driver.getAxisRightY())>0.0){//check to see if get AxisRightX does trick, otherwise switch to getAxisRightY
-	//		new DriveWithJoystick();
+//			new DriveWithJoystick();
 		}	
 		
 		
@@ -156,7 +153,9 @@ public class OI {//joystick layout pic with Gaurab
 			System.out.println("Operator is turning off fuel intake");
 			new turnIntakeOff();
 		}
-		if(operator.getButtonX()){}
+		if(operator.getButtonX()){
+//			new runWallShot();
+		}
 		if(operator.getButtonY()){
 			System.out.println("Operator is running the climber");
 			new runClimber();
@@ -177,10 +176,10 @@ public class OI {//joystick layout pic with Gaurab
 		if(Math.abs(operator.getAxisLeftX())>0.0){}	
 		if(Math.abs(operator.getAxisLeftY())>0.0){}	
 		
-		if(operator.getAxisLT()>0.0){}
-		if(operator.getAxisRT()>0.0){
-			new runHopperWithJoystick();
+		if(operator.getAxisLT()>0.0){
+			
 		}
+		if(operator.getAxisRT()>0.0){}
 		
 		if(Math.abs(operator.getAxisRightX())>0.0){}
 		if(Math.abs(operator.getAxisRightY())>0.0){}

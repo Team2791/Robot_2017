@@ -1,14 +1,17 @@
-/*
 /** Shooter class for Shaker Robotics' 2017 robot 
 *
 * @author Lukas Velikov
 * @version pre
-*
+*/
 package org.usfirst.frc.team2791.robot.subsystems;
 
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.Util;
+
+import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -19,8 +22,8 @@ public class ShakerShooter extends Subsystem{
 
     protected Encoder shooterEncoder = null;
 
-    private CANTalon leftShooterTalon = null;
-    private CANTalon rightShooterTalon = null;
+    private CANTalon primaryShooterTalon = null;
+    private CANTalon followerShooterTalonA = null;
     //private CANTalon powerShooterTalon = null; //Potential third Talon for extra shooter power
 
     private Solenoid shooterSolenoid;
@@ -32,43 +35,47 @@ public class ShakerShooter extends Subsystem{
     	shooterSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.SHOOTER_CHANNEL);
     	shooterSolenoid.set(false);//default state
     	
-        this.leftShooterTalon = new CANTalon(RobotMap.LEFT_SHOOTER_TALON_PORT);
-        this.rightShooterTalon = new CANTalon(RobotMap.RIGHT_SHOOTER_TALON_PORT);
+        primaryShooterTalon = new CANTalon(RobotMap.LEFT_SHOOTER_TALON_PORT);
+        followerShooterTalonA = new CANTalon(RobotMap.RIGHT_SHOOTER_TALON_PORT);
         //this.powerShooterTalon = new CANTalon(RobotMap.CENTER_SHOOTER_TALON_PORT);
 
-        this.shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER_PORT_A, RobotMap.SHOOTER_ENCODER_PORT_B);
+//        this.shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER_PORT_A, RobotMap.SHOOTER_ENCODER_PORT_B);
 
-        shooterEncoder.reset();
-        shooterEncoder.setDistancePerPulse(Util.tickToFeet(CONSTANTS.SHOOTER_ENCODER_TICKS, CONSTANTS.SHOOTER_WHEEL_DIAMETER));
+//        shooterEncoder.reset();
+//        shooterEncoder.setDistancePerPulse(Util.tickToFeet(CONSTANTS.SHOOTER_ENCODER_TICKS, CONSTANTS.SHOOTER_WHEEL_DIAMETER));
 
-        leftShooterTalon.configPeakOutputVoltage(+12.0f, 0);
-        rightShooterTalon.configPeakOutputVoltage(+12.0f, 0);
+        primaryShooterTalon.configPeakOutputVoltage(+12.0f, 0);
+        followerShooterTalonA.configPeakOutputVoltage(+12.0f, 0);
 
-        SmartDashboard.putNumber("Shooter P", CONSTANTS.SHOOTER_P);
-        SmartDashboard.putNumber("Shooter I", CONSTANTS.SHOOTER_I);
-        SmartDashboard.putNumber("Shooter D", CONSTANTS.SHOOTER_D);
-        SmartDashboard.putNumber("Shooter Feed Forward", CONSTANTS.FEED_FORWARD);
+//        SmartDashboard.putNumber("Shooter P", CONSTANTS.SHOOTER_P);
+//        SmartDashboard.putNumber("Shooter I", CONSTANTS.SHOOTER_I);
+//        SmartDashboard.putNumber("Shooter D", CONSTANTS.SHOOTER_D);
+//        SmartDashboard.putNumber("Shooter Feed Forward", CONSTANTS.FEED_FORWARD);
 
-        leftShooterTalon.setIZone(CONSTANTS.SHOOTER_I_ZONE);
-        rightShooterTalon.setIZone(CONSTANTS.SHOOTER_I_ZONE);
+        primaryShooterTalon.setIZone(CONSTANTS.SHOOTER_I_ZONE);
+        followerShooterTalonA.setIZone(CONSTANTS.SHOOTER_I_ZONE);
         
-        leftShooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-        rightShooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+        primaryShooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+        followerShooterTalonA.setFeedbackDevice(FeedbackDevice.QuadEncoder);
         
-        leftShooterTalon.configEncoderCodesPerRev(CONSTANTS.SHOOTER_ENCODER_TICKS);
-        rightShooterTalon.configEncoderCodesPerRev(CONSTANTS.SHOOTER_ENCODER_TICKS);
+        primaryShooterTalon.configEncoderCodesPerRev(CONSTANTS.SHOOTER_ENCODER_TICKS);
+        followerShooterTalonA.configEncoderCodesPerRev(CONSTANTS.SHOOTER_ENCODER_TICKS);
         
-        leftShooterTalon.changeControlMode(TalonControlMode.Speed);
-        rightShooterTalon.changeControlMode(TalonControlMode.Follower);
+        primaryShooterTalon.changeControlMode(TalonControlMode.Speed);
+        followerShooterTalonA.changeControlMode(TalonControlMode.Follower);
                
-        leftShooterTalon.enableControl();
-        rightShooterTalon.enableControl();
+        primaryShooterTalon.enableControl();
+        followerShooterTalonA.enableControl();
         
-        leftShooterTalon.enable();
-        rightShooterTalon.enable();
+        primaryShooterTalon.enable();
+        followerShooterTalonA.enable();
         
-        leftShooterTalon.configNominalOutputVoltage(0, 0);
-        rightShooterTalon.configNominalOutputVoltage(0, 0);
+        primaryShooterTalon.setP(CONSTANTS.SHOOTER_P);
+        primaryShooterTalon.setI(CONSTANTS.SHOOTER_I);
+        primaryShooterTalon.setD(CONSTANTS.SHOOTER_D);
+        
+        primaryShooterTalon.configNominalOutputVoltage(0, 0);
+        followerShooterTalonA.configNominalOutputVoltage(0, 0);
     }
     public void setShooterSolenoidState(boolean key){
     	shooterSolenoid.set(key);
@@ -79,7 +86,7 @@ public class ShakerShooter extends Subsystem{
     }
     
     public boolean shooterAtSpeed() {
-        double total_error = Math.abs(leftShooterTalon.getError()) + Math.abs(rightShooterTalon.getError());
+        double total_error = Math.abs(primaryShooterTalon.getError()) + Math.abs(followerShooterTalonA.getError());
         return total_error < 200;
     }
 
@@ -87,30 +94,37 @@ public class ShakerShooter extends Subsystem{
 	public void setShooterSpeeds(double targetSpeed, boolean withPID) {
         if (withPID) {
             //If PID is used then we have to switch CANTalons to velocity mode
-            leftShooterTalon.changeControlMode(TalonControlMode.Speed);
-            rightShooterTalon.changeControlMode(TalonControlMode.Follower);
+            primaryShooterTalon.changeControlMode(TalonControlMode.Speed);//percent v bus
+            followerShooterTalonA.changeControlMode(TalonControlMode.Follower);
             
             //Update the PID and FeedForward values
-            leftShooterTalon.setP(SmartDashboard.getNumber("Shooter p"));
-            leftShooterTalon.setI(SmartDashboard.getNumber("Shooter i"));
-            leftShooterTalon.setD(SmartDashboard.getNumber("Shooter d"));
-            rightShooterTalon.setP(SmartDashboard.getNumber("Shooter p"));
-            rightShooterTalon.setI(SmartDashboard.getNumber("Shooter i"));
-            rightShooterTalon.setD(SmartDashboard.getNumber("Shooter d"));
-            leftShooterTalon.setF(SmartDashboard.getNumber("FeedForward"));
-            rightShooterTalon.setF(SmartDashboard.getNumber("FeedForward"));
+            /*
+            primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter p"));
+            primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter i"));
+            primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter d"));
+            followerShooterTalonA.setP(SmartDashboard.getNumber("Shooter p"));
+            followerShooterTalonA.setI(SmartDashboard.getNumber("Shooter i"));
+            followerShooterTalonA.setD(SmartDashboard.getNumber("Shooter d"));
+            primaryShooterTalon.setF(SmartDashboard.getNumber("FeedForward"));
+            followerShooterTalonA.setF(SmartDashboard.getNumber("FeedForward"));
+            */
             
             //Set speeds (IN RPMS)
-            leftShooterTalon.set(targetSpeed);
-            rightShooterTalon.set(targetSpeed);
-
+//            primaryShooterTalon.set(-0.15);
+//            followerShooterTalonA.set(-0.15);
+            
+            primaryShooterTalon.setF(CONSTANTS.SHOOTER_FEED_FORWARD);
+            primaryShooterTalon.setSetpoint(targetSpeed);
+            followerShooterTalonA.set(primaryShooterTalon.getDeviceID());
+            
         } else if (!autoFire && !prepShot) {
             //If shooter is not autofiring or prepping the shot, use inputs given (including 0)
-            leftShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
-            rightShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
-            leftShooterTalon.set(targetSpeed);
-            rightShooterTalon.set(targetSpeed);
+            primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
+            followerShooterTalonA.changeControlMode(TalonControlMode.PercentVbus);
+            primaryShooterTalon.set(targetSpeed);
+            followerShooterTalonA.set(targetSpeed);
         }
+        System.out.println("Coming up to speed and my error is "+primaryShooterTalon.getError());
     }
 
     public void updateSmartDash() {
@@ -119,18 +133,20 @@ public class ShakerShooter extends Subsystem{
     }
 
 	public void debug() {
-    	  SmartDashboard.putNumber("LeftShooterSpeed", leftShooterTalon.getSpeed());
-	      SmartDashboard.putNumber("RightShooterSpeed", rightShooterTalon.getSpeed());
-	      SmartDashboard.putNumber("Left Shooter Error", leftShooterTalon.getClosedLoopError());
-	      SmartDashboard.putNumber("Right Shooter Error", -rightShooterTalon.getClosedLoopError());
+    	  /*
+    	   * SmartDashboard.putNumber("LeftShooterSpeed", primaryShooterTalon.getSpeed());
+    	   
+	      SmartDashboard.putNumber("RightShooterSpeed", followerShooterTalonA.getSpeed());
+	      SmartDashboard.putNumber("Left Shooter Error", primaryShooterTalon.getClosedLoopError());
+	      SmartDashboard.putNumber("Right Shooter Error", -followerShooterTalonA.getClosedLoopError());
 	      SmartDashboard.putString("Current shooter setpoint", getShooterHeight());
-	      SmartDashboard.putNumber("left output voltage", leftShooterTalon.getOutputVoltage());
-	      SmartDashboard.putNumber("left speed", -leftShooterTalon.getEncVelocity());
-	      SmartDashboard.putNumber("right output voltage", rightShooterTalon.getOutputVoltage());
-	      SmartDashboard.putNumber("right speed", rightShooterTalon.getEncVelocity());
-	      SmartDashboard.putNumber("Right error", rightShooterTalon.getError());
-	      SmartDashboard.putNumber("Left error", leftShooterTalon.getError());
-	      
+	      SmartDashboard.putNumber("left output voltage", primaryShooterTalon.getOutputVoltage());
+	      SmartDashboard.putNumber("left speed", -primaryShooterTalon.getEncVelocity());
+	      SmartDashboard.putNumber("right output voltage", followerShooterTalonA.getOutputVoltage());
+	      SmartDashboard.putNumber("right speed", followerShooterTalonA.getEncVelocity());
+	      SmartDashboard.putNumber("Right error", followerShooterTalonA.getError());
+	      SmartDashboard.putNumber("Left error", primaryShooterTalon.getError());
+	      */
 //	      leftShooterTalon.set(SmartDashboard.getNumber("setpoint"));
 //	      rightShooterTalon.set(SmartDashboard.getNumber("setpoint"));
 //	      powerShooterTalon.set(SmartDashboard.getNumber("setpoint"));
@@ -144,20 +160,24 @@ public class ShakerShooter extends Subsystem{
 
 	public void reset() {
         stopMotors();
-        leftShooterTalon.reset();
-        rightShooterTalon.reset();
+        primaryShooterTalon.reset();
+        followerShooterTalonA.reset();
     }
 
     public void stopMotors() { //Set the motors to 0 to stop
-        leftShooterTalon.set(0);
-        rightShooterTalon.set(0);
+        primaryShooterTalon.set(0);
+        followerShooterTalonA.set(0);
     }
 
     public void disable() {
-        stopMotors();
+    	primaryShooterTalon.disableControl();
+        followerShooterTalonA.disableControl();;
         prepShot = false;
         
-        SmartDashboard.putNumber("right speed", rightShooterTalon.getSpeed());
-        SmartDashboard.putNumber("left speed", leftShooterTalon.getSpeed());
+//        SmartDashboard.putNumber("right speed", followerShooterTalonA.getSpeed());
+//        SmartDashboard.putNumber("left speed", primaryShooterTalon.getSpeed());
     }
-}*/
+    public double getCurrentUsage(){
+    	return primaryShooterTalon.getOutputCurrent();
+    }
+}

@@ -23,13 +23,13 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 		
 		intakeSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.INTAKE_CHANNEL);
 		wingSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.WING_CHANNEL);
-		wingSolenoid.set(false);
+		wingSolenoid.set(true);
 		intakeSolenoid.set(false);//all Pistons should be closed (true) at beginning
 		System.out.println("Initiating intake");
 	}
 	
 	public void wingDeployment(){
-		wingSolenoid.set(true);
+		wingSolenoid.set(false);
 	}
 	public void moveIntakeOut(boolean yes){
 		intakeSolenoid.set(yes);
@@ -42,7 +42,7 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 		intakeSpark.setSpeed(0.0);
 	}
 	public void motorOnClimber(){//should be positive
-		intakeSpark.setSpeed(-0.05);
+		intakeSpark.setSpeed(-0.10);
 	}
 	public double getClimberCurrent(){
 		climber_current = Robot.pdp.getCurrent(3);//slot number of climber motor wires
@@ -58,6 +58,9 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 	}
 	public void debug(){
 		SmartDashboard.putNumber("Intake/Climber current usage", getClimberCurrent());
+	}
+	public double getCurrentUsage() {
+		return Robot.pdp.getCurrent(3);
 	}
 }
 
