@@ -4,7 +4,7 @@ import org.usfirst.frc.team2791.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class runIntake extends Command{
+public class runIntake extends Command {
 	public runIntake() {
 		super("runIntake");
 		requires(Robot.intake);// Use requires() here to declare subsystem dependencies
