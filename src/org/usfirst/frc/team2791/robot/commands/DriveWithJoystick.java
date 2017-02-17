@@ -6,8 +6,7 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveWithJoystick extends Command {
-	public DriveWithJoystick() {
-		
+	public DriveWithJoystick() {		
 		super("DriveWithJoystick");
 		requires(Robot.drivetrain);// Use requires() here to declare subsystem dependencies
 		System.out.println("came to constructor");
@@ -24,17 +23,17 @@ public class DriveWithJoystick extends Command {
 		//logic interprets driver Joystick position for motor outputs 
 	    double combinedLeft, combinedRight;
 	    //if we need to change the speed we can change the .35 FIRST and then the /3 ONLY if thats not enough
-	    if(Robot.oi.driver.getButtonRB()){
-		combinedLeft=0.35+Robot.oi.driver.getAxisLeftX()/3;
-		combinedRight=0.35-(double) (Robot.oi.driver.getAxisLeftX())/3.0;
+	    if (Robot.oi.driver.getButtonRB()) {
+			combinedLeft=0.35+Robot.oi.driver.getAxisLeftX()/3;
+			combinedRight=0.35-(double) (Robot.oi.driver.getAxisLeftX())/3.0;
 	    }
-	    else if(Robot.oi.driver.getButtonLB()){
-		combinedLeft=-1*(0.35+Robot.oi.driver.getAxisLeftX()/3);
-		combinedRight=-1*(0.35-Robot.oi.driver.getAxisLeftX()/3);
+	    else if (Robot.oi.driver.getButtonLB()){
+			combinedLeft=-1*(0.35+Robot.oi.driver.getAxisLeftX()/3);
+			combinedRight=-1*(0.35-Robot.oi.driver.getAxisLeftX()/3);
 	    }
-	    else{
-	 	combinedLeft=Robot.oi.driver.getGtaDriveLeft();
-		combinedRight=Robot.oi.driver.getGtaDriveRight();
+	    else {
+		 	combinedLeft=Robot.oi.driver.getGtaDriveLeft();
+			combinedRight=Robot.oi.driver.getGtaDriveRight();
 	    }
 	    Robot.drivetrain.setLeftRightMotorOutputs(combinedLeft,combinedRight);
 	}
