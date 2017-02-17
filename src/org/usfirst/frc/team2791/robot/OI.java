@@ -106,7 +106,7 @@ public class OI {//joystick layout pic with Gaurab
 			System.out.println("getAxisLeftX");
 			new DriveWithJoystick();
 		}	
-		if(Math.abs(driver.getAxisLeftY())>0.0){}	
+		if(Math.abs(driver.getAxisLeftY()) > 0.0){}	
 		
 		if(Math.abs(driver.getAxisLT())>0.0){//left trigger and right triggers
 			new DriveWithJoystick();

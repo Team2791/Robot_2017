@@ -98,7 +98,6 @@ public class ShakerDrivetrain extends Subsystem{
 		movingAnglePID.setIZone(4);
 		gyro = new ShakerGyro(SPI.Port.kOnboardCS1);
 		//	(new Thread(gyro)).start();
-		debug();
 
 	}
 	@SuppressWarnings("deprecation")
@@ -207,7 +206,6 @@ public class ShakerDrivetrain extends Subsystem{
 	//set motor output according to above interpretation
 
 	public void setLeftRightMotorOutputs(double left, double right){
-
 		shakyDrive.setLeftRightMotorOutputs(left, right);
 	}
 
@@ -236,8 +234,17 @@ public class ShakerDrivetrain extends Subsystem{
 		debug();
 	}
 	public void debug() {
-		SmartDashboard.putNumber("Speed:", getAverageVelocity());
-		SmartDashboard.putNumber("Acceleration", getAverageAcceleration());
+		SmartDashboard.putNumber("Left Drive Encoders Rate", leftDriveEncoder.getRate());
+		SmartDashboard.putNumber("Right Drive Encoders Rate", rightDriveEncoder.getRate());
+		SmartDashboard.putNumber("Encoder Angle", getAngleEncoder());
+		SmartDashboard.putNumber("Encoder Angle Rate Change", getEncoderAngleRate());
+		SmartDashboard.putNumber("Angle PID Error", stationaryAnglePID.getError());
+		SmartDashboard.putNumber("Angle PID Output", stationaryAnglePID.getOutput());
+		SmartDashboard.putNumber("Average Encoder Distance", getAverageDist());
+		SmartDashboard.putNumber("Left Encoder Distance", getLeftDistance());
+		SmartDashboard.putNumber("Right Encoder Distance", getRightDistance());
+		SmartDashboard.putNumber("Distance PID output", distancePID.getOutput());
+		SmartDashboard.putNumber("Distance PID error", distancePID.getError());
 		
 	}	
 }

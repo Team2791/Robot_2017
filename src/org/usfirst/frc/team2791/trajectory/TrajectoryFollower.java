@@ -28,11 +28,11 @@ public class TrajectoryFollower {
   }
 
   public void configure(double kp, double ki, double kd, double kv, double ka) {
-    kp_ = kp;
-    ki_ = ki;
-    kd_ = kd;
-    kv_ = kv;
-    ka_ = ka;
+    kp_ = SmartDashboard.getNumber(name+"-kp",kp);
+    ki_ = SmartDashboard.getNumber(name+"-ki",ki);
+    kd_ = SmartDashboard.getNumber(name+"-kd",kd);
+    kv_ = SmartDashboard.getNumber(name+"-kv",kv);
+    ka_ = SmartDashboard.getNumber(name+"-ka",ka);
   }
 
   public void reset() {
@@ -45,7 +45,7 @@ public class TrajectoryFollower {
   }
 
   public double calculate(double distance_so_far) {
-   
+
     if (current_segment < profile_.getNumSegments()) {
       Trajectory.Segment segment = profile_.getSegment(current_segment);
       double error = segment.pos - distance_so_far;
@@ -65,7 +65,7 @@ public class TrajectoryFollower {
     }
   }
 
-  public double getHeading() {
+public double getHeading() {
     return current_heading;
   }
 
@@ -83,30 +83,25 @@ public class TrajectoryFollower {
   
   private void debug(double distance_so_far, double error, double output, Segment segment){
 
-      SmartDashboard.putNumber(name + "FollowerPosSensor", distance_so_far);
-      SmartDashboard.putNumber(name + "FollowerPosGoal", segment.pos);
-      SmartDashboard.putNumber(name + "FollowerPosError", error);
+      SmartDashboard.putNumber(name + " PosSensor", distance_so_far);
+      SmartDashboard.putNumber(name + " PosGoal", segment.pos);
+      SmartDashboard.putNumber(name + " PosError", error);
       
       double currentVelocity =  Robot.drivetrain.getAverageVelocity(); 
       double velocityError=segment.vel-currentVelocity;
       
-      SmartDashboard.putNumber(name + "FollowerVeloSensor", currentVelocity);
-      SmartDashboard.putNumber(name + "FollowerPosGoal", segment.vel);
-      SmartDashboard.putNumber(name + "FollowerPosError", velocityError);
+      
+      SmartDashboard.putNumber(name + " VelSensor", currentVelocity);
+      SmartDashboard.putNumber(name + " VelGoal", segment.vel);
+      SmartDashboard.putNumber(name + " VelError", velocityError);
       
       double currentAcceleration =  Robot.drivetrain.getAverageAcceleration(); 
       double accelerationError=segment.acc-currentAcceleration;
       
-      SmartDashboard.putNumber(name + "FollowerVeloSensor", currentAcceleration);
-      SmartDashboard.putNumber(name + "FollowerPosGoal", segment.acc);
-      SmartDashboard.putNumber(name + "FollowerPosError", accelerationError);
+      SmartDashboard.putNumber(name + " AccSensor", currentAcceleration);
+      SmartDashboard.putNumber(name + " AccGoal", segment.acc);
+      SmartDashboard.putNumber(name + " AccError", accelerationError);
       
-      SmartDashboard.putNumber(name + "kp", kp_);
-      SmartDashboard.putNumber(name + "ki", ki_);
-      SmartDashboard.putNumber(name + "ki", kd_);
-
-      SmartDashboard.putNumber(name + "kv", ka_);
-      SmartDashboard.putNumber(name + "ka", kv_);
 	  
   }
 }

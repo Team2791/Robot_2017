@@ -78,7 +78,16 @@ public class Robot extends IterativeRobot {
 		gearMechanism = new ShakerGear();
 		hopper = new ShakerHopper();
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
+		if(SmartDashboard.getNumber("left-kp", -2791) == -2791){
+			String name = "left";
+			SmartDashboard.putNumber(name+"-kp",0);
+		    SmartDashboard.putNumber(name+"-ki",0);
+		    SmartDashboard.putNumber(name+"-kd",0);
+		    SmartDashboard.putNumber(name+"-kv",0);
+		    SmartDashboard.putNumber(name+"-ka",0);
+		}
 		
+
 		//driveTrainThread = new Thread(drivetrain);
         //driveTrainThread.start();
 		//chooser.addDefault("Default Auto", new ExampleCommand());
@@ -102,6 +111,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		
 	}
 
 	/**

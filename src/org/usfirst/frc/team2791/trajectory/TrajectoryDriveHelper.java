@@ -26,6 +26,7 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
   private void init() {
     followerLeft.configure(1.5, 0, 0, 1.0/15.0, 1.0/34.0);
     followerRight.configure(1.5, 0, 0, 1.0/15.0, 1.0/34.0);
+    
   }
 
   public void loadProfile(Trajectory leftProfile, Trajectory rightProfile, double direction, double heading) {
@@ -64,7 +65,8 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
      else  {
           double speedLeft = getOutputs("left");
           double speedRight = getOutputs("right");
-          double turn =getOutputs("turn");
+          //double turn =getOutputs("turn");
+          double turn=0;
           Robot.drivetrain.setLeftRightMotorOutputs(speedLeft + turn, speedRight -turn);
           //Robot.drivetrain.setLeftRightMotorOutputs(speedLeft + turn, speedRight - turn);
     }
@@ -97,7 +99,7 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
       case "left": return speedLeft;
       case "right": return speedRight;
       case "turn": return turn;
-      default: System.out.println("TrajectoryDrive is sending 0.0 for some reason");
+      default: System.out.println("TrajectoryDrive doesn't know what you want from it");
     	  return 0.0;
       }
 	  
