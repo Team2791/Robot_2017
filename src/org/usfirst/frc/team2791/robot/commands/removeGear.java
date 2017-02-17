@@ -4,7 +4,7 @@ import org.usfirst.frc.team2791.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class removeGear extends Command{
+public class removeGear extends Command {
 	public removeGear() {
 		super("removeGear");
 		requires(Robot.gearMechanism);// Use requires() here to declare subsystem dependencies
@@ -26,9 +26,9 @@ public class removeGear extends Command{
 		return false;
 	}
 
-	protected void end(){	
+	protected void end() {	
 	}
 
-	protected void interrupted(){
+	protected void interrupted() {
 	}
 }
