@@ -21,6 +21,7 @@ public class removeGear extends Command{
 		System.out.println("I'm trying to execute gear removal");
 		Robot.gearMechanism.changeGearSolenoidState(true);
 	}
+	
 	protected boolean isFinished() {
 		return false;
 	}
