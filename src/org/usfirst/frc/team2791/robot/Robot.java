@@ -71,11 +71,11 @@ public class Robot extends IterativeRobot {
 		System.out.println("Starting to init my systems.");
 		gamePeriod = GamePeriod.DISABLED;
 		pdp = new PowerDistributionPanel(); //CAN id has to be 0
-		compressor = new Compressor(RobotMap.PCM_MODULE);
-		compressor.setClosedLoopControl(true);
+		//compressor = new Compressor(RobotMap.PCM_MODULE);
+		//compressor.setClosedLoopControl(true);
 		drivetrain = new ShakerDrivetrain();
-		intake = new ShakerIntake();
-		gearMechanism = new ShakerGear();
+		//intake = new ShakerIntake();
+		//gearMechanism = new ShakerGear();
 		hopper = new ShakerHopper();
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 		if(SmartDashboard.getNumber("left-kp", -2791) == -2791){
@@ -137,7 +137,7 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		intake.wingDeployment();//opens up robot as soon as robot starts
+		//intake.wingDeployment();//opens up robot as soon as robot starts
 		autonomousCommand= new FollowPath(AutoPaths.get("StraightAheadPath"));
 		if (autonomousCommand != null)
 			autonomousCommand.start();
