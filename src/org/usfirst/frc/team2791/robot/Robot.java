@@ -78,9 +78,10 @@ public class Robot extends IterativeRobot {
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
 		hopper = new ShakerHopper();
+//		Thread.sleep(500);
 		shooter = new ShakerShooter();
+//		Thread.sleep(500);
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
-		
 		//driveTrainThread = new Thread(drivetrain);
         //driveTrainThread.start();
 		//chooser.addDefault("Default Auto", new ExampleCommand());
@@ -174,11 +175,11 @@ public class Robot extends IterativeRobot {
 		System.out.println("Shooter current draw: "+shooter.getCurrentUsage());
 		Scheduler.getInstance().run();
 		
-		if(Robot.hopper.moreBalls())
+		/* if(Robot.hopper.moreBalls())
 			Robot.hopper.runHopper();
 		else
 			Robot.hopper.stopHopper();
-		
+		*/
 		oi.checkForAction();
 	}
 

@@ -42,7 +42,7 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 		intakeSpark.setSpeed(0.0);
 	}
 	public void motorOnClimber(){//should be positive
-		intakeSpark.setSpeed(-0.10);
+		intakeSpark.setSpeed(0.10);
 	}
 	public double getClimberCurrent(){
 		climber_current = Robot.pdp.getCurrent(3);//slot number of climber motor wires

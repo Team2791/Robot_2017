@@ -33,6 +33,9 @@ public class ShakerHopper extends Subsystem{
 	public void runHopper(){
 		hopperSpark.set(-0.66);
 	}
+	public void setHopperSpeed(double speed){
+		hopperSpark.set(speed);
+	}
 	public void stopHopper(){
 		hopperSpark.set(0.0);
 	}

@@ -9,12 +9,14 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
 import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
+import org.usfirst.frc.team2791.robot.commands.ShootWithJoystick;
 import org.usfirst.frc.team2791.robot.commands.removeGear;
 import org.usfirst.frc.team2791.robot.commands.resetGear;
 import org.usfirst.frc.team2791.robot.commands.runClimber;
 import org.usfirst.frc.team2791.robot.commands.runHopper;
 import org.usfirst.frc.team2791.robot.commands.runIntake;
 import org.usfirst.frc.team2791.robot.commands.runIntakeBelt;
+import org.usfirst.frc.team2791.robot.commands.runWallShot;
 //import org.usfirst.frc.team2791.robot.commands.runWallShot;
 import org.usfirst.frc.team2791.robot.commands.stopHopper;
 import org.usfirst.frc.team2791.robot.commands.turnIntakeOff;
@@ -29,7 +31,7 @@ public class OI {//joystick layout pic with Gaurab
 	public static ShakerOperator operator;
 	public OI(){
 		System.out.println("OIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOI");
-		driver = new ShakerDriver();
+		driver = new ShakerDriver();///increase driver control expiration to 0.5
 		operator = new ShakerOperator();
 		//if(driver.getXVal()){}
 	//	if(driver.getYVal()){}
@@ -154,7 +156,7 @@ public class OI {//joystick layout pic with Gaurab
 			new turnIntakeOff();
 		}
 		if(operator.getButtonX()){
-//			new runWallShot();
+			new runWallShot();
 		}
 		if(operator.getButtonY()){
 			System.out.println("Operator is running the climber");
@@ -177,7 +179,7 @@ public class OI {//joystick layout pic with Gaurab
 		if(Math.abs(operator.getAxisLeftY())>0.0){}	
 		
 		if(operator.getAxisLT()>0.0){
-			
+			new ShootWithJoystick();
 		}
 		if(operator.getAxisRT()>0.0){}
 		

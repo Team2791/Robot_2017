@@ -61,8 +61,8 @@ public class ShakerShooter extends Subsystem{
         primaryShooterTalon.configEncoderCodesPerRev(CONSTANTS.SHOOTER_ENCODER_TICKS);
         followerShooterTalonA.configEncoderCodesPerRev(CONSTANTS.SHOOTER_ENCODER_TICKS);
         
-        primaryShooterTalon.changeControlMode(TalonControlMode.Speed);
-        followerShooterTalonA.changeControlMode(TalonControlMode.Follower);
+        primaryShooterTalon.changeControlMode(TalonControlMode.Speed);//thread.sleep for half a second
+        followerShooterTalonA.changeControlMode(TalonControlMode.Speed);//should be follower
                
         primaryShooterTalon.enableControl();
         followerShooterTalonA.enableControl();
@@ -70,9 +70,9 @@ public class ShakerShooter extends Subsystem{
         primaryShooterTalon.enable();
         followerShooterTalonA.enable();
         
-        primaryShooterTalon.setP(CONSTANTS.SHOOTER_P);
-        primaryShooterTalon.setI(CONSTANTS.SHOOTER_I);
-        primaryShooterTalon.setD(CONSTANTS.SHOOTER_D);
+//        primaryShooterTalon.setP(CONSTANTS.SHOOTER_P);
+//        primaryShooterTalon.setI(CONSTANTS.SHOOTER_I);
+//        primaryShooterTalon.setD(CONSTANTS.SHOOTER_D);
         
         primaryShooterTalon.configNominalOutputVoltage(0, 0);
         followerShooterTalonA.configNominalOutputVoltage(0, 0);
@@ -94,8 +94,8 @@ public class ShakerShooter extends Subsystem{
 	public void setShooterSpeeds(double targetSpeed, boolean withPID) {
         if (withPID) {
             //If PID is used then we have to switch CANTalons to velocity mode
-            primaryShooterTalon.changeControlMode(TalonControlMode.Speed);//percent v bus
-            followerShooterTalonA.changeControlMode(TalonControlMode.Follower);
+            primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);//percent v bus
+            followerShooterTalonA.changeControlMode(TalonControlMode.PercentVbus);
             
             //Update the PID and FeedForward values
             /*
@@ -110,12 +110,12 @@ public class ShakerShooter extends Subsystem{
             */
             
             //Set speeds (IN RPMS)
-//            primaryShooterTalon.set(-0.15);
-//            followerShooterTalonA.set(-0.15);
+            primaryShooterTalon.set(-0.8);
+            followerShooterTalonA.set(-0.80);
             
-            primaryShooterTalon.setF(CONSTANTS.SHOOTER_FEED_FORWARD);
-            primaryShooterTalon.setSetpoint(targetSpeed);
-            followerShooterTalonA.set(primaryShooterTalon.getDeviceID());
+//            primaryShooterTalon.setF(CONSTANTS.SHOOTER_FEED_FORWARD);
+//            primaryShooterTalon.setSetpoint(targetSpeed);
+//            followerShooterTalonA.set(primaryShooterTalon.getDeviceID());
             
         } else if (!autoFire && !prepShot) {
             //If shooter is not autofiring or prepping the shot, use inputs given (including 0)
@@ -180,4 +180,12 @@ public class ShakerShooter extends Subsystem{
     public double getCurrentUsage(){
     	return primaryShooterTalon.getOutputCurrent();
     }
+	public void setTrigger(double combinedLeft) {
+		// TODO Auto-generated method stub
+		primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);//percent v bus
+        followerShooterTalonA.changeControlMode(TalonControlMode.PercentVbus);
+		
+        primaryShooterTalon.set(combinedLeft);
+        followerShooterTalonA.set(combinedLeft);
+	}
 }

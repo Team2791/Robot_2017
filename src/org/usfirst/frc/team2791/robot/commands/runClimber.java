@@ -31,5 +31,6 @@ public class runClimber extends Command{
 		Robot.intake.stopMotor();
 	}
 	protected void interrupted(){
+		new turnIntakeOff();
 	}
 }

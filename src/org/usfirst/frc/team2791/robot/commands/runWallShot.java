@@ -29,9 +29,31 @@ public class runWallShot extends Command{
 	@Override
 	protected void execute() {
 		System.out.println("Running a wall shot");
-//		Robot.shooter.setShooterSolenoidState(false);
+		
+		while(Robot.hopper.moreBalls()){
+			System.out.println("Running hopper");
+			Robot.hopper.runHopper();
+		}
+		Robot.hopper.stopHopper();
+		System.out.println("Stopping hopper");
+		
 		Robot.shooter.prepWallShot();
-		/*while(Robot.hopper.moreBalls()){
+		System.out.println("Prepping speed");
+//		if(Robot.shooter.shooterAtSpeed()){
+			while(Robot.hopper.isBallAtTop()){
+				Robot.hopper.setHopperSpeed(-0.50);
+				System.out.println("feeding ball");
+			}
+//			Robot.hopper.stopHopper();
+			System.out.println("stopping hopper");
+//		}
+		if(Robot.hopper.moreBalls())
+			Robot.shooter.stopMotors();
+		System.out.println("stopping shooter");
+//		end();
+//		Robot.shooter.setShooterSolenoidState(false);
+		/*Robot.shooter.prepWallShot();
+		while(Robot.hopper.moreBalls()){
 			System.out.println("I'm trying to execute hopper run");
 			Robot.hopper.runHopper();
 		}//gets balls right up to before shooter
@@ -41,22 +63,19 @@ public class runWallShot extends Command{
 					Robot.hopper.runHopper();
 					System.out.println("ball pushed in");
 			}
-		}*/
+		}
+		Robot.shooter.disable();*/
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		System.out.println("I just shot....Woohoo!");
-		if(Robot.oi.operator.getButtonX() == false)
-			return true;
 		return false;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.hopper.stopHopper();
 		Robot.shooter.disable();
 	}
 
@@ -64,6 +83,7 @@ public class runWallShot extends Command{
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		new stopHopper();
 	}
 }
 
