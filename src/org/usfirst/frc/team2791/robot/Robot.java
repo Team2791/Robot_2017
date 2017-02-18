@@ -33,12 +33,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2791.robot.Robot.GamePeriod;
 import org.usfirst.frc.team2791.robot.commands.FollowPath;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
-import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
-import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
+//import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
+//import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
 //import org.usfirst.frc.team2791.robot.commands.ExampleCommand;
 //import org.usfirst.frc.team2791.robot.subsystems.ExampleSubsystem;
 //import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
-import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
+//import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 import org.usfirst.frc.team2791.trajectory.AutoPaths;
 
 /**
@@ -53,11 +53,11 @@ public class Robot extends IterativeRobot {
 //	public Thread driveTrainThread;
 	public static GamePeriod gamePeriod;
 	public static PowerDistributionPanel pdp; //CAN ID has to be 0 for current sensing
-	public static ShakerIntake intake;
-	public static ShakerGear gearMechanism;
-	public static Compressor compressor;
+//	public static ShakerIntake intake;
+//	public static ShakerGear gearMechanism;
+//	public static Compressor compressor;
 	public static ShakerDrivetrain drivetrain;
-	public static ShakerHopper hopper;
+//	public static ShakerHopper hopper;
 	
 	Command autonomousCommand;
 	//SendableChooser<Command> chooser = new SendableChooser<>();
@@ -76,15 +76,14 @@ public class Robot extends IterativeRobot {
 		drivetrain = new ShakerDrivetrain();
 		//intake = new ShakerIntake();
 		//gearMechanism = new ShakerGear();
-		hopper = new ShakerHopper();
+//		hopper = new ShakerHopper();
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
-		if(SmartDashboard.getNumber("left-kp", -2791) == -2791){
-			String name = "left";
-			SmartDashboard.putNumber(name+"-kp",0);
-		    SmartDashboard.putNumber(name+"-ki",0);
-		    SmartDashboard.putNumber(name+"-kd",0);
-		    SmartDashboard.putNumber(name+"-kv",0);
-		    SmartDashboard.putNumber(name+"-ka",0);
+		if(SmartDashboard.getNumber("kp", -2791) == -2791){
+			SmartDashboard.putNumber("kp",0);
+		    SmartDashboard.putNumber("ki",0);
+		    SmartDashboard.putNumber("kd",0);
+		    SmartDashboard.putNumber("kv",.0666);
+		    SmartDashboard.putNumber("ka",.0297);
 		}
 		
 
@@ -162,9 +161,9 @@ public class Robot extends IterativeRobot {
 		//if (autonomousCommand != null)
 			//autonomousCommand.cancel();
 			gamePeriod = GamePeriod.TELEOP;
-			gearMechanism.changeGearSolenoidState(false);//makes it stay up when it turns on; just initiating it as up in the subsystem isn't working
-			intake.moveIntakeOut(false);
-			intake.wingDeployment();
+//			gearMechanism.changeGearSolenoidState(false);//makes it stay up when it turns on; just initiating it as up in the subsystem isn't working
+//			intake.moveIntakeOut(false);
+//			intake.wingDeployment();
 	}
 
 	/**
@@ -172,7 +171,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
+//		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
 //		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
 		Scheduler.getInstance().run();
 		oi.checkForAction();

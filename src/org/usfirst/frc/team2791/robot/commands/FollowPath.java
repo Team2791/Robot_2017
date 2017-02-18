@@ -8,6 +8,9 @@ import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.trajectory.Path;
 import org.usfirst.frc.team2791.trajectory.TrajectoryDriveHelper;
 
+/*
+ * @author unbun
+ */
 public class FollowPath extends Command {
 	protected TrajectoryDriveHelper trajHelper;
 

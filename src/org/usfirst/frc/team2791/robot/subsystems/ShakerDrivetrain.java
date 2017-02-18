@@ -50,10 +50,14 @@ public class ShakerDrivetrain extends Subsystem{
 	protected double angleTimePIDGoodTime = 0;
 
 	protected double previousRate = 0;
-	protected double previousRateTime = 0;
-	protected double currentRate = 0;
-	protected double currentTime = 0;
-
+	protected double previousTime = 0;
+	
+	protected double previousLeftRate = 0;
+	protected double previousLeftTime = 0;
+	
+	protected double previousRightRate = 0;
+	protected double previousRightTime = 0;
+	
 	protected double angleTarget = 0.0;
 	protected double turnPIDMaxOutput = 0.5;
 	protected boolean PIDAtTarget = false;
@@ -69,9 +73,11 @@ public class ShakerDrivetrain extends Subsystem{
 		this.rightSparkA = new Talon(RobotMap.DRIVE_TALON_RIGHT_PORT);
 
 
-		this.leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
-		this.rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
-
+		this.leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_B, RobotMap.LEFT_DRIVE_ENCODER_PORT_A);
+		this.rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_B,RobotMap.RIGHT_DRIVE_ENCODER_PORT_A);
+		
+//		this.leftDriveEncoder.setReverseDirection(true);
+//		this.rightDriveEncoder.setReverseDirection(true);
 		// use the talons to create a roboDrive (it has methods that allow for easier control)
 		this.shakyDrive = new RobotDrive(rightSparkA, leftSparkA);
 		//robotDrive = new RobotDrive(leftTalonA, leftTalonB, rightTalonA, rightTalonB);
@@ -81,8 +87,8 @@ public class ShakerDrivetrain extends Subsystem{
 		leftDriveEncoder.reset();
 		rightDriveEncoder.reset();
 
-		leftDriveEncoder.setDistancePerPulse(Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
-		rightDriveEncoder.setDistancePerPulse(-Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
+		leftDriveEncoder.setDistancePerPulse(Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER_IN_FEET)); 
+		rightDriveEncoder.setDistancePerPulse(-Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER_IN_FEET)); 
 
 		movingAnglePID = new BasicPID(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
 		distancePID = new BasicPID(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);
@@ -122,23 +128,47 @@ public class ShakerDrivetrain extends Subsystem{
 	}
 
 	public double getAverageAcceleration() {
-		double acceleration = -1.1;
-		acceleration = currentRate - previousRate;
-		acceleration /= (currentTime - previousRateTime);
+		double currentRate = getAverageVelocity();
+		double currentTime = Timer.getFPGATimestamp();
+		double acceleration = (currentRate - previousRate) /
+				(currentTime - previousRightTime);
+		
 		previousRate = currentRate;
-		previousRateTime = currentTime;
-		currentRate = getAverageVelocity();
-		currentTime = Timer.getFPGATimestamp();
+		previousRightTime = currentTime;
 		return acceleration;
 	}
 
+	public double getLeftAcceleration(){
+		double currentLeftRate = getLeftVelocity();
+		double currentLeftTime = Timer.getFPGATimestamp();
+		
+		System.out.println("TIME:"+previousLeftTime+"\t"+currentLeftTime+ "\tRATE:"+previousLeftRate+"\t"+currentLeftRate);
+		double acceleration = (currentLeftRate - previousLeftRate) /
+				(currentLeftTime - previousLeftTime);
+		
+		previousLeftRate = currentLeftRate;
+		previousLeftTime = currentLeftTime;
+		return acceleration;
+	}
+	
+	public double getRightAcceleration(){
+		double currentRightRate = getRightVelocity();
+		double currentRightTime = Timer.getFPGATimestamp();
+		double acceleration = (currentRightRate - previousRightRate) /
+				(currentRightTime - previousRightTime);
+		
+		previousRightRate = currentRightRate;
+		previousRightTime = currentRightTime;
+		return acceleration;
+	}
+	
 	public void reset() {
 		this.disable();
 		this.rightDriveEncoder.reset();
 		this.leftDriveEncoder.reset();
 	}
 	public double getRightDistance() {
-		// distance of right encoder
+		// distance of right encoder\
 		return rightDriveEncoder.getDistance();
 	}
 
@@ -206,6 +236,8 @@ public class ShakerDrivetrain extends Subsystem{
 	//set motor output according to above interpretation
 
 	public void setLeftRightMotorOutputs(double left, double right){
+		SmartDashboard.putNumber("Velocity", getAverageVelocity());
+		SmartDashboard.putNumber("Acceleration", getAverageAcceleration());
 		shakyDrive.setLeftRightMotorOutputs(left, right);
 	}
 
@@ -215,11 +247,11 @@ public class ShakerDrivetrain extends Subsystem{
 		shakyDrive.setLeftRightMotorOutputs(0.0, 0.0);
 	}
 
-	public static void shakerDriveInchesPerSecond(double left_vel, double right_vel){
-		// this is a total guess
-		System.out.println("I am sending ShakyDrive some outputs");
-		shakyDrive.setLeftRightMotorOutputs(left_vel / CONSTANTS.kPathFollowingMaxVel, right_vel / CONSTANTS.kPathFollowingMaxVel);
-	}
+//	public static void shakerDriveInchesPerSecond(double left_vel, double right_vel){
+//		// this is a total guess
+//		System.out.println("I am sending ShakyDrive some outputs");
+//		shakyDrive.setLeftRightMotorOutputs(left_vel / CONSTANTS.kPathFollowingMaxVel, right_vel / CONSTANTS.kPathFollowingMaxVel);
+//	}
 
 	public double getGyroAngleInRadians(){
 		return gyro.getAngle();
@@ -231,22 +263,12 @@ public class ShakerDrivetrain extends Subsystem{
 	}
 	@SuppressWarnings("deprecation")
 	public void updateSmartDash() {
-		debug();
-	}
-	public void debug() {
-		SmartDashboard.putNumber("Left Drive Encoders Rate", leftDriveEncoder.getRate());
-		SmartDashboard.putNumber("Right Drive Encoders Rate", rightDriveEncoder.getRate());
-		SmartDashboard.putNumber("Encoder Angle", getAngleEncoder());
-		SmartDashboard.putNumber("Encoder Angle Rate Change", getEncoderAngleRate());
-		SmartDashboard.putNumber("Angle PID Error", stationaryAnglePID.getError());
-		SmartDashboard.putNumber("Angle PID Output", stationaryAnglePID.getOutput());
-		SmartDashboard.putNumber("Average Encoder Distance", getAverageDist());
-		SmartDashboard.putNumber("Left Encoder Distance", getLeftDistance());
-		SmartDashboard.putNumber("Right Encoder Distance", getRightDistance());
-		SmartDashboard.putNumber("Distance PID output", distancePID.getOutput());
-		SmartDashboard.putNumber("Distance PID error", distancePID.getError());
-		
+		driveDebug();
+		return;
 	}	
+	public void driveDebug(){
+		
+	}
 }
 
 

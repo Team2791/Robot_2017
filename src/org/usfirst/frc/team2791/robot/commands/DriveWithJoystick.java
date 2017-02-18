@@ -24,17 +24,18 @@ public class DriveWithJoystick extends Command {
 		//logic interprets driver Joystick position for motor outputs 
 	    double combinedLeft, combinedRight;
 	    //if we need to change the speed we can change the .35 FIRST and then the /3 ONLY if thats not enough
+	    double turn=(double)(Robot.oi.driver.getAxisLeftX())/3.0;
 	    if(Robot.oi.driver.getButtonRB()){
-		combinedLeft=0.35+Robot.oi.driver.getAxisLeftX()/3;
-		combinedRight=0.35-(double) (Robot.oi.driver.getAxisLeftX())/3.0;
+		combinedLeft=0.35-turn;
+		combinedRight=0.35+turn;
 	    }
 	    else if(Robot.oi.driver.getButtonLB()){
-		combinedLeft=-1*(0.35+Robot.oi.driver.getAxisLeftX()/3);
-		combinedRight=-1*(0.35-Robot.oi.driver.getAxisLeftX()/3);
+		combinedLeft=-1*(0.35+turn);
+		combinedRight=-1*(0.35-turn);
 	    }
 	    else{
-	 	combinedLeft=Robot.oi.driver.getGtaDriveLeft();
-		combinedRight=Robot.oi.driver.getGtaDriveRight();
+	 	combinedRight=Robot.oi.driver.getGtaDriveLeft();
+		combinedLeft=Robot.oi.driver.getGtaDriveRight();
 	    }
 	    Robot.drivetrain.setLeftRightMotorOutputs(combinedLeft,combinedRight);
 	}

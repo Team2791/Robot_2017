@@ -24,7 +24,6 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
   }
 
   private void init() {
-	  
     followerLeft.configure(1.5, 0, 0, 1.0/15.0, 1.0/34.0);
     followerRight.configure(1.5, 0, 0, 1.0/15.0, 1.0/34.0);
     
@@ -66,8 +65,8 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
      else  {
           double speedLeft = getOutputs("left");
           double speedRight = getOutputs("right");
-          //double turn =getOutputs("turn");
-          double turn=0;
+          double turn =getOutputs("turn");
+          //double turn=0;
           Robot.drivetrain.setLeftRightMotorOutputs(speedLeft + turn, speedRight -turn);
           //Robot.drivetrain.setLeftRightMotorOutputs(speedLeft + turn, speedRight - turn);
     }

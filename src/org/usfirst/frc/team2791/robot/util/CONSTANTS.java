@@ -3,10 +3,11 @@ package org.usfirst.frc.team2791.robot.util;
 //import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 /**
- * Created by Gaurab on 1/12/2017.
- * Adapted from Akhil (2016).
+ *
  * This class holds all important ports and constants that are used throughout the code
  * This is rarely changed, only when ports are switched or pid's are re-tuned
+ * @author unbun
+ * @author Akhil Jacobs
  */
 public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 
@@ -15,7 +16,8 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	
 	public static double driveEncoderTicks = 128;
 	
-	public static final double WHEEL_DIAMETER = 4.0;
+	public static final double WHEEL_DIAMETER = 7.35;
+	public static final double WHEEL_DIAMETER_IN_FEET = 7.35/ 12.0;
 
 	// 2016 Constants = can be changed as needed
 	// PID VALUES
@@ -37,7 +39,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
     public static double kPathFollowingLookahead = 24.0; // inches
     public static double kPathFollowingMaxVel = 120.0; // inches/sec
     public static double kPathFollowingMaxAccel = 80.0; // inches/sec^2
-    public static double kLooperDt = 0.01;
+    public static double kLooperDt = 0.02;
     
     public static double kTrackScrubFactor = 0.5;
 
