@@ -233,6 +233,16 @@ public class ShakerDrivetrain extends Subsystem{
     public void setLeftRightMotorOutputs(double left, double right){
     	shakyDrive.setLeftRightMotorOutputs(left, right);
     }
+	public double getCurrentUsage() {
+		double totalCurrent = 0.0;
+		for(int i=0; i<=2; i++){
+			totalCurrent += Robot.pdp.getCurrent(i);
+		}
+		for(int i=13; i<=15; i++){
+			totalCurrent += Robot.pdp.getCurrent(i);
+		}
+		return totalCurrent;
+	}
 	
     //don't need any of this stuff below b/c of the interpreter
     /*

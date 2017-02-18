@@ -169,7 +169,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
-//		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
+		SmartDashboard.putNumber("Drivetrain current", drivetrain.getCurrentUsage());
+		System.out.println("Drivetrain total Current: "+drivetrain.getCurrentUsage());
 		System.out.println("Hopper current draw: "+hopper.getCurrentUsage());
 		System.out.println("Intake current draw: "+intake.getCurrentUsage());
 		System.out.println("Shooter current draw: "+shooter.getCurrentUsage());

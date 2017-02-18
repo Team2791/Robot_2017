@@ -31,6 +31,9 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 	public void wingDeployment(){
 		wingSolenoid.set(false);
 	}
+	public void climberUndeploy(){
+		wingSolenoid.set(true);
+	}
 	public void moveIntakeOut(boolean yes){
 		intakeSolenoid.set(yes);
 		System.out.print("The intake moved");
