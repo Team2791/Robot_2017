@@ -1,8 +1,6 @@
 package org.usfirst.frc.team2791.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-//import edu.wpi.first.wpilibj.buttons.Button;
-//import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -12,9 +10,6 @@ import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team2791.robot.commands.removeGear;
 import org.usfirst.frc.team2791.robot.commands.resetGear;
 import org.usfirst.frc.team2791.robot.commands.runClimber;
-//import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
-//import org.usfirst.frc.team2791.robot.commands.ExampleCommand;
-//import org.usfirst.frc.team2791.shakerJoystick.ShakerOperator;
 import org.usfirst.frc.team2791.robot.commands.runIntake;
 import org.usfirst.frc.team2791.robot.commands.runIntakeBelt;
 import org.usfirst.frc.team2791.robot.commands.turnIntakeOff;
@@ -31,14 +26,14 @@ public class OI {//joystick layout pic with Gaurab
 		System.out.println("OIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOI");
 		driver = new ShakerDriver();
 		operator = new ShakerOperator();
-		//if(driver.getXVal()){}
-	//	if(driver.getYVal()){}
+		// if(driver.getXVal()){}
+		// if(driver.getYVal()){}
 		
 		//Button driveForward = new JoystickButton(driver, 3);
 		
 		//driveForward.whileHeld(new DriveWithJoystick());
 		
-		
+	}	
 
 	/* Note: We're doing it our own way since we wrote an Overridden Joystick class
 	 * 
@@ -66,7 +61,7 @@ public class OI {//joystick layout pic with Gaurab
 	Start the command when the button is released and let it run the command
  	until it is finished as determined by it's isFinished method.
  	button.whenReleased(new ExampleCommand()); */
-}
+
 	public void checkForAction(){
 		if(driver.getDpadUp()){}
 		if(driver.getDpadUpRight()){}
@@ -176,7 +171,7 @@ public class OI {//joystick layout pic with Gaurab
 		if(Math.abs(operator.getAxisRightX())>0.0){}
 		if(Math.abs(operator.getAxisRightY())>0.0){}
 	}
-	}
+}
 	
 
 
