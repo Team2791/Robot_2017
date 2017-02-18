@@ -17,6 +17,7 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 	private Solenoid intakeSolenoid;
 	public Solenoid wingSolenoid;
 	
+	private final double BALLS_IN_POWER = -0.666;
 	public void initDefaultCommand(){
 
 		this.intakeSpark = new Talon(RobotMap.INTAKE_SPARK_PORT);
@@ -39,7 +40,7 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 		System.out.print("The intake moved");
 	}
 	public void motorOnIntake(){//negative is proper direction
-		intakeSpark.setSpeed(-0.66);
+		intakeSpark.setSpeed(BALLS_IN_POWER);
 	}
 	public void motorOffIntake(){
 		intakeSpark.setSpeed(0.0);
