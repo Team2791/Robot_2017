@@ -110,8 +110,18 @@ public class ShakerShooter extends Subsystem{
             */
             
             //Set speeds (IN RPMS)
-            primaryShooterTalon.set(-0.8);
-            followerShooterTalonA.set(-0.80);
+            primaryShooterTalon.setP(CONSTANTS.SHOOTER_P);
+            primaryShooterTalon.setI(CONSTANTS.SHOOTER_I);
+            primaryShooterTalon.setD(CONSTANTS.SHOOTER_D);
+            primaryShooterTalon.setF(CONSTANTS.SHOOTER_FEED_FORWARD);
+            
+            followerShooterTalonA.setP(CONSTANTS.SHOOTER_P);
+            followerShooterTalonA.setI(CONSTANTS.SHOOTER_I);
+            followerShooterTalonA.setD(CONSTANTS.SHOOTER_D);
+            followerShooterTalonA.setF(CONSTANTS.SHOOTER_FEED_FORWARD);
+            
+            primaryShooterTalon.set(CONSTANTS.SHOOTER_SET_POINT);
+            followerShooterTalonA.set(CONSTANTS.SHOOTER_SET_POINT);
             
 //            primaryShooterTalon.setF(CONSTANTS.SHOOTER_FEED_FORWARD);
 //            primaryShooterTalon.setSetpoint(targetSpeed);
@@ -187,5 +197,9 @@ public class ShakerShooter extends Subsystem{
 		
         primaryShooterTalon.set(combinedLeft);
         followerShooterTalonA.set(combinedLeft);
+	}
+	public double getError() {
+		// TODO Auto-generated method stub
+		return primaryShooterTalon.getError();
 	}
 }

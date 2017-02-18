@@ -64,7 +64,7 @@ public class ShakerDrivetrain extends Subsystem{
 	    this.rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
 	    
 	    // use the talons to create a roboDrive (it has methods that allow for easier control)
-	    this.shakyDrive = new RobotDrive(rightSpark, leftSpark);
+	    this.shakyDrive = new RobotDrive(rightSpark,leftSpark);
 	    
 	    // stop all motors right away just in case
 	    shakyDrive.stopMotor();

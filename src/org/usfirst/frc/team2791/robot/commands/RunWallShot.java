@@ -41,7 +41,7 @@ public class RunWallShot extends Command{
 		System.out.println("Prepping speed");
 //		if(Robot.shooter.shooterAtSpeed()){
 			while(Robot.hopper.isBallAtTop()){
-				Robot.hopper.setHopperSpeed(-0.50);
+				Robot.hopper.setHopperSpeed(-1.0);
 				System.out.println("feeding ball");
 			}
 //			Robot.hopper.stopHopper();
