@@ -6,6 +6,9 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveWithJoystick extends Command {
+	
+	private double speedMultiplier = .5;
+	
 	public DriveWithJoystick() {
 		
 		super("DriveWithJoystick");
@@ -36,7 +39,7 @@ public class DriveWithJoystick extends Command {
 	 	combinedLeft=Robot.oi.driver.getGtaDriveLeft();
 		combinedRight=Robot.oi.driver.getGtaDriveRight();
 	    }
-	    Robot.drivetrain.setLeftRightMotorOutputs(combinedLeft,combinedRight);
+	    Robot.drivetrain.setLeftRightMotorOutputs(speedMultiplier*combinedLeft,speedMultiplier*combinedRight);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

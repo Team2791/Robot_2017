@@ -10,26 +10,25 @@ public class RunClimber extends Command{
 		super("RunClimber");
 		requires(Robot.intake);// Use requires() here to declare subsystem dependencies
 		System.out.println("came to constructor of climber");
-		initialize();
 	}
 	protected void initialize(){
 		System.out.println("came to initialize of climber");
-		execute();
 	}
 	protected void execute(){
 		System.out.println("I'm trying to execute climbing");
-		Robot.intake.wingDeployment();
+		Robot.intake.engageRatchetWing();
 		Robot.intake.motorOnClimber();
 	}
 	protected boolean isFinished(){
-		if(Robot.intake.stopMotor())
-			return true;
 		return false;
 	}
 	protected void end(){
-		Robot.intake.stopMotor();
+//		Robot.intake.stopMotor();
+		Robot.intake.motorOffIntake();
 	}
 	protected void interrupted(){
-		new TurnIntakeOff();
+//		new TurnIntakeOff();
+		Robot.intake.motorOffIntake();
+
 	}
 }

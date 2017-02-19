@@ -34,6 +34,9 @@ public class OI {//joystick layout pic with Gaurab
 		System.out.println("OIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOI");
 		driver = new ShakerDriver();///increase driver control expiration to 0.5
 		operator = new ShakerOperator();
+		
+		new JoystickButton(driver, 4).whileHeld(new RunClimber()); 
+
 		//if(driver.getXVal()){}
 	//	if(driver.getYVal()){}
 		
@@ -87,7 +90,10 @@ public class OI {//joystick layout pic with Gaurab
 		if(driver.getButtonX()){
 			System.out.println("XXXXX");
 		}
-		if(driver.getButtonY()){}
+		if(driver.getButtonY()){
+//			System.out.println("Driver is running the climber");
+			// new RunClimber();
+		}
 		
 		if(driver.getButtonLB()){
 			new DriveWithJoystick();
@@ -160,8 +166,6 @@ public class OI {//joystick layout pic with Gaurab
 			new RunWallShot();
 		}
 		if(operator.getButtonY()){
-			System.out.println("Operator is running the climber");
-			new RunClimber();
 		}
 		
 		if(operator.getButtonLB()){}

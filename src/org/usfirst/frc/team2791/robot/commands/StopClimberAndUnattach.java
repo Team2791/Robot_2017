@@ -17,16 +17,14 @@ public class StopClimberAndUnattach extends Command{
 		execute();
 	}
 	protected void execute(){
-		Robot.intake.climberUndeploy();
+		Robot.intake.disengageRatchetWing();
 		Robot.intake.motorOffIntake();
 	}
 	protected boolean isFinished(){
-		if(Robot.intake.stopMotor())
-			return true;
 		return false;
 	}
 	protected void end(){
-		Robot.intake.stopMotor();
+		Robot.intake.motorOffIntake();
 	}
 	protected void interrupted(){
 		new TurnIntakeOff();

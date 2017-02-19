@@ -10,58 +10,67 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShakerIntake extends Subsystem{ //code for intake and climber
-	public Talon intakeSpark;
-	
-	private double climber_current;
-	
-	private Solenoid intakeSolenoid;
-	public Solenoid wingSolenoid;
-	
 	private final double BALLS_IN_POWER = -0.666;
-	public void initDefaultCommand(){
+	private final double CLIMBING_VBUS = 0.5;
 
-		this.intakeSpark = new Talon(RobotMap.INTAKE_SPARK_PORT);
-		
-		intakeSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.INTAKE_CHANNEL);
-		wingSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.WING_CHANNEL);
-		wingSolenoid.set(true);
+	public Talon intakeSpark;
+	private Solenoid intakeSolenoid;
+	public Solenoid ratchetWingSolenoid;
+
+	public ShakerIntake(){
+		intakeSpark = new Talon(RobotMap.INTAKE_SPARK_PORT);
+
+		intakeSolenoid = new Solenoid(RobotMap.PCM_MODULE, RobotMap.INTAKE_CHANNEL);
+		ratchetWingSolenoid = new Solenoid(RobotMap.PCM_MODULE, RobotMap.WING_CHANNEL);
+		//		wingSolenoid.set(true);
 		intakeSolenoid.set(false);//all Pistons should be closed (true) at beginning
+	}
+
+	public void initDefaultCommand(){
 		System.out.println("Initiating intake");
 	}
 	
-	public void wingDeployment(){
-		wingSolenoid.set(false);
+	public void engageRatchetWing(){
+		ratchetWingSolenoid.set(false);
 	}
-	public void climberUndeploy(){
-		wingSolenoid.set(true);
+	
+	public void disengageRatchetWing(){
+		ratchetWingSolenoid.set(true);
 	}
 	public void moveIntakeOut(boolean yes){
 		intakeSolenoid.set(yes);
-		System.out.print("The intake moved");
+		System.out.print("The intake movedThe intake movedThe intake movedThe intake moved");
 	}
+
 	public void motorOnIntake(){//negative is proper direction
+		System.out.print("Intake going in");
 		intakeSpark.setSpeed(BALLS_IN_POWER);
 	}
+
 	public void motorOffIntake(){
+		System.out.print("Intake/Climer stoppingIntake/Climer stoppingIntake/Climer stoppingIntake/Climer stopping");
 		intakeSpark.setSpeed(0.0);
 	}
+
 	public void motorOnClimber(){//should be positive
-		intakeSpark.setSpeed(0.10);
+		ratchetWingSolenoid.set(false);
+		System.out.print("climber going inclimber going inclimber going inclimber going in");
+		intakeSpark.setSpeed(CLIMBING_VBUS);
+
 	}
-	public double getClimberCurrent(){
-		climber_current = Robot.pdp.getCurrent(3);//slot number of climber motor wires
-		return climber_current;
-	}
-	public boolean stopMotor(){
-		if(getClimberCurrent()>5.0){
-			intakeSpark.stopMotor();
-			System.out.println("Climbing ceased; remove me from this rope");
-			return true;
-		}
-		return false;
-	}
+
+	// TODO RENAME THIS AND PUT THE LOGIC IN A COMMAND
+	//	public boolean stopMotor(){
+	//		if(getClimberCurrent()>5.0){
+	//			intakeSpark.stopMotor();
+	//			System.out.println("Climbing ceased; remove me from this rope");
+	//			return true;
+	//		}
+	//		return false;
+	//	}
+
 	public void debug(){
-		SmartDashboard.putNumber("Intake/Climber current usage", getClimberCurrent());
+		SmartDashboard.putNumber("Intake/Climber current usage", getCurrentUsage());
 	}
 	public double getCurrentUsage() {
 		return Robot.pdp.getCurrent(3);

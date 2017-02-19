@@ -56,7 +56,7 @@ public class Robot extends IterativeRobot {
 	public static ShakerIntake intake;
 	public static ShakerShooter shooter;
 	public static ShakerGear gearMechanism;
-	public static Compressor compressor;
+//	public static Compressor compressor;
 	public static ShakerDrivetrain drivetrain;
 	public static ShakerHopper hopper;
 	
@@ -72,8 +72,8 @@ public class Robot extends IterativeRobot {
 		System.out.println("Starting to init my systems.");
 		gamePeriod = GamePeriod.DISABLED;
 		pdp = new PowerDistributionPanel(0); //CAN id has to be 0
-		compressor = new Compressor(RobotMap.PCM_MODULE);
-		compressor.setClosedLoopControl(true);
+//		compressor = new Compressor(RobotMap.PCM_MODULE);
+//		compressor.setClosedLoopControl(true);
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
@@ -81,13 +81,17 @@ public class Robot extends IterativeRobot {
 //		Thread.sleep(500);
 		shooter = new ShakerShooter();
 //		Thread.sleep(500);
-		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
+		
 		//driveTrainThread = new Thread(drivetrain);
         //driveTrainThread.start();
 		//chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", chooser);
 //		SmartDashboard.putData(drivetrain);
+		
+		// OI has to be initialized after all subsystems to
+		// prevent startCompetition() error
+		oi = new OI();
 	}
 
 	/**
@@ -168,7 +172,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
+//		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
 //		SmartDashboard.putNumber("Drivetrain current", drivetrain.getCurrentUsage());
 		System.out.println("Drivetrain total Current: "+drivetrain.getCurrentUsage());
 		System.out.println("Hopper current draw: "+hopper.getCurrentUsage());

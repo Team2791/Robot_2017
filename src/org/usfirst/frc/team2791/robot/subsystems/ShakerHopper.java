@@ -9,18 +9,15 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShakerHopper extends Subsystem{
-	private AnalogInput ballSensor1;
-	private AnalogInput ballSensor2;
-	
-	private Talon hopperSpark;
+	private AnalogInput ballSensor1 = new AnalogInput(0);
+	private AnalogInput ballSensor2 = new AnalogInput(1);
+	private Talon hopperSpark = new Talon(RobotMap.HOPPER_SPARK_PORT);
+
 	public void initDefaultCommand(){
-		this.hopperSpark = new Talon(RobotMap.HOPPER_SPARK_PORT);
-		
-		this.ballSensor1 = new AnalogInput(0);
-		this.ballSensor2 = new AnalogInput(1);
 	}
+	
 	public boolean moreBalls(){
-		System.out.println("Ball sensor 1: "+ballSensor1.getVoltage()+"\tBall sensor 2: "+ballSensor2.getVoltage());
+//		System.out.println("Ball sensor 1: "+ballSensor1.getVoltage()+"\tBall sensor 2: "+ballSensor2.getVoltage());
 		if(ballSensor1.getVoltage()<1.5 || ballSensor2.getVoltage()<1.5)
 			return false;
 		return true;
