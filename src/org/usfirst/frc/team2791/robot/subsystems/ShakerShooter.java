@@ -7,7 +7,6 @@ package org.usfirst.frc.team2791.robot.subsystems;
 
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
-import org.usfirst.frc.team2791.robot.util.Util;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -98,16 +97,16 @@ public class ShakerShooter extends Subsystem{
             followerShooterTalonA.changeControlMode(TalonControlMode.PercentVbus);
             
             //Update the PID and FeedForward values
-            /*
-            primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter p"));
-            primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter i"));
-            primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter d"));
-            followerShooterTalonA.setP(SmartDashboard.getNumber("Shooter p"));
-            followerShooterTalonA.setI(SmartDashboard.getNumber("Shooter i"));
-            followerShooterTalonA.setD(SmartDashboard.getNumber("Shooter d"));
-            primaryShooterTalon.setF(SmartDashboard.getNumber("FeedForward"));
-            followerShooterTalonA.setF(SmartDashboard.getNumber("FeedForward"));
-            */
+            
+//            primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter p"));
+//            primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter i"));
+//            primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter d"));
+//            followerShooterTalonA.setP(SmartDashboard.getNumber("Shooter p"));
+//            followerShooterTalonA.setI(SmartDashboard.getNumber("Shooter i"));
+//            followerShooterTalonA.setD(SmartDashboard.getNumber("Shooter d"));
+//            primaryShooterTalon.setF(SmartDashboard.getNumber("FeedForward"));
+//            followerShooterTalonA.setF(SmartDashboard.getNumber("FeedForward"));
+            
             
             //Set speeds (IN RPMS)
             primaryShooterTalon.setP(CONSTANTS.SHOOTER_P);
@@ -175,7 +174,10 @@ public class ShakerShooter extends Subsystem{
     }
 
     public void stopMotors() { //Set the motors to 0 to stop
-        primaryShooterTalon.set(0);
+    	primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);//percent v bus
+        followerShooterTalonA.changeControlMode(TalonControlMode.PercentVbus);
+    	
+    	primaryShooterTalon.set(0);
         followerShooterTalonA.set(0);
     }
 

@@ -34,7 +34,7 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int IR_SENSOR_2 = 1;
 	
 	// CAN
-	public static final int PCM_MODULE = 20;
+	public static final int PCM_MODULE = 1;
 	
 	public static final int LEFT_SHOOTER_TALON_PORT = 11;
 	public static final int RIGHT_SHOOTER_TALON_PORT = 10;

@@ -20,6 +20,7 @@ import org.usfirst.frc.team2791.robot.commands.RunWallShot;
 import org.usfirst.frc.team2791.robot.commands.StopClimberAndUnattach;
 //import org.usfirst.frc.team2791.robot.commands.RunWallShot;
 import org.usfirst.frc.team2791.robot.commands.StopHopper;
+import org.usfirst.frc.team2791.robot.commands.StopShot;
 import org.usfirst.frc.team2791.robot.commands.TurnIntakeOff;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 
@@ -83,9 +84,12 @@ public class OI {//joystick layout pic with Gaurab
 		if(driver.getDpadLeft()){}
 		if(driver.getDpadUpLeft()){}
 		
-		if(driver.getButtonA()){}
+		if(driver.getButtonA()){
+			new RunWallShot();
+		}
 		if(driver.getButtonB()){
 			System.out.println("BBBBB");
+			new StopShot();
 		}
 		if(driver.getButtonX()){
 			System.out.println("XXXXX");
@@ -166,6 +170,7 @@ public class OI {//joystick layout pic with Gaurab
 			new RunWallShot();
 		}
 		if(operator.getButtonY()){
+			new StopShot();
 		}
 		
 		if(operator.getButtonLB()){}

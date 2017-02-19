@@ -15,7 +15,8 @@ public class RunClimber extends Command{
 		System.out.println("came to initialize of climber");
 	}
 	protected void execute(){
-		System.out.println("I'm trying to execute climbing");
+		//System.out.println("I'm trying to execute climbing");
+		Robot.intake.debug();
 		Robot.intake.engageRatchetWing();
 		Robot.intake.motorOnClimber();
 	}

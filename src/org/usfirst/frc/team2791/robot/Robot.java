@@ -27,7 +27,6 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2791.robot.Robot.GamePeriod;
@@ -56,7 +55,7 @@ public class Robot extends IterativeRobot {
 	public static ShakerIntake intake;
 	public static ShakerShooter shooter;
 	public static ShakerGear gearMechanism;
-//	public static Compressor compressor;
+	public static Compressor compressor;
 	public static ShakerDrivetrain drivetrain;
 	public static ShakerHopper hopper;
 	
@@ -72,8 +71,9 @@ public class Robot extends IterativeRobot {
 		System.out.println("Starting to init my systems.");
 		gamePeriod = GamePeriod.DISABLED;
 		pdp = new PowerDistributionPanel(0); //CAN id has to be 0
-//		compressor = new Compressor(RobotMap.PCM_MODULE);
-//		compressor.setClosedLoopControl(true);
+		compressor = new Compressor(RobotMap.PCM_MODULE);
+		compressor.setClosedLoopControl(true);
+		compressor.start();
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
@@ -172,13 +172,21 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-//		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
+		compressor.start();
+		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
+		System.out.println("Compressor enabled? " + compressor.enabled());
+		System.out.println("Compressor closed loop? " + compressor.getClosedLoopControl());
+		System.out.println("Compressor switch vaule " + compressor.getPressureSwitchValue());
+		
+		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
+		
 //		SmartDashboard.putNumber("Drivetrain current", drivetrain.getCurrentUsage());
-		System.out.println("Drivetrain total Current: "+drivetrain.getCurrentUsage());
-		System.out.println("Hopper current draw: "+hopper.getCurrentUsage());
-		System.out.println("Intake current draw: "+intake.getCurrentUsage());
-		System.out.println("Shooter current draw: "+shooter.getCurrentUsage());
-		System.out.println("Shooter error: "+shooter.getError());
+//		System.out.println("Drivetrain total Current: "+drivetrain.getCurrentUsage());
+//		System.out.println("Hopper current draw: "+hopper.getCurrentUsage());
+//		System.out.println("Intake current draw: "+intake.getCurrentUsage());
+		SmartDashboard.putNumber("Climber current usage: ",intake.getCurrentUsage());
+//		System.out.println("Shooter current draw: "+shooter.getCurrentUsage());
+//		System.out.println("Shooter error: "+shooter.getError());
 		Scheduler.getInstance().run();
 		
 		/* if(Robot.hopper.moreBalls())

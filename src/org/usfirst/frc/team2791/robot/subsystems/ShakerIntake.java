@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShakerIntake extends Subsystem{ //code for intake and climber
-	private final double BALLS_IN_POWER = -0.666;
-	private final double CLIMBING_VBUS = 0.5;
+	private final double BALLS_IN_POWER = -1.0;
+	private final double CLIMBING_VBUS = 0.75;
 
 	public Talon intakeSpark;
 	private Solenoid intakeSolenoid;
@@ -39,7 +39,7 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 	}
 	public void moveIntakeOut(boolean yes){
 		intakeSolenoid.set(yes);
-		System.out.print("The intake movedThe intake movedThe intake movedThe intake moved");
+//		System.out.print("The intake movedThe intake movedThe intake movedThe intake moved");
 	}
 
 	public void motorOnIntake(){//negative is proper direction
@@ -48,13 +48,13 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 	}
 
 	public void motorOffIntake(){
-		System.out.print("Intake/Climer stoppingIntake/Climer stoppingIntake/Climer stoppingIntake/Climer stopping");
+//		System.out.print("Intake/Climer stoppingIntake/Climer stoppingIntake/Climer stoppingIntake/Climer stopping");
 		intakeSpark.setSpeed(0.0);
 	}
 
 	public void motorOnClimber(){//should be positive
 		ratchetWingSolenoid.set(false);
-		System.out.print("climber going inclimber going inclimber going inclimber going in");
+//		System.out.print("climber going inclimber going inclimber going inclimber going in");
 		intakeSpark.setSpeed(CLIMBING_VBUS);
 
 	}
