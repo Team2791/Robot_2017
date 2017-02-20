@@ -9,11 +9,9 @@ public class ResetGear extends Command{
 		super("ResetGear");
 		requires(Robot.gearMechanism);// Use requires() here to declare subsystem dependencies
 		System.out.println("came to constructor of gear");
-		initialize();
 	}
 	protected void initialize(){
 		System.out.println("came to initialize of gear");
-		execute();
 	}
 	protected void execute(){
 		System.out.println("I'm trying to execute gear reset");

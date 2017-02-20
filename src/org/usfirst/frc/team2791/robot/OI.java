@@ -20,7 +20,7 @@ import org.usfirst.frc.team2791.robot.commands.RunWallShot;
 import org.usfirst.frc.team2791.robot.commands.StopClimberAndUnattach;
 //import org.usfirst.frc.team2791.robot.commands.RunWallShot;
 import org.usfirst.frc.team2791.robot.commands.StopHopper;
-import org.usfirst.frc.team2791.robot.commands.StopShot;
+import org.usfirst.frc.team2791.robot.commands.TurnShooterOff;
 import org.usfirst.frc.team2791.robot.commands.TurnIntakeOff;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 
@@ -28,7 +28,7 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
-public class OI {//joystick layout pic with Gaurab
+public class OI {
 	public static ShakerDriver driver;
 	public static ShakerOperator operator;
 	public OI(){
@@ -58,6 +58,9 @@ public class OI {//joystick layout pic with Gaurab
 		Button operatorLS = new JoystickButton(operator,9);
 		Button operatorRS = new JoystickButton(operator,10);
 		
+		Button operatorStart = new JoystickButton(operator, 8);
+		Button driverStart = new JoystickButton(driver, 8);
+
 		
 		operatorX.whileHeld(new RunWallShot());
 		operatorY.whileHeld(new RunClimber());
@@ -67,32 +70,24 @@ public class OI {//joystick layout pic with Gaurab
 		driverX.whenPressed(new RemoveGear());
 		driverX.whenReleased(new ResetGear());
 		driverY.whileHeld(new RunClimber());
-		driverA.whenReleased(new RunIntake());
-		driverB.whenPressed(new TurnIntakeOff());
 		
-		driverLB.whileHeld(new DriveWithJoystick());
-		driverRB.whileHeld(new DriveWithJoystick());
+		driverA.whenReleased(new RunIntake());//for driver tryouts
+		driverB.whenPressed(new TurnIntakeOff());//for driver tryouts
 		
-		operatorLB.whenPressed(new StopClimberAndUnattach());
-		operatorRB.whenPressed(new StopShot());
+		driverLB.whileHeld(new DriveWithJoystick());//TODO: change to triggers once they are properly set up
+		driverRB.whileHeld(new DriveWithJoystick());//TODO: change to triggers once they are properly set up
+		
+		operatorLB.whenPressed(new StopClimberAndUnattach());//TODO: change to start buttons or something less needed
+//		operatorRB.whenPressed(new TurnShooterOff());
 		
 }
 	public void checkForAction(){
 		
-		if(Math.abs(driver.getAxisLeftX())>0.0){//turns drivetrain
-			System.out.println("getAxisLeftX");
-			
-		}
-		if(Math.abs(driver.getAxisLT())>0.0){//left trigger
-		}
-		if(Math.abs(driver.getAxisRT())>0.0){//right trigger
-			System.out.println("Driving with right trigger");
-		}
 		
-
 		if(operator.getDpadUp()){
 			new ResetGear();
 		}
+		
 		if(operator.getDpadDown()){
 			new RemoveGear();
 		}
@@ -100,6 +95,7 @@ public class OI {//joystick layout pic with Gaurab
 		if(operator.getDpadLeft()){
 			new RunHopper();
 		}
+		
 		if(operator.getDpadRight()){
 			new StopHopper();
 		}
@@ -107,14 +103,15 @@ public class OI {//joystick layout pic with Gaurab
 		if(operator.getAxisLT()>0.0){
 			new ShootWithJoystick();
 		}
-		if(operator.getDpadUpLeft()){
-//			new RunShooter();
-		}
+		
 		if(operator.getDpadDownLeft()){
-			new StopShot();
+			new TurnShooterOff();
 		}
-		
-		
+
+		if(Math.abs(driver.getAxisLeftX())>0.0){System.out.println("getAxisLeftX");}//turns drivetrain
+		if(Math.abs(driver.getAxisRT())>0.0){System.out.println("Driving with right trigger");}//right trigger
+		if(operator.getDpadUpLeft()){/*new RunShooter();*/}
+		if(Math.abs(driver.getAxisLT())>0.0){}//left trigger
 		if(Math.abs(driver.getXVal())>0.0){}
 		if(Math.abs(driver.getYVal())>0.0){}
 		if(driver.getDpadUp()){}

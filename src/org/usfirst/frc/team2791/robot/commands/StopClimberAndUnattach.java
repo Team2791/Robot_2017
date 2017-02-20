@@ -10,11 +10,11 @@ public class StopClimberAndUnattach extends Command{
 		super("StopClimberAndUnattach");
 		requires(Robot.intake);// Use requires() here to declare subsystem dependencies
 		System.out.println("came to constructor of climber");
-		initialize();
+		//initialize();
 	}
 	protected void initialize(){
 		System.out.println("came to initialize of climber");
-		execute();
+		//execute();
 	}
 	protected void execute(){
 		Robot.intake.disengageRatchetWing();

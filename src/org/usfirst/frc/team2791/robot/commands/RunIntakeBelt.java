@@ -9,11 +9,9 @@ public class RunIntakeBelt extends Command{
 		super("RunIntakeBelt");
 		requires(Robot.intake);// Use requires() here to declare subsystem dependencies
 		System.out.println("came to constructor of intake belts");
-		initialize();
 	}
 	protected void initialize(){
 		System.out.println("came to initialize of intake belts");
-		execute();
 	}
 	protected void execute(){
 		System.out.println("I'm trying to execute intake belt");

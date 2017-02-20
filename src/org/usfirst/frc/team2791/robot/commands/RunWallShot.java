@@ -57,7 +57,7 @@ public class RunWallShot extends Command{
 	@Override
 	protected void interrupted() {
 		new StopHopper();
-		new StopShot();
+		new TurnShooterOff();
 	}
 }
 

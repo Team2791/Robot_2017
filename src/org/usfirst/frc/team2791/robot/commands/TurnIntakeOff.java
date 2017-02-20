@@ -17,7 +17,7 @@ public class TurnIntakeOff extends Command{
 	}
 	protected void execute(){
 		System.out.println("I'm trying to execute intake off");
-		Robot.intake.moveIntakeOut(false);
+		Robot.intake.setIntakeOut(false);
 		Robot.intake.motorOffIntake();
 		
 	}
@@ -25,9 +25,9 @@ public class TurnIntakeOff extends Command{
 		return false;
 	}
 	protected void end(){
-		Robot.intake.moveIntakeOut(false);
+		Robot.intake.setIntakeOut(false);
 	}
 	protected void interrupted(){
-		Robot.intake.moveIntakeOut(false);
+		Robot.intake.setIntakeOut(false);
 	}
 }

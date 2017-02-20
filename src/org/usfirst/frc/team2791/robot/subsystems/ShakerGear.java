@@ -15,6 +15,10 @@ public class ShakerGear extends Subsystem{
 		gearSolenoid.set(false);
 	}
 	
+	/**
+	 * 
+	 * @param state true(down) or false(up)
+	 */
 	public void changeGearSolenoidState(boolean state){
 		gearSolenoid.set(state);
 	}
