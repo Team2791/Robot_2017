@@ -146,10 +146,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		if(Robot.hopper.moreBalls())
-			Robot.hopper.runHopper();
-		else
-			Robot.hopper.stopHopper();
+//		if(!hopper.isBallAtTop())
+//			hopper.runHopper();
+//		else
+//			hopper.stopHopper();
 	}
 
 	@Override
@@ -175,6 +175,30 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		compressor.start();
+		debug();
+		
+		// TODO REMOVE THIS CODE ENTIRELY
+//		if(!Robot.hopper.isBallAtTop())//comment out to turn off auto-hopper
+//			Robot.hopper.runHopper();
+//		else
+//			Robot.hopper.stopHopper();
+		
+		Scheduler.getInstance().run();
+		oi.checkForAction();
+	}
+
+	/**
+	 * This function is called periodically during test mode
+	 */
+	@Override
+	public void testPeriodic() {
+		LiveWindow.run();
+	}
+	public enum GamePeriod {
+        AUTONOMOUS, TELEOP, DISABLED
+    }
+	
+	public void debug() {
 		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
 		System.out.println("Compressor enabled? " + compressor.enabled());
 		System.out.println("Compressor closed loop? " + compressor.getClosedLoopControl());
@@ -192,24 +216,5 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("Climber current usage: ",intake.getCurrentUsage());
 		System.out.println("Shooter current draw: "+shooter.getCurrentUsage());
 //		System.out.println("Shooter error: "+shooter.getError());
-		
-		if(Robot.hopper.moreBalls())//comment out to turn off auto-hopper
-			Robot.hopper.runHopper();
-		else
-			Robot.hopper.stopHopper();
-		
-		Scheduler.getInstance().run();
-		oi.checkForAction();
 	}
-
-	/**
-	 * This function is called periodically during test mode
-	 */
-	@Override
-	public void testPeriodic() {
-		LiveWindow.run();
-	}
-	public enum GamePeriod {
-        AUTONOMOUS, TELEOP, DISABLED
-    }
 }

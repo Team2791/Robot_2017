@@ -28,45 +28,17 @@ public class RunWallShot extends Command{
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		System.out.println("Running a wall shot");
-		
-		while(Robot.hopper.moreBalls()){
-			System.out.println("Running hopper");
-			Robot.hopper.runHopper();
-		}
-		Robot.hopper.stopHopper();
-		System.out.println("Stopping hopper");
-		
+//		System.out.println("Running a wall shot");
 		Robot.shooter.prepWallShot();
-		System.out.println("Prepping speed");
-		if(Robot.shooter.shooterAtSpeed()){
-			while(Robot.hopper.isBallAtTop()){
-				Robot.hopper.setHopperSpeed(-1.0);
-				System.out.println("feeding ball");
-			}
-//			Robot.hopper.stopHopper();
-			System.out.println("stopping hopper");
-//		}
-		if(Robot.hopper.moreBalls())
-			Robot.shooter.stopMotors();
-		System.out.println("stopping shooter");
-
 		
-//		end();
-//		Robot.shooter.setShooterSolenoidState(false);
-		/*Robot.shooter.prepWallShot();
-		while(Robot.hopper.moreBalls()){
-			System.out.println("I'm trying to execute hopper run");
+		// if we need more balls or the shooter is ready
+		if(!Robot.hopper.isBallAtTop() || Robot.shooter.atSpeed()) {
+//			System.out.println("Running hopper");
 			Robot.hopper.runHopper();
-		}//gets balls right up to before shooter
-		
-		if(Robot.shooter.shooterAtSpeed()){//pushes a ball into the shooter
-			while(Robot.hopper.isBallAtTop()){//runs the hopper so the ball can get in but stops before next ball
-					Robot.hopper.runHopper();
-					System.out.println("ball pushed in");
-			}
+		} else { 
+//			System.out.println("Stopping hopper");
+			Robot.hopper.stopHopper();
 		}
-		Robot.shooter.disable();*/
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

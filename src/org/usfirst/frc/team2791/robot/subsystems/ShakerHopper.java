@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShakerHopper extends Subsystem{
 	private AnalogInput ballSensor1;
@@ -15,7 +16,7 @@ public class ShakerHopper extends Subsystem{
 	
 	private Talon hopperSpark;
 
-	private final double hopperSetpoint = -0.66;
+	private static double hopperSetpoint = -0.66;
 	private final double distanceSensorCutoffPoint = 1.5;
 	public void initDefaultCommand(){
 		hopperSpark = new Talon(RobotMap.HOPPER_SPARK_PORT);
@@ -24,26 +25,27 @@ public class ShakerHopper extends Subsystem{
 		ballSensor2 = new AnalogInput(1);
 	}
 	
-	public boolean moreBalls(){
-//		System.out.println("Ball sensor 1: "+ballSensor1.getVoltage()+"\tBall sensor 2: "+ballSensor2.getVoltage());
-		if(ballSensor1.getVoltage()<distanceSensorCutoffPoint || ballSensor2.getVoltage()<distanceSensorCutoffPoint)
-			return false;
-		return true;
+	/**
+	 * This method checks the elevator for balls.
+	 * @return returns True if a ball is ready to shoot.
+	 */
+	public boolean isBallAtTop() {
+		return (ballSensor1.getVoltage() < distanceSensorCutoffPoint ||
+				ballSensor2.getVoltage() < distanceSensorCutoffPoint);
 	}
-	public boolean isBallAtTop(){
-		if(ballSensor1.getVoltage()<distanceSensorCutoffPoint || ballSensor2.getVoltage()<distanceSensorCutoffPoint)
-			return true;
-		return false;
+	
+	public void runHopper() {
+		hopperSpark.set(SmartDashboard.getNumber("Hopper VBus",hopperSetpoint));
 	}
-	public void runHopper(){
-		hopperSpark.set(hopperSetpoint);
-	}
+	
 	public void setHopperSpeed(double speed){
 		hopperSpark.set(speed);
 	}
+	
 	public void stopHopper(){
 		hopperSpark.set(0.0);
 	}
+	
 	public void stopMotor(){
 		hopperSpark.disable();
 	}
