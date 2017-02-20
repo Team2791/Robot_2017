@@ -36,13 +36,6 @@ public class ShakerShooter extends Subsystem{
     	
         primaryShooterTalon = new CANTalon(RobotMap.LEFT_SHOOTER_TALON_PORT);
         followerShooterTalonA = new CANTalon(RobotMap.RIGHT_SHOOTER_TALON_PORT);
-        //this.powerShooterTalon = new CANTalon(RobotMap.CENTER_SHOOTER_TALON_PORT);
-
-//        this.shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER_PORT_A, RobotMap.SHOOTER_ENCODER_PORT_B);
-
-//        shooterEncoder.reset();
-//        shooterEncoder.setDistancePerPulse(Util.tickToFeet(CONSTANTS.SHOOTER_ENCODER_TICKS, CONSTANTS.SHOOTER_WHEEL_DIAMETER));
-
         primaryShooterTalon.configPeakOutputVoltage(+12.0f, 0);
         followerShooterTalonA.configPeakOutputVoltage(+12.0f, 0);
 
@@ -52,17 +45,13 @@ public class ShakerShooter extends Subsystem{
 //        SmartDashboard.putNumber("Shooter Feed Forward", CONSTANTS.FEED_FORWARD);
 
         primaryShooterTalon.setIZone(CONSTANTS.SHOOTER_I_ZONE);
-        followerShooterTalonA.setIZone(CONSTANTS.SHOOTER_I_ZONE);
-        
         primaryShooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-        followerShooterTalonA.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-        
         primaryShooterTalon.configEncoderCodesPerRev(CONSTANTS.SHOOTER_ENCODER_TICKS);
-        followerShooterTalonA.configEncoderCodesPerRev(CONSTANTS.SHOOTER_ENCODER_TICKS);
-        
-        primaryShooterTalon.changeControlMode(TalonControlMode.Speed);//thread.sleep for half a second
-        followerShooterTalonA.changeControlMode(TalonControlMode.Speed);//should be follower
-               
+        primaryShooterTalon.changeControlMode(TalonControlMode.Speed);
+        followerShooterTalonA.changeControlMode(TalonControlMode.Follower);
+        followerShooterTalonA.set(RobotMap.LEFT_SHOOTER_TALON_PORT);
+
+        // NOT sure what this does
         primaryShooterTalon.enableControl();
         followerShooterTalonA.enableControl();
         
@@ -81,7 +70,7 @@ public class ShakerShooter extends Subsystem{
     }
     public void prepWallShot() {
     	prepShot = true;
-        setShooterSpeeds(CONSTANTS.SHOOTER_SET_POINT, true);
+        setShooterSpeedsPID(CONSTANTS.SHOOTER_SET_POINT);
     }
     
     public boolean shooterAtSpeed() {
@@ -89,52 +78,34 @@ public class ShakerShooter extends Subsystem{
         return total_error < 200;
     }
 
-    @SuppressWarnings("deprecation")
-	public void setShooterSpeeds(double targetSpeed, boolean withPID) {
-        if (withPID) {
-            //If PID is used then we have to switch CANTalons to velocity mode
-            primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);//percent v bus
-            followerShooterTalonA.changeControlMode(TalonControlMode.PercentVbus);
-            
-            //Update the PID and FeedForward values
-            
-//            primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter p"));
-//            primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter i"));
-//            primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter d"));
-//            followerShooterTalonA.setP(SmartDashboard.getNumber("Shooter p"));
-//            followerShooterTalonA.setI(SmartDashboard.getNumber("Shooter i"));
-//            followerShooterTalonA.setD(SmartDashboard.getNumber("Shooter d"));
-//            primaryShooterTalon.setF(SmartDashboard.getNumber("FeedForward"));
-//            followerShooterTalonA.setF(SmartDashboard.getNumber("FeedForward"));
-            
-            
-            //Set speeds (IN RPMS)
-            primaryShooterTalon.setP(CONSTANTS.SHOOTER_P);
-            primaryShooterTalon.setI(CONSTANTS.SHOOTER_I);
-            primaryShooterTalon.setD(CONSTANTS.SHOOTER_D);
-            primaryShooterTalon.setF(CONSTANTS.SHOOTER_FEED_FORWARD);
-            
-            followerShooterTalonA.setP(CONSTANTS.SHOOTER_P);
-            followerShooterTalonA.setI(CONSTANTS.SHOOTER_I);
-            followerShooterTalonA.setD(CONSTANTS.SHOOTER_D);
-            followerShooterTalonA.setF(CONSTANTS.SHOOTER_FEED_FORWARD);
-            
-            primaryShooterTalon.set(CONSTANTS.SHOOTER_SET_POINT);
-            followerShooterTalonA.set(CONSTANTS.SHOOTER_SET_POINT);
-            
+	public void setShooterSpeedsPID(double targetSpeed) {
+        //If PID is used then we have to switch CANTalons to velocity mode
+        primaryShooterTalon.changeControlMode(TalonControlMode.Speed);//percent v bus
+        followerShooterTalonA.changeControlMode(TalonControlMode.Follower);
+        followerShooterTalonA.set(RobotMap.LEFT_SHOOTER_TALON_PORT);
+        
+        //Update the PID and FeedForward values
+        
+        primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter p", 0));
+        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter i", 0));
+        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter d", 0));
+        primaryShooterTalon.setF(SmartDashboard.getNumber("FeedForward", 0));
+
+//            //Set speeds (IN RPMS)
+//            primaryShooterTalon.setP(CONSTANTS.SHOOTER_P);
+//            primaryShooterTalon.setI(CONSTANTS.SHOOTER_I);
+//            primaryShooterTalon.setD(CONSTANTS.SHOOTER_D);
 //            primaryShooterTalon.setF(CONSTANTS.SHOOTER_FEED_FORWARD);
-//            primaryShooterTalon.setSetpoint(targetSpeed);
-//            followerShooterTalonA.set(primaryShooterTalon.getDeviceID());
-            
-        } else if (!autoFire && !prepShot) {
-            //If shooter is not autofiring or prepping the shot, use inputs given (including 0)
-            primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
-            followerShooterTalonA.changeControlMode(TalonControlMode.PercentVbus);
-            primaryShooterTalon.set(targetSpeed);
-            followerShooterTalonA.set(targetSpeed);
-        }
+        
+        primaryShooterTalon.set(CONSTANTS.SHOOTER_SET_POINT);
         System.out.println("Coming up to speed and my error is "+primaryShooterTalon.getError());
     }
+	
+	public void setShooterSpeedVBus(double vbus) {
+        //If shooter is not autofiring or prepping the shot, use inputs given (including 0)
+        primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
+        primaryShooterTalon.set(vbus);
+	}
 
     public void updateSmartDash() {
         SmartDashboard.putBoolean("Is auto firing", autoFire);

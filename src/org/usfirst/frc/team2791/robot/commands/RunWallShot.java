@@ -50,6 +50,8 @@ public class RunWallShot extends Command{
 		if(Robot.hopper.moreBalls())
 			Robot.shooter.stopMotors();
 		System.out.println("stopping shooter");
+
+		
 //		end();
 //		Robot.shooter.setShooterSolenoidState(false);
 		/*Robot.shooter.prepWallShot();
