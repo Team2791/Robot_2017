@@ -9,11 +9,11 @@ public class TurnIntakeOff extends Command{
 		super("TurnIntakeOff");
 		requires(Robot.intake);// Use requires() here to declare subsystem dependencies
 		System.out.println("came to constructor of off-ing intake");
-		initialize();
+		
 	}
 	protected void initialize(){
 		System.out.println("came to initialize of off-ing intake");
-		execute();
+		
 	}
 	protected void execute(){
 		System.out.println("I'm trying to execute intake off");
@@ -25,8 +25,9 @@ public class TurnIntakeOff extends Command{
 		return false;
 	}
 	protected void end(){
-//		Robot.intake.stopMotor();
+		Robot.intake.moveIntakeOut(false);
 	}
 	protected void interrupted(){
+		Robot.intake.moveIntakeOut(false);
 	}
 }

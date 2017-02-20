@@ -7,23 +7,18 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveWithJoystick extends Command {
 	
-	private double speedMultiplier = .5;
+	private double speedMultiplier = 1.0;
 	
 	public DriveWithJoystick() {
-		
 		super("DriveWithJoystick");
 		requires(Robot.drivetrain);// Use requires() here to declare subsystem dependencies
-		System.out.println("came to constructor");
-		initialize();
 	}
 	protected void initialize() {
-		System.out.println("came to initialize");
-		execute();
 	}
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		System.out.println("I'm trying to execute");
+//		System.out.println("I'm trying to execute");
 		//logic interprets driver Joystick position for motor outputs 
 	    double combinedLeft, combinedRight;
 	    //if we need to change the speed we can change the .35 FIRST and then the /3 ONLY if thats not enough

@@ -4,6 +4,7 @@ import org.usfirst.frc.team2791.robot.OI;
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
+import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team2791.robot.util.BasicPID;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.Util;
@@ -91,9 +92,7 @@ public class ShakerDrivetrain extends Subsystem{
 		(new Thread(gyro)).start();
     }
     public void initDefaultCommand() {
-	
-		
-		
+    	setDefaultCommand(new DriveWithJoystick());
 	}
     @SuppressWarnings("deprecation")
 	public void updateSmartDash() {

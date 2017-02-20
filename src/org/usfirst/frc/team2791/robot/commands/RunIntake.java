@@ -17,6 +17,7 @@ public class RunIntake extends Command{
 	}
 	protected void execute(){
 		System.out.println("I'm trying to execute intake on");
+		Robot.intake.disengageRatchetWing();
 		Robot.intake.moveIntakeOut(true);
 		Robot.intake.motorOnIntake();
 		
@@ -26,7 +27,10 @@ public class RunIntake extends Command{
 	}
 	protected void end(){
 		Robot.intake.motorOffIntake();
+		Robot.intake.moveIntakeOut(false);
 	}
 	protected void interrupted(){
+		Robot.intake.motorOffIntake();
+		Robot.intake.moveIntakeOut(false);
 	}
 }

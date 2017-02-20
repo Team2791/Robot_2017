@@ -59,7 +59,7 @@ public class OI {//joystick layout pic with Gaurab
 		Button operatorRS = new JoystickButton(operator,10);
 		
 		
-		operatorX.whenPressed(new RunWallShot());
+		operatorX.whileHeld(new RunWallShot());
 		operatorY.whileHeld(new RunClimber());
 		operatorA.whileHeld(new RunIntake());
 		operatorB.whileHeld(new RunIntakeBelt());
@@ -81,14 +81,12 @@ public class OI {//joystick layout pic with Gaurab
 		
 		if(Math.abs(driver.getAxisLeftX())>0.0){//turns drivetrain
 			System.out.println("getAxisLeftX");
-			new DriveWithJoystick();
+			
 		}
 		if(Math.abs(driver.getAxisLT())>0.0){//left trigger
-			new DriveWithJoystick();
 		}
 		if(Math.abs(driver.getAxisRT())>0.0){//right trigger
 			System.out.println("Driving with right trigger");
-			new DriveWithJoystick();
 		}
 		
 

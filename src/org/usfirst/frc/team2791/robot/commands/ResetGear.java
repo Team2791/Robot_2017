@@ -26,5 +26,6 @@ public class ResetGear extends Command{
 		
 	}
 	protected void interrupted(){
+		new DriveWithJoystick();
 	}
 }

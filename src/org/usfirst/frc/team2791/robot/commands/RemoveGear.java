@@ -26,5 +26,6 @@ public class RemoveGear extends Command{
 		
 	}
 	protected void interrupted(){
+		new DriveWithJoystick();
 	}
 }
