@@ -10,13 +10,18 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShakerHopper extends Subsystem{
-	private AnalogInput ballSensor1 = new AnalogInput(0);
-	private AnalogInput ballSensor2 = new AnalogInput(1);
-	private Talon hopperSpark = new Talon(RobotMap.HOPPER_SPARK_PORT);
+	private AnalogInput ballSensor1;
+	private AnalogInput ballSensor2;
+	
+	private Talon hopperSpark;
 
 	private final double hopperSetpoint = -0.66;
 	private final double distanceSensorCutoffPoint = 1.5;
 	public void initDefaultCommand(){
+		hopperSpark = new Talon(RobotMap.HOPPER_SPARK_PORT);
+		
+		ballSensor1 = new AnalogInput(0);
+		ballSensor2 = new AnalogInput(1);
 	}
 	
 	public boolean moreBalls(){

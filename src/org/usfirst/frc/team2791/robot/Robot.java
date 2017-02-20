@@ -192,13 +192,13 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("Climber current usage: ",intake.getCurrentUsage());
 		System.out.println("Shooter current draw: "+shooter.getCurrentUsage());
 //		System.out.println("Shooter error: "+shooter.getError());
-		Scheduler.getInstance().run();
 		
 		if(Robot.hopper.moreBalls())//comment out to turn off auto-hopper
 			Robot.hopper.runHopper();
 		else
 			Robot.hopper.stopHopper();
 		
+		Scheduler.getInstance().run();
 		oi.checkForAction();
 	}
 

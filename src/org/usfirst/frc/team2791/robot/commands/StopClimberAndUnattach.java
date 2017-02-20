@@ -21,9 +21,10 @@ public class StopClimberAndUnattach extends Command{
 		Robot.intake.motorOffIntake();
 	}
 	protected boolean isFinished(){
-		return false;
+		return true;
 	}
 	protected void end(){
+		Robot.intake.disengageRatchetWing();
 		Robot.intake.motorOffIntake();
 	}
 	protected void interrupted(){
