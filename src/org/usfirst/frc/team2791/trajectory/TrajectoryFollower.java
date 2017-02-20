@@ -38,12 +38,12 @@ public class TrajectoryFollower {
 		kd_ = SmartDashboard.getNumber("kd", kd);
 		kv_ = SmartDashboard.getNumber("kv", kv);
 		ka_ = SmartDashboard.getNumber("ka", ka);
-		
+
 		SmartDashboard.putNumber("kp",kp_);
-	    SmartDashboard.putNumber("ki",ki_);
-	    SmartDashboard.putNumber("kd",kd_);
-	    SmartDashboard.putNumber("kv",kv_);
-	    SmartDashboard.putNumber("ka",ka_);
+		SmartDashboard.putNumber("ki",ki_);
+		SmartDashboard.putNumber("kd",kd_);
+		SmartDashboard.putNumber("kv",kv_);
+		SmartDashboard.putNumber("ka",ka_);
 
 	}
 
@@ -96,37 +96,29 @@ public class TrajectoryFollower {
 
 	private void debug(double distance_so_far, double error, double output, Segment segment){
 
-//		System.out.println("im debugging");
-		
 		SmartDashboard.putString(name+"PosGoal v\n PosActual:", segment.pos+":"+distance_so_far);
+
 		double currentVelocity;
 		double currentAcceleration;
-
 		if(name == "left") {
 			currentVelocity = Robot.drivetrain.getLeftVelocity(); 
 			currentAcceleration = Robot.drivetrain.getLeftAcceleration(); 
-			System.out.println(currentAcceleration);
-
-
+			//System.out.println("ACC:"+currentAcceleration);
 		} else {
 			currentVelocity = Robot.drivetrain.getRightVelocity(); 
 			currentAcceleration = Robot.drivetrain.getRightAcceleration(); 
-			System.out.println(currentAcceleration);
-
+			//System.out.println("ACC:"+currentAcceleration);
 		}
-		
+
 		double velocityError = segment.vel-currentVelocity;
-
 		SmartDashboard.putString(name+"VelGoal v\n VelActual:", segment.vel+":"+currentVelocity);
-		
-		double accelerationError = segment.acc - currentAcceleration;
 
+		double accelerationError = segment.acc - currentAcceleration;
 		SmartDashboard.putString(name+"AccGoal v\n AccActual:", segment.acc+":"+currentAcceleration);
+
 		SmartDashboard.putNumber(name+"PosError",error);
 		SmartDashboard.putNumber(name+"VelError",velocityError);
 		SmartDashboard.putNumber(name+"AccError",accelerationError);
-
-
 
 	}
 }

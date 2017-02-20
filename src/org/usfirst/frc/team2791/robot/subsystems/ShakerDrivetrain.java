@@ -142,7 +142,7 @@ public class ShakerDrivetrain extends Subsystem{
 		double currentLeftRate = getLeftVelocity();
 		double currentLeftTime = Timer.getFPGATimestamp();
 		
-		System.out.println("TIME:"+previousLeftTime+"\t"+currentLeftTime+ "\tRATE:"+previousLeftRate+"\t"+currentLeftRate);
+//		System.out.println("TIME:"+previousLeftTime+"\t"+currentLeftTime+ "\tRATE:"+previousLeftRate+"\t"+currentLeftRate);
 		double acceleration = (currentLeftRate - previousLeftRate) /
 				(currentLeftTime - previousLeftTime);
 		
@@ -236,8 +236,10 @@ public class ShakerDrivetrain extends Subsystem{
 	//set motor output according to above interpretation
 
 	public void setLeftRightMotorOutputs(double left, double right){
-		SmartDashboard.putNumber("Velocity", getAverageVelocity());
-		SmartDashboard.putNumber("Acceleration", getAverageAcceleration());
+		driveDebug();
+		SmartDashboard.putNumber("leftMotorOutput", left);
+		SmartDashboard.putNumber("rightMotorOutput", right);
+
 		shakyDrive.setLeftRightMotorOutputs(left, right);
 	}
 
@@ -267,7 +269,8 @@ public class ShakerDrivetrain extends Subsystem{
 		return;
 	}	
 	public void driveDebug(){
-		
+		SmartDashboard.putNumber("Velocity", getAverageVelocity());
+		SmartDashboard.putNumber("Acceleration", getAverageAcceleration());
 	}
 }
 

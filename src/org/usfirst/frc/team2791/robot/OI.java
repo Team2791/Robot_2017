@@ -26,6 +26,7 @@ import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
  *@author unbun
  *@author Gaurab
  */
+
 public class OI {
 	public static ShakerDriver driver;
 	public static ShakerOperator operator;
@@ -33,6 +34,8 @@ public class OI {
 		System.out.println("OIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOI");
 		driver = new ShakerDriver();
 		operator = new ShakerOperator();
+		
+				
 		//if(driver.getXVal()){}
 		//	if(driver.getYVal()){}
 
@@ -68,7 +71,11 @@ public class OI {
 	Start the command when the button is released and let it run the command
  	until it is finished as determined by it's isFinished method.
  	button.whenReleased(new ExampleCommand()); */
+		
+		
 	}
+	
+
 	public void checkForAction(){
 		if(driver.getDpadUp()){}
 		if(driver.getDpadUpRight()){}
@@ -78,7 +85,8 @@ public class OI {
 		if(driver.getDpadDownLeft()){}
 		if(driver.getDpadLeft()){}
 		if(driver.getDpadUpLeft()){}
-
+		
+		
 		if(driver.getButtonA()){}
 		if(driver.getButtonB()){
 			System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
