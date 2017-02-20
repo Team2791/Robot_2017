@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DigitalSource;
  */
 public class RobotMap {//to map ports; constants are in separate class
 	//if all ports are not correctly throughout code (i.e. ports utilized more than once), startCompetition() error comes
+	
 	// JOYSTICK PORTS
 	public static final int JOYSTICK_DRIVER_PORT = 0;
 	public static final int JOYSTICK_OPERATOR_PORT = 1;
