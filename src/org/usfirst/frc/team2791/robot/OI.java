@@ -59,7 +59,7 @@ public class OI {//joystick layout pic with Gaurab
 		Button operatorRS = new JoystickButton(operator,10);
 		
 		
-		operatorX.whileHeld(new RunWallShot());
+		operatorX.whenPressed(new RunWallShot());
 		operatorY.whileHeld(new RunClimber());
 		operatorA.whileHeld(new RunIntake());
 		operatorB.whileHeld(new RunIntakeBelt());
@@ -108,6 +108,12 @@ public class OI {//joystick layout pic with Gaurab
 		
 		if(operator.getAxisLT()>0.0){
 			new ShootWithJoystick();
+		}
+		if(operator.getDpadUpLeft()){
+//			new RunShooter();
+		}
+		if(operator.getDpadDownLeft()){
+			new StopShot();
 		}
 		
 		

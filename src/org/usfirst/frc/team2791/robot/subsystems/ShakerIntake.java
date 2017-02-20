@@ -18,11 +18,14 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 	public Solenoid ratchetWingSolenoid;
 	
 //public ShakerIntake(){}
-	public void initDefaultCommand(){
+	public ShakerIntake(){
 		intakeSpark = new Talon(RobotMap.INTAKE_SPARK_PORT);
 
 		intakeSolenoid = new Solenoid(RobotMap.PCM_MODULE, RobotMap.INTAKE_CHANNEL);
 		ratchetWingSolenoid = new Solenoid(RobotMap.PCM_MODULE, RobotMap.WING_CHANNEL);
+	}
+	public void initDefaultCommand(){
+		
 		ratchetWingSolenoid.set(true);
 		//		wingSolenoid.set(true);
 		intakeSolenoid.set(false);//all Pistons should be closed (true) at beginning

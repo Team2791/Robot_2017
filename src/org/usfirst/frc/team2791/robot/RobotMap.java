@@ -38,8 +38,8 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int PDP = 0;
 	public static final int PCM_MODULE = 1;
 	
-	public static final int LEFT_SHOOTER_TALON_PORT = 11;
-	public static final int RIGHT_SHOOTER_TALON_PORT = 10;
+	public static final int PRIMARY_SHOOTER_TALON_PORT = 10;
+	public static final int RIGHT_SHOOTER_TALON_PORT = 11;
 	public static final int CENTER_SHOOTER_TALON_PORT = 0;
 	
 	public static final int SHOOTER_ENCODER_PORT_A = 0;
@@ -51,9 +51,9 @@ public class RobotMap {//to map ports; constants are in separate class
 	
 	//PCM Ports--note: due to use of single solenoids, solenoids will default to false state while disabled
 	public static final int INTAKE_CHANNEL = 7;
-	public static final int WING_CHANNEL = 5;
+	public static final int WING_CHANNEL = 4;
 	public static final int GEAR_CHANNEL = 6;
-	public static final int SHOOTER_CHANNEL = 4;
+	public static final int SHOOTER_CHANNEL = 5;
 	
 	//PDP Ports
 	public static final int POWER_RIGHT_DRIVE_A = 0;

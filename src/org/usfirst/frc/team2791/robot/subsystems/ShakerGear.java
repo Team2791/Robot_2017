@@ -7,8 +7,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShakerGear extends Subsystem{
 	private Solenoid gearSolenoid;
-	public void initDefaultCommand(){
+	public ShakerGear(){
 		gearSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.GEAR_CHANNEL);
+	}
+	public void initDefaultCommand(){
+		
 		gearSolenoid.set(false);
 	}
 	

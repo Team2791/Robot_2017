@@ -15,20 +15,19 @@ public class RunWallShot extends Command{
 		requires(Robot.shooter);
 		requires(Robot.hopper);
 		System.out.println("Came to wall shooter constructor");
-		initialize();
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
 		System.out.println("initializing wall shot");
-		execute();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
 //		System.out.println("Running a wall shot");
+		Robot.shooter.setShooterSolenoidState(false);
 		Robot.shooter.prepWallShot();
 		
 		// if we need more balls or the shooter is ready

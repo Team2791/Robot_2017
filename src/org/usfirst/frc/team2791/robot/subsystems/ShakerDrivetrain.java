@@ -52,11 +52,10 @@ public class ShakerDrivetrain extends Subsystem{
     protected boolean PIDAtTarget = false;
     protected boolean anglePIDQuickExit = false;
     
-    public void initDefaultCommand() {
-	
-		this.leftSpark = new Talon(RobotMap.DRIVE_SPARK_LEFT_PORT);
+    public ShakerDrivetrain(){
+    	this.leftSpark = new Talon(RobotMap.DRIVE_SPARK_LEFT_PORT);
 	    
-	
+    	
 	    this.rightSpark = new Talon(RobotMap.DRIVE_SPARK_RIGHT_PORT);
 	    
 	
@@ -90,6 +89,10 @@ public class ShakerDrivetrain extends Subsystem{
 		gyro = new ShakerGyro(SPI.Port.kOnboardCS1);
 		gyro.reset();
 		(new Thread(gyro)).start();
+    }
+    public void initDefaultCommand() {
+	
+		
 		
 	}
     @SuppressWarnings("deprecation")

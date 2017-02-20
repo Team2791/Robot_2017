@@ -199,10 +199,10 @@ public class Robot extends IterativeRobot {
     }
 	
 	public void debug() {
-		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
-		System.out.println("Compressor enabled? " + compressor.enabled());
-		System.out.println("Compressor closed loop? " + compressor.getClosedLoopControl());
-		System.out.println("Compressor switch vaule " + compressor.getPressureSwitchValue());
+//		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
+//		System.out.println("Compressor enabled? " + compressor.enabled());
+//		System.out.println("Compressor closed loop? " + compressor.getClosedLoopControl());
+//		System.out.println("Compressor switch vaule " + compressor.getPressureSwitchValue());
 		
 		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
 		SmartDashboard.putNumber("Drivetrain total current", drivetrain.getCurrentUsage());
@@ -210,11 +210,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Hopper current",hopper.getCurrentUsage());
 		SmartDashboard.putNumber("Shooter total current",shooter.getCurrentUsage());
 		
-		System.out.println("Drivetrain total Current: "+drivetrain.getCurrentUsage());
-		System.out.println("Hopper current draw: "+hopper.getCurrentUsage());
-		System.out.println("Intake current draw: "+intake.getCurrentUsage());
-//		SmartDashboard.putNumber("Climber current usage: ",intake.getCurrentUsage());
-		System.out.println("Shooter current draw: "+shooter.getCurrentUsage());
-//		System.out.println("Shooter error: "+shooter.getError());
+//		System.out.println("Drivetrain total Current: "+drivetrain.getCurrentUsage());
+//		System.out.println("Hopper current draw: "+hopper.getCurrentUsage());
+//		System.out.println("Intake current draw: "+intake.getCurrentUsage());
+////		SmartDashboard.putNumber("Climber current usage: ",intake.getCurrentUsage());
+//		System.out.println("Shooter current draw: "+shooter.getCurrentUsage());
+////		System.out.println("Shooter error: "+shooter.getError());
 	}
 }

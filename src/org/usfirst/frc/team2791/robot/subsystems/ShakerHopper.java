@@ -18,11 +18,14 @@ public class ShakerHopper extends Subsystem{
 
 	private static double hopperSetpoint = -0.66;
 	private final double distanceSensorCutoffPoint = 1.5;
-	public void initDefaultCommand(){
+	public ShakerHopper(){
 		hopperSpark = new Talon(RobotMap.HOPPER_SPARK_PORT);
 		
 		ballSensor1 = new AnalogInput(0);
 		ballSensor2 = new AnalogInput(1);
+	}
+	public void initDefaultCommand(){
+		
 	}
 	
 	/**

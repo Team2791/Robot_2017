@@ -16,7 +16,7 @@ public class RunHopper extends Command{
 		execute();
 	}
 	protected void execute(){
-		while(Robot.hopper.moreBalls()){
+		if(!Robot.hopper.isBallAtTop()){
 			System.out.println("I'm trying to execute hopper run");
 			Robot.hopper.runHopper();
 		}

@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShakerShooter extends Subsystem {
+	
 	private final double ERROR_THRESHOLD = 200;
 
     protected Encoder shooterEncoder = null;
@@ -29,21 +30,23 @@ public class ShakerShooter extends Subsystem {
     private Solenoid shooterSolenoid;
 
     protected boolean autoFire = false;
-
-    public void initDefaultCommand() {
+    public void initDefaultCommand(){}
+    
+    public ShakerShooter() {
     	shooterSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.SHOOTER_CHANNEL);
     	shooterSolenoid.set(false);//default state
     	
-        primaryShooterTalon = new CANTalon(RobotMap.LEFT_SHOOTER_TALON_PORT);
+        primaryShooterTalon = new CANTalon(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
+        primaryShooterTalon.setInverted(true);
         followerShooterTalonA = new CANTalon(RobotMap.RIGHT_SHOOTER_TALON_PORT);
-        primaryShooterTalon.configPeakOutputVoltage(+12.0f, 0);
-        followerShooterTalonA.configPeakOutputVoltage(+12.0f, 0);
+        primaryShooterTalon.configPeakOutputVoltage(0, -12.0f);
+        followerShooterTalonA.configPeakOutputVoltage(0, -12.0f);
         
         if(SmartDashboard.getNumber("Shooter P", -2791) == -2791){
 	        SmartDashboard.putNumber("Shooter P", CONSTANTS.SHOOTER_P);
 	        SmartDashboard.putNumber("Shooter I", CONSTANTS.SHOOTER_I);
 	        SmartDashboard.putNumber("Shooter D", CONSTANTS.SHOOTER_D);
-	        SmartDashboard.putNumber("Shooter Feed Forward", CONSTANTS.SHOOTER_FEED_FORWARD);
+	        SmartDashboard.putNumber("Shooter FeedForward", CONSTANTS.SHOOTER_FEED_FORWARD);
 	        SmartDashboard.putNumber("Shooter Setpoint", 0);
         }
 
@@ -53,7 +56,7 @@ public class ShakerShooter extends Subsystem {
         primaryShooterTalon.changeControlMode(TalonControlMode.Speed);
 
         followerShooterTalonA.changeControlMode(TalonControlMode.Follower);
-        followerShooterTalonA.set(RobotMap.LEFT_SHOOTER_TALON_PORT);
+        followerShooterTalonA.set(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
 
         // NOT sure what this does
         primaryShooterTalon.enableControl();
@@ -73,7 +76,7 @@ public class ShakerShooter extends Subsystem {
     	shooterSolenoid.set(key);
     }
     public void prepWallShot() {
-        setShooterSpeedsPID(CONSTANTS.SHOOTER_SET_POINT);
+        setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Setpoint", 0));
     }
     
     public boolean atSpeed() {
@@ -119,7 +122,7 @@ public class ShakerShooter extends Subsystem {
 		SmartDashboard.putNumber("Primary Talon Closed Loop Error (Sensor value)", primaryShooterTalon.getClosedLoopError());
     	 
 		
-		/*
+		/* 	
     	   * SmartDashboard.putNumber("LeftShooterSpeed", primaryShooterTalon.getSpeed());
     	   
 	      SmartDashboard.putNumber("RightShooterSpeed", followerShooterTalonA.getSpeed());
