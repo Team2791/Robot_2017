@@ -18,7 +18,11 @@ public class RunClimber extends Command{
 		//System.out.println("I'm trying to execute climbing");
 		Robot.intake.debug();
 		Robot.intake.engageRatchetWing();
-		Robot.intake.motorOnClimber();
+		if(Robot.intake.getCurrentUsage()<40.0){
+			Robot.intake.motorOnClimber();
+		}
+		else
+			Robot.intake.motorOffIntake();
 	}
 	protected boolean isFinished(){
 		return false;

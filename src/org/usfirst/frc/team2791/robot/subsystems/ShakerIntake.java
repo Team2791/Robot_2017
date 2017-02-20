@@ -22,6 +22,7 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 
 		intakeSolenoid = new Solenoid(RobotMap.PCM_MODULE, RobotMap.INTAKE_CHANNEL);
 		ratchetWingSolenoid = new Solenoid(RobotMap.PCM_MODULE, RobotMap.WING_CHANNEL);
+		ratchetWingSolenoid.set(true);
 		//		wingSolenoid.set(true);
 		intakeSolenoid.set(false);//all Pistons should be closed (true) at beginning
 	}
@@ -73,7 +74,7 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 		SmartDashboard.putNumber("Intake/Climber current usage", getCurrentUsage());
 	}
 	public double getCurrentUsage() {
-		return Robot.pdp.getCurrent(3);
+		return Robot.pdp.getCurrent(RobotMap.POWER_CLIMBER_INTAKE);
 	}
 }
 
