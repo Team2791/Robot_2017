@@ -39,10 +39,10 @@ public class ShakerShooter extends Subsystem{
         primaryShooterTalon.configPeakOutputVoltage(+12.0f, 0);
         followerShooterTalonA.configPeakOutputVoltage(+12.0f, 0);
 
-//        SmartDashboard.putNumber("Shooter P", CONSTANTS.SHOOTER_P);
-//        SmartDashboard.putNumber("Shooter I", CONSTANTS.SHOOTER_I);
-//        SmartDashboard.putNumber("Shooter D", CONSTANTS.SHOOTER_D);
-//        SmartDashboard.putNumber("Shooter Feed Forward", CONSTANTS.FEED_FORWARD);
+        SmartDashboard.putNumber("Shooter P", CONSTANTS.SHOOTER_P);
+        SmartDashboard.putNumber("Shooter I", CONSTANTS.SHOOTER_I);
+        SmartDashboard.putNumber("Shooter D", CONSTANTS.SHOOTER_D);
+        SmartDashboard.putNumber("Shooter Feed Forward", CONSTANTS.SHOOTER_FEED_FORWARD);
 
         primaryShooterTalon.setIZone(CONSTANTS.SHOOTER_I_ZONE);
         primaryShooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
@@ -99,6 +99,7 @@ public class ShakerShooter extends Subsystem{
         
         primaryShooterTalon.set(CONSTANTS.SHOOTER_SET_POINT);
         System.out.println("Coming up to speed and my error is "+primaryShooterTalon.getError());
+        debug();
     }
 	
 	public void setShooterSpeedVBus(double vbus) {
@@ -113,7 +114,13 @@ public class ShakerShooter extends Subsystem{
     }
 
 	public void debug() {
-    	  /*
+		
+		SmartDashboard.putNumber("Primary Talon Speed",primaryShooterTalon.getSpeed());
+		SmartDashboard.putNumber("Primary Talon Error (Setpoint)", primaryShooterTalon.getError());
+		SmartDashboard.putNumber("Primary Talon Closed Loop Error (Sensor value)", primaryShooterTalon.getClosedLoopError());
+    	 
+		
+		/*
     	   * SmartDashboard.putNumber("LeftShooterSpeed", primaryShooterTalon.getSpeed());
     	   
 	      SmartDashboard.putNumber("RightShooterSpeed", followerShooterTalonA.getSpeed());
@@ -161,7 +168,7 @@ public class ShakerShooter extends Subsystem{
 //        SmartDashboard.putNumber("left speed", primaryShooterTalon.getSpeed());
     }
     public double getCurrentUsage(){
-    	return primaryShooterTalon.getOutputCurrent();
+    	return primaryShooterTalon.getOutputCurrent()+followerShooterTalonA.getOutputCurrent();
     }
 	public void setTrigger(double combinedLeft) {
 		// TODO Auto-generated method stub

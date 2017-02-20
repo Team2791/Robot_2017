@@ -14,7 +14,7 @@ public class StopShot extends Command{
 		super("StopShot");
 		requires(Robot.shooter);
 		requires(Robot.hopper);
-		System.out.println("Came to wall shooter constructor");
+		System.out.println("Came to shooter stopper");
 		initialize();
 	}
 
@@ -28,33 +28,14 @@ public class StopShot extends Command{
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		System.out.println("Running a wall shot");
-		
-		
 		Robot.hopper.stopHopper();
 		Robot.shooter.stopMotors();
-//		System.out.println("stopping shooter");
-//		end();
-//		Robot.shooter.setShooterSolenoidState(false);
-		/*Robot.shooter.prepWallShot();
-		while(Robot.hopper.moreBalls()){
-			System.out.println("I'm trying to execute hopper run");
-			Robot.hopper.runHopper();
-		}//gets balls right up to before shooter
-		
-		if(Robot.shooter.shooterAtSpeed()){//pushes a ball into the shooter
-			while(Robot.hopper.isBallAtTop()){//runs the hopper so the ball can get in but stops before next ball
-					Robot.hopper.runHopper();
-					System.out.println("ball pushed in");
-			}
-		}
-		Robot.shooter.disable();*/
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	// Called once after isFinished returns true
@@ -67,7 +48,7 @@ public class StopShot extends Command{
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		new StopHopper();
+		new StopShot();
 	}
 }
 

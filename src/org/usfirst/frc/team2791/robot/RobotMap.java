@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DigitalSource;
  */
 public class RobotMap {//to map ports; constants are in separate class
 	//if all ports are not correctly throughout code (i.e. ports utilized more than once), startCompetition() error comes
+	
 	// JOYSTICK PORTS
 	public static final int JOYSTICK_DRIVER_PORT = 0;
 	public static final int JOYSTICK_OPERATOR_PORT = 1;
@@ -34,6 +35,7 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int IR_SENSOR_2 = 1;
 	
 	// CAN
+	public static final int PDP = 0;
 	public static final int PCM_MODULE = 1;
 	
 	public static final int LEFT_SHOOTER_TALON_PORT = 11;
@@ -54,4 +56,17 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int SHOOTER_CHANNEL = 4;
 	
 	//PDP Ports
+	public static final int POWER_RIGHT_DRIVE_A = 0;
+	public static final int POWER_RIGHT_DRIVE_B = 1;
+	public static final int POWER_RIGHT_DRIVE_C = 2;
+
+	public static final int POWER_LEFT_DRIVE_A = 13;
+	public static final int POWER_LEFT_DRIVE_B = 14;
+	public static final int POWER_LEFT_DRIVE_C = 15;
+	
+	public static final int POWER_CLIMBER_INTAKE = 3;
+	public static final int POWER_HOPPER_FLOOR = 12;
+	
+	public static final int POWER_PRIMARY_SHOOTER = 4;
+	public static final int POWER_FOLLOWER_SHOOTER = 11;
 }

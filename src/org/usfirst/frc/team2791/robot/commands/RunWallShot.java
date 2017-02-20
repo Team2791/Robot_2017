@@ -39,7 +39,7 @@ public class RunWallShot extends Command{
 		
 		Robot.shooter.prepWallShot();
 		System.out.println("Prepping speed");
-//		if(Robot.shooter.shooterAtSpeed()){
+		if(Robot.shooter.shooterAtSpeed()){
 			while(Robot.hopper.isBallAtTop()){
 				Robot.hopper.setHopperSpeed(-1.0);
 				System.out.println("feeding ball");
@@ -86,6 +86,7 @@ public class RunWallShot extends Command{
 	@Override
 	protected void interrupted() {
 		new StopHopper();
+		new StopShot();
 	}
 }
 

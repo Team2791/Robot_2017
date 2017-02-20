@@ -70,7 +70,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		System.out.println("Starting to init my systems.");
 		gamePeriod = GamePeriod.DISABLED;
-		pdp = new PowerDistributionPanel(0); //CAN id has to be 0
+		pdp = new PowerDistributionPanel(RobotMap.PDP); //CAN id has to be 0
 		compressor = new Compressor(RobotMap.PCM_MODULE);
 		compressor.setClosedLoopControl(true);
 		compressor.start();
@@ -137,6 +137,7 @@ public class Robot extends IterativeRobot {
 //		intake.wingSolenoid.set(false);//opens up robot as soon as robot starts
 //		if (autonomousCommand != null)
 //			autonomousCommand.start();
+		intake.disengageRatchetWing();
 	}
 
 	/**
@@ -162,6 +163,7 @@ public class Robot extends IterativeRobot {
 		//if (autonomousCommand != null)
 			//autonomousCommand.cancel();
 			gamePeriod = GamePeriod.TELEOP;
+			intake.disengageRatchetWing();
 //			intake.wingSolenoid.set(false);
 //			gearMechanism.changeGearSolenoidState(false);//makes it stay up when it turns on; just initiating it as up in the subsystem isn't working
 //			intake.moveIntakeOut(false);
@@ -179,21 +181,24 @@ public class Robot extends IterativeRobot {
 		System.out.println("Compressor switch vaule " + compressor.getPressureSwitchValue());
 		
 		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
+		SmartDashboard.putNumber("Drivetrain total current", drivetrain.getCurrentUsage());
+		SmartDashboard.putNumber("Climber/Intake current",intake.getCurrentUsage());
+		SmartDashboard.putNumber("Hopper current",hopper.getCurrentUsage());
+		SmartDashboard.putNumber("Shooter total current",shooter.getCurrentUsage());
 		
-//		SmartDashboard.putNumber("Drivetrain current", drivetrain.getCurrentUsage());
-//		System.out.println("Drivetrain total Current: "+drivetrain.getCurrentUsage());
-//		System.out.println("Hopper current draw: "+hopper.getCurrentUsage());
-//		System.out.println("Intake current draw: "+intake.getCurrentUsage());
-		SmartDashboard.putNumber("Climber current usage: ",intake.getCurrentUsage());
-//		System.out.println("Shooter current draw: "+shooter.getCurrentUsage());
+		System.out.println("Drivetrain total Current: "+drivetrain.getCurrentUsage());
+		System.out.println("Hopper current draw: "+hopper.getCurrentUsage());
+		System.out.println("Intake current draw: "+intake.getCurrentUsage());
+//		SmartDashboard.putNumber("Climber current usage: ",intake.getCurrentUsage());
+		System.out.println("Shooter current draw: "+shooter.getCurrentUsage());
 //		System.out.println("Shooter error: "+shooter.getError());
-		Scheduler.getInstance().run();
 		
-		/* if(Robot.hopper.moreBalls())
+		if(Robot.hopper.moreBalls())//comment out to turn off auto-hopper
 			Robot.hopper.runHopper();
 		else
 			Robot.hopper.stopHopper();
-		*/
+		
+		Scheduler.getInstance().run();
 		oi.checkForAction();
 	}
 
