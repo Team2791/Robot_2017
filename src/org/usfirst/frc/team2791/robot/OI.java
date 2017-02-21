@@ -12,6 +12,7 @@ import org.usfirst.frc.team2791.robot.commands.RemoveGear;
 import org.usfirst.frc.team2791.robot.commands.ResetGear;
 import org.usfirst.frc.team2791.robot.commands.RunClimber;
 import org.usfirst.frc.team2791.robot.commands.RunHopper;
+import org.usfirst.frc.team2791.robot.commands.RunHopperBackwards;
 import org.usfirst.frc.team2791.robot.commands.RunIntake;
 import org.usfirst.frc.team2791.robot.commands.RunIntakeBelt;
 import org.usfirst.frc.team2791.robot.commands.RunWallShot;
@@ -191,6 +192,7 @@ public class OI {
 		
 		operatorDpadLeft.whileHeld(new RunHopper());
 		operatorDpadRight.whenPressed(new StopHopper());
+		operatorDpadDownLeft.whileHeld(new RunHopperBackwards());
 }
 	public void checkForAction(){
 		
