@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2791.robot.ShakerJoystick;
 
 import org.usfirst.frc.team2791.robot.RobotMap;
-import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 
 public class ShakerDriver extends OverriddenJoystick {
     private static ShakerDriver driverJoystickInstance;

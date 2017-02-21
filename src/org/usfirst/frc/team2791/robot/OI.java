@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2791.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 //import edu.wpi.first.wpilibj.buttons.Button;
 //import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -9,7 +8,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
 import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
-import org.usfirst.frc.team2791.robot.commands.ShootWithJoystick;
 import org.usfirst.frc.team2791.robot.commands.RemoveGear;
 import org.usfirst.frc.team2791.robot.commands.ResetGear;
 import org.usfirst.frc.team2791.robot.commands.RunClimber;
@@ -22,7 +20,6 @@ import org.usfirst.frc.team2791.robot.commands.StopClimberAndDisengage;
 import org.usfirst.frc.team2791.robot.commands.StopHopper;
 import org.usfirst.frc.team2791.robot.commands.TurnShooterOff;
 import org.usfirst.frc.team2791.robot.commands.TurnIntakeOff;
-import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 
 /**
  * This class is the glue that binds the controls on the physical operator
