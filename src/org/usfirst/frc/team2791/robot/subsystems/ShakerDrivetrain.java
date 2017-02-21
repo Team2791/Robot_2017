@@ -1,19 +1,15 @@
 package org.usfirst.frc.team2791.robot.subsystems;
 
-import org.usfirst.frc.team2791.robot.OI;
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
-import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
 import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team2791.robot.util.BasicPID;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.Util;
-import org.usfirst.frc.team2791.robot.util.TalonSet;
 //import org.usfirst.frc.team2791.shakerJoystick.ShakerDriver;
 //import org.usfirst.frc.team2791.util.RobotMap;
 import org.usfirst.frc.team2791.robot.util.ShakerGyro;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
@@ -21,7 +17,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Solenoid;
 
 public class ShakerDrivetrain extends Subsystem{
     protected Encoder leftDriveEncoder = null;
@@ -53,18 +48,18 @@ public class ShakerDrivetrain extends Subsystem{
     protected boolean PIDAtTarget = false;
     protected boolean anglePIDQuickExit = false;
     
+    private double distancePerPulse = Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER);
+    
     public ShakerDrivetrain(){
-    	this.leftSpark = new Talon(RobotMap.DRIVE_SPARK_LEFT_PORT);
-	    
-    	
-	    this.rightSpark = new Talon(RobotMap.DRIVE_SPARK_RIGHT_PORT);
+    	leftSpark = new Talon(RobotMap.DRIVE_SPARK_LEFT_PORT);
+	    rightSpark = new Talon(RobotMap.DRIVE_SPARK_RIGHT_PORT);
 	    
 	
-	    this.leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
-	    this.rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
+	    leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
+	    rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
 	    
 	    // use the talons to create a roboDrive (it has methods that allow for easier control)
-	    this.shakyDrive = new RobotDrive(rightSpark,leftSpark);
+	    shakyDrive = new RobotDrive(rightSpark,leftSpark);
 	    
 	    // stop all motors right away just in case
 	    shakyDrive.stopMotor();
@@ -72,8 +67,8 @@ public class ShakerDrivetrain extends Subsystem{
 		leftDriveEncoder.reset();
 		rightDriveEncoder.reset();
 			
-		leftDriveEncoder.setDistancePerPulse(Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
-		rightDriveEncoder.setDistancePerPulse(-Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER)); 
+		leftDriveEncoder.setDistancePerPulse(distancePerPulse); 
+		rightDriveEncoder.setDistancePerPulse(-distancePerPulse); 
 	
 		movingAnglePID = new BasicPID(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
 		distancePID = new BasicPID(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);
@@ -113,18 +108,18 @@ public class ShakerDrivetrain extends Subsystem{
 	}
 
 	public void debug() {
-//		SmartDashboard.putNumber("Left Drive Encoders Rate", leftDriveEncoder.getRate());
-//		SmartDashboard.putNumber("Right Drive Encoders Rate", rightDriveEncoder.getRate());
-//		SmartDashboard.putNumber("Encoder Angle", getAngleEncoder());
+		SmartDashboard.putNumber("Left Drive Encoders Rate", leftDriveEncoder.getRate());
+		SmartDashboard.putNumber("Right Drive Encoders Rate", rightDriveEncoder.getRate());
+		SmartDashboard.putNumber("Encoder Angle", getAngleEncoder());
 //		SmartDashboard.putNumber("Encoder Angle Rate Change", getEncoderAngleRate());
 //		SmartDashboard.putNumber("Angle PID Error", stationaryAnglePID.getError());
-//		SmartDashboard.putNumber("Angle PID Output", stationaryAnglePID.getOutput());
-//		SmartDashboard.putNumber("Average Encoder Distance", getAverageDist());
-//		SmartDashboard.putNumber("Left Encoder Distance", getLeftDistance());
-//		SmartDashboard.putNumber("Right Encoder Distance", getRightDistance());
+		SmartDashboard.putNumber("Angle PID Output", stationaryAnglePID.getOutput());
+		SmartDashboard.putNumber("Average Encoder Distance", getAverageDist());
+		SmartDashboard.putNumber("Left Encoder Distance", getLeftDistance());
+		SmartDashboard.putNumber("Right Encoder Distance", getRightDistance());
 //		SmartDashboard.putNumber("Distance PID output", distancePID.getOutput());
-//		SmartDashboard.putNumber("Distance PID error", distancePID.getError());
-//		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
+		SmartDashboard.putNumber("Distance PID error", distancePID.getError());
+		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
 	}
 	public void updatePIDGains() {
 		movingAnglePID.changeGains(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
@@ -156,9 +151,9 @@ public class ShakerDrivetrain extends Subsystem{
 	}
 
 	public void reset() {
-		this.disable();
-		this.rightDriveEncoder.reset();
-		this.leftDriveEncoder.reset();
+		disable();
+		rightDriveEncoder.reset();
+		leftDriveEncoder.reset();
 	}
 	public void resetEncoders() {
 		// zero the encoders
@@ -183,7 +178,7 @@ public class ShakerDrivetrain extends Subsystem{
 	}
 	public void disable() {
 		// Stops all the motors
-		this.shakyDrive.stopMotor();
+		shakyDrive.stopMotor();
 	}
 	 public void resetGyro() {
 	 // zero the gyro
@@ -245,16 +240,4 @@ public class ShakerDrivetrain extends Subsystem{
 		}
 		return totalCurrent;
 	}
-	
-    //don't need any of this stuff below b/c of the interpreter
-    /*
-    public void forward(double distance) {}
-	
-    public void left(double distance) {}
-	
-    public void right(double distance) {}
-	
-    public void back(double distance) {}
-    */
-	
 }

@@ -11,14 +11,9 @@ public class ShakerGear extends Subsystem{
 		gearSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.GEAR_CHANNEL);
 	}
 	public void initDefaultCommand(){
-		
 		gearSolenoid.set(false);
 	}
-	
-	/**
-	 * 
-	 * @param state true(down) or false(up)
-	 */
+
 	public void changeGearSolenoidState(boolean state){
 		gearSolenoid.set(state);
 	}

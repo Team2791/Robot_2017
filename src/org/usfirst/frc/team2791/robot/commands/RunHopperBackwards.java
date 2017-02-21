@@ -3,21 +3,17 @@ package org.usfirst.frc.team2791.robot.commands;
 import org.usfirst.frc.team2791.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-
-public class RunIntakeBelt extends Command{
-	public RunIntakeBelt(){
-		super("RunIntakeBelt");
-		requires(Robot.intake);
+//unjams the hopper if needed
+public class RunHopperBackwards extends Command{
+	public RunHopperBackwards(){
+		super("RunHopperBackwards");
+		requires(Robot.hopper);
 	}
 	
 	protected void initialize(){}
 	
 	protected void execute(){
-		Robot.intake.disengageRatchetWing();//hard-coded in to ensure no destruction
-		
-		if(Robot.intake.isRatchetWingDisengaged()){
-			Robot.intake.motorOnIntake();
-		}
+		Robot.hopper.setHopperSpeed(0.66);
 	}
 	
 	protected boolean isFinished(){
@@ -25,10 +21,9 @@ public class RunIntakeBelt extends Command{
 	}
 	
 	protected void end(){
-		Robot.intake.motorOffIntake();
+		Robot.hopper.stopMotor();
 	}
 	
 	protected void interrupted(){
 	}
-	
 }

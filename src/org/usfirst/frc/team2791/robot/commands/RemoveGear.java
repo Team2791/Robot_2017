@@ -7,16 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RemoveGear extends Command{
 	public RemoveGear (){
 		super("RemoveGear");
-		requires(Robot.gearMechanism);// Use requires() here to declare subsystem dependencies
-		System.out.println("came to constructor of gear");
+		requires(Robot.gearMechanism);
 	}
 	
-	protected void initialize(){
-		System.out.println("came to initialize of gear");
-	}
+	protected void initialize(){}
 	
 	protected void execute(){
-		System.out.println("I'm trying to execute gear removal");
 		Robot.gearMechanism.changeGearSolenoidState(true);
 	}
 	

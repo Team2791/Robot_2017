@@ -6,6 +6,7 @@
 package org.usfirst.frc.team2791.robot.subsystems;
 
 import org.usfirst.frc.team2791.robot.RobotMap;
+import org.usfirst.frc.team2791.robot.commands.ShootWithJoystick;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 
 import com.ctre.CANTalon;
@@ -30,15 +31,14 @@ public class ShakerShooter extends Subsystem {
     private Solenoid shooterSolenoid;
 
     protected boolean autoFire = false;
-    public void initDefaultCommand(){}
-    
+        
     public ShakerShooter() {
     	shooterSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.SHOOTER_CHANNEL);
     	shooterSolenoid.set(false);//default state
     	
         primaryShooterTalon = new CANTalon(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
         primaryShooterTalon.setInverted(true);
-        followerShooterTalonA = new CANTalon(RobotMap.RIGHT_SHOOTER_TALON_PORT);
+        followerShooterTalonA = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT);
         primaryShooterTalon.configPeakOutputVoltage(0, -12.0f);
         followerShooterTalonA.configPeakOutputVoltage(0, -12.0f);
         
@@ -72,6 +72,11 @@ public class ShakerShooter extends Subsystem {
         primaryShooterTalon.configNominalOutputVoltage(0, 0);
         followerShooterTalonA.configNominalOutputVoltage(0, 0);
     }
+    
+    public void initDefaultCommand(){
+    	setDefaultCommand(new ShootWithJoystick());
+    }
+    
     public void setShooterSolenoidState(boolean key){
     	shooterSolenoid.set(key);
     }
@@ -171,13 +176,14 @@ public class ShakerShooter extends Subsystem {
     public double getCurrentUsage(){
     	return primaryShooterTalon.getOutputCurrent()+followerShooterTalonA.getOutputCurrent();
     }
-	public void setTrigger(double combinedLeft) {
+	@SuppressWarnings("deprecation")
+	public void setVBusWithTrigger(double Vbus) {
 		// TODO Auto-generated method stub
 		primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);//percent v bus
         followerShooterTalonA.changeControlMode(TalonControlMode.PercentVbus);
-		
-        primaryShooterTalon.set(combinedLeft);
-        followerShooterTalonA.set(combinedLeft);
+		SmartDashboard.putNumber("Shooter percent Vbus",Vbus);
+        primaryShooterTalon.set(Vbus);
+        followerShooterTalonA.set(Vbus);
 	}
 	public double getError() {
 		// TODO Auto-generated method stub

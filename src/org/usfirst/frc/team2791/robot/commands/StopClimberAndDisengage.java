@@ -4,20 +4,18 @@ import org.usfirst.frc.team2791.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class RunIntakeBelt extends Command{
-	public RunIntakeBelt(){
-		super("RunIntakeBelt");
+public class StopClimberAndDisengage extends Command{
+	
+	public StopClimberAndDisengage(){
+		super("StopClimberAndDisengage");
 		requires(Robot.intake);
 	}
 	
 	protected void initialize(){}
 	
 	protected void execute(){
-		Robot.intake.disengageRatchetWing();//hard-coded in to ensure no destruction
-		
-		if(Robot.intake.isRatchetWingDisengaged()){
-			Robot.intake.motorOnIntake();
-		}
+		Robot.intake.disengageRatchetWing();
+		Robot.intake.motorOffIntake();
 	}
 	
 	protected boolean isFinished(){
@@ -25,10 +23,11 @@ public class RunIntakeBelt extends Command{
 	}
 	
 	protected void end(){
+		Robot.intake.disengageRatchetWing();
 		Robot.intake.motorOffIntake();
 	}
 	
 	protected void interrupted(){
+		new TurnIntakeOff();
 	}
-	
 }
