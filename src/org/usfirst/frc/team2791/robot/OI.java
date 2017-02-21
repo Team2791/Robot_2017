@@ -78,7 +78,7 @@ public class OI {
 		driverRB.whileHeld(new DriveWithJoystick());//TODO: change to triggers once they are properly set up
 		
 		operatorLB.whenPressed(new StopClimberAndUnattach());//TODO: change to start buttons or something less needed
-//		operatorRB.whenPressed(new TurnShooterOff());
+		operatorRB.whenPressed(new TurnShooterOff());
 		
 }
 	public void checkForAction(){
