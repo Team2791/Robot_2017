@@ -8,7 +8,7 @@ public class StopClimberAndDisengage extends Command{
 	
 	public StopClimberAndDisengage(){
 		super("StopClimberAndDisengage");
-		requires(Robot.intake);// Use requires() here to declare subsystem dependencies
+		requires(Robot.intake);
 	}
 	
 	protected void initialize(){}

@@ -11,47 +11,28 @@ public class DriveWithJoystick extends Command {
 	
 	public DriveWithJoystick() {
 		super("DriveWithJoystick");
-		requires(Robot.drivetrain);// Use requires() here to declare subsystem dependencies
+		requires(Robot.drivetrain);
 	}
+	
 	protected void initialize() {
 	}
-	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
 		Robot.drivetrain.setLeftRightMotorOutputs(speedMultiplier*GTADrive.getLeftValue(Robot.oi.driver),
 				speedMultiplier*GTADrive.getRightValue(Robot.oi.driver));
-//		System.out.println("I'm trying to execute");
-		//logic interprets driver Joystick position for motor outputs 
-	    
-//		double combinedLeft, combinedRight;
-//	    //if we need to change the speed we can change the .35 FIRST and then the /3 ONLY if thats not enough
-//	    if(Robot.oi.driver.getButtonRB()){
-//		combinedLeft=0.35+Robot.oi.driver.getAxisLeftX()/3;
-//		combinedRight=0.35-(double) (Robot.oi.driver.getAxisLeftX())/3.0;
-//	    }
-//	    else if(Robot.oi.driver.getButtonLB()){
-//		combinedLeft=-1*(0.35+Robot.oi.driver.getAxisLeftX()/3);
-//		combinedRight=-1*(0.35-Robot.oi.driver.getAxisLeftX()/3);
-//	    }
-//	    else{
-//	 	combinedLeft=Robot.oi.driver.getGtaDriveLeft();
-//		combinedRight=Robot.oi.driver.getGtaDriveRight();
-//	    }
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
 	@Override
-	protected boolean isFinished() {//false because always running unless interrupted
+	protected boolean isFinished() {
 		return false;
 	}
-
-	// Called once after isFinished returns true
+	
 	@Override
 	protected void end() {
 		Robot.drivetrain.setLeftRightMotorOutputs(0.0,0.0);
 	}
 
-	protected void interrupted() {//called when another command requires the same subsystem to run itself
+	protected void interrupted() {
 		new DriveWithJoystick();
 	}
 

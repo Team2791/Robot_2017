@@ -77,19 +77,14 @@ public class Robot extends IterativeRobot {
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
 		hopper = new ShakerHopper();
-//		Thread.sleep(500);
 		shooter = new ShakerShooter();
-//		Thread.sleep(500);
 		
-		//driveTrainThread = new Thread(drivetrain);
         //driveTrainThread.start();
 		//chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", chooser);
-//		SmartDashboard.putData(drivetrain);
 		
-		// OI has to be initialized after all subsystems to
-		// prevent startCompetition() error
+		// OI has to be initialized after all subsystems to prevent startCompetition() error
 		oi = new OI();
 	}
 
@@ -145,15 +140,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-//		if(!hopper.isBallAtTop())
-//			hopper.runHopper();
-//		else
-//			hopper.stopHopper();
 	}
 
 	@Override
 	public void teleopInit() {
-//		intake.wingDeployment();//comment out when auton is runnings
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
@@ -163,9 +153,6 @@ public class Robot extends IterativeRobot {
 			//autonomousCommand.cancel();
 			gamePeriod = GamePeriod.TELEOP;
 			intake.disengageRatchetWing();
-//			intake.wingSolenoid.set(false);
-//			gearMechanism.changeGearSolenoidState(false);//makes it stay up when it turns on; just initiating it as up in the subsystem isn't working
-//			intake.moveIntakeOut(false);
 		}
 
 	/**
@@ -173,15 +160,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		compressor.start();
-		debug();
-		
-		// TODO REMOVE THIS CODE ENTIRELY
-//		if(!Robot.hopper.isBallAtTop())//comment out to turn off auto-hopper
-//			Robot.hopper.runHopper();
-//		else
-//			Robot.hopper.stopHopper();
-		
+		debug();	
 		Scheduler.getInstance().run();
 		oi.checkForAction();
 	}
@@ -198,6 +177,8 @@ public class Robot extends IterativeRobot {
     }
 	
 	public void debug() {
+		
+		//compressor debugging
 //		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
 //		System.out.println("Compressor enabled? " + compressor.enabled());
 //		System.out.println("Compressor closed loop? " + compressor.getClosedLoopControl());
@@ -209,6 +190,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Hopper current",hopper.getCurrentUsage());
 		SmartDashboard.putNumber("Shooter total current",shooter.getCurrentUsage());
 		
+		//for current based debugging without smart dashboard
 //		System.out.println("Drivetrain total Current: "+drivetrain.getCurrentUsage());
 //		System.out.println("Hopper current draw: "+hopper.getCurrentUsage());
 //		System.out.println("Intake current draw: "+intake.getCurrentUsage());

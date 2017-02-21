@@ -7,23 +7,28 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RunIntakeBelt extends Command{
 	public RunIntakeBelt(){
 		super("RunIntakeBelt");
-		requires(Robot.intake);// Use requires() here to declare subsystem dependencies
-//		System.out.println("came to constructor of intake belts");
+		requires(Robot.intake);
 	}
-	protected void initialize(){
-//		System.out.println("came to initialize of intake belts");
-	}
+	
+	protected void initialize(){}
+	
 	protected void execute(){
-//		System.out.println("I'm trying to execute intake belt");
-		Robot.intake.motorOnIntake();
+		Robot.intake.disengageRatchetWing();//hard-coded in to ensure no destruction
 		
+		if(Robot.intake.isRatchetWingDisengaged()){
+			Robot.intake.motorOnIntake();
+		}
 	}
+	
 	protected boolean isFinished(){
 		return false;
 	}
+	
 	protected void end(){
 		Robot.intake.motorOffIntake();
 	}
+	
 	protected void interrupted(){
 	}
+	
 }

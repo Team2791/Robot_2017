@@ -35,7 +35,9 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 	public void disengageRatchetWing(){
 		ratchetWingSolenoid.set(true);
 	}
-	
+	public boolean isRatchetWingDisengaged(){
+		return ratchetWingSolenoid.get();
+	}
 	/**
 	 * sets intake to in(true) or out (false)
 	 */
