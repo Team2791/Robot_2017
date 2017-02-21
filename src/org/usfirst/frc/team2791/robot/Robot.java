@@ -50,15 +50,14 @@ import org.usfirst.frc.team2791.trajectory.AutoPaths;
  */
 public class Robot extends IterativeRobot {
 	public static OI oi;
-//	public Thread driveTrainThread;
 	public static GamePeriod gamePeriod;
 	public static PowerDistributionPanel pdp; //CAN ID has to be 0 for current sensing
-//	public static ShakerIntake intake;
-//	public static ShakerGear gearMechanism;
-//	public static Compressor compressor;
+
 	public static ShakerDrivetrain drivetrain;
-//	public static ShakerHopper hopper;
 	
+	/**
+	 * setting autonomousCommand to a Command will cause that Command to run in autonomous init
+	 */
 	Command autonomousCommand;
 	//SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -74,9 +73,7 @@ public class Robot extends IterativeRobot {
 		//compressor = new Compressor(RobotMap.PCM_MODULE);
 		//compressor.setClosedLoopControl(true);
 		drivetrain = new ShakerDrivetrain();
-		//intake = new ShakerIntake();
-		//gearMechanism = new ShakerGear();
-//		hopper = new ShakerHopper();
+		
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 		if(SmartDashboard.getNumber("kp", -2791) == -2791){
 			SmartDashboard.putNumber("kp",0);

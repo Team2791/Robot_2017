@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2791.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 //import edu.wpi.first.wpilibj.buttons.Button;
 //import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -8,190 +7,182 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
-import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
-//import org.usfirst.frc.team2791.robot.commands.RemoveGear;
-//import org.usfirst.frc.team2791.robot.commands.ResetGear;
-//import org.usfirst.frc.team2791.robot.commands.RunClimber;
-//import org.usfirst.frc.team2791.robot.commands.RunHopper;
-//import org.usfirst.frc.team2791.robot.commands.RunHopperWithJoystick;
-//import org.usfirst.frc.team2791.robot.commands.RunIntake;
-//import org.usfirst.frc.team2791.robot.commands.RunIntakeBelt;
-//import org.usfirst.frc.team2791.robot.commands.StopHopper;
-//import org.usfirst.frc.team2791.robot.commands.TurnIntakeOff;
-//import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
-
-/** 
- *This class is the glue that binds the controls on the physical operator
- *interface to the commands and command groups that allow control of the robot.
- *@author unbun
- *@author Gaurab
+import org.usfirst.frc.team2791.robot.commands.*;
+/**
+ * This class is the glue that binds the controls on the physical operator
+ * interface to the commands and command groups that allow control of the robot.
  */
-
 public class OI {
 	public static ShakerDriver driver;
 	public static ShakerOperator operator;
 	public OI(){
-		System.out.println("OIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOI");
-		driver = new ShakerDriver();
+		System.out.println("OI initialized");
+		driver = new ShakerDriver();///increase driver control expiration to 0.5
 		operator = new ShakerOperator();
-		
-				
-		//if(driver.getXVal()){}
-		//	if(driver.getYVal()){}
 
-		//Button driveForward = new JoystickButton(driver, 3);
-
-		//driveForward.whileHeld(new DriveWithJoystick());
-
-
-
-		/* Note: We're doing it our own way since we wrote an Overridden Joystick class
-		 * 
-		 * 
-		 * 
+		/*
+		 * Button assignments
 		 */
-		//Button button = new JoystickButton(driver, buttonNumber);
+		Button driverA = new JoystickButton(driver, 1);
+		Button driverB = new JoystickButton(driver, 2);
+		Button driverX = new JoystickButton(driver, 3);
+		Button driverY = new JoystickButton(driver, 4);
 
-		// There are a few additional built in buttons you can use. Additionally,
-		// by subclassing Button you can create custom triggers and bind those to
-		// commands the same as any other Button.
+		Button operatorA = new JoystickButton(operator, 1);
+		Button operatorB = new JoystickButton(operator, 2);
+		Button operatorX = new JoystickButton(operator, 3);
+		Button operatorY = new JoystickButton(operator, 4);
 
-		/*TRIGGERING COMMANDS WITH BUTTONS
-	Once you have a button, it's trivial to bind it to a button in one of
-    three ways:
+		Button driverLB = new JoystickButton(driver,5);
+		Button driverRB = new JoystickButton(driver,6);
 
-	Start the command when the button is pressed and let it run the command
-	until it is finished as determined by it's isFinished method.
-	button.whenPressed(new ExampleCommand());
+		Button operatorLB = new JoystickButton(operator,5);
+		Button operatorRB = new JoystickButton(operator,6);
 
-	Run the command while the button is being held down and interrupt it once
-	the button is released.
-	button.whileHeld(new ExampleCommand());
+		Button driverLS = new JoystickButton(driver,9);//stick buttons - pushing joysticks in
+		Button driverRS = new JoystickButton(driver,10);
 
-	Start the command when the button is released and let it run the command
- 	until it is finished as determined by it's isFinished method.
- 	button.whenReleased(new ExampleCommand()); */
-		
-		
+		Button operatorLS = new JoystickButton(operator,9);
+		Button operatorRS = new JoystickButton(operator,10);
+
+		Button driverSelect = new JoystickButton(driver,7);
+		Button driverStart = new JoystickButton(driver,8);
+
+		Button operatorSelect = new JoystickButton(operator,7);
+		Button operatorStart = new JoystickButton(operator, 8);
+
+		Button driverDpadUp = new Button(){
+			@Override
+			public boolean get(){
+				return driver.getDpadUp();
+			}
+		};
+
+		Button driverDpadUpRight = new Button(){
+			@Override
+			public boolean get(){
+				return driver.getDpadUpRight();
+			}
+		};
+
+		Button driverDpadRight = new Button(){
+			@Override
+			public boolean get(){
+				return driver.getDpadRight();
+			}
+		};
+
+		Button driverDpadDownRight = new Button(){
+			@Override
+			public boolean get(){
+				return driver.getDpadDownRight();
+			}
+		};
+
+		Button driverDpadDown = new Button(){
+			@Override
+			public boolean get(){
+				return driver.getDpadDown();
+			}
+		};
+
+		Button driverDpadDownLeft = new Button(){
+			@Override
+			public boolean get(){
+				return driver.getDpadDownLeft();
+			}
+		};
+
+		Button driverDpadLeft = new Button(){
+			@Override
+			public boolean get(){
+				return driver.getDpadLeft();
+			}
+		};
+
+		Button driverDpadUpLeft = new Button(){
+			@Override
+			public boolean get(){
+				return driver.getDpadUpLeft();
+			}
+		};
+
+		Button operatorDpadUp = new Button(){
+			@Override
+			public boolean get(){
+				return operator.getDpadUp();
+			}
+		};
+
+		Button operatorDpadUpRight = new Button(){
+			@Override
+			public boolean get(){
+				return operator.getDpadUpRight();
+			}
+		};
+
+		Button operatorDpadRight = new Button(){
+			@Override
+			public boolean get(){
+				return operator.getDpadRight();
+			}
+		};
+		Button operatorDpadDownRight = new Button(){
+			@Override
+			public boolean get(){
+				return operator.getDpadDownRight();
+			}
+		};
+		Button operatorDpadDown = new Button(){
+			@Override
+			public boolean get(){
+				return operator.getDpadDown();
+			}
+		};
+		Button operatorDpadDownLeft = new Button(){
+			@Override
+			public boolean get(){
+				return operator.getDpadDownLeft();
+			}
+		};
+		Button operatorDpadLeft = new Button(){
+			@Override
+			public boolean get(){
+				return operator.getDpadLeft();
+			}
+		};
+		Button operatorDpadUpLeft = new Button(){
+			@Override
+			public boolean get(){
+				return operator.getDpadUpLeft();
+			}
+		};
+
+		/*
+		 * Command Assignments
+		 */
+		driverLB.whileHeld(new DriveWithJoystick());//TODO: change to triggers once they are properly set up
+		driverRB.whileHeld(new DriveWithJoystick());//TODO: change to triggers once they are properly set up
 	}
-	
 
-	public void checkForAction(){
-		if(driver.getDpadUp()){}
-		if(driver.getDpadUpRight()){}
-		if(driver.getDpadRight()){}
-		if(driver.getDpadDownRight()){}
-		if(driver.getDpadDown()){}
-		if(driver.getDpadDownLeft()){}
-		if(driver.getDpadLeft()){}
-		if(driver.getDpadUpLeft()){}
-		
-		
-		if(driver.getButtonA()){}
-		if(driver.getButtonB()){
-			System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
-		}
-		if(driver.getButtonX()){
-			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-		}
-		if(driver.getButtonY()){}
-
-		if(driver.getButtonLB()){
-			new DriveWithJoystick();
-		}
-		if(driver.getButtonRB()){//creep forward button (right button back)
-			new DriveWithJoystick();
-		}
-
-		if(driver.getButtonLS()){}//stick buttons - pushing joysticks in
-		if(driver.getButtonRS()){}
-
-		if(driver.getButtonSel()){}
-		if(driver.getButtonSt()){}
-
-		if(Math.abs(driver.getAxisLeftX())>0.0){
-			System.out.println("getAxisLeftX");
-			new DriveWithJoystick();
-		}	
-		if(Math.abs(driver.getAxisLeftY()) > 0.0){}	
-
-		if(Math.abs(driver.getAxisLT())>0.0){//left trigger and right triggers
-			new DriveWithJoystick();
-		}
-		if(Math.abs(driver.getAxisRT())>0.0){
-			System.out.println("RTRTRTRTRTRTRTRTRTRTRT");
-			new DriveWithJoystick();
-			System.out.println("Called new command from button");
-		}
-
-		if(Math.abs(driver.getAxisRightX())>0.0){//right joystick
-		}
-		if(Math.abs(driver.getAxisRightY())>0.0){//check to see if get AxisRightX does trick, otherwise switch to getAxisRightY
-			//		new DriveWithJoystick();
-		}	
-
-
-
-
-		if(Math.abs(operator.getXVal())>0.0){
-		}
-		if(Math.abs(operator.getYVal())>0.0){
-		}
-
-		if(operator.getDpadUp()){
-		}
-		if(operator.getDpadUpRight()){}
-		if(operator.getDpadRight()){
-			//			new StopHopper();
-		}
-		if(operator.getDpadDownRight()){}
-		if(operator.getDpadDown()){
-			//			new RemoveGear();
-		}
-		if(operator.getDpadDownLeft()){}
-		if(operator.getDpadLeft()){
-			//			new RunHopper();
-		}
-		if(operator.getDpadUpLeft()){}
-
-		if(operator.getButtonA()){
-			System.out.println("Operator is running the fuel intake");
-			//			new RunIntake();
-		}
-		if(operator.getButtonB()){
-			System.out.println("Operator is turning off fuel intake");
-			//			new TurnIntakeOff();
-		}
-		if(operator.getButtonX()){}
-		if(operator.getButtonY()){
-			System.out.println("Operator is running the climber");
-			//			new RunClimber();
-		}
-
-		if(operator.getButtonLB()){}
-		if(operator.getButtonRB()){
-			System.out.println("only running intake belts");
-			//			new RunIntakeBelt();
-		}
-
-		if(operator.getButtonLS()){}
-		if(operator.getButtonRS()){}
-
-		if(operator.getButtonSel()){}
-		if(operator.getButtonSt()){}
-
-		if(Math.abs(operator.getAxisLeftX())>0.0){}	
-		if(Math.abs(operator.getAxisLeftY())>0.0){}	
-
-		if(operator.getAxisLT()>0.0){}
-		if(operator.getAxisRT()>0.0){
-			//			new RunHopperWithJoystick();
-		}
-
-		if(Math.abs(operator.getAxisRightX())>0.0){}
-		if(Math.abs(operator.getAxisRightY())>0.0){}
-	}
+//	public void checkForAction(){
+//
+//		if(Math.abs(driver.getAxisLeftX())>0.0){}//left joystick
+//		if(Math.abs(driver.getAxisRT())>0.0){}//right trigger
+//		if(operator.getDpadUpLeft()){}
+//		if(Math.abs(driver.getAxisLT())>0.0){}//left trigger
+//		if(Math.abs(driver.getXVal())>0.0){}
+//		if(Math.abs(driver.getYVal())>0.0){}
+//		if(Math.abs(driver.getAxisLeftY())>0.0){}	
+//		if(Math.abs(driver.getAxisRightX())>0.0){}//right joystick
+//		if(Math.abs(driver.getAxisRightY())>0.0){}	
+//
+//		if(Math.abs(operator.getXVal())>0.0){}
+//		if(Math.abs(operator.getYVal())>0.0){}
+//		if(Math.abs(operator.getAxisLeftX())>0.0){}	
+//		if(Math.abs(operator.getAxisLeftY())>0.0){}	
+//		if(operator.getAxisRT()>0.0){}
+//		if(Math.abs(operator.getAxisRightX())>0.0){}
+//		if(Math.abs(operator.getAxisRightY())>0.0){}
+//
 }
-
-
-
