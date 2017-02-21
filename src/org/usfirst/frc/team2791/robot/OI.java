@@ -181,10 +181,10 @@ public class OI {
 		driverA.whenReleased(new RunIntake());//for driver tryouts
 		driverB.whenPressed(new TurnIntakeOff());//for driver tryouts
 		
-		driverLB.whileHeld(new DriveWithJoystick());//TODO: change to triggers once they are properly set up
-		driverRB.whileHeld(new DriveWithJoystick());//TODO: change to triggers once they are properly set up
+		driverLB.whileHeld(new DriveWithJoystick());
+		driverRB.whileHeld(new DriveWithJoystick());
 		
-		operatorLB.whenPressed(new StopClimberAndDisengage());//TODO: change to start buttons or something less needed
+		operatorLB.whenPressed(new StopClimberAndDisengage());
 		operatorRB.whenPressed(new TurnShooterOff());
 		
 		operatorDpadUp.whenPressed(new ResetGear());
