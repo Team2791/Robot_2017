@@ -184,16 +184,11 @@ public class OI {
 		driverLB.whileHeld(new DriveWithJoystick());//TODO: change to triggers once they are properly set up
 		driverRB.whileHeld(new DriveWithJoystick());//TODO: change to triggers once they are properly set up
 		
-<<<<<<< HEAD
-		operatorLB.whenPressed(new StopClimberAndUnattach());//TODO: change to start buttons or something less needed
-		operatorRB.whenPressed(new TurnShooterOff());
-=======
 		operatorLB.whenPressed(new StopClimberAndDisengage());//TODO: change to start buttons or something less needed
 		operatorRB.whenPressed(new TurnShooterOff());
 		
 		operatorDpadUp.whenPressed(new ResetGear());
 		operatorDpadDown.whenPressed(new RemoveGear());
->>>>>>> c88324170d362555a01eadaa78b365e7bd699aef
 		
 		operatorDpadLeft.whileHeld(new RunHopper());
 		operatorDpadRight.whenPressed(new StopHopper());
@@ -221,4 +216,3 @@ public class OI {
 	
 	}
 }
-
