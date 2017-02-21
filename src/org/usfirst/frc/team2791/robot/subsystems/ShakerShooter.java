@@ -38,7 +38,7 @@ public class ShakerShooter extends Subsystem {
     	
         primaryShooterTalon = new CANTalon(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
         primaryShooterTalon.setInverted(true);
-        followerShooterTalonA = new CANTalon(RobotMap.RIGHT_SHOOTER_TALON_PORT);
+        followerShooterTalonA = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT);
         primaryShooterTalon.configPeakOutputVoltage(0, -12.0f);
         followerShooterTalonA.configPeakOutputVoltage(0, -12.0f);
         

@@ -55,8 +55,6 @@ public class ShakerDrivetrain extends Subsystem{
     
     public ShakerDrivetrain(){
     	this.leftSpark = new Talon(RobotMap.DRIVE_SPARK_LEFT_PORT);
-	    
-    	
 	    this.rightSpark = new Talon(RobotMap.DRIVE_SPARK_RIGHT_PORT);
 	    
 	
@@ -113,18 +111,18 @@ public class ShakerDrivetrain extends Subsystem{
 	}
 
 	public void debug() {
-//		SmartDashboard.putNumber("Left Drive Encoders Rate", leftDriveEncoder.getRate());
-//		SmartDashboard.putNumber("Right Drive Encoders Rate", rightDriveEncoder.getRate());
-//		SmartDashboard.putNumber("Encoder Angle", getAngleEncoder());
+		SmartDashboard.putNumber("Left Drive Encoders Rate", leftDriveEncoder.getRate());
+		SmartDashboard.putNumber("Right Drive Encoders Rate", rightDriveEncoder.getRate());
+		SmartDashboard.putNumber("Encoder Angle", getAngleEncoder());
 //		SmartDashboard.putNumber("Encoder Angle Rate Change", getEncoderAngleRate());
 //		SmartDashboard.putNumber("Angle PID Error", stationaryAnglePID.getError());
-//		SmartDashboard.putNumber("Angle PID Output", stationaryAnglePID.getOutput());
-//		SmartDashboard.putNumber("Average Encoder Distance", getAverageDist());
-//		SmartDashboard.putNumber("Left Encoder Distance", getLeftDistance());
-//		SmartDashboard.putNumber("Right Encoder Distance", getRightDistance());
+		SmartDashboard.putNumber("Angle PID Output", stationaryAnglePID.getOutput());
+		SmartDashboard.putNumber("Average Encoder Distance", getAverageDist());
+		SmartDashboard.putNumber("Left Encoder Distance", getLeftDistance());
+		SmartDashboard.putNumber("Right Encoder Distance", getRightDistance());
 //		SmartDashboard.putNumber("Distance PID output", distancePID.getOutput());
-//		SmartDashboard.putNumber("Distance PID error", distancePID.getError());
-//		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
+		SmartDashboard.putNumber("Distance PID error", distancePID.getError());
+		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
 	}
 	public void updatePIDGains() {
 		movingAnglePID.changeGains(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);

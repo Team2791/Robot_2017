@@ -18,6 +18,7 @@ public class RobotMap {//to map ports; constants are in separate class
 	// DIO
 	public static final int LEFT_DRIVE_ENCODER_PORT_A = 9;
 	public static final int LEFT_DRIVE_ENCODER_PORT_B = 8;
+	
 	public static final int RIGHT_DRIVE_ENCODER_PORT_A = 7;
 	public static final int RIGHT_DRIVE_ENCODER_PORT_B = 6;
 	
@@ -29,7 +30,6 @@ public class RobotMap {//to map ports; constants are in separate class
 	
 	public static final int HOPPER_SPARK_PORT = 7;
 		 
-	// INTAKE CONSTANTS
 	// ANALOG
 	public static final int IR_SENSOR_1 = 0;
 	public static final int IR_SENSOR_2 = 1;
@@ -39,15 +39,8 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int PCM_MODULE = 1;
 	
 	public static final int PRIMARY_SHOOTER_TALON_PORT = 10;
-	public static final int RIGHT_SHOOTER_TALON_PORT = 11;
-	public static final int CENTER_SHOOTER_TALON_PORT = 0;
-	
-	public static final int SHOOTER_ENCODER_PORT_A = 0;
-	public static final int SHOOTER_ENCODER_PORT_B = 0;
-	
-
-	//	public static final int SHOOTER_TALON_RIGHT_PORT = 10;
-//	public static final int SHOOTER_TALON_LEFT_PORT = 11;
+	public static final int FOLLOWER_SHOOTER_TALON_PORT = 11;
+	public static final int SECONDARY_FOLLOWER_SHOOTER_TALON_PORT = 63;
 	
 	//PCM Ports--note: due to use of single solenoids, solenoids will default to false state while disabled
 	public static final int INTAKE_CHANNEL = 7;
