@@ -8,15 +8,15 @@ public class RunIntake extends Command{
 	public RunIntake(){
 		super("RunIntake");
 		requires(Robot.intake);// Use requires() here to declare subsystem dependencies
-		System.out.println("came to constructor of intake");
+//		System.out.println("came to constructor of intake");
 	}
 	protected void initialize(){
-		System.out.println("came to initialize of intake");
+//		System.out.println("came to initialize of intake");
 	}
 	protected void execute(){
-		System.out.println("I'm trying to execute intake on");
+//		System.out.println("I'm trying to execute intake on");
 		Robot.intake.disengageRatchetWing();
-		Robot.intake.setIntakeOut(true);
+		Robot.intake.moveIntakeOut(true);
 		Robot.intake.motorOnIntake();
 		
 	}
@@ -25,10 +25,10 @@ public class RunIntake extends Command{
 	}
 	protected void end(){
 		Robot.intake.motorOffIntake();
-		Robot.intake.setIntakeOut(false);
+		Robot.intake.moveIntakeOut(false);
 	}
 	protected void interrupted(){
 		Robot.intake.motorOffIntake();
-		Robot.intake.setIntakeOut(false);
+		Robot.intake.moveIntakeOut(false);
 	}
 }

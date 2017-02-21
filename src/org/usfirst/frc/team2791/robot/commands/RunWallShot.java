@@ -14,13 +14,13 @@ public class RunWallShot extends Command{
 		super("RunWallShot");
 		requires(Robot.shooter);
 		requires(Robot.hopper);
-		System.out.println("Came to wall shooter constructor");
+//		System.out.println("Came to wall shooter constructor");
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		System.out.println("initializing wall shot");
+//		System.out.println("initializing wall shot");
 	}
 
 	// Called repeatedly when this Command is scheduled to run

@@ -5,6 +5,8 @@ import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.Util;
 
 public class OverriddenJoystick extends Joystick {
+	public static double offset = 0;//to account for any slack in the system
+	
     public OverriddenJoystick(int port) {
         super(port);
     }
@@ -111,5 +113,36 @@ public class OverriddenJoystick extends Joystick {
 
     public double getAxisRightY() {
         return Util.deadzone(CONSTANTS.DEADZONE, super.getRawAxis(5), 1.0);
+    }
+    
+
+    public double getGtaDriveLeft() {
+        // Does the math to get Gta Drive Type on left motor
+        double leftAxis;
+        if (getAxisLeftX() < 0)
+            leftAxis = -Math.pow(getAxisLeftX(), 2) - offset;
+        else
+            leftAxis = Math.pow(getAxisLeftX(), 2) + offset;
+        double combined = -leftAxis + getAxisRT() - getAxisLT();
+        if (combined > 1.0)
+            return 1.0;
+        else if (combined < -1.0)
+            return -1.0;
+        return combined;
+    }
+
+    public double getGtaDriveRight() {
+        // Does the math to get Gta Drive Type on right motor
+        double leftAxis;
+        if (getAxisLeftX() < 0)
+            leftAxis = -Math.pow(getAxisLeftX(), 2) - offset;
+        else
+            leftAxis = Math.pow(getAxisLeftX(), 2) + offset;
+        double combined = leftAxis + getAxisRT() - getAxisLT();
+        if (combined > 1.0)
+            return 1.0;
+        else if (combined < -1.0)
+            return -1.0;
+        return combined;
     }
 }

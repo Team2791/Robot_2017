@@ -13,20 +13,14 @@ import org.usfirst.frc.team2791.robot.commands.RunHopper;
  */
 public class TurnShooterOff extends Command{
 	public TurnShooterOff() {
-		// Use requires() here to declare subsystem dependencies
 		super("StopShot");
 		requires(Robot.shooter);
 		requires(Robot.hopper);
-		System.out.println("Came to shooter stopper");
-		initialize();
 	}
 
 	// Called just before this Command runs the first time
 	@Override
-	protected void initialize() {
-		System.out.println("initializing wall shot");
-		execute();
-	}
+	protected void initialize() {}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
@@ -38,7 +32,7 @@ public class TurnShooterOff extends Command{
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	// Called once after isFinished returns true

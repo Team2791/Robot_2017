@@ -9,11 +9,9 @@ public class RunHopper extends Command{
 		super("RunHopper");
 		requires(Robot.hopper);// Use requires() here to declare subsystem dependencies
 		System.out.println("came to constructor of hopper run");
-		initialize();
 	}
 	protected void initialize(){
 		System.out.println("came to initialize of hopper run");
-		execute();
 	}
 	protected void execute(){
 		if(!Robot.hopper.isBallAtTop()){

@@ -2,6 +2,7 @@ package org.usfirst.frc.team2791.robot.subsystems;
 
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
+import org.usfirst.frc.team2791.robot.commands.RunHopper;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -27,7 +28,7 @@ public class ShakerHopper extends Subsystem{
 	}
 	
 	public void initDefaultCommand(){
-		
+		setDefaultCommand(new RunHopper());
 	}
 	
 	/**

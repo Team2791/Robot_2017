@@ -43,7 +43,7 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 	/**
 	 * sets intake to in(true) or out (false)
 	 */
-	public void setIntakeOut(boolean inOrOut){
+	public void moveIntakeOut(boolean inOrOut){
 		intakeSolenoid.set(inOrOut);
 //		System.out.print("The intake movedThe intake movedThe intake movedThe intake moved");
 	}
