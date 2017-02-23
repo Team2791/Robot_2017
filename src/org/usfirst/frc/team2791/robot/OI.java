@@ -1,16 +1,12 @@
 package org.usfirst.frc.team2791.robot;
 
-//import edu.wpi.first.wpilibj.buttons.Button;
-//import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
-import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
+import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
 import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team2791.robot.commands.RemoveGear;
 import org.usfirst.frc.team2791.robot.commands.ResetGear;
 import org.usfirst.frc.team2791.robot.commands.RunClimber;
+import org.usfirst.frc.team2791.robot.commands.RunFarShot;
 import org.usfirst.frc.team2791.robot.commands.RunHopper;
 import org.usfirst.frc.team2791.robot.commands.RunHopperBackwards;
 import org.usfirst.frc.team2791.robot.commands.RunIntake;
@@ -19,8 +15,14 @@ import org.usfirst.frc.team2791.robot.commands.RunWallShot;
 import org.usfirst.frc.team2791.robot.commands.StopClimberAndDisengage;
 //import org.usfirst.frc.team2791.robot.commands.RunWallShot;
 import org.usfirst.frc.team2791.robot.commands.StopHopper;
-import org.usfirst.frc.team2791.robot.commands.TurnShooterOff;
 import org.usfirst.frc.team2791.robot.commands.TurnIntakeOff;
+import org.usfirst.frc.team2791.robot.commands.TurnShooterOff;
+import org.usfirst.frc.team2791.robot.commands.WarmUpCompBot;
+
+//import edu.wpi.first.wpilibj.buttons.Button;
+//import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -170,6 +172,7 @@ public class OI {
 		 * Since all Buttons were initialized above, the bottom contains has commands assigned to each of the buttons
 		 */
 		operatorX.whileHeld(new RunWallShot());
+		operatorStart.whileHeld(new RunFarShot());
 		operatorY.whileHeld(new RunClimber());
 		operatorA.whileHeld(new RunIntake());
 		operatorB.whileHeld(new RunIntakeBelt());
@@ -190,9 +193,12 @@ public class OI {
 		operatorDpadUp.whenPressed(new ResetGear());
 		operatorDpadDown.whenPressed(new RemoveGear());
 		
+		operatorLS.whileHeld(new RunHopper());
 		operatorDpadLeft.whileHeld(new RunHopper());
 		operatorDpadRight.whenPressed(new StopHopper());
 		operatorDpadDownLeft.whileHeld(new RunHopperBackwards());
+		
+		driverStart.whileHeld(new WarmUpCompBot());
 }
 	public void checkForAction(){
 		

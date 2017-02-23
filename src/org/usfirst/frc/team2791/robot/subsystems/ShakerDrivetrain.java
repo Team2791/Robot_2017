@@ -113,13 +113,13 @@ public class ShakerDrivetrain extends Subsystem{
 		SmartDashboard.putNumber("Encoder Angle", getAngleEncoder());
 //		SmartDashboard.putNumber("Encoder Angle Rate Change", getEncoderAngleRate());
 //		SmartDashboard.putNumber("Angle PID Error", stationaryAnglePID.getError());
-		SmartDashboard.putNumber("Angle PID Output", stationaryAnglePID.getOutput());
+//		SmartDashboard.putNumber("Angle PID Output", stationaryAnglePID.getOutput());
 		SmartDashboard.putNumber("Average Encoder Distance", getAverageDist());
 		SmartDashboard.putNumber("Left Encoder Distance", getLeftDistance());
 		SmartDashboard.putNumber("Right Encoder Distance", getRightDistance());
 //		SmartDashboard.putNumber("Distance PID output", distancePID.getOutput());
-		SmartDashboard.putNumber("Distance PID error", distancePID.getError());
-		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
+//		SmartDashboard.putNumber("Distance PID error", distancePID.getError());
+//		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
 	}
 	public void updatePIDGains() {
 		movingAnglePID.changeGains(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);

@@ -161,11 +161,15 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		debug();	
+		hopper.debug();
+		drivetrain.debug();
+//		Robot.hopper.stopHopper();
 		Scheduler.getInstance().run();
 		oi.checkForAction();
 	}
 
 	/**
+	 * 
 	 * This function is called periodically during test mode
 	 */
 	@Override

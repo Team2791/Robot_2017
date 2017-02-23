@@ -59,6 +59,9 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 		intakeSpark.setSpeed(SmartDashboard.getNumber("Climbing Vbus",CLIMBING_VBUS));
 
 	}
+	public void setIntakeSpeed(double vbus){
+		intakeSpark.setSpeed(vbus);
+	}
 
 	public void debug(){
 		SmartDashboard.putNumber("Intake/Climber current usage", getCurrentUsage());
