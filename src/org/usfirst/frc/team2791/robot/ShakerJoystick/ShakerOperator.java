@@ -15,11 +15,4 @@ public class ShakerOperator extends OverriddenJoystick {
         return operatorJoystickInstance;
 
     }
-    public double getGtaDriveLeft() {
-        return super.getGtaDriveLeft();
-    }
-
-    public double getGtaDriveRight() {
-        return super.getGtaDriveRight();
-    }
 }

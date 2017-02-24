@@ -16,11 +16,14 @@ public class ShakerHopper extends Subsystem{
 	
 	private Talon hopperSpark;
 
-	private static double hopperSetpoint = -1.0;
+	private static double hopperSetpoint = 1.0;
 	private final double distanceSensorCutoffPoint = 1.5;
 	
 	public ShakerHopper(){
 		hopperSpark = new Talon(RobotMap.HOPPER_SPARK_PORT);
+		hopperSpark.setInverted(true);
+		hopperSpark.set(0.0);
+		hopperSpark.
 		
 		ballSensor1 = new AnalogInput(0);
 		ballSensor2 = new AnalogInput(1);
@@ -35,15 +38,13 @@ public class ShakerHopper extends Subsystem{
 	 * @return returns True if a ball is ready to shoot.
 	 */
 	public void debug(){
-		System.out.println("ball 1: "+ballSensor1.getVoltage());
-		System.out.println("ball 2: "+ballSensor2.getVoltage());
 		SmartDashboard.putBoolean("Dist 1", ballSensor1.getVoltage()< distanceSensorCutoffPoint);
 		SmartDashboard.putBoolean("Dist 2", ballSensor2.getVoltage()< distanceSensorCutoffPoint);
 	}
 	public boolean isBallAtTop() {
 		
-		return (ballSensor1.getVoltage() < distanceSensorCutoffPoint ||
-				ballSensor2.getVoltage() < distanceSensorCutoffPoint);
+		return ( (ballSensor1.getVoltage() < distanceSensorCutoffPoint) ||
+				(ballSensor2.getVoltage() < distanceSensorCutoffPoint) );
 	}
 	
 	public void runHopper() {
@@ -55,11 +56,11 @@ public class ShakerHopper extends Subsystem{
 	}
 	
 	public void stopHopper(){
-		hopperSpark.set(0.0);
+		stopMotor();
 	}
 	
 	public void stopMotor(){
-		hopperSpark.disable();
+		hopperSpark.stopMotor();
 	}
 	public double getCurrentUsage() {
 		return Robot.pdp.getCurrent(RobotMap.POWER_HOPPER_FLOOR);

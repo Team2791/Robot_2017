@@ -11,12 +11,16 @@ public class RunHopper extends Command{
 		requires(Robot.hopper);
 	}
 	
-	protected void initialize(){}
+	protected void initialize(){
+		Robot.hopper.runHopper();
+	}
 	
 	protected void execute(){
 		SmartDashboard.putBoolean("isBallAtTop", Robot.hopper.isBallAtTop());
-		if(!Robot.hopper.isBallAtTop()){
+		if(!Robot.hopper.isBallAtTop()) {
 			Robot.hopper.runHopper();
+		} else {
+			Robot.hopper.stopHopper();
 		}
 	}
 	
@@ -25,9 +29,10 @@ public class RunHopper extends Command{
 	}
 	
 	protected void end(){
-		Robot.hopper.stopMotor();
+		Robot.hopper.stopHopper();
 	}
 	
 	protected void interrupted(){
+		Robot.hopper.stopHopper();
 	}
 }

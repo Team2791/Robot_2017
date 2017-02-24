@@ -10,20 +10,23 @@ public class StopHopper extends Command{
 		requires(Robot.hopper);
 	}
 	
-	protected void initialize(){}
+	protected void initialize(){
+		Robot.hopper.stopHopper();
+	}
 	
 	protected void execute(){
 		Robot.hopper.stopHopper();
 	}
 	
 	protected boolean isFinished(){
-		return true;
+		return false;
 	}
 	
 	protected void end(){
-		Robot.hopper.stopMotor();
+		Robot.hopper.stopHopper();
 	}
 	
 	protected void interrupted(){
+		Robot.hopper.stopHopper();
 	}
 }

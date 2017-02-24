@@ -173,9 +173,11 @@ public class OI {
 		 */
 		operatorX.whileHeld(new RunWallShot());
 		operatorStart.whileHeld(new RunFarShot());
+		
 		operatorY.whileHeld(new RunClimber());
 		operatorA.whileHeld(new RunIntake());
-		operatorB.whileHeld(new RunIntakeBelt());
+//		operatorB.whileHeld(new RunIntakeBelt());
+		operatorB.whileHeld(new RunHopper());//this command has something wrong with it not sure what?
 		
 		driverX.whenPressed(new RemoveGear());
 		driverX.whenReleased(new ResetGear());
@@ -193,10 +195,10 @@ public class OI {
 		operatorDpadUp.whenPressed(new ResetGear());
 		operatorDpadDown.whenPressed(new RemoveGear());
 		
-		operatorLS.whileHeld(new RunHopper());
-		operatorDpadLeft.whileHeld(new RunHopper());
+		operatorDpadLeft.whenPressed(new RunIntakeBelt());
+//		operatorDpadLeft.whenPressed(new RunHopper());
 		operatorDpadRight.whenPressed(new StopHopper());
-		operatorDpadDownLeft.whileHeld(new RunHopperBackwards());
+		operatorDpadUpLeft.whenPressed(new RunHopperBackwards());
 		
 		driverStart.whileHeld(new WarmUpCompBot());
 }
