@@ -195,8 +195,8 @@ public class OI {
 		operatorDpadUp.whenPressed(new ResetGear());
 		operatorDpadDown.whenPressed(new RemoveGear());
 		
-		operatorDpadLeft.whenPressed(new RunIntakeBelt());
-//		operatorDpadLeft.whenPressed(new RunHopper());
+//		operatorDpadLeft.whenPressed(new RunIntakeBelt());
+		operatorDpadLeft.whenPressed(new RunHopper());
 		operatorDpadRight.whenPressed(new StopHopper());
 		operatorDpadUpLeft.whenPressed(new RunHopperBackwards());
 		

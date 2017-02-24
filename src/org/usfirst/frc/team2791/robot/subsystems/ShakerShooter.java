@@ -83,7 +83,7 @@ public class ShakerShooter extends Subsystem {
     	shooterSolenoid.set(key);
     }
     public void prepWallShot() {
-        setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Setpoint", 0));
+        setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Setpoint", 2835));
     }
     
     public boolean atSpeed() {
