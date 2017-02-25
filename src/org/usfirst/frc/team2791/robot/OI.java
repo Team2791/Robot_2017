@@ -176,8 +176,8 @@ public class OI {
 		
 		operatorY.whileHeld(new RunClimber());
 		operatorA.whileHeld(new RunIntake());
-//		operatorB.whileHeld(new RunIntakeBelt());
-		operatorB.whileHeld(new RunHopper());//this command has something wrong with it not sure what?
+		operatorB.whileHeld(new RunIntakeBelt());
+//		operatorB.whileHeld(new RunHopper());//this command has something wrong with it not sure what?
 		
 		driverX.whenPressed(new RemoveGear());
 		driverX.whenReleased(new ResetGear());

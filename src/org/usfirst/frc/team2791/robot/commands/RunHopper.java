@@ -17,11 +17,7 @@ public class RunHopper extends Command{
 	
 	protected void execute(){
 		SmartDashboard.putBoolean("isBallAtTop", Robot.hopper.isBallAtTop());
-		if(!Robot.hopper.isBallAtTop()) {
 			Robot.hopper.runHopper();
-		} else {
-			Robot.hopper.stopHopper();
-		}
 	}
 	
 	protected boolean isFinished(){
