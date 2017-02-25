@@ -127,7 +127,7 @@ public class ShakerShooter extends Subsystem {
     }
 
 	public void debug() {
-		
+		SmartDashboard.putString("Shooter Error vs Speed",""+primaryShooterTalon.getError()+":"+primaryShooterTalon.getOutputVoltage()/12.0*100+"");
 		SmartDashboard.putNumber("Primary Talon Speed",primaryShooterTalon.getSpeed());
 		SmartDashboard.putNumber("Primary Talon Error (Setpoint)", primaryShooterTalon.getError());
 		SmartDashboard.putNumber("Primary Talon Closed Loop Error (Sensor value)", primaryShooterTalon.getClosedLoopError());
