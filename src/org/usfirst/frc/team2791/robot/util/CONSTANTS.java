@@ -15,7 +15,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	
 	public static double driveEncoderTicks = 256;
 	
-	public static final double WHEEL_DIAMETER = 4.0;
+	public static final double DRIVE_WHEEL_DIAMETER_IN_FEET = 4.0/12.0;//4 inches
 
 	public static final int SHOOTER_ENCODER_TICKS = 128;
 	public static final double SHOOTER_WHEEL_DIAMETER = 4.0;

@@ -48,7 +48,7 @@ public class ShakerDrivetrain extends Subsystem{
     protected boolean PIDAtTarget = false;
     protected boolean anglePIDQuickExit = false;
     
-    private double distancePerPulse = Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER);
+    private double distancePerPulse = Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.DRIVE_WHEEL_DIAMETER_IN_FEET);
     
     /* 
      * Spark speed controllers can be controlled with the WPI Talon class.
