@@ -13,7 +13,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	// JOYSTICK CONSTANTS
 	public static final double DEADZONE = 0.08;
 	
-	public static double driveEncoderTicks = 128;
+	public static double driveEncoderTicks = 256;
 	
 	public static final double WHEEL_DIAMETER = 4.0;
 
