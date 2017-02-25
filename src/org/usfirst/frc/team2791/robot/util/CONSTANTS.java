@@ -31,7 +31,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	
 	public static final double SHOOTER_SET_POINT = 2855; //2855
 	
-	public static final int SHOOTER_I_ZONE = 90; //90
+	public static final int SHOOTER_I_ZONE = 90; //90; should it be lower?
 	
 	//Drive PID
 	public static double DRIVE_ANGLE_P = 0.05;

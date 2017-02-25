@@ -10,11 +10,11 @@ public class ShakerGear extends Subsystem{
 	public ShakerGear(){
 		gearSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.GEAR_CHANNEL);
 	}
-	public void initDefaultCommand(){
+	public void initDefaultCommand(){//puts the gear holder in the up position when teleop or auton init'ed
 		gearSolenoid.set(false);
 	}
 
-	public void changeGearSolenoidState(boolean state){
+	public void changeGearSolenoidState(boolean state){//true is down; false is up
 		gearSolenoid.set(state);
 	}
 }

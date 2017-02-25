@@ -50,10 +50,16 @@ public class ShakerDrivetrain extends Subsystem{
     
     private double distancePerPulse = Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER);
     
+    /* 
+     * Spark speed controllers can be controlled with the WPI Talon class.
+     * Only two Sparks are initialized here even though the robot has 6 physcial speed controllers.
+     * This is done because only two PWMs are put into the RoboRIO and then three PWM connections are branched off of the single signal wires.
+     * So, the Sparks on one side all receive the same signal and the feedback is done through one Encoder per side.
+     * 
+     */
     public ShakerDrivetrain(){
     	leftSpark = new Talon(RobotMap.DRIVE_SPARK_LEFT_PORT);
 	    rightSpark = new Talon(RobotMap.DRIVE_SPARK_RIGHT_PORT);
-	    
 	
 	    leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
 	    rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
