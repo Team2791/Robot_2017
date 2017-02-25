@@ -41,7 +41,17 @@ public class ShakerDrivetrain extends Subsystem{
 	protected double previousRateTime = 0;
 	protected double currentRate = 0;
 	protected double currentTime = 0;
-
+	
+	protected double leftPreviousRate = 0;
+	protected double leftPreviousTime = 0;
+	protected double leftCurrentRate = 0;
+	protected double leftCurrentTime = 0;
+	
+	protected double rightPreviousRate = 0;
+	protected double rightPreviousTime = 0;
+	protected double rightCurrentRate = 0;
+	protected double rightCurrentTime = 0;
+	
 	protected double angleTarget = 0.0;
 	protected double turnPIDMaxOutput = 0.5;
 	protected boolean PIDAtTarget = false;
@@ -101,14 +111,45 @@ public class ShakerDrivetrain extends Subsystem{
 	public double getEncoderAngleRate() {
 		return (360/7.9) * (leftDriveEncoder.getRate() - rightDriveEncoder.getRate()) / 2.0;
 	}
+	
+	public double getLeftAcceleration() {
 
+		leftCurrentRate = getLeftVelocity();
+		leftCurrentTime = Timer.getFPGATimestamp();
+		
+		double acceleration = (leftCurrentRate - leftPreviousRate) / (leftCurrentTime - leftPreviousTime);
+		
+		leftPreviousRate = leftCurrentRate;
+		leftPreviousTime = leftCurrentTime;
+		
+		return acceleration;
+	}	
+
+	public double getRightAcceleration() {
+		
+
+		rightCurrentRate = getLeftVelocity();
+		rightCurrentTime = Timer.getFPGATimestamp();
+		
+		double acceleration = (rightCurrentRate - rightPreviousRate) / (rightCurrentTime - rightPreviousTime);
+		
+		rightPreviousRate = rightCurrentRate;
+		rightPreviousTime = rightCurrentTime;
+		
+		return acceleration;
+	}	
+	
 	public double getAverageAcceleration() {
-		double acceleration = currentRate - previousRate;
-		acceleration /= (currentTime - previousRateTime);
-		previousRate = currentRate;
-		previousRateTime = currentTime;
+		
+
 		currentRate = getAverageVelocity();
 		currentTime = Timer.getFPGATimestamp();
+		
+		double acceleration = (currentRate - previousRate) / (currentTime - previousRateTime);
+		
+		previousRate = currentRate;
+		previousRateTime = currentTime;
+		
 		return acceleration;
 	}
 
@@ -246,5 +287,9 @@ public class ShakerDrivetrain extends Subsystem{
 		distancePID.changeGains(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);
 		stationaryAnglePID.changeGains(CONSTANTS.STATIONARY_ANGLE_P, CONSTANTS.STATIONARY_ANGLE_I,
 				CONSTANTS.STATIONARY_ANGLE_D);
+	}
+
+	public double getGyroAngleInRadians() {
+		return getGyroAngle() * (Math.PI/180);
 	}
 }

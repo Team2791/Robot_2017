@@ -75,6 +75,7 @@ public class Robot extends IterativeRobot {
 		drivetrain = new ShakerDrivetrain();
 		
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
+		
 		if(SmartDashboard.getNumber("kp", -2791) == -2791){
 			SmartDashboard.putNumber("kp",0);
 		    SmartDashboard.putNumber("ki",0);
@@ -171,7 +172,6 @@ public class Robot extends IterativeRobot {
 //		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
 //		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
 		Scheduler.getInstance().run();
-		oi.checkForAction();
 	}
 
 	/**
