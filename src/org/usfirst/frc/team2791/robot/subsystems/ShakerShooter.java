@@ -8,6 +8,7 @@ package org.usfirst.frc.team2791.robot.subsystems;
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.commands.ShootWithJoystick;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
+import org.usfirst.frc.team2791.robot.util.DelayedBoolean;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -21,6 +22,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShakerShooter extends Subsystem {
 	
 	private final double ERROR_THRESHOLD = 25;
+	private final double SHOOTER_GOOD_TIME = 0.1;
+	private DelayedBoolean shooterGoodDelayedBoolean = new DelayedBoolean(SHOOTER_GOOD_TIME);
 
     protected Encoder shooterEncoder = null;
 
@@ -52,6 +55,11 @@ public class ShakerShooter extends Subsystem {
 	        SmartDashboard.putNumber("Shooter D", CONSTANTS.SHOOTER_D);
 	        SmartDashboard.putNumber("Shooter FeedForward", CONSTANTS.SHOOTER_FEED_FORWARD);
 	        SmartDashboard.putNumber("Shooter Setpoint", CONSTANTS.SHOOTER_SET_POINT);
+	        
+	        SmartDashboard.putNumber("Shooter Long P", CONSTANTS.SHOOTER_LONG_P);
+	        SmartDashboard.putNumber("Shooter Long I", CONSTANTS.SHOOTER_LONG_I);
+	        SmartDashboard.putNumber("Shooter Long D", CONSTANTS.SHOOTER_LONG_D);
+	        SmartDashboard.putNumber("Shooter Long FeedForward", CONSTANTS.SHOOTER_LONG_FEED_FORWARD);
 	        SmartDashboard.putNumber("Shooter Long Setpoint", CONSTANTS.SHOOTER_LONG_SET_POINT);
         }
 
@@ -87,14 +95,15 @@ public class ShakerShooter extends Subsystem {
     }
     public void prepWallShot() {
     	longShot = false;
-        setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Wall Setpoint", CONSTANTS.SHOOTER_SET_POINT));
+        setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Setpoint", 0));
     }
     public void prepLongShot() {
     	longShot = true;
-    	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Long Setpoint", CONSTANTS.SHOOTER_LONG_SET_POINT));
+    	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Long Setpoint", 0));
 	}
     public boolean atSpeed() {
-        return Math.abs(primaryShooterTalon.getError()) < ERROR_THRESHOLD;
+        return shooterGoodDelayedBoolean.update(
+        		Math.abs(primaryShooterTalon.getError()) < ERROR_THRESHOLD);
     }
 
 	public void setShooterSpeedsPID(double targetSpeed) {
@@ -104,10 +113,17 @@ public class ShakerShooter extends Subsystem {
         followerShooterTalonA.set(primaryShooterTalon.getDeviceID());
         //Update the PID and FeedForward values
         
-        primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter P", 0));
-        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter I", 0));
-        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter D", 0));
-        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter FeedForward", 0));
+        if(longShot){
+        	primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter Long P", 0));
+	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter Long I", 0));
+	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter Long D", 0));
+	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter Long FeedForward", 0));
+        }else{
+	        primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter P", 0));
+	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter I", 0));
+	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter D", 0));
+	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter FeedForward", 0));
+        }
 
 //            //Set speeds (IN RPMS)
 //            primaryShooterTalon.setP(CONSTANTS.SHOOTER_P);

@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team2791.robot.commands.CalibrateGyro;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -102,6 +103,10 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		if(oi.driver.getButtonBack()){
+			new CalibrateGyro();
+		}
+		debug();
 		Scheduler.getInstance().run();
 	}
 
@@ -160,10 +165,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		debug();	
-		hopper.debug();
-		drivetrain.debug();
-//		Robot.hopper.stopHopper();
+		debug();
 		Scheduler.getInstance().run();
 	}
 
@@ -193,6 +195,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Hopper current",hopper.getCurrentUsage());
 		SmartDashboard.putNumber("Shooter total current",shooter.getCurrentUsage());
 		
+		hopper.debug();
+		shooter.debug();
+		drivetrain.debug();
 		//for current based debugging without smart dashboard
 //		System.out.println("Drivetrain total Current: "+drivetrain.getCurrentUsage());
 //		System.out.println("Hopper current draw: "+hopper.getCurrentUsage());

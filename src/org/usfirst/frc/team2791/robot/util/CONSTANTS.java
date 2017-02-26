@@ -30,9 +30,14 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static final double SHOOTER_FEED_FORWARD = 0.2842; // 0.2842; calculated by doing 1093/max velocity
 	
 	public static final double SHOOTER_SET_POINT = 2855; //2855
-	public static final double SHOOTER_LONG_SET_POINT = 2855; //2855
+	public static final double SHOOTER_LONG_SET_POINT = 3500; //3500
 	
 	public static final int SHOOTER_I_ZONE = 90; //90; should it be lower?
+
+	public static final double SHOOTER_LONG_P = 1.3;
+	public static final double SHOOTER_LONG_I = 0.004;
+	public static final double SHOOTER_LONG_D = 13;
+	public static final double SHOOTER_LONG_FEED_FORWARD = 0.25;
 	
 	//Drive PID
 	public static double DRIVE_ANGLE_P = 0.05;

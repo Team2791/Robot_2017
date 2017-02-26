@@ -5,24 +5,25 @@ import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team2791.robot.util.BasicPID;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
-import org.usfirst.frc.team2791.robot.util.Util;
 //import org.usfirst.frc.team2791.shakerJoystick.ShakerDriver;
 //import org.usfirst.frc.team2791.util.RobotMap;
 import org.usfirst.frc.team2791.robot.util.ShakerGyro;
+import org.usfirst.frc.team2791.robot.util.Util;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.SPI;
 
 public class ShakerDrivetrain extends Subsystem{
     protected Encoder leftDriveEncoder = null;
     protected Encoder rightDriveEncoder = null;
     
- 	public ShakerGyro gyro;
+ 	public ADXRS450_Gyro gyro;
 	
     protected RobotDrive shakyDrive = null;
 
@@ -88,9 +89,9 @@ public class ShakerDrivetrain extends Subsystem{
 		stationaryAnglePID.setIZone(6);
 		distancePID.setIZone(0.25);
 		movingAnglePID.setIZone(4);
-		gyro = new ShakerGyro(SPI.Port.kOnboardCS1);
+		gyro = new ADXRS450_Gyro();//SPI.Port.kOnboardCS1
+		gyro.calibrate();
 		gyro.reset();
-		(new Thread(gyro)).start();
     }
     public void initDefaultCommand() {
     	setDefaultCommand(new DriveWithJoystick());
@@ -117,15 +118,12 @@ public class ShakerDrivetrain extends Subsystem{
 		SmartDashboard.putNumber("Left Drive Encoders Rate", leftDriveEncoder.getRate());
 		SmartDashboard.putNumber("Right Drive Encoders Rate", rightDriveEncoder.getRate());
 		SmartDashboard.putNumber("Encoder Angle", getAngleEncoder());
-//		SmartDashboard.putNumber("Encoder Angle Rate Change", getEncoderAngleRate());
-//		SmartDashboard.putNumber("Angle PID Error", stationaryAnglePID.getError());
-//		SmartDashboard.putNumber("Angle PID Output", stationaryAnglePID.getOutput());
+//		SmartDashboard.putNumber("Encoder Angle Rate Change", getEncoderAngleRate());\
 		SmartDashboard.putNumber("Average Encoder Distance", getAverageDist());
 		SmartDashboard.putNumber("Left Encoder Distance", getLeftDistance());
 		SmartDashboard.putNumber("Right Encoder Distance", getRightDistance());
-//		SmartDashboard.putNumber("Distance PID output", distancePID.getOutput());
-//		SmartDashboard.putNumber("Distance PID error", distancePID.getError());
-//		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
+		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
+		SmartDashboard.putNumber("Gyro rate", gyro.getRate());
 	}
 	public void updatePIDGains() {
 		movingAnglePID.changeGains(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
@@ -218,7 +216,7 @@ public class ShakerDrivetrain extends Subsystem{
 	public void calibrateGyro() {
 //		 recalibrate the gyro
 		System.out.println("Gyro calibrating");
-		gyro.recalibrate();
+		gyro.calibrate();
 		System.out.println("Done calibrating " + " The current rate is " + gyro.getRate());
 	}
 

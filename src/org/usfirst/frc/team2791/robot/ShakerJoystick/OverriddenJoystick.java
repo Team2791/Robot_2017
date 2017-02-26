@@ -75,7 +75,7 @@ public class OverriddenJoystick extends Joystick {
         return super.getRawButton(6);
     }
 
-    public boolean getButtonSel() {
+    public boolean getButtonBack() {
         return super.getRawButton(7);
     }
 

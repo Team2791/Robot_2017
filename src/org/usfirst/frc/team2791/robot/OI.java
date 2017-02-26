@@ -2,6 +2,7 @@ package org.usfirst.frc.team2791.robot;
 
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
+import org.usfirst.frc.team2791.robot.commands.CalibrateGyro;
 import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team2791.robot.commands.RemoveGear;
 import org.usfirst.frc.team2791.robot.commands.ResetGear;
@@ -48,6 +49,8 @@ public class OI {
 		
 		Button driverLB = new JoystickButton(driver,5);
 		Button driverRB = new JoystickButton(driver,6);
+		
+		Button driverBack = new JoystickButton(driver,7);
 		
 		Button operatorLB = new JoystickButton(operator,5);
 		Button operatorRB = new JoystickButton(operator,6);
@@ -201,6 +204,7 @@ public class OI {
 		operatorDpadUpLeft.whenPressed(new RunHopperBackwards());
 		
 		driverStart.whileHeld(new WarmUpCompBot());
+		driverBack.whileHeld(new CalibrateGyro());
 }
 	public void checkForAction(){
 		
