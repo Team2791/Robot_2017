@@ -1,7 +1,5 @@
 package org.usfirst.frc.team2791.robot.subsystems;
 
-import java.io.IOException;
-
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.commands.RunHopper;
@@ -16,38 +14,31 @@ public class ShakerHopper extends Subsystem{
 	
 	private Talon hopperSpark;
 
-	private static double hopperSetpoint = 1.0;
+	private static double hopperSetpoint = -0.66;
 	private final double distanceSensorCutoffPoint = 1.5;
 	
 	public ShakerHopper(){
 		hopperSpark = new Talon(RobotMap.HOPPER_SPARK_PORT);
-		hopperSpark.setInverted(true);
-		hopperSpark.set(0.0);
 		
 		ballSensor1 = new AnalogInput(0);
 		ballSensor2 = new AnalogInput(1);
 	}
 	
 	public void initDefaultCommand(){
-//		setDefaultCommand(new RunHopper());
+		setDefaultCommand(new RunHopper());
 	}
 	
 	/**
 	 * This method checks the elevator for balls.
 	 * @return returns True if a ball is ready to shoot.
 	 */
-	public void debug(){
-		SmartDashboard.putBoolean("Dist 1", ballSensor1.getVoltage()< distanceSensorCutoffPoint);
-		SmartDashboard.putBoolean("Dist 2", ballSensor2.getVoltage()< distanceSensorCutoffPoint);
-	}
 	public boolean isBallAtTop() {
-		
-		return ( (ballSensor1.getVoltage() < distanceSensorCutoffPoint) ||
-				(ballSensor2.getVoltage() < distanceSensorCutoffPoint) );
+		return (ballSensor1.getVoltage() < distanceSensorCutoffPoint ||
+				ballSensor2.getVoltage() < distanceSensorCutoffPoint);
 	}
 	
 	public void runHopper() {
-		hopperSpark.set(hopperSetpoint);
+		hopperSpark.set(SmartDashboard.getNumber("Hopper VBus",hopperSetpoint));
 	}
 	
 	public void setHopperSpeed(double speed){
@@ -55,11 +46,11 @@ public class ShakerHopper extends Subsystem{
 	}
 	
 	public void stopHopper(){
-		stopMotor();
+		hopperSpark.set(0.0);
 	}
 	
 	public void stopMotor(){
-		hopperSpark.stopMotor();
+		hopperSpark.disable();
 	}
 	public double getCurrentUsage() {
 		return Robot.pdp.getCurrent(RobotMap.POWER_HOPPER_FLOOR);

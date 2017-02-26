@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TurnShooterOff extends Command{
 	public TurnShooterOff() {
-		super("TurnShooterOff");
+		super("StopShot");
 		requires(Robot.shooter);
 		requires(Robot.hopper);
 	}
@@ -29,12 +29,12 @@ public class TurnShooterOff extends Command{
 
 	@Override
 	protected void end() {
-		Robot.shooter.stopMotors();
+		Robot.shooter.disable();
 	}
 
 	@Override
 	protected void interrupted() {
-		Robot.shooter.stopMotors();
+		new TurnShooterOff();
 	}
 }
 

@@ -8,7 +8,10 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class ShakerIntake extends Subsystem{ //code for intake and climber
+/**
+ * The Combined Intake/Climber Subsystem for Stoker
+ */
+public class ShakerIntake extends Subsystem{
 	private final double BALLS_IN_POWER = -1.0;
 	private final double CLIMBING_VBUS = 0.75;
 
@@ -21,13 +24,17 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 
 		intakeSolenoid = new Solenoid(RobotMap.PCM_MODULE, RobotMap.INTAKE_CHANNEL);
 		ratchetWingSolenoid = new Solenoid(RobotMap.PCM_MODULE, RobotMap.WING_CHANNEL);
+		
+		ratchetWingSolenoid.set(true);
+		intakeSolenoid.set(false);//all Pistons should be closed (false) at beginning
 	}
+	
 	public void initDefaultCommand(){
 		ratchetWingSolenoid.set(true);
 		intakeSolenoid.set(false);//all Pistons should be closed (false) at beginning
-		System.out.println("Initiating intake");
 	}
 	
+	//***********Ratchet Wing***********//
 	public void engageRatchetWing(){
 		ratchetWingSolenoid.set(false);
 	}
@@ -38,6 +45,9 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 	public boolean isRatchetWingDisengaged(){
 		return ratchetWingSolenoid.get();
 	}
+	
+	//***********Intake/Climber Helper Methods***********//
+
 	/**
 	 * sets intake to in(true) or out (false)
 	 */
@@ -58,9 +68,6 @@ public class ShakerIntake extends Subsystem{ //code for intake and climber
 		ratchetWingSolenoid.set(false);
 		intakeSpark.setSpeed(SmartDashboard.getNumber("Climbing Vbus",CLIMBING_VBUS));
 
-	}
-	public void setIntakeSpeed(double vbus){
-		intakeSpark.setSpeed(vbus);
 	}
 
 	public void debug(){

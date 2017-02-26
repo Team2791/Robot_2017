@@ -1,44 +1,28 @@
 
-/*
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * Make sure mini piston on intake is in proper position before running intake
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- */
+
 package org.usfirst.frc.team2791.robot;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team2791.robot.Robot.GamePeriod;
+
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Timer;
 
 import org.usfirst.frc.team2791.robot.commands.CalibrateGyro;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
-//import org.usfirst.frc.team2791.robot.commands.ExampleCommand;
-//import org.usfirst.frc.team2791.robot.subsystems.ExampleSubsystem;
-//import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
-//import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
+
+import org.usfirst.frc.team2791.trajectory.AutoPaths;
+import org.usfirst.frc.team2791.robot.commands.FollowPath;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -49,17 +33,22 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
  */
 public class Robot extends IterativeRobot {
 	public static OI oi;
-//	public Thread driveTrainThread;
 	public static GamePeriod gamePeriod;
 	public static PowerDistributionPanel pdp; //CAN ID has to be 0 for current sensing
+	public static Compressor compressor;
+
+	public static ShakerHopper hopper;
 	public static ShakerIntake intake;
 	public static ShakerShooter shooter;
 	public static ShakerGear gearMechanism;
-	public static Compressor compressor;
 	public static ShakerDrivetrain drivetrain;
-	public static ShakerHopper hopper;
-	
-	Command autonomousCommand = null;
+
+	private double lastAutonLoopTime;
+
+	/**
+	 * setting autonomousCommand to a Command will cause that Command to run in autonomous init
+	 */
+	public Command autonomousCommand;
 	//SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
@@ -70,23 +59,28 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		System.out.println("Starting to init my systems.");
 		gamePeriod = GamePeriod.DISABLED;
+
 		pdp = new PowerDistributionPanel(RobotMap.PDP); //CAN id has to be 0
+
 		compressor = new Compressor(RobotMap.PCM_MODULE);
 		compressor.setClosedLoopControl(true);
 		compressor.start();
+
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
 		hopper = new ShakerHopper();
 		shooter = new ShakerShooter();
-		
-        //driveTrainThread.start();
-		//chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		//SmartDashboard.putData("Auto mode", chooser);
-		
-		// OI has to be initialized after all subsystems to prevent startCompetition() error
-		oi = new OI();
+
+		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
+
+		if(SmartDashboard.getNumber("kp", -2791) == -2791){
+			SmartDashboard.putNumber("kp",7.0);
+			SmartDashboard.putNumber("ki",0);
+			SmartDashboard.putNumber("kd",0.25);
+			SmartDashboard.putNumber("kv",0.09);
+			SmartDashboard.putNumber("ka",0.033);
+		}
 	}
 
 	/**
@@ -96,9 +90,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		
+
 		gamePeriod = GamePeriod.DISABLED;
-		
+
 	}
 
 	@Override
@@ -108,6 +102,8 @@ public class Robot extends IterativeRobot {
 		}
 		debug();
 		Scheduler.getInstance().run();
+		debug();
+
 	}
 
 	/**
@@ -133,10 +129,21 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-//		intake.wingSolenoid.set(false);//opens up robot as soon as robot starts
-//		if (autonomousCommand != null)
-//			autonomousCommand.start();
+
+		drivetrain.resetEncoders();
+
+
 		intake.disengageRatchetWing();
+		//		intake.wingSolenoid.set(false);//opens up robot as soon as robot starts
+		//		if (autonomousCommand != null)
+		//			autonomousCommand.start();
+		//intake.wingDeployment();//opens up robot as soon as robot starts
+
+		autonomousCommand= new FollowPath(AutoPaths.get("Test180"));
+
+		if (autonomousCommand != null)
+			autonomousCommand.start();
+		lastAutonLoopTime = Timer.getFPGATimestamp();
 	}
 
 	/**
@@ -145,65 +152,73 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		debug();
+
+		double thisAutoLoopTime = Timer.getFPGATimestamp();
+		double timeDiff = thisAutoLoopTime - lastAutonLoopTime;
+		//		System.out.println("Auton time diff = "+timeDiff+"s rate = "+(1.0/timeDiff)+"hz");
+		//		lastAutonLoopTime = thisAutoLoopTime;
 	}
 
 	@Override
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
+
+		if (autonomousCommand != null)
+			autonomousCommand.cancel();
 		
-		//if (autonomousCommand != null)
-			//autonomousCommand.cancel();
-			gamePeriod = GamePeriod.TELEOP;
-			intake.disengageRatchetWing();
-		}
+		drivetrain.resetEncoders();
+		gamePeriod = GamePeriod.TELEOP;
+		intake.disengageRatchetWing();
+		//gearMechanism.changeGearSolenoidState(false);//makes it stay up when it turns on; just initiating it as up in the subsystem isn't working
+		//intake.moveIntakeOut(false);
+		//intake.wingDeployment();
+	}
 
 	/**
 	 * This function is called periodically during operator control
 	 */
 	@Override
 	public void teleopPeriodic() {
-		debug();
 		Scheduler.getInstance().run();
+		debug();
 	}
 
+	
 	/**
-	 * 
 	 * This function is called periodically during test mode
 	 */
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
+
 	public enum GamePeriod {
-        AUTONOMOUS, TELEOP, DISABLED
-    }
-	
+		AUTONOMOUS, TELEOP, DISABLED
+	}
+
 	public void debug() {
-		
+
 		//compressor debugging
-//		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
-//		System.out.println("Compressor enabled? " + compressor.enabled());
-//		System.out.println("Compressor closed loop? " + compressor.getClosedLoopControl());
-//		System.out.println("Compressor switch vaule " + compressor.getPressureSwitchValue());
-		
+		//		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
+		//		System.out.println("Compressor enabled? " + compressor.enabled());
+		//		System.out.println("Compressor closed loop? " + compressor.getClosedLoopControl());
+		//		System.out.println("Compressor switch vaule " + compressor.getPressureSwitchValue());
+
 		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
 		SmartDashboard.putNumber("Drivetrain total current", drivetrain.getCurrentUsage());
 		SmartDashboard.putNumber("Climber/Intake current",intake.getCurrentUsage());
 		SmartDashboard.putNumber("Hopper current",hopper.getCurrentUsage());
 		SmartDashboard.putNumber("Shooter total current",shooter.getCurrentUsage());
-		
-		hopper.debug();
+
 		shooter.debug();
 		drivetrain.debug();
+		
 		//for current based debugging without smart dashboard
-//		System.out.println("Drivetrain total Current: "+drivetrain.getCurrentUsage());
-//		System.out.println("Hopper current draw: "+hopper.getCurrentUsage());
-//		System.out.println("Intake current draw: "+intake.getCurrentUsage());
-////		SmartDashboard.putNumber("Climber current usage: ",intake.getCurrentUsage());
-//		System.out.println("Shooter current draw: "+shooter.getCurrentUsage());
-////		System.out.println("Shooter error: "+shooter.getError());
+		//		System.out.println("Drivetrain total Current: "+drivetrain.getCurrentUsage());
+		//		System.out.println("Hopper current draw: "+hopper.getCurrentUsage());
+		//		System.out.println("Intake current draw: "+intake.getCurrentUsage());
+		////		SmartDashboard.putNumber("Climber current usage: ",intake.getCurrentUsage());
+		//		System.out.println("Shooter current draw: "+shooter.getCurrentUsage());
+		////		System.out.println("Shooter error: "+shooter.getError());
 	}
 }
