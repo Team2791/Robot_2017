@@ -36,14 +36,13 @@ public class RunWallShot extends Command{
 
 	@Override
 	protected void end() {
-		Robot.shooter.stopMotors();
-		Robot.hopper.stopHopper();
+		Robot.shooter.disable();
 	}
 
 	@Override
 	protected void interrupted() {
-		Robot.shooter.stopMotors();
-		Robot.hopper.stopHopper();
+		new StopHopper();
+		new TurnShooterOff();
 	}
 }
 

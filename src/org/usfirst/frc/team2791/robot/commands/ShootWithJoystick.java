@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShootWithJoystick extends Command {
 	public ShootWithJoystick() {
-		super("ShootWithJoystick");
+		super("DriveWithJoystick");
 		requires(Robot.shooter);
 		requires(Robot.hopper);
 	}
@@ -16,8 +16,8 @@ public class ShootWithJoystick extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.shooter.setVBusWithTrigger(Robot.oi.operator.getAxisLT());
-		Robot.hopper.setHopperSpeed(Robot.oi.operator.getAxisLT());
+		Robot.hopper.runHopper();
+		Robot.shooter.setVBusWithTrigger(GTADrive.getLeftValue(Robot.oi.operator));
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class ShootWithJoystick extends Command {
 
 	@Override
 	protected void end() {
-		Robot.shooter.stopMotors();
+		Robot.shooter.disable();
 	}
 
 	protected void interrupted() {
