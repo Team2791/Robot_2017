@@ -60,7 +60,7 @@ public class ShakerDrivetrain extends Subsystem{
     public ShakerDrivetrain(){
     	leftSpark = new Talon(RobotMap.DRIVE_SPARK_LEFT_PORT);
 	    rightSpark = new Talon(RobotMap.DRIVE_SPARK_RIGHT_PORT);
-	
+	    
 	    leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
 	    rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
 	    

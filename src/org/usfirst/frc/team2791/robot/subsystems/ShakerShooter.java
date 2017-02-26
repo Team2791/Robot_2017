@@ -31,6 +31,8 @@ public class ShakerShooter extends Subsystem {
     private Solenoid shooterSolenoid;
 
     protected boolean autoFire = false;
+    
+    protected boolean longShot = false;
         
     public ShakerShooter() {
     	shooterSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.SHOOTER_CHANNEL);
@@ -50,6 +52,7 @@ public class ShakerShooter extends Subsystem {
 	        SmartDashboard.putNumber("Shooter D", CONSTANTS.SHOOTER_D);
 	        SmartDashboard.putNumber("Shooter FeedForward", CONSTANTS.SHOOTER_FEED_FORWARD);
 	        SmartDashboard.putNumber("Shooter Setpoint", CONSTANTS.SHOOTER_SET_POINT);
+	        SmartDashboard.putNumber("Shooter Long Setpoint", CONSTANTS.SHOOTER_LONG_SET_POINT);
         }
 
         primaryShooterTalon.setIZone(CONSTANTS.SHOOTER_I_ZONE);
@@ -83,9 +86,13 @@ public class ShakerShooter extends Subsystem {
     	shooterSolenoid.set(key);
     }
     public void prepWallShot() {
-        setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Setpoint", 2835));
+    	longShot = false;
+        setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Wall Setpoint", CONSTANTS.SHOOTER_SET_POINT));
     }
-    
+    public void prepLongShot() {
+    	longShot = true;
+    	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Long Setpoint", CONSTANTS.SHOOTER_LONG_SET_POINT));
+	}
     public boolean atSpeed() {
         return Math.abs(primaryShooterTalon.getError()) < ERROR_THRESHOLD;
     }
@@ -108,7 +115,7 @@ public class ShakerShooter extends Subsystem {
 //            primaryShooterTalon.setD(CONSTANTS.SHOOTER_D);
 //            primaryShooterTalon.setF(CONSTANTS.SHOOTER_FEED_FORWARD);
         
-        primaryShooterTalon.set(SmartDashboard.getNumber("Shooter Setpoint", 0));
+        primaryShooterTalon.set(targetSpeed);
         
         System.out.println("Coming up to speed and my error is "+primaryShooterTalon.getError());
         debug();
@@ -127,29 +134,11 @@ public class ShakerShooter extends Subsystem {
     }
 
 	public void debug() {
-		SmartDashboard.putString("Shooter Error vs Speed",""+primaryShooterTalon.getError()+":"+primaryShooterTalon.getOutputVoltage()/12.0*100+"");
+		SmartDashboard.putString("Shooter Error vs Output Voltage %",""+primaryShooterTalon.getError()+":"+primaryShooterTalon.getOutputVoltage()/12.0*100+"");
 		SmartDashboard.putNumber("Primary Talon Speed",primaryShooterTalon.getSpeed());
 		SmartDashboard.putNumber("Primary Talon Error (Setpoint)", primaryShooterTalon.getError());
 		SmartDashboard.putNumber("Primary Talon Closed Loop Error (Sensor value)", primaryShooterTalon.getClosedLoopError());
-    	 
-		
-		/* 	
-    	   * SmartDashboard.putNumber("LeftShooterSpeed", primaryShooterTalon.getSpeed());
-    	   
-	      SmartDashboard.putNumber("RightShooterSpeed", followerShooterTalonA.getSpeed());
-	      SmartDashboard.putNumber("Left Shooter Error", primaryShooterTalon.getClosedLoopError());
-	      SmartDashboard.putNumber("Right Shooter Error", -followerShooterTalonA.getClosedLoopError());
-	      SmartDashboard.putString("Current shooter setpoint", getShooterHeight());
-	      SmartDashboard.putNumber("left output voltage", primaryShooterTalon.getOutputVoltage());
-	      SmartDashboard.putNumber("left speed", -primaryShooterTalon.getEncVelocity());
-	      SmartDashboard.putNumber("right output voltage", followerShooterTalonA.getOutputVoltage());
-	      SmartDashboard.putNumber("right speed", followerShooterTalonA.getEncVelocity());
-	      SmartDashboard.putNumber("Right error", followerShooterTalonA.getError());
-	      SmartDashboard.putNumber("Left error", primaryShooterTalon.getError());
-	      */
-//	      leftShooterTalon.set(SmartDashboard.getNumber("setpoint"));
-//	      rightShooterTalon.set(SmartDashboard.getNumber("setpoint"));
-//	      powerShooterTalon.set(SmartDashboard.getNumber("setpoint"));
+    	SmartDashboard.putBoolean("Long Shot?", longShot);
     }
 
     private String getShooterHeight() {

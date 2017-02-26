@@ -165,7 +165,6 @@ public class Robot extends IterativeRobot {
 		drivetrain.debug();
 //		Robot.hopper.stopHopper();
 		Scheduler.getInstance().run();
-		oi.checkForAction();
 	}
 
 	/**

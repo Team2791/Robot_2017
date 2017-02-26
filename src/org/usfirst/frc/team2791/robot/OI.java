@@ -6,11 +6,11 @@ import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team2791.robot.commands.RemoveGear;
 import org.usfirst.frc.team2791.robot.commands.ResetGear;
 import org.usfirst.frc.team2791.robot.commands.RunClimber;
-import org.usfirst.frc.team2791.robot.commands.RunFarShot;
 import org.usfirst.frc.team2791.robot.commands.RunHopper;
 import org.usfirst.frc.team2791.robot.commands.RunHopperBackwards;
 import org.usfirst.frc.team2791.robot.commands.RunIntake;
 import org.usfirst.frc.team2791.robot.commands.RunIntakeBelt;
+import org.usfirst.frc.team2791.robot.commands.RunLongShot;
 import org.usfirst.frc.team2791.robot.commands.RunWallShot;
 import org.usfirst.frc.team2791.robot.commands.StopClimberAndDisengage;
 //import org.usfirst.frc.team2791.robot.commands.RunWallShot;
@@ -172,7 +172,7 @@ public class OI {
 		 * Since all Buttons were initialized above, the bottom contains has commands assigned to each of the buttons
 		 */
 		operatorX.whileHeld(new RunWallShot());
-		operatorStart.whileHeld(new RunFarShot());
+		operatorStart.whileHeld(new RunLongShot());
 		
 		operatorY.whileHeld(new RunClimber());
 		operatorA.whileHeld(new RunIntake());

@@ -4,23 +4,22 @@ package org.usfirst.frc.team2791.robot.commands;
 import org.usfirst.frc.team2791.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class RunFarShot extends Command{
-	public RunFarShot() {
-		super("RunFarShot");
+public class RunLongShot extends Command{
+	public RunLongShot() {
+		super("RunLongShot");
 		requires(Robot.shooter);
 		requires(Robot.hopper);
 	}
 
 	@Override
 	protected void initialize() {
-		// TODO change this to the other speed
 		Robot.shooter.prepWallShot();
 	}
 
 	@Override
 	protected void execute() {
 		Robot.shooter.setShooterSolenoidState(true); //down position
-		Robot.shooter.prepWallShot(); //bringing shooter up to speed
+		Robot.shooter.prepLongShot(); //bringing shooter up to speed
 		
 		// if we need more balls or the shooter is ready
 		if(!Robot.hopper.isBallAtTop() || Robot.shooter.atSpeed()) {
