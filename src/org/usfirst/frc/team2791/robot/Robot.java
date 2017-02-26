@@ -80,11 +80,11 @@ public class Robot extends IterativeRobot {
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 		
 		if(SmartDashboard.getNumber("kp", -2791) == -2791){
-			SmartDashboard.putNumber("kp",0);
+			SmartDashboard.putNumber("kp",7.0);
 		    SmartDashboard.putNumber("ki",0);
-		    SmartDashboard.putNumber("kd",0);
-		    SmartDashboard.putNumber("kv",.08);
-		    SmartDashboard.putNumber("ka",.033);
+		    SmartDashboard.putNumber("kd",0.25);
+		    SmartDashboard.putNumber("kv",0.09);
+		    SmartDashboard.putNumber("ka",0.033);
 		}
 		
 
