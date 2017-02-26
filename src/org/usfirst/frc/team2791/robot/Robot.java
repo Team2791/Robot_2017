@@ -34,6 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2791.robot.Robot.GamePeriod;
 import org.usfirst.frc.team2791.robot.commands.FollowPath;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
+import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 //import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 //import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
 //import org.usfirst.frc.team2791.robot.commands.ExampleCommand;
@@ -55,6 +56,7 @@ public class Robot extends IterativeRobot {
 	public static PowerDistributionPanel pdp; //CAN ID has to be 0 for current sensing
 
 	public static ShakerDrivetrain drivetrain;
+	public static ShakerGear gearMechanism;
 	
 	private double lastAutonLoopTime;
 	
@@ -75,7 +77,9 @@ public class Robot extends IterativeRobot {
 		pdp = new PowerDistributionPanel(); //CAN id has to be 0
 		//compressor = new Compressor(RobotMap.PCM_MODULE);
 		//compressor.setClosedLoopControl(true);
+		
 		drivetrain = new ShakerDrivetrain();
+		gearMechanism= new ShakerGear();
 		
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 		

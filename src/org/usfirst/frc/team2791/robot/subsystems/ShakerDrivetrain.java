@@ -41,19 +41,19 @@ public class ShakerDrivetrain extends Subsystem{
 	protected double previousRateTime = 0;
 	protected double currentRate = 0;
 	protected double currentTime = 0;
-	
+
 	protected double leftPreviousRate = 0;
 	protected double leftPreviousTime = 0;
 	protected double leftCurrentRate = 0;
 	protected double leftCurrentTime = 0;
 	protected double leftFilteredAccel = 0;
-	
+
 	protected double rightPreviousRate = 0;
 	protected double rightPreviousTime = 0;
 	protected double rightCurrentRate = 0;
 	protected double rightCurrentTime = 0;
 	protected double rightFilteredAccel = 0;
-	
+
 	protected double angleTarget = 0.0;
 	protected double turnPIDMaxOutput = 0.5;
 	protected boolean PIDAtTarget = false;
@@ -70,7 +70,7 @@ public class ShakerDrivetrain extends Subsystem{
 		rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A, RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
 
 		// use the talons to create a roboDrive (it has methods that allow for easier control)
-	
+
 		shakyDrive = new RobotDrive(leftSpark, rightSpark);
 		shakyDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
 		shakyDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
@@ -116,50 +116,50 @@ public class ShakerDrivetrain extends Subsystem{
 	public double getEncoderAngleRate() {
 		return (360/7.9) * (leftDriveEncoder.getRate() - rightDriveEncoder.getRate()) / 2.0;
 	}
-	
+
 	public double getLeftAcceleration() {
 
 		leftCurrentRate = getLeftVelocity();
 		leftCurrentTime = Timer.getFPGATimestamp();
-		
+
 		double acceleration = (leftCurrentRate - leftPreviousRate) / (leftCurrentTime - leftPreviousTime);
-		
+
 		leftPreviousRate = leftCurrentRate;
 		leftPreviousTime = leftCurrentTime;
-		
+
 		leftFilteredAccel = acceleration * 0.5 + leftFilteredAccel * 0.5;
-		
+
 		return leftFilteredAccel;
 	}	
 
 	public double getRightAcceleration() {
-		
+
 
 		rightCurrentRate = getLeftVelocity();
 		rightCurrentTime = Timer.getFPGATimestamp();
-		
-		
+
+
 		double acceleration = (rightCurrentRate - rightPreviousRate) / (rightCurrentTime - rightPreviousTime);
-		
+
 		rightPreviousRate = rightCurrentRate;
 		rightPreviousTime = rightCurrentTime;
-		
+
 		rightFilteredAccel = acceleration * 0.5 + rightFilteredAccel * 0.5;
-		
+
 		return rightFilteredAccel;
 	}	
-	
+
 	public double getAverageAcceleration() {
-		
+
 
 		currentRate = getAverageVelocity();
 		currentTime = Timer.getFPGATimestamp();
-		
+
 		double acceleration = (currentRate - previousRate) / (currentTime - previousRateTime);
-		
+
 		previousRate = currentRate;
 		previousRateTime = currentTime;
-		
+
 		return acceleration;
 	}
 
@@ -191,7 +191,7 @@ public class ShakerDrivetrain extends Subsystem{
 	public void doneUsingPID() {
 		usingPID = false;
 	}
-	
+
 	/**Stops all the drivetrain motors*/
 	public void disable() {
 		shakyDrive.stopMotor();
@@ -219,12 +219,12 @@ public class ShakerDrivetrain extends Subsystem{
 	public double getAverageVelocity() {
 		return (getLeftVelocity() + getRightVelocity()) / 2;
 	}
-	
+
 	/**@return average distance of both encoder velocities */
 	public double getAverageDist() {
 		return (getLeftDistance() + getRightDistance()) / 2;
 	}
-	
+
 	/**recalibrates the gyro*/
 	public void calibrateGyro() {
 		System.out.println("Gyro calibrating");
@@ -242,14 +242,14 @@ public class ShakerDrivetrain extends Subsystem{
 		return getAngleEncoder();
 
 	}
-	
-	
+
+
 	/** @param left motor output
 	 * @param right motor output*/
 	public void setLeftRightMotorOutputs(double left, double right){
 		shakyDrive.setLeftRightMotorOutputs(left, right);
 	}
-	
+
 	public double getCurrentUsage() {
 		double totalCurrent = 0.0;
 		for(int i=0; i<=2; i++){
