@@ -24,6 +24,7 @@ package org.usfirst.frc.team2791.robot;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -55,6 +56,8 @@ public class Robot extends IterativeRobot {
 
 	public static ShakerDrivetrain drivetrain;
 	
+	private double lastAutonLoopTime;
+	
 	/**
 	 * setting autonomousCommand to a Command will cause that Command to run in autonomous init
 	 */
@@ -80,8 +83,8 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("kp",0);
 		    SmartDashboard.putNumber("ki",0);
 		    SmartDashboard.putNumber("kd",0);
-		    SmartDashboard.putNumber("kv",.0666);
-		    SmartDashboard.putNumber("ka",.0297);
+		    SmartDashboard.putNumber("kv",.08);
+		    SmartDashboard.putNumber("ka",.033);
 		}
 		
 
@@ -108,6 +111,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		debug();
 		
 	}
 
@@ -135,9 +139,13 @@ public class Robot extends IterativeRobot {
 
 		// schedule the autonomous command (example)
 		//intake.wingDeployment();//opens up robot as soon as robot starts
-		autonomousCommand= new FollowPath(AutoPaths.get("StraightAheadPath"));
+		drivetrain.resetEncoders();
+
+		autonomousCommand= new FollowPath(AutoPaths.get("Test180"));
 		if (autonomousCommand != null)
 			autonomousCommand.start();
+		lastAutonLoopTime = Timer.getFPGATimestamp();
+		
 	}
 
 	/**
@@ -146,6 +154,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		debug();
+		
+		double thisAutoLoopTime = Timer.getFPGATimestamp();
+		double timeDiff = thisAutoLoopTime - lastAutonLoopTime;
+//		System.out.println("Auton time diff = "+timeDiff+"s rate = "+(1.0/timeDiff)+"hz");
+//		lastAutonLoopTime = thisAutoLoopTime;
 	}
 
 	@Override
@@ -158,6 +172,7 @@ public class Robot extends IterativeRobot {
 		
 		//if (autonomousCommand != null)
 			//autonomousCommand.cancel();
+		drivetrain.resetEncoders();
 			gamePeriod = GamePeriod.TELEOP;
 //			gearMechanism.changeGearSolenoidState(false);//makes it stay up when it turns on; just initiating it as up in the subsystem isn't working
 //			intake.moveIntakeOut(false);
@@ -172,6 +187,7 @@ public class Robot extends IterativeRobot {
 //		System.out.println("Compressor current:"+compressor.getCompressorCurrent());
 //		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
 		Scheduler.getInstance().run();
+		debug();
 	}
 
 	/**
@@ -181,6 +197,11 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
+	
+	public void debug(){
+		drivetrain.debug();
+	}
+	
 	public enum GamePeriod {
         AUTONOMOUS, TELEOP, DISABLED
     }

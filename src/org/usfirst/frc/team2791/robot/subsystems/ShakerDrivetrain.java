@@ -46,18 +46,20 @@ public class ShakerDrivetrain extends Subsystem{
 	protected double leftPreviousTime = 0;
 	protected double leftCurrentRate = 0;
 	protected double leftCurrentTime = 0;
+	protected double leftFilteredAccel = 0;
 	
 	protected double rightPreviousRate = 0;
 	protected double rightPreviousTime = 0;
 	protected double rightCurrentRate = 0;
 	protected double rightCurrentTime = 0;
+	protected double rightFilteredAccel = 0;
 	
 	protected double angleTarget = 0.0;
 	protected double turnPIDMaxOutput = 0.5;
 	protected boolean PIDAtTarget = false;
 	protected boolean anglePIDQuickExit = false;
 
-	private double distancePerPulse = Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER);
+	private double distancePerPulse = Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER_IN_FEET);
 
 	public ShakerDrivetrain(){
 		leftSpark = new Talon(RobotMap.DRIVE_SPARK_LEFT_PORT);
@@ -65,10 +67,13 @@ public class ShakerDrivetrain extends Subsystem{
 
 
 		leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
-		rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
+		rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A, RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
 
 		// use the talons to create a roboDrive (it has methods that allow for easier control)
-		shakyDrive = new RobotDrive(rightSpark,leftSpark);
+	
+		shakyDrive = new RobotDrive(leftSpark, rightSpark);
+		shakyDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
+		shakyDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 
 		// stop all motors right away just in case
 		shakyDrive.stopMotor();
@@ -122,7 +127,9 @@ public class ShakerDrivetrain extends Subsystem{
 		leftPreviousRate = leftCurrentRate;
 		leftPreviousTime = leftCurrentTime;
 		
-		return acceleration;
+		leftFilteredAccel = acceleration * 0.5 + leftFilteredAccel * 0.5;
+		
+		return leftFilteredAccel;
 	}	
 
 	public double getRightAcceleration() {
@@ -131,12 +138,15 @@ public class ShakerDrivetrain extends Subsystem{
 		rightCurrentRate = getLeftVelocity();
 		rightCurrentTime = Timer.getFPGATimestamp();
 		
+		
 		double acceleration = (rightCurrentRate - rightPreviousRate) / (rightCurrentTime - rightPreviousTime);
 		
 		rightPreviousRate = rightCurrentRate;
 		rightPreviousTime = rightCurrentTime;
 		
-		return acceleration;
+		rightFilteredAccel = acceleration * 0.5 + rightFilteredAccel * 0.5;
+		
+		return rightFilteredAccel;
 	}	
 	
 	public double getAverageAcceleration() {
@@ -239,6 +249,7 @@ public class ShakerDrivetrain extends Subsystem{
 	public void setLeftRightMotorOutputs(double left, double right){
 		shakyDrive.setLeftRightMotorOutputs(left, right);
 	}
+	
 	public double getCurrentUsage() {
 		double totalCurrent = 0.0;
 		for(int i=0; i<=2; i++){
@@ -281,6 +292,11 @@ public class ShakerDrivetrain extends Subsystem{
 		//		SmartDashboard.putNumber("Distance PID output", distancePID.getOutput());
 		SmartDashboard.putNumber("Distance PID error", distancePID.getError());
 		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
+		SmartDashboard.putNumber("Velocity", getAverageVelocity());
+		SmartDashboard.putNumber("Acceleration", getAverageAcceleration());
+		SmartDashboard.putString("LVel vs RVel vs AvgVel", ""+getLeftVelocity() + ":" + getRightVelocity() + ":" + getAverageVelocity() +"");
+		SmartDashboard.putString("LDist vs RDist vs AvgDist", ""+getLeftDistance() + ":" + getRightDistance() + ":" + getAverageDist()+"");
+
 	}
 	public void updatePIDGains() {
 		movingAnglePID.changeGains(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);

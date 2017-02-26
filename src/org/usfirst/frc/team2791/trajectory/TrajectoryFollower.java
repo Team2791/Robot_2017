@@ -58,7 +58,6 @@ public class TrajectoryFollower {
 
 	public double calculate(double distance_so_far) {
 
-
 		if (current_segment < profile_.getNumSegments()) {
 			Trajectory.Segment segment = profile_.getSegment(current_segment);
 			double error = segment.pos - distance_so_far;
@@ -70,7 +69,7 @@ public class TrajectoryFollower {
 			current_heading = segment.heading;
 			current_segment++;
 
-			debug(distance_so_far, error, output, segment);
+			debug(distance_so_far, error, output, segment, current_segment);
 
 			return output;
 		} else {
@@ -94,12 +93,13 @@ public class TrajectoryFollower {
 		return profile_.getNumSegments();
 	}
 
-	private void debug(double distance_so_far, double error, double output, Segment segment){
+	private void debug(double distance_so_far, double error, double output, Segment segment, int current_segment){
 
 		SmartDashboard.putString(name+"PosGoal v\n PosActual:", segment.pos+":"+distance_so_far);
 
 		double currentVelocity;
 		double currentAcceleration;
+		
 		if(name == "left") {
 			currentVelocity = Robot.drivetrain.getLeftVelocity(); 
 			currentAcceleration = Robot.drivetrain.getLeftAcceleration(); 
@@ -119,6 +119,7 @@ public class TrajectoryFollower {
 		SmartDashboard.putNumber(name+"PosError",error);
 		SmartDashboard.putNumber(name+"VelError",velocityError);
 		SmartDashboard.putNumber(name+"AccError",accelerationError);
+		System.out.println("Just looked at segment #"+current_segment);
 
 	}
 }

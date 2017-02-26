@@ -15,27 +15,36 @@ public class DriveWithJoystick extends Command {
 	protected void initialize() {
 		System.out.println("came to initialize");
 	}
+	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		System.out.println("I'm trying to execute");
+		System.out.println("Drive with joystick executig");
+		
 		//logic interprets driver Joystick position for motor outputs 
 	    double combinedLeft, combinedRight;
+	    
 	    //if we need to change the speed we can change the .35 FIRST and then the /3 ONLY if thats not enough
 	    double turn=(double)(Robot.oi.driver.getAxisLeftX())/3.0;
+	    
 	    if(Robot.oi.driver.getButtonRB()){
-		combinedLeft=0.35-turn;
-		combinedRight=0.35+turn;
+	    	
+		combinedLeft = 0.35-turn;
+		combinedRight = 0.35+turn;
+		
+	    }else if(Robot.oi.driver.getButtonLB()){
+	    	
+		combinedLeft = -1*(0.35+turn);
+		combinedRight = -1*(0.35-turn);
+		
+	    }else{
+	    	
+	 	combinedRight = Robot.oi.driver.getGtaDriveRight();
+		combinedLeft = Robot.oi.driver.getGtaDriveLeft();
+		
 	    }
-	    else if(Robot.oi.driver.getButtonLB()){
-		combinedLeft=-1*(0.35+turn);
-		combinedRight=-1*(0.35-turn);
-	    }
-	    else{
-	 	combinedRight=Robot.oi.driver.getGtaDriveLeft();
-		combinedLeft=Robot.oi.driver.getGtaDriveRight();
-	    }
-	    Robot.drivetrain.setLeftRightMotorOutputs(combinedLeft,combinedRight);
+//	    System.out.println("DT left = "+combinedLeft+" DT right = "+combinedRight);
+	    Robot.drivetrain.setLeftRightMotorOutputs(combinedLeft, combinedRight);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -51,6 +60,7 @@ public class DriveWithJoystick extends Command {
 	}
 
 	protected void interrupted() {
+		System.out.println("Drive with joystik interrupted.");
 	}
 
 }

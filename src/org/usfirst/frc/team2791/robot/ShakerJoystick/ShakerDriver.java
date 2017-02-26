@@ -25,11 +25,14 @@ public class ShakerDriver extends OverriddenJoystick {
             leftAxis = -Math.pow(super.getAxisLeftX(), 2) - offset;
         else
             leftAxis = Math.pow(super.getAxisLeftX(), 2) + offset;
-        double combined = -leftAxis + super.getAxisRT() - super.getAxisLT();
+        
+        double combined = leftAxis + super.getAxisRT() - super.getAxisLT();
+        
         if (combined > 1.0)
             return 1.0;
         else if (combined < -1.0)
             return -1.0;
+        
         return combined;
 
     }
@@ -41,11 +44,13 @@ public class ShakerDriver extends OverriddenJoystick {
             leftAxis = -Math.pow(super.getAxisLeftX(), 2) - offset;
         else
             leftAxis = Math.pow(super.getAxisLeftX(), 2) + offset;
-        double combined = leftAxis + super.getAxisRT() - super.getAxisLT();
+        double combined = -leftAxis + super.getAxisRT() - super.getAxisLT();
+        
         if (combined > 1.0)
             return 1.0;
         else if (combined < -1.0)
             return -1.0;
+        
         return combined;
     }
 

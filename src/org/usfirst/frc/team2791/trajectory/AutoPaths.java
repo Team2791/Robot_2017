@@ -28,12 +28,16 @@ public class AutoPaths {
 			"WallLanePath",
 			"InsideLanePathClose", 
 			"StraightAheadPath",
+			"TenFootSCurve",
+			"Test180",
 	};
 	public final static String[] kPathDescriptions = { "Inside, Far", 
 			"Middle Lane",
 			"Wall Lane",
 			"Inside, Close",
 			"Straight ahead",
+			"Simple S-Turn",
+			"Generic Testing File"
 	};
 	static Hashtable paths_ = new Hashtable();
 

@@ -19,25 +19,21 @@ public class FollowPath extends Command {
 	protected Path path;
 
 	public FollowPath(Path path_, double angle) {// double angle may not be correct
-
-		super("DriveWithJoystick");
+		super("FollowPath");
 		requires(Robot.drivetrain);
 		trajHelper=new TrajectoryDriveHelper();
 		path=path_;
 		heading=angle;
 		System.out.println("came to constructor FollowPath");
-		initialize();
 	}
 
 	public FollowPath(Path path_) {// double angle may not be correct
-
-		super("DriveWithJoystick");
+		super("FollowPath");
 		requires(Robot.drivetrain);
 		path = path_;
 		trajHelper = new TrajectoryDriveHelper();
 		heading = 0;
 		System.out.println("came to constructor FollowPath");
-		initialize();
 	}
 
 	// Called just before this Command runs the first time
@@ -55,7 +51,6 @@ public class FollowPath extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		System.out.println("I am asking trajHelper for outputs");
 		trajHelper.update();
 	}
 
