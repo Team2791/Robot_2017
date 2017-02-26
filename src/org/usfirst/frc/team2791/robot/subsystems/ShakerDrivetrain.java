@@ -127,12 +127,17 @@ public class ShakerDrivetrain extends Subsystem{
 		SmartDashboard.putNumber("Left Drive Encoders Rate", leftDriveEncoder.getRate());
 		SmartDashboard.putNumber("Right Drive Encoders Rate", rightDriveEncoder.getRate());
 		SmartDashboard.putNumber("Encoder Angle", getAngleEncoder());
-//		SmartDashboard.putNumber("Encoder Angle Rate Change", getEncoderAngleRate());\
-		SmartDashboard.putNumber("Average Encoder Distance", getAverageDist());
-		SmartDashboard.putNumber("Left Encoder Distance", getLeftDistance());
-		SmartDashboard.putNumber("Right Encoder Distance", getRightDistance());
+
 		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
 		SmartDashboard.putNumber("Gyro rate", gyro.getRate());
+		
+		SmartDashboard.putNumber("Avg Acceleration", getAverageAcceleration());
+		
+		SmartDashboard.putString("LDist vs RDist vs AvgDist", getLeftDistance()+":"+getRightDistance()+":"+getAverageDist());
+		SmartDashboard.putString("LVel vs RVel vs AvgVel", getLeftVelocity()+":"+getRightVelocity()+":"+getAverageVelocity());
+		SmartDashboard.putString("LAcc vs RAcc vs AvgAcc", getLeftAcceleration()+":"+getRightAcceleration()+":"+getAverageAcceleration());
+		
+		
 	}
 		
 	/**TODO: Get rid of this redundant method**/

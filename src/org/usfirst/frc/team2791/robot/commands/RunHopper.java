@@ -13,6 +13,7 @@ public class RunHopper extends Command{
 	protected void initialize(){}
 	
 	protected void execute(){
+		System.out.println("Hopper Running");
 		if(!Robot.hopper.isBallAtTop()){
 			Robot.hopper.runHopper();
 		}
