@@ -204,10 +204,11 @@ public class ShakerShooter extends Subsystem {
 	public void setVBusWithTrigger(double Vbus) {
 		// TODO Auto-generated method stub
 		primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);//percent v bus
-        followerShooterTalonA.changeControlMode(TalonControlMode.PercentVbus);
+        followerShooterTalonA.changeControlMode(TalonControlMode.Follower);
+        followerShooterTalonA.set(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
 		SmartDashboard.putNumber("Shooter percent Vbus",Vbus);
         primaryShooterTalon.set(Vbus);
-        followerShooterTalonA.set(Vbus);
+       
 	}
 	public double getError() {
 		// TODO Auto-generated method stub

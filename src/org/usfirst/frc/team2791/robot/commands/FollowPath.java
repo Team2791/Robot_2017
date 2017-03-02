@@ -5,13 +5,15 @@ package org.usfirst.frc.team2791.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team2791.robot.Robot;
+import org.usfirst.frc.team2791.trajectory.AutoPaths;
 import org.usfirst.frc.team2791.trajectory.Path;
 import org.usfirst.frc.team2791.trajectory.TrajectoryDriveHelper;
 
 /**
- * Follows a give path
+ * Follows a given path
  * @author unbun
  */
+
 public class FollowPath extends Command {
 	protected TrajectoryDriveHelper trajHelper;
 
@@ -27,6 +29,15 @@ public class FollowPath extends Command {
 		System.out.println("came to constructor FollowPath");
 	}
 
+	public FollowPath(String path_) {// double angle may not be correct
+		super("FollowPath");
+		requires(Robot.drivetrain);
+		path = AutoPaths.get(path_);
+		trajHelper = new TrajectoryDriveHelper();
+		heading = 0;
+		System.out.println("came to constructor FollowPath");
+	}
+	
 	public FollowPath(Path path_) {// double angle may not be correct
 		super("FollowPath");
 		requires(Robot.drivetrain);

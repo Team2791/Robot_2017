@@ -23,20 +23,14 @@ public class AutoPaths {
 	public static final int WALL_LANE_ID = 2;
 	public static String fileLocation="/paths/";
 
-	public final static String[] kPathNames = { "InsideLanePathFar",
-			"CenterLanePathFar",
-			"WallLanePath",
-			"InsideLanePathClose", 
-			"StraightAheadPath",
+	public final static String[] kPathNames = { "RightGear",
+			"RightGearToHopper",
 			"TenFootSCurve",
 			"Test180",
 	};
-	public final static String[] kPathDescriptions = { "Inside, Far", 
-			"Middle Lane",
-			"Wall Lane",
-			"Inside, Close",
-			"Straight ahead",
-			"Simple S-Turn",
+	public final static String[] kPathDescriptions = { "From Wall to Right Gear [Backwards], in testing",
+			"From Right Gear to Hopper, in testing",
+			"Simple S-Turn, in testing, in testing",
 			"Generic Testing File"
 	};
 	static Hashtable paths_ = new Hashtable();
@@ -45,17 +39,23 @@ public class AutoPaths {
 	 * @param: String pathname_ is a path that you want to make sure exists
 	 */
 	public AutoPaths(String pathname_){
+		boolean allPathsFound=false;
 		for (int c=0;c<kPathNames.length;c++){
 			if (kPathNames[c].equals(pathname_)){
+				allPathsFound=true;
 				break;
 			}
 		}
-		loadPaths();
+		if(allPathsFound)
+			loadPaths();
+		else
+			System.out.println("One or more Paths are not in AutoPaths");
 	}
 
 	public AutoPaths(){
 		loadPaths();
 	}
+	
 	/*
 	 * loads all paths so that they can be accessed 
 	 */

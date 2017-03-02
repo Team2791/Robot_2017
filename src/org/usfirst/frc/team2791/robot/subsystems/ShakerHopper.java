@@ -38,7 +38,7 @@ public class ShakerHopper extends Subsystem{
 	}
 	
 	public void runHopper() {
-		hopperSpark.set(SmartDashboard.getNumber("Hopper VBus",hopperSetpoint));
+		hopperSpark.set(1.0);
 	}
 	
 	public void setHopperSpeed(double speed){

@@ -46,6 +46,11 @@ public class OI {
 		Button operatorB = new JoystickButton(operator, 2);
 		Button operatorX = new JoystickButton(operator, 3);
 		Button operatorY = new JoystickButton(operator, 4);
+		
+		Button driverA = new JoystickButton(driver,1);
+		Button driverB = new JoystickButton(driver,2);
+		Button driverX = new JoystickButton(driver,3);
+		Button driverY = new JoystickButton(driver,4);
 
 		Button driverLB = new JoystickButton(driver,5);
 		Button driverRB = new JoystickButton(driver,6);
@@ -54,10 +59,6 @@ public class OI {
 
 		Button operatorLB = new JoystickButton(operator,5);
 		Button operatorRB = new JoystickButton(operator,6);
-
-		Button driverX = new JoystickButton(driver, 3);
-		Button driverY = new JoystickButton(driver, 4);
-
 		
 		Button driverLS = new JoystickButton(driver,9);//stick buttons - pushing joysticks in
 		Button driverRS = new JoystickButton(driver,10);
@@ -190,10 +191,13 @@ public class OI {
 
 		driverX.whenPressed(new RemoveGear());
 		driverX.whenReleased(new ResetGear());
-		driverY.whileHeld(new RunClimber());
+//		driverY.whileHeld(new RunClimber());
+		
+		driverA.whenReleased(new RunIntake());
+		driverB.whenPressed(new TurnIntakeOff());
 
-		driverLB.whileHeld(new DriveWithJoystick());//TODO: change to triggers once they are properly set up
-		driverRB.whileHeld(new DriveWithJoystick());//TODO: change to triggers once they are properly set up
+		driverLB.whileHeld(new DriveWithJoystick());
+		driverRB.whileHeld(new DriveWithJoystick());
 
 		operatorLB.whenPressed(new StopClimberAndDisengage());//TODO: change to start buttons or something less needed
 		operatorRB.whenPressed(new TurnShooterOff());
@@ -201,9 +205,9 @@ public class OI {
 		operatorDpadUp.whenPressed(new ResetGear());
 		operatorDpadDown.whenPressed(new RemoveGear());
 
-		operatorDpadLeft.whileHeld(new RunHopper());
+//		operatorDpadLeft.whileHeld(new RunHopper());
 		operatorDpadRight.whenPressed(new StopHopper());
-		operatorDpadUpLeft.whenPressed(new RunHopperBackwards());
+//		operatorDpadUpLeft.whenPressed(new RunHopperBackwards());
 		
 		driverBack.whileHeld(new CalibrateGyro());
 	}
