@@ -16,7 +16,7 @@ public class ShootWithJoystick extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.hopper.runHopper();
+//		Robot.hopper.runHopper();
 		Robot.shooter.setVBusWithTrigger(-GTADrive.getLeftValue(Robot.oi.operator));
 	}
 

@@ -191,7 +191,7 @@ public class OI {
 
 		driverX.whenPressed(new RemoveGear());
 		driverX.whenReleased(new ResetGear());
-//		driverY.whileHeld(new RunClimber());
+		driverY.whileHeld(new RunClimber());
 		
 		driverA.whenReleased(new RunIntake());
 		driverB.whenPressed(new TurnIntakeOff());

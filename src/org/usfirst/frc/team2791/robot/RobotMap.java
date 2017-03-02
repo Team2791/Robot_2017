@@ -24,7 +24,7 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int DRIVE_SPARK_LEFT_PORT = 9;
 	public static final int DRIVE_SPARK_RIGHT_PORT = 8;
 	
-	public static final int INTAKE_SPARK_PORT = 6;
+	public static final int INTAKE_SPARK_PORT = 6;//runs on 7 (weird) figure out why
 	
 	public static final int HOPPER_SPARK_PORT = 7;
 
