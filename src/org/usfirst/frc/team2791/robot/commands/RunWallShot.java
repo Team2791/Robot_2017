@@ -22,7 +22,7 @@ public class RunWallShot extends Command{
 		Robot.shooter.prepWallShot(); //bringing shooter up to speed
 		
 		// if we need more balls or the shooter is ready
-		if(!Robot.hopper.isBallAtTop() || Robot.shooter.atSpeed()) {
+		if(Robot.shooter.atSpeed()) {
 			Robot.hopper.runHopper();
 		} else {
 			Robot.hopper.stopHopper();

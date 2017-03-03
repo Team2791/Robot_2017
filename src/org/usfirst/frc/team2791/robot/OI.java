@@ -187,7 +187,8 @@ public class OI {
 		operatorX.whileHeld(new RunWallShot());
 		operatorY.whileHeld(new RunClimber());
 		operatorA.whileHeld(new RunIntake());
-		operatorB.whileHeld(new RunIntakeBelt());
+//		operatorB.whileHeld(new RunIntakeBelt());
+		operatorB.whileHeld(new HopperOn());
 
 		driverX.whenPressed(new RemoveGear());
 		driverX.whenReleased(new ResetGear());
@@ -205,8 +206,8 @@ public class OI {
 		operatorDpadUp.whenPressed(new ResetGear());
 		operatorDpadDown.whenPressed(new RemoveGear());
 
-//		operatorDpadLeft.whileHeld(new RunHopper());
-		operatorDpadRight.whenPressed(new StopHopper());
+		operatorDpadLeft.whileHeld(new HopperOn());
+//		operatorDpadRight.whenPressed(new StopHopper());
 //		operatorDpadUpLeft.whenPressed(new RunHopperBackwards());
 		
 		driverBack.whileHeld(new CalibrateGyro());

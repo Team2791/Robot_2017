@@ -24,9 +24,9 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int DRIVE_SPARK_LEFT_PORT = 9;
 	public static final int DRIVE_SPARK_RIGHT_PORT = 8;
 	
-	public static final int INTAKE_SPARK_PORT = 6;//runs on 7 (weird) figure out why
+	public static final int INTAKE_SPARK_PORT = 6;
 	
-	public static final int HOPPER_SPARK_PORT = 7;
+	public static final int HOPPER_SPARK_PORT = 7;//try on a different port
 
 	// ANALOG
 	public static final int IR_SENSOR_1 = 0;
@@ -56,8 +56,11 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int POWER_LEFT_DRIVE_C = 15;
 	
 	public static final int POWER_CLIMBER_INTAKE = 3;
+	public static final int POWER_CLIMBER_INTAKE_2 = 10;
+	
 	public static final int POWER_HOPPER_FLOOR = 12;
 	
 	public static final int POWER_PRIMARY_SHOOTER = 4;
 	public static final int POWER_FOLLOWER_SHOOTER = 11;
+	
 }

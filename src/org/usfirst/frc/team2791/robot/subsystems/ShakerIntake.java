@@ -74,7 +74,7 @@ public class ShakerIntake extends Subsystem{
 		SmartDashboard.putNumber("Intake/Climber current usage", getCurrentUsage());
 	}
 	public double getCurrentUsage() {
-		return Robot.pdp.getCurrent(RobotMap.POWER_CLIMBER_INTAKE);
+		return Robot.pdp.getCurrent(RobotMap.POWER_CLIMBER_INTAKE) + Robot.pdp.getCurrent(RobotMap.POWER_CLIMBER_INTAKE_2);
 	}
 }
 
