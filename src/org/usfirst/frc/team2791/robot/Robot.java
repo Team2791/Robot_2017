@@ -96,7 +96,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		if(oi.driver.getButtonBack()){
-			new CalibrateGyro();
+//			new CalibrateGyro();
 		}
 		debug();
 		Scheduler.getInstance().run();

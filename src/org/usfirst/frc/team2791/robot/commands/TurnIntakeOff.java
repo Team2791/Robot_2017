@@ -13,8 +13,8 @@ public class TurnIntakeOff extends Command{
 	protected void initialize(){}
 	
 	protected void execute(){
-		Robot.intake.moveIntakeOut(false);
 		Robot.intake.motorOffIntake();
+		Robot.intake.moveIntakeOut(false);
 	}
 	
 	protected boolean isFinished(){

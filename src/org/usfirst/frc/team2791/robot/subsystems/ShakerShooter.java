@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShakerShooter extends Subsystem {
 	
-	private final double ERROR_THRESHOLD = 25;
+	private final double ERROR_THRESHOLD = 40;//25
 	private final double SHOOTER_GOOD_TIME = 0.1;
 	private DelayedBoolean shooterGoodDelayedBoolean = new DelayedBoolean(SHOOTER_GOOD_TIME);
 
@@ -84,7 +84,7 @@ public class ShakerShooter extends Subsystem {
     }
     
     public void initDefaultCommand(){
-    	setDefaultCommand(new ShootWithJoystick());
+    	
     }
     
     public void setShooterSolenoidState(boolean key){
@@ -183,16 +183,12 @@ public class ShakerShooter extends Subsystem {
     }
 
     public void stopMotors() { //Set the motors to 0 to stop
-    	primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);//percent v bus
-        followerShooterTalonA.changeControlMode(TalonControlMode.PercentVbus);
-    	
+    	primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
     	primaryShooterTalon.set(0);
-        followerShooterTalonA.set(0);
     }
 
     public void disable() {
     	primaryShooterTalon.disableControl();
-        followerShooterTalonA.disableControl();
         
 //        SmartDashboard.putNumber("right speed", followerShooterTalonA.getSpeed());
 //        SmartDashboard.putNumber("left speed", primaryShooterTalon.getSpeed());

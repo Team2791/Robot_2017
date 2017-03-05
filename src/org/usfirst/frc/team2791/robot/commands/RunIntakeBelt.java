@@ -29,6 +29,7 @@ public class RunIntakeBelt extends Command{
 	}
 	
 	protected void interrupted(){
+		end();
 	}
 	
 }

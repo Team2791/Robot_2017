@@ -102,9 +102,9 @@ public class ShakerDrivetrain extends Subsystem{
 		stationaryAnglePID.setIZone(6);
 		distancePID.setIZone(0.25);
 		movingAnglePID.setIZone(4);
-		gyro = new ADXRS450_Gyro();//SPI.Port.kOnboardCS1
-		gyro.calibrate();
-		gyro.reset();
+//		gyro = new ADXRS450_Gyro();//SPI.Port.kOnboardCS1
+//		gyro.calibrate();
+//		gyro.reset();
     }
     public void initDefaultCommand() {
     	setDefaultCommand(new DriveWithJoystick());
@@ -128,8 +128,8 @@ public class ShakerDrivetrain extends Subsystem{
 		SmartDashboard.putNumber("Right Drive Encoders Rate", rightDriveEncoder.getRate());
 		SmartDashboard.putNumber("Encoder Angle", getAngleEncoder());
 
-		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
-		SmartDashboard.putNumber("Gyro rate", gyro.getRate());
+//		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
+//		SmartDashboard.putNumber("Gyro rate", gyro.getRate());
 		
 		SmartDashboard.putNumber("Avg Acceleration", getAverageAcceleration());
 		

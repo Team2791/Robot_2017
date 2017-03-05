@@ -2,7 +2,7 @@ package org.usfirst.frc.team2791.robot.subsystems;
 
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
-import org.usfirst.frc.team2791.robot.commands.RunHopper;
+import org.usfirst.frc.team2791.robot.commands.HopperOn;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,13 +19,13 @@ public class ShakerHopper extends Subsystem{
 	
 	public ShakerHopper(){
 		hopperSpark = new Talon(RobotMap.HOPPER_SPARK_PORT);
-		
+		hopperSpark.setSpeed(0.0);
 		ballSensor1 = new AnalogInput(0);
 		ballSensor2 = new AnalogInput(1);
 	}
 	
 	public void initDefaultCommand(){
-//		setDefaultCommand(new RunHopper());
+//		setDefaultCommand(new HopperOn());
 	}
 	
 	/**
@@ -38,15 +38,22 @@ public class ShakerHopper extends Subsystem{
 	}
 	
 	public void runHopper() {
-		hopperSpark.set(1.0);
+		System.out.print("runHopper accessor");
+		hopperSpark.setSpeed(1.0);
+	}
+	public void slowHopper() {
+		System.out.print("slowHopper accessor");
+		hopperSpark.setSpeed(0.5);
 	}
 	
 	public void setHopperSpeed(double speed){
-		hopperSpark.set(speed);
+		System.out.print("setHopperSpeed accessor");
+		hopperSpark.setSpeed(speed);
 	}
 	
 	public void stopHopper(){
-		hopperSpark.set(0.0);
+		System.out.print("stopHopper accessor");
+		hopperSpark.setSpeed(0.0);
 	}
 	
 	public void stopMotor(){

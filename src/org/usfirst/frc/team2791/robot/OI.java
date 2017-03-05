@@ -7,7 +7,6 @@ import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team2791.robot.commands.RemoveGear;
 import org.usfirst.frc.team2791.robot.commands.ResetGear;
 import org.usfirst.frc.team2791.robot.commands.RunClimber;
-import org.usfirst.frc.team2791.robot.commands.RunHopper;
 import org.usfirst.frc.team2791.robot.commands.RunHopperBackwards;
 import org.usfirst.frc.team2791.robot.commands.RunIntake;
 import org.usfirst.frc.team2791.robot.commands.RunIntakeBelt;
@@ -42,34 +41,30 @@ public class OI {
 		/*
 		 * Button Inits
 		 */
-		Button operatorA = new JoystickButton(operator, 1);
-		Button operatorB = new JoystickButton(operator, 2);
-		Button operatorX = new JoystickButton(operator, 3);
-		Button operatorY = new JoystickButton(operator, 4);
-		
+
 		Button driverA = new JoystickButton(driver,1);
 		Button driverB = new JoystickButton(driver,2);
 		Button driverX = new JoystickButton(driver,3);
 		Button driverY = new JoystickButton(driver,4);
-
 		Button driverLB = new JoystickButton(driver,5);
 		Button driverRB = new JoystickButton(driver,6);
-
 		Button driverBack = new JoystickButton(driver,7);
+		Button driverStart = new JoystickButton(driver,8);
+		Button driverLS = new JoystickButton(driver,9);
+		Button driverRS = new JoystickButton(driver,10);
+		
 
+		Button operatorA = new JoystickButton(operator, 1);
+		Button operatorB = new JoystickButton(operator, 2);
+		Button operatorX = new JoystickButton(operator, 3);
+		Button operatorY = new JoystickButton(operator, 4);
 		Button operatorLB = new JoystickButton(operator,5);
 		Button operatorRB = new JoystickButton(operator,6);
-		
-		Button driverLS = new JoystickButton(driver,9);//stick buttons - pushing joysticks in
-		Button driverRS = new JoystickButton(driver,10);
+		Button operatorSelect = new JoystickButton(operator,7);
+		Button operatorStart = new JoystickButton(operator, 8);
 		Button operatorLS = new JoystickButton(operator,9);
 		Button operatorRS = new JoystickButton(operator,10);
 
-		Button driverSelect = new JoystickButton(driver,7);
-		Button driverStart = new JoystickButton(driver,8);
-
-		Button operatorSelect = new JoystickButton(operator,7);
-		Button operatorStart = new JoystickButton(operator, 8);
 
 		/*
 		 * DPad Inits
@@ -187,8 +182,7 @@ public class OI {
 		operatorX.whileHeld(new RunWallShot());
 		operatorY.whileHeld(new RunClimber());
 		operatorA.whileHeld(new RunIntake());
-//		operatorB.whileHeld(new RunIntakeBelt());
-		operatorB.whileHeld(new HopperOn());
+		operatorB.whileHeld(new RunIntakeBelt());
 
 		driverX.whenPressed(new RemoveGear());
 		driverX.whenReleased(new ResetGear());
@@ -207,11 +201,12 @@ public class OI {
 		operatorDpadDown.whenPressed(new RemoveGear());
 
 		operatorDpadLeft.whileHeld(new HopperOn());
-//		operatorDpadRight.whenPressed(new StopHopper());
-//		operatorDpadUpLeft.whenPressed(new RunHopperBackwards());
+		operatorDpadUpLeft.whenPressed(new StopHopper());
+		operatorDpadRight.whileHeld(new RunHopperBackwards());
 		
 		driverBack.whileHeld(new CalibrateGyro());
 	}
+
 	public void checkForAction(){
 
 		if(Math.abs(driver.getAxisLeftX())>0.0){}//left joystick

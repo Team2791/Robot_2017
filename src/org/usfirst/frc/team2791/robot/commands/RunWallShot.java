@@ -9,15 +9,18 @@ public class RunWallShot extends Command{
 		super("RunWallShot");
 		requires(Robot.shooter);
 		requires(Robot.hopper);
+		System.out.print("shooter construct");
 	}
 
 	@Override
 	protected void initialize() {
+		System.out.print("shooter init");
 		Robot.shooter.prepWallShot();
 	}
 
 	@Override
 	protected void execute() {
+		System.out.print("shooter execute");
 		Robot.shooter.setShooterSolenoidState(false); //down position
 		Robot.shooter.prepWallShot(); //bringing shooter up to speed
 		
@@ -25,24 +28,27 @@ public class RunWallShot extends Command{
 		if(Robot.shooter.atSpeed()) {
 			Robot.hopper.runHopper();
 		} else {
-			Robot.hopper.stopHopper();
+			Robot.hopper.slowHopper();
 		}
 	}
 
 	@Override
 	protected boolean isFinished() {
+		System.out.print("shooter isFinished");
 		return false;
 	}
 
 	@Override
 	protected void end() {
-		Robot.shooter.disable();
+		System.out.print("shooter end");
+		Robot.hopper.stopHopper();
+		Robot.shooter.stopMotors();
 	}
 
 	@Override
 	protected void interrupted() {
-		new StopHopper();
-		new TurnShooterOff();
+		System.out.print("shooter interrupted");
+		end(); // we don't think it's called automatically
 	}
 }
 
