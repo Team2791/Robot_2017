@@ -19,12 +19,29 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static final double WHEEL_DIAMETER_IN_IN = 4.0;
 	public static final double WHEEL_DIAMETER_IN_FEET = WHEEL_DIAMETER_IN_IN/12.0;
 
+	public static final int SHOOTER_ENCODER_TICKS = 128;
+	public static final double SHOOTER_WHEEL_DIAMETER = 4.0;
+	
 	// 2016 Constants = can be changed as needed
 	// PID VALUES
 	// Shooter PID
-	public static double SHOOTER_P = 0.4;
-	public static double SHOOTER_I = 0.001;
-	public static double SHOOTER_D = 0;
+	public static double SHOOTER_P = 3.0; //3.0
+	public static double SHOOTER_I = 0.005;//0.005
+	public static double SHOOTER_D = 100.0; //100.0
+	
+	public static final double SHOOTER_FEED_FORWARD = 0.30115; //0.30115
+	
+	public static final double SHOOTER_SET_POINT = 2885; //2855
+	public static final double SHOOTER_LONG_SET_POINT = 3500; //3500
+	
+	public static final int SHOOTER_I_ZONE = 40; //90; should it be lower?
+
+	public static final double SHOOTER_LONG_P = 1.3;
+	public static final double SHOOTER_LONG_I = 0.004;
+	public static final double SHOOTER_LONG_D = 13;
+	public static final double SHOOTER_LONG_FEED_FORWARD = 0.25;
+	
+	//Drive PID
 	public static double DRIVE_ANGLE_P = 0.05;
 	public static double DRIVE_ANGLE_I = 0;
 	public static double DRIVE_ANGLE_D = 0.000;
