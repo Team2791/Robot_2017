@@ -34,7 +34,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static final double SHOOTER_SET_POINT = 2885; //2855
 	public static final double SHOOTER_LONG_SET_POINT = 3500; //3500
 	
-	public static final int SHOOTER_I_ZONE = 90; //90; should it be lower?
+	public static final int SHOOTER_I_ZONE = 40; //90; should it be lower?
 
 	public static final double SHOOTER_LONG_P = 1.3;
 	public static final double SHOOTER_LONG_I = 0.004;
