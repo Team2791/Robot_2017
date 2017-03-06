@@ -44,6 +44,8 @@ public class TextFileReader{
 			file_connection_ = new FileInputStream(uri);
 
 			// Make an I/O adapter sandwich to actually get some text out
+			if(file_connection_.equals(null))
+				System.out.println("File Connection is Null");
 			reader_ = new BufferedReader(new InputStreamReader(file_connection_, Charset.forName("UTF-8")));
 
 		} catch (IOException e) {
@@ -71,6 +73,8 @@ public class TextFileReader{
 	public String readLine() {
 		String line = null;
 		try {
+			if(reader_.equals(null))
+				System.out.println("Buffered Reader is null");
 			line = reader_.readLine();
 		} catch (IOException e) {
 			e.printStackTrace();

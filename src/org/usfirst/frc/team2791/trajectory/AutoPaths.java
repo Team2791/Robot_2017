@@ -24,7 +24,7 @@ public class AutoPaths {
 	public static String fileLocation="/paths/";
 
 	public final static String[] kPathNames = { "RightGear",
-			"RightGearToHopper",
+			"RightGearToRightHopper",
 			"TenFootSCurve",
 			"Test180",
 	};
@@ -84,7 +84,10 @@ public class AutoPaths {
 	public static Path get(String name) {
 		System.out.println("got a Path from AutoPaths");
 		loadPaths();
-		return (Path)paths_.get(name);
+		Path newPath = (Path)paths_.get(name);
+		if(newPath.equals(null))
+			System.out.println("AutoPath is returning null");
+		return newPath;
 	}
 
 	/*

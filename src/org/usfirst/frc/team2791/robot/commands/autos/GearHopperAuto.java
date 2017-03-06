@@ -14,7 +14,7 @@ public class GearHopperAuto extends CommandGroup{
 	
 	public GearHopperAuto(){
 		addSequential(new FollowPath("RightGear"));
-		addParallel(new PauseDrivetrain(10.0));
+		addParallel(new PauseDrivetrain(0.5));
 		addSequential(new RemoveGear());
 		addSequential(new FollowPath("RightGearToHopper"));
 		addSequential(new EmptyFieldHopper()); //TODO: Finish this Command

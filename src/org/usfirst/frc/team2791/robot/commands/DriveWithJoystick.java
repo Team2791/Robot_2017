@@ -10,10 +10,8 @@ public class DriveWithJoystick extends Command {
 		
 		super("DriveWithJoystick");
 		requires(Robot.drivetrain);// Use requires() here to declare subsystem dependencies
-		System.out.println("came to constructor");
 	}
 	protected void initialize() {
-		System.out.println("came to initialize");
 	}
 	
 	// Called repeatedly when this Command is scheduled to run

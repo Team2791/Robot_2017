@@ -86,7 +86,7 @@ public class Robot extends IterativeRobot {
 		if(SmartDashboard.getNumber("kp", -2791) == -2791){
 			SmartDashboard.putNumber("kp",7.0);
 		    SmartDashboard.putNumber("ki",0);
-		    SmartDashboard.putNumber("kd",0.25);
+		    SmartDashboard.putNumber("kd",0.025); //.25
 		    SmartDashboard.putNumber("kv",0.09);
 		    SmartDashboard.putNumber("ka",0.033);
 		}
@@ -145,7 +145,7 @@ public class Robot extends IterativeRobot {
 		//intake.wingDeployment();//opens up robot as soon as robot starts
 		drivetrain.resetEncoders();
 
-		autonomousCommand= new FollowPath(AutoPaths.get("Test180"));
+		autonomousCommand= new FollowPath("RightGear");
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 		lastAutonLoopTime = Timer.getFPGATimestamp();
