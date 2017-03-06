@@ -26,7 +26,7 @@ public class FollowPath extends Command {
 		trajHelper=new TrajectoryDriveHelper();
 		path=path_;
 		heading=angle;
-		System.out.println("came to constructor FollowPath");
+		System.out.println("Beginning to Follow"+ path.getName());
 	}
 
 	public FollowPath(String path_) {// double angle may not be correct
@@ -35,7 +35,7 @@ public class FollowPath extends Command {
 		path = AutoPaths.get(path_);
 		trajHelper = new TrajectoryDriveHelper();
 		heading = 0;
-		System.out.println("came to constructor FollowPath");
+		System.out.println("Beginning to Follow"+ path.getName());
 	}
 	
 	public FollowPath(Path path_) {// double angle may not be correct
@@ -44,7 +44,7 @@ public class FollowPath extends Command {
 		path = path_;
 		trajHelper = new TrajectoryDriveHelper();
 		heading = 0;
-		System.out.println("came to constructor FollowPath");
+		System.out.println("Beginning to Follow"+ path.getName());
 	}
 
 	// Called just before this Command runs the first time

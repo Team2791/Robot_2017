@@ -27,11 +27,13 @@ public class AutoPaths {
 			"RightGearToRightHopper",
 			"TenFootSCurve",
 			"Test180",
+			"ForwardBackward"
 	};
 	public final static String[] kPathDescriptions = { "From Wall to Right Gear [Backwards], in testing",
 			"From Right Gear to Hopper, in testing",
 			"Simple S-Turn, in testing, in testing",
-			"Generic Testing File"
+			"Generic Testing File",
+			"Backward Testing File"
 	};
 	static Hashtable paths_ = new Hashtable();
 
