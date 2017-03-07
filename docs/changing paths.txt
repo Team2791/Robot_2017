@@ -1,0 +1,10 @@
+
+---If a new path was created:---
+*Make sure that it is in the rio folder "/paths/"
+*Make sure that the Path name is in the array AutoPaths.kPathNames
+*Make sure that the Path descripitions is in the array AutoPaths.kPathDescriptions
+*Make sure ALL names in that array match the files in the rio, and all the files in the rio match the names in the array
+
+---If a different Path is needed for auto:---
+*Make sure the Path/Auto is in the chooser
+*Make sure the command is created: new FollowPath("TestPath",boolean), where boolean is the reverse condition

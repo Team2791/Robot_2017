@@ -106,7 +106,7 @@ public class TrajectoryFollower {
 		System.out.println("IN FOLLOWER'S DEBUG");
 		
 		SmartDashboard.putString("TEST", "this is a test");
-		SmartDashboard.putString(name+"PosGoal v\n PosActual:", -segment.pos+":"+distance_so_far);
+		SmartDashboard.putString(name+"PosGoal v\n PosActual:", BACKWARDS_CONSTANT*segment.pos+":"+distance_so_far);
 
 		double currentVelocity;
 		double currentAcceleration;
@@ -121,11 +121,11 @@ public class TrajectoryFollower {
 			//System.out.println("ACC:"+currentAcceleration);
 		}
 
-		double velocityError = (-segment.vel)-currentVelocity;
-		SmartDashboard.putString(name+"VelGoal v\n VelActual:", -segment.vel+":"+currentVelocity);
+		double velocityError = (BACKWARDS_CONSTANT*segment.vel)-currentVelocity;
+		SmartDashboard.putString(name+"VelGoal v\n VelActual:", BACKWARDS_CONSTANT*segment.vel+":"+currentVelocity);
 
-		double accelerationError = (-segment.acc) - currentAcceleration;
-		SmartDashboard.putString(name+"AccGoal v\n AccActual:", -segment.acc+":"+currentAcceleration);
+		double accelerationError = (BACKWARDS_CONSTANT*segment.acc) - currentAcceleration;
+		SmartDashboard.putString(name+"AccGoal v\n AccActual:", BACKWARDS_CONSTANT*segment.acc+":"+currentAcceleration);
 
 		SmartDashboard.putNumber(name+"PosError",error);
 		SmartDashboard.putNumber(name+"VelError",velocityError);
