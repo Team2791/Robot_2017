@@ -24,24 +24,20 @@ package org.usfirst.frc.team2791.robot;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2791.robot.Robot.GamePeriod;
-import org.usfirst.frc.team2791.robot.commands.FollowPath;
-import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
-import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
-//import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
-//import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
-//import org.usfirst.frc.team2791.robot.commands.ExampleCommand;
-//import org.usfirst.frc.team2791.robot.subsystems.ExampleSubsystem;
-//import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
-//import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
-import org.usfirst.frc.team2791.trajectory.AutoPaths;
+
+import org.usfirst.frc.team2791.robot.subsystems.*;
+import org.usfirst.frc.team2791.robot.commands.autos.*;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -64,7 +60,7 @@ public class Robot extends IterativeRobot {
 	 * setting autonomousCommand to a Command will cause that Command to run in autonomous init
 	 */
 	Command autonomousCommand;
-	//SendableChooser<Command> chooser = new SendableChooser<>();
+	SendableChooser chooser = new SendableChooser();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -91,13 +87,13 @@ public class Robot extends IterativeRobot {
 		    SmartDashboard.putNumber("ka",0.033);
 		}
 		
+		//From past experience, putting these here may cause a startCompetition
+		chooser.addDefault("Default Auto", new FollowPath("TestingOneTwo", false));
+		chooser.addObject("Gear Hopper Auto", new GearHopperAuto());
+		chooser.addObject("Gear Path", new FollowPath("BLUELeftGear", true));
+		chooser.addObject("Gear-Hopper Path", new FollowPath("BLUELeftGearToLeftHopper", false));
 
-		//driveTrainThread = new Thread(drivetrain);
-        //driveTrainThread.start();
-		//chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		//SmartDashboard.putData("Auto mode", chooser);
-//		SmartDashboard.putData(drivetrain);
+		SmartDashboard.putData("Auto Mode", chooser);
 	}
 
 	/**
@@ -145,7 +141,7 @@ public class Robot extends IterativeRobot {
 		//intake.wingDeployment();//opens up robot as soon as robot starts
 		drivetrain.resetEncoders();
 
-		autonomousCommand= new FollowPath("RightGear", true);
+//		autonomousCommand= new FollowPath("RightGear", true);
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 		lastAutonLoopTime = Timer.getFPGATimestamp();

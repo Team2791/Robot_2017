@@ -23,17 +23,15 @@ public class AutoPaths {
 	public static final int WALL_LANE_ID = 2;
 	public static String fileLocation="/paths/";
 
-	public final static String[] kPathNames = { "RightGear",
-			"RightGearToRightHopper",
-			"TenFootSCurve",
-			"Test180",
+	public final static String[] kPathNames = { "TestingOneTwo",
+			"BLUELeftGear",
+			"BLUELeftGearToLeftHopper",
 			"Backwards"
 	};
-	public final static String[] kPathDescriptions = { "From Wall to Right Gear [Backwards], in testing",
-			"From Right Gear to Hopper, in testing",
-			"Simple S-Turn, in testing, in testing",
-			"Generic Testing File",
-			"Backward Testing File"
+	public final static String[] kPathDescriptions = { "Generic Testing Path",
+			"Blue-Left Gear, designed for Reverse",
+			"Blue-Left Gear to Blue-Left Hopper",
+			"Backward Testing Path"
 	};
 	static Hashtable paths_ = new Hashtable();
 
@@ -51,7 +49,11 @@ public class AutoPaths {
 		if(allPathsFound)
 			loadPaths();
 		else
-			System.out.println("One or more Paths are not in AutoPaths");
+			try {
+				throw new IOException();
+			} catch (IOException e) {
+				System.err.println("One or more Paths are not in AutoPaths");
+			}
 	}
 
 	public AutoPaths(){

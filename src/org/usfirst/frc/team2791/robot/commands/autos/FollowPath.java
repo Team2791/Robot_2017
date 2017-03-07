@@ -1,5 +1,5 @@
 
-package org.usfirst.frc.team2791.robot.commands;
+package org.usfirst.frc.team2791.robot.commands.autos;
 
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,7 +10,7 @@ import org.usfirst.frc.team2791.trajectory.Path;
 import org.usfirst.frc.team2791.trajectory.TrajectoryDriveHelper;
 
 /**
- * Follows a given path
+ * Follows a given path using Trajectory Lib
  * @author unbun
  */
 
