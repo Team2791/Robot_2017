@@ -27,7 +27,7 @@ public class AutoPaths {
 			"RightGearToRightHopper",
 			"TenFootSCurve",
 			"Test180",
-			"ForwardBackward"
+			"Backwards"
 	};
 	public final static String[] kPathDescriptions = { "From Wall to Right Gear [Backwards], in testing",
 			"From Right Gear to Hopper, in testing",

@@ -23,13 +23,21 @@ public class TrajectoryFollower {
 	private Trajectory profile_;
 	public String name;
 
-	public TrajectoryFollower(String name) {
+	private int BACKWARDS_CONSTANT;
+
+	public TrajectoryFollower(String name, boolean reversed) {
 		this.name = name;
 		kp_ = SmartDashboard.getNumber("kp", 0);
 		ki_ = SmartDashboard.getNumber("ki", 0);
 		kd_ = SmartDashboard.getNumber("kd", 0);
 		kv_ = SmartDashboard.getNumber("kv", 0);
 		ka_ = SmartDashboard.getNumber("ka", 0);
+
+		if(reversed)
+			BACKWARDS_CONSTANT = -1;
+		else
+			BACKWARDS_CONSTANT = -1;
+
 	}
 
 	public void configure(double kp, double ki, double kd, double kv, double ka) {
@@ -60,7 +68,7 @@ public class TrajectoryFollower {
 
 		if (current_segment < profile_.getNumSegments()) {
 			Trajectory.Segment segment = profile_.getSegment(current_segment);
-			double error = segment.pos - distance_so_far;
+			double error = segment.pos - (BACKWARDS_CONSTANT * distance_so_far);
 			double output = kp_ * error + kd_ * ((error - last_error_)
 					/ segment.dt - segment.vel) + (kv_ * segment.vel
 							+ ka_ * segment.acc);
@@ -71,7 +79,7 @@ public class TrajectoryFollower {
 
 			debug(distance_so_far, error, output, segment, current_segment);
 
-			return output;
+			return BACKWARDS_CONSTANT * output;
 		} else {
 			return 0;
 		}
@@ -95,11 +103,14 @@ public class TrajectoryFollower {
 
 	private void debug(double distance_so_far, double error, double output, Segment segment, int current_segment){
 
-		SmartDashboard.putString(name+"PosGoal v\n PosActual:", segment.pos+":"+distance_so_far);
+		System.out.println("IN FOLLOWER'S DEBUG");
+		
+		SmartDashboard.putString("TEST", "this is a test");
+		SmartDashboard.putString(name+"PosGoal v\n PosActual:", -segment.pos+":"+distance_so_far);
 
 		double currentVelocity;
 		double currentAcceleration;
-		
+
 		if(name == "left") {
 			currentVelocity = Robot.drivetrain.getLeftVelocity(); 
 			currentAcceleration = Robot.drivetrain.getLeftAcceleration(); 
@@ -110,11 +121,11 @@ public class TrajectoryFollower {
 			//System.out.println("ACC:"+currentAcceleration);
 		}
 
-		double velocityError = segment.vel-currentVelocity;
-		SmartDashboard.putString(name+"VelGoal v\n VelActual:", segment.vel+":"+currentVelocity);
+		double velocityError = (-segment.vel)-currentVelocity;
+		SmartDashboard.putString(name+"VelGoal v\n VelActual:", -segment.vel+":"+currentVelocity);
 
-		double accelerationError = segment.acc - currentAcceleration;
-		SmartDashboard.putString(name+"AccGoal v\n AccActual:", segment.acc+":"+currentAcceleration);
+		double accelerationError = (-segment.acc) - currentAcceleration;
+		SmartDashboard.putString(name+"AccGoal v\n AccActual:", -segment.acc+":"+currentAcceleration);
 
 		SmartDashboard.putNumber(name+"PosError",error);
 		SmartDashboard.putNumber(name+"VelError",velocityError);

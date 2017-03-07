@@ -145,7 +145,7 @@ public class Robot extends IterativeRobot {
 		//intake.wingDeployment();//opens up robot as soon as robot starts
 		drivetrain.resetEncoders();
 
-		autonomousCommand= new FollowPath(AutoPaths.get("ForwardBackward"));
+		autonomousCommand= new FollowPath("RightGear", true);
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 		lastAutonLoopTime = Timer.getFPGATimestamp();

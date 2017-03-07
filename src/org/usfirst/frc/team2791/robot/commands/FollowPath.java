@@ -19,31 +19,42 @@ public class FollowPath extends Command {
 
 	double heading; //not sure where this is assigned a value
 	protected Path path;
-
-	public FollowPath(Path path_, double angle) {// double angle may not be correct
+	private boolean reversed;
+	
+	public FollowPath(Path path_, double angle, boolean reversed_) {// double angle may not be correct
 		super("FollowPath");
 		requires(Robot.drivetrain);
-		trajHelper=new TrajectoryDriveHelper();
+		
 		path=path_;
 		heading=angle;
+		
+		reversed = reversed_;
+		trajHelper=new TrajectoryDriveHelper(reversed);
+
 		System.out.println("Beginning to Follow"+ path.getName());
 	}
 
-	public FollowPath(String path_) {// double angle may not be correct
+	public FollowPath(String path_, boolean reversed_) {// double angle may not be correct
 		super("FollowPath");
 		requires(Robot.drivetrain);
 		path = AutoPaths.get(path_);
-		trajHelper = new TrajectoryDriveHelper();
 		heading = 0;
+		
+		reversed = reversed_;
+		trajHelper=new TrajectoryDriveHelper(reversed);
+		
 		System.out.println("Beginning to Follow"+ path.getName());
 	}
 	
-	public FollowPath(Path path_) {// double angle may not be correct
+	public FollowPath(Path path_, boolean reversed_) {// double angle may not be correct
 		super("FollowPath");
 		requires(Robot.drivetrain);
 		path = path_;
-		trajHelper = new TrajectoryDriveHelper();
 		heading = 0;
+		
+		reversed = reversed_;
+		trajHelper=new TrajectoryDriveHelper(reversed);
+		
 		System.out.println("Beginning to Follow"+ path.getName());
 	}
 
