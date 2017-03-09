@@ -26,12 +26,10 @@ public class AutoPaths {
 	public final static String[] kPathNames = { "TestingOneTwo",
 			"BLUELeftGear",
 			"BLUELeftGearToLeftHopper",
-			"Backwards"
 	};
 	public final static String[] kPathDescriptions = { "Generic Testing Path",
 			"Blue-Left Gear, designed for Reverse",
 			"Blue-Left Gear to Blue-Left Hopper",
-			"Backward Testing Path"
 	};
 	static Hashtable paths_ = new Hashtable();
 

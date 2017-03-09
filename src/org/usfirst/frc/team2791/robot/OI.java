@@ -163,6 +163,10 @@ public class OI {
 		 */
 		driverLB.whileHeld(new DriveWithJoystick());//TODO: change to triggers once they are properly set up
 		driverRB.whileHeld(new DriveWithJoystick());//TODO: change to triggers once they are properly set up
+		
+		driverX.whenPressed(new RemoveGear());
+		driverY.whenPressed(new RiseGear());
+
 	}
 
 //	public void checkForAction(){

@@ -1,23 +1,6 @@
 
-/*
- * 
- * 
- * 
- * 
- * 
- * 
- * 
+/**
  * Make sure mini piston on intake is in proper position before running intake
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
  */
 package org.usfirst.frc.team2791.robot;
 
@@ -88,12 +71,12 @@ public class Robot extends IterativeRobot {
 		}
 		
 		//From past experience, putting these here may cause a startCompetition
-		chooser.addDefault("Default Auto", new FollowPath("TestingOneTwo", false));
-		chooser.addObject("Gear Hopper Auto", new GearHopperAuto());
-		chooser.addObject("Gear Path", new FollowPath("BLUELeftGear", true));
-		chooser.addObject("Gear-Hopper Path", new FollowPath("BLUELeftGearToLeftHopper", false));
-
-		SmartDashboard.putData("Auto Mode", chooser);
+//		chooser.addDefault("Default Auto", new FollowPath("TestingOneTwo", false));
+//		chooser.addObject("Gear Hopper Auto", new GearHopperAuto());
+//		chooser.addObject("Gear Path", new FollowPath("BLUELeftGear", true));
+//		chooser.addObject("Gear-Hopper Path", new FollowPath("BLUELeftGearToLeftHopper", false));
+//
+//		SmartDashboard.putData("Auto Mode", chooser);
 	}
 
 	/**
@@ -137,11 +120,11 @@ public class Robot extends IterativeRobot {
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
 
-		// schedule the autonomous command (example)
-		//intake.wingDeployment();//opens up robot as soon as robot starts
 		drivetrain.resetEncoders();
-
-//		autonomousCommand= new FollowPath("RightGear", true);
+		Robot.gearMechanism.changeGearSolenoidState(false);
+		
+		autonomousCommand= new GearHopperAuto();
+		
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 		lastAutonLoopTime = Timer.getFPGATimestamp();
