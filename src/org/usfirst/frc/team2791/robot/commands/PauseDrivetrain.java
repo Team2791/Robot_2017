@@ -20,14 +20,14 @@ public class PauseDrivetrain extends Command {
 		super("PauseDrivetrain");
 		requires(Robot.drivetrain);
 		
-		timePeriod=30.0;
+		timePeriod = 30.0;
 	}
 	
 	public PauseDrivetrain(double time_){
 		super("PauseDrivetrain");
 		requires(Robot.drivetrain);
 		
-		timePeriod=time_;
+		timePeriod = time_;
 	}
 	
 	
@@ -42,6 +42,7 @@ public class PauseDrivetrain extends Command {
 		System.out.println("PauseDrivetrain is Executing");
 		if(Timer.getFPGATimestamp()-startTime < timePeriod){
 			Robot.drivetrain.setLeftRightMotorOutputs(0.0, 0.0);
+//			execute();
 		}else{
 			end();
 		}

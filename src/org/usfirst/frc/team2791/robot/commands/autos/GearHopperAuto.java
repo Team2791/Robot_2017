@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2791.robot.commands.autos;
 
-import org.usfirst.frc.team2791.robot.commands.autos.EmptyFieldHopper;
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.commands.PauseDrivetrain;
 import org.usfirst.frc.team2791.robot.commands.RemoveGear;
@@ -17,6 +16,7 @@ public class GearHopperAuto extends CommandGroup{
 		addSequential(new FollowPath("BLUELeftGear", true));
 		addSequential(new RemoveGear());
 //		addSequential(new PauseDrivetrain(0.5));
+		System.out.println("The auto got past RemoveGear");
 	    Robot.drivetrain.setLeftRightMotorOutputs(1.0, 1.0);
 
 	}

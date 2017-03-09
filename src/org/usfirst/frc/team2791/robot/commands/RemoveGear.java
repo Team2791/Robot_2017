@@ -21,10 +21,12 @@ public class RemoveGear extends Command{
 	}
 	
 	protected void end(){
+		System.out.println("RemoveGear has ended");
 	}
 	
 	protected void interrupted(){
 		end();
-		new DriveWithJoystick();
+//		new DriveWithJoystick(); 
+		//UNTESTED
 	}
 }
