@@ -17,14 +17,15 @@ public class RemoveGear extends Command{
 	}
 	
 	protected boolean isFinished(){
-		return false;
+		return Robot.gearMechanism.getGearState();
 	}
 	
 	protected void end(){
+//		Robot.drivetrain.setLeftRightMotorOutputs(0.3, 0.3);
 	}
 	
 	protected void interrupted(){
 		end();
-		new DriveWithJoystick();
+//		new DriveWithJoystick();
 	}
 }

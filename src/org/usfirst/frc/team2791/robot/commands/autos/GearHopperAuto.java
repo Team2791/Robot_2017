@@ -17,7 +17,7 @@ public class GearHopperAuto extends CommandGroup{
 		addSequential(new FollowPath("BLUELeftGear", true));
 		addSequential(new RemoveGear());
 //		addSequential(new PauseDrivetrain(0.5));
-	    Robot.drivetrain.setLeftRightMotorOutputs(1.0, 1.0);
-
+//	    Robot.drivetrain.setLeftRightMotorOutputs(1.0, 1.0);
+		addSequential(new DriveForward());
 	}
 }
