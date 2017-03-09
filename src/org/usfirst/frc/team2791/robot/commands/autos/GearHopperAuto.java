@@ -1,8 +1,6 @@
 package org.usfirst.frc.team2791.robot.commands.autos;
 
-import org.usfirst.frc.team2791.robot.commands.autos.EmptyFieldHopper;
 import org.usfirst.frc.team2791.robot.Robot;
-import org.usfirst.frc.team2791.robot.commands.PauseDrivetrain;
 import org.usfirst.frc.team2791.robot.commands.RemoveGear;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -19,5 +17,6 @@ public class GearHopperAuto extends CommandGroup{
 //		addSequential(new PauseDrivetrain(0.5));
 //	    Robot.drivetrain.setLeftRightMotorOutputs(1.0, 1.0);
 		addSequential(new DriveForward());
+
 	}
 }

@@ -21,11 +21,10 @@ public class RemoveGear extends Command{
 	}
 	
 	protected void end(){
-//		Robot.drivetrain.setLeftRightMotorOutputs(0.3, 0.3);
+		System.out.println("RemoveGear has ended");
 	}
 	
 	protected void interrupted(){
 		end();
-//		new DriveWithJoystick();
 	}
 }
