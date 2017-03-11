@@ -199,6 +199,9 @@ public class OI {
 
 		operatorDpadUp.whenPressed(new ResetGear());
 		operatorDpadDown.whenPressed(new RemoveGear());
+		
+		//operatorDpadDown.whenPressed(new RemoveGear());
+		//operatorDpadDown.whenReleased(new ResetGear());
 
 		operatorDpadLeft.whileHeld(new HopperOn());
 		operatorDpadUpLeft.whenPressed(new StopHopper());
