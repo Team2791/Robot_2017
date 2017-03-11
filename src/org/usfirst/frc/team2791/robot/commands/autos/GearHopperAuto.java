@@ -1,10 +1,8 @@
 package org.usfirst.frc.team2791.robot.commands.autos;
 
 import org.usfirst.frc.team2791.robot.Robot;
-import org.usfirst.frc.team2791.robot.commands.RemoveGear;
-
-import org.usfirst.frc.team2791.robot.commands.autos.DriveForward;
-
+import org.usfirst.frc.team2791.robot.commands.*;
+import org.usfirst.frc.team2791.robot.commands.autos.*;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
