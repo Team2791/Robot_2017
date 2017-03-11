@@ -10,6 +10,7 @@ import org.usfirst.frc.team2791.robot.Robot.GamePeriod;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -65,7 +66,7 @@ public class Robot extends IterativeRobot {
 		compressor = new Compressor(RobotMap.PCM_MODULE);
 		compressor.setClosedLoopControl(true);
 		compressor.start();
-
+		CameraServer.getInstance().startAutomaticCapture();
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
@@ -135,7 +136,7 @@ public class Robot extends IterativeRobot {
 		//			autonomousCommand.start();
 		//intake.wingDeployment();//opens up robot as soon as robot starts
 
-		autonomousCommand= new FollowPath(AutoPaths.get("Test180"));
+		autonomousCommand= GearHopperAuto();
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();
