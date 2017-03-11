@@ -23,6 +23,7 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 
 import org.usfirst.frc.team2791.trajectory.AutoPaths;
 import org.usfirst.frc.team2791.robot.commands.FollowPath;
+import org.usfirst.frc.team2791.robot.commands.autos.GearHopperAuto;
 
 
 /**
@@ -136,7 +137,7 @@ public class Robot extends IterativeRobot {
 		//			autonomousCommand.start();
 		//intake.wingDeployment();//opens up robot as soon as robot starts
 
-		autonomousCommand= GearHopperAuto();
+		autonomousCommand= new GearHopperAuto();
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();
