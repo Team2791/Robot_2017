@@ -10,17 +10,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;;
  */
 public class TrajectoryDriveHelper{ //eventually implements Loopale 
 
-	public TrajectoryDriveHelper() {
-		init();
-	}
+	private boolean reversed = false;
+	
 
 	Trajectory trajectory;
-	TrajectoryFollower followerLeft = new TrajectoryFollower("left");
-	TrajectoryFollower followerRight = new TrajectoryFollower("right");
+	TrajectoryFollower followerLeft;
+	TrajectoryFollower followerRight;
 	double direction;
 	double heading;
 	double kTurn = 0; //-3.0/80.0;
 
+	public TrajectoryDriveHelper(boolean reversed_) {
+		reversed = reversed_;
+		followerLeft = new TrajectoryFollower("left", reversed);
+		followerRight = new TrajectoryFollower("right", reversed);
+		init();
+	}
+	
 	public boolean onTarget() {
 		return followerLeft.isFinishedTrajectory(); 
 	}
@@ -70,7 +76,7 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
 			double speedLeft = outputs[0];
 			double speedRight = outputs[1];
 			double turn = outputs[2];
-			Robot.drivetrain.setLeftRightMotorOutputs(speedLeft + turn, speedRight -turn);
+			Robot.drivetrain.setLeftRightMotorOutputs((speedLeft + turn), (speedRight -turn));
 			//Robot.drivetrain.setLeftRightMotorOutputs(speedLeft + turn, speedRight - turn);
 		}
 	}
