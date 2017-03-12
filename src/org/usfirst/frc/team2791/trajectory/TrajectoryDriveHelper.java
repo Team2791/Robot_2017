@@ -87,7 +87,7 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
 			double speedLeft = outputs[0];
 			double speedRight = outputs[1];
 			double turn = outputs[2];
-			Robot.drivetrain.setLeftRightMotorOutputs((speedLeft + turn), (speedRight -turn));
+			Robot.drivetrain.setLeftRightMotorOutputs(speedLeft + turn, speedRight - turn);
 			//Robot.drivetrain.setLeftRightMotorOutputs(speedLeft + turn, speedRight - turn);
 		}
 		debug();
@@ -113,8 +113,14 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
 
 		double angleDiffRads = ChezyMath.getDifferenceInAngleRadians(observedHeading, goalHeading);
 		double angleDiff = Math.toDegrees(angleDiffRads);
+		
+		SmartDashboard.putNumber("Traj AngleDiff", angleDiff);
 
 		double turn = kTurn * angleDiff;
+		
+		if(Robot.drivetrain.gyroDisabled);{
+			turn = 0;
+		}
 
 		double[] outArr = new double[3];
 		outArr[0] = speedLeft;

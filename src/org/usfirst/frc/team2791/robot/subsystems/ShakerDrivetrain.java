@@ -125,6 +125,7 @@ public class ShakerDrivetrain extends Subsystem{
 	/** @param left motor output
 	 * @param right motor output*/
 	public void setLeftRightMotorOutputs(double left, double right){
+		SmartDashboard.putString("LeftOutput vs RightOutput", left+":"+right);
 		shakyDrive.setLeftRightMotorOutputs(left, right);
 	}
 

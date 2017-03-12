@@ -99,6 +99,7 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		if(oi.driver.getButtonSt()){
 			drivetrain.resetEncoders();
+			drivetrain.gyro.reset();
 		}
 		
 		debug();
@@ -118,28 +119,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		//autonomousCommand = chooser.getSelected();
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// schedule the autonomous command (example)
-
 		drivetrain.resetEncoders();
-
+		drivetrain.gyro.reset();
 
 		intake.disengageRatchetWing();
-		
-		//		intake.wingSolenoid.set(false);//opens up robot as soon as robot starts
-		//		if (autonomousCommand != null)
-		//			autonomousCommand.start();
-		//intake.wingDeployment();//opens up robot as soon as robot starts
 
-		autonomousCommand = new FollowPath("BLUELeftGear");
+		autonomousCommand = new FollowPath("TestingOneTwo");
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -156,6 +141,7 @@ public class Robot extends IterativeRobot {
 		
 		if(oi.driver.getButtonSt()){
 			drivetrain.resetEncoders();
+			drivetrain.calibrateGyro();
 		}
 
 		double thisAutoLoopTime = Timer.getFPGATimestamp();
