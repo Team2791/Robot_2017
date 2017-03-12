@@ -16,14 +16,25 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
 	Trajectory trajectory;
 	TrajectoryFollower followerLeft;
 	TrajectoryFollower followerRight;
-	double direction;
+	double direction; //reversing constant
 	double heading;
-	double kTurn = 0; //-3.0/80.0;
+	double kTurn; //-3.0/80.0;
 
 	public TrajectoryDriveHelper(boolean reversed_) {
 		reversed = reversed_;
-		followerLeft = new TrajectoryFollower("left", reversed);
-		followerRight = new TrajectoryFollower("right", reversed);
+		kTurn = SmartDashboard.getNumber("kTurn", 0);
+
+		followerLeft = new TrajectoryFollower("left");
+		followerRight = new TrajectoryFollower("right");
+		init();
+	}
+	
+	public TrajectoryDriveHelper() {
+		reversed = false;
+		kTurn = SmartDashboard.getNumber("kTurn", 0);
+
+		followerLeft = new TrajectoryFollower("left");
+		followerRight = new TrajectoryFollower("right");
 		init();
 	}
 	
@@ -79,6 +90,7 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
 			Robot.drivetrain.setLeftRightMotorOutputs((speedLeft + turn), (speedRight -turn));
 			//Robot.drivetrain.setLeftRightMotorOutputs(speedLeft + turn, speedRight - turn);
 		}
+		debug();
 	}
 
 	public void setTrajectory(Trajectory t) {

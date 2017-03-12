@@ -97,9 +97,10 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
-		if(oi.driver.getButtonBack()){
-//			new CalibrateGyro();
+		if(oi.driver.getButtonSt()){
+			drivetrain.resetEncoders();
 		}
+		
 		debug();
 		Scheduler.getInstance().run();
 	}
@@ -132,12 +133,13 @@ public class Robot extends IterativeRobot {
 
 
 		intake.disengageRatchetWing();
+		
 		//		intake.wingSolenoid.set(false);//opens up robot as soon as robot starts
 		//		if (autonomousCommand != null)
 		//			autonomousCommand.start();
 		//intake.wingDeployment();//opens up robot as soon as robot starts
 
-		autonomousCommand= new GearHopperAuto();
+		autonomousCommand = new FollowPath("BLUELeftGear");
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -151,6 +153,10 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		debug();
+		
+		if(oi.driver.getButtonSt()){
+			drivetrain.resetEncoders();
+		}
 
 		double thisAutoLoopTime = Timer.getFPGATimestamp();
 		double timeDiff = thisAutoLoopTime - lastAutonLoopTime;

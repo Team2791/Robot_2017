@@ -21,12 +21,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShakerDrivetrain extends Subsystem{
 
-    protected Encoder leftDriveEncoder = null;
-    protected Encoder rightDriveEncoder = null;
-    
- 	public ADXRS450_Gyro gyro;
-	
-    protected RobotDrive shakyDrive = null;
+	protected Encoder leftDriveEncoder = null;
+	protected Encoder rightDriveEncoder = null;
+
+	public ADXRS450_Gyro gyro;
+	public boolean gyroDisabled = false;
+
+	protected RobotDrive shakyDrive = null;
 
 	private Talon leftSpark;    
 	private Talon rightSpark;
@@ -44,7 +45,7 @@ public class ShakerDrivetrain extends Subsystem{
 	protected double turnPIDMaxOutput = 0.5;
 	protected boolean PIDAtTarget = false;
 	protected boolean anglePIDQuickExit = false;
-	
+
 	protected double previousRate = 0;
 	protected double previousRateTime = 0;
 	protected double currentRate = 0;
@@ -102,14 +103,20 @@ public class ShakerDrivetrain extends Subsystem{
 		stationaryAnglePID.setIZone(6);
 		distancePID.setIZone(0.25);
 		movingAnglePID.setIZone(4);
-//		gyro = new ADXRS450_Gyro();//SPI.Port.kOnboardCS1
-//		gyro.calibrate();
-//		gyro.reset();
-    }
-    public void initDefaultCommand() {
-    	setDefaultCommand(new DriveWithJoystick());
+		try{
+			gyro = new ADXRS450_Gyro();//SPI.Port.kOnboardCS1
+			gyro.calibrate();
+			gyro.reset();
+		}catch(NullPointerException e){
+			gyroDisabled = true;
+			System.out.println("Gyro is unplugged, Disabling Gyro");
+		}
+
 	}
-	
+	public void initDefaultCommand() {
+		setDefaultCommand(new DriveWithJoystick());
+	}
+
 	public void disable() {
 		shakyDrive.stopMotor();
 	}
@@ -120,37 +127,46 @@ public class ShakerDrivetrain extends Subsystem{
 	public void setLeftRightMotorOutputs(double left, double right){
 		shakyDrive.setLeftRightMotorOutputs(left, right);
 	}
-	
+
 	//************** Gyro and Encoder Helper Methods **************//
 
 	public void debug() {
+
+
 		SmartDashboard.putNumber("Left Drive Encoders Rate", leftDriveEncoder.getRate());
 		SmartDashboard.putNumber("Right Drive Encoders Rate", rightDriveEncoder.getRate());
 		SmartDashboard.putNumber("Encoder Angle", getAngleEncoder());
 
-//		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
-//		SmartDashboard.putNumber("Gyro rate", gyro.getRate());
-		
+		SmartDashboard.putNumber("LEncoderDistance", leftDriveEncoder.getDistance());
+		SmartDashboard.putNumber("REncoderDistance", rightDriveEncoder.getDistance());
+		SmartDashboard.putNumber("AvgEncoderDistance", getAverageDist());
+
+		SmartDashboard.putNumber("Gyro angle", gyro.getAngle());
+		SmartDashboard.putNumber("Gyro rate", gyro.getRate());
+
 		SmartDashboard.putNumber("Avg Acceleration", getAverageAcceleration());
-		
+
 		SmartDashboard.putString("LDist vs RDist vs AvgDist", getLeftDistance()+":"+getRightDistance()+":"+getAverageDist());
 		SmartDashboard.putString("LVel vs RVel vs AvgVel", getLeftVelocity()+":"+getRightVelocity()+":"+getAverageVelocity());
 		SmartDashboard.putString("LAcc vs RAcc vs AvgAcc", getLeftAcceleration()+":"+getRightAcceleration()+":"+getAverageAcceleration());
-		
-		
+
+
 	}
-		
+
 	/**TODO: Get rid of this redundant method**/
 	public double getAngle() {
 		return getAngleEncoder();
 	}
-	
+
 	public double getAngleEncoder() {
 		return (360 / 7.9) * (getLeftDistance() - getRightDistance()) / 2.0;
 	}
-	
+
 	public double getGyroAngle() {
-		return gyro.getAngle();
+		if(!gyroDisabled)
+			return gyro.getAngle();
+		System.err.println("Gyro is Disabled, Angle is Incorrect");
+		return 0.0;
 	}
 
 	public double getEncoderAngleRate() {
@@ -169,24 +185,29 @@ public class ShakerDrivetrain extends Subsystem{
 		rightDriveEncoder.reset();
 	}
 	public void resetGyro() {
-		// zero the gyro
-		gyro.reset();
+		if(!gyroDisabled)
+			gyro.reset();
+		else{
+			System.err.println("Gyro is Disabled, Unable to Reset");
+		}
 	}
 
 	public double getGyroRate() {
-		// recalibrate the gyro for
-		return gyro.getRate();
+		if(!gyroDisabled)
+			return gyro.getRate();
+		System.err.println("Gyro is Disabled, Rate is Incorrect");
+		return 0.0;
 	}
-	
+
 	public double getGyroAngleInRadians() {
 		return getGyroAngle() * (Math.PI/180);
 	}
 
 	/**recalibrates the gyro*/
-	
-	
+
+
 	//************** Pos/Vel/Acc Helper Methods **************// 
-	
+
 	public double getLeftAcceleration() {
 
 		leftCurrentRate = getLeftVelocity();
@@ -257,10 +278,11 @@ public class ShakerDrivetrain extends Subsystem{
 	}
 
 	public void calibrateGyro() {
-//		 recalibrate the gyro
-		System.out.println("Gyro calibrating");
-		gyro.calibrate();
-		System.out.println("Done calibrating " + " The current rate is " + gyro.getRate());
+		if(!gyroDisabled){
+			System.out.println("Gyro calibrating");
+			gyro.calibrate();
+			System.out.println("Done calibrating " + " The current rate is " + gyro.getRate());
+		}
 	}
 
 	/**@return distance of left encoder
@@ -268,9 +290,9 @@ public class ShakerDrivetrain extends Subsystem{
 	public double getLeftDistance() {
 		return leftDriveEncoder.getDistance();
 	}
-	
+
 	//************** PID Helper Methods **************//
-	
+
 	public boolean isUsingPID() {
 		return usingPID;
 	}
@@ -314,7 +336,7 @@ public class ShakerDrivetrain extends Subsystem{
 		debug();
 		updatePIDGains();
 	}
-	
+
 	public void updatePIDGains() {
 		movingAnglePID.changeGains(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
 		distancePID.changeGains(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);

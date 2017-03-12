@@ -23,15 +23,15 @@ public class AutoPaths {
 	public static final int WALL_LANE_ID = 2;
 	public static String fileLocation="/paths/";
 
-	public final static String[] kPathNames = { "RightGear",
-			"RightGearToHopper",
-			"TenFootSCurve",
-			"Test180",
+	public final static String[] kPathNames = { "BLUELeftGear",
+			"BLUELeftGearToLeftHopper",
+			"TestingOneTwo",
+			"CenterGear"
 	};
-	public final static String[] kPathDescriptions = { "From Wall to Right Gear [Backwards], in testing",
-			"From Right Gear to Hopper, in testing",
-			"Simple S-Turn, in testing, in testing",
-			"Generic Testing File"
+	public final static String[] kPathDescriptions = { "Left Gear-Blue",
+			"Left Gear to Left Hopper-Blue",
+			"Generic testing Path",
+			"Center Gear-Both"
 	};
 	static Hashtable paths_ = new Hashtable();
 
