@@ -13,7 +13,7 @@ public class RunLongShot extends Command{
 
 	@Override
 	protected void initialize() {
-		Robot.shooter.prepWallShot();
+		Robot.shooter.prepLongShot();
 	}
 
 	@Override

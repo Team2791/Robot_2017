@@ -129,7 +129,7 @@ public class ShakerShooter extends Subsystem {
 //            primaryShooterTalon.setD(CONSTANTS.SHOOTER_D);
 //            primaryShooterTalon.setF(CONSTANTS.SHOOTER_FEED_FORWARD);
         
-        primaryShooterTalon.set(SmartDashboard.getNumber("Shooter Setpoint", 0));
+        primaryShooterTalon.set(targetSpeed);
         System.out.println("Coming up to speed and my error is "+primaryShooterTalon.getError());
         debug();
     }

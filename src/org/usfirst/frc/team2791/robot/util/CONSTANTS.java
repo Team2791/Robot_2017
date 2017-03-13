@@ -25,21 +25,21 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	// 2016 Constants = can be changed as needed
 	// PID VALUES
 	// Shooter PID
-	public static double SHOOTER_P = 3.0; //3.0
-	public static double SHOOTER_I = 0.005;//0.005
-	public static double SHOOTER_D = 100.0; //100.0
+	public static double SHOOTER_P = 1.5; //1.5
+	public static double SHOOTER_I = 0.000;//0.000
+	public static double SHOOTER_D = 30.0; //30
 	
-	public static final double SHOOTER_FEED_FORWARD = 0.30115; //0.30115
+	public static final double SHOOTER_FEED_FORWARD = 0.24; //0.24
 	
-	public static final double SHOOTER_SET_POINT = 2885; //2855
-	public static final double SHOOTER_LONG_SET_POINT = 3500; //3500
+	public static final double SHOOTER_SET_POINT = 2800; //2800
+	public static final double SHOOTER_LONG_SET_POINT = 3650; //3650
 	
-	public static final int SHOOTER_I_ZONE = 40; //90; should it be lower?
+	public static final int SHOOTER_I_ZONE = 40; //40
 
-	public static final double SHOOTER_LONG_P = 1.3;
-	public static final double SHOOTER_LONG_I = 0.004;
-	public static final double SHOOTER_LONG_D = 13;
-	public static final double SHOOTER_LONG_FEED_FORWARD = 0.25;
+	public static final double SHOOTER_LONG_P = 1.5;//1.5
+	public static final double SHOOTER_LONG_I = 0.0000;//0.0000
+	public static final double SHOOTER_LONG_D = 30.0;//30.0
+	public static final double SHOOTER_LONG_FEED_FORWARD = 0.25;//0.25
 	
 	//Drive PID
 	public static double DRIVE_ANGLE_P = 0.05;

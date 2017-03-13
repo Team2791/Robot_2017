@@ -182,7 +182,8 @@ public class OI {
 		operatorX.whileHeld(new RunWallShot());
 		operatorY.whileHeld(new RunClimber());
 		operatorA.whileHeld(new RunIntake());
-		operatorB.whileHeld(new RunIntakeBelt());
+//		operatorB.whileHeld(new RunIntakeBelt());
+		operatorB.whileHeld(new RunLongShot());
 
 		driverX.whenPressed(new RemoveGear());
 		driverX.whenReleased(new ResetGear());
