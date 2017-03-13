@@ -10,17 +10,17 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveForward extends Command {
 
-	private double POWER_VOUT = .3;
+	private double POWER_VOUT = .5;
 	private Timer timer = new Timer();
 	
     public DriveForward() {
     	super("DriveForward");
-         requires(Robot.drivetrain);
+        requires(Robot.drivetrain);
     }
 
     protected void initialize() {
+    	System.out.println("Starting to drive forward.");
     	timer.start();
-    	timer.delay(0.5);
 	    Robot.drivetrain.setLeftRightMotorOutputs(POWER_VOUT, POWER_VOUT);
     }
 
@@ -37,12 +37,14 @@ public class DriveForward extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	timer.reset();
     	Robot.drivetrain.setLeftRightMotorOutputs(0.0, 0.0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	timer.reset();
     	execute();
     }
 }

@@ -1,8 +1,8 @@
 package org.usfirst.frc.team2791.robot.commands.autos;
 
-import org.usfirst.frc.team2791.robot.Robot;
-import org.usfirst.frc.team2791.robot.commands.*;
-import org.usfirst.frc.team2791.robot.commands.autos.*;
+import org.usfirst.frc.team2791.robot.commands.DelayDrivertrain;
+import org.usfirst.frc.team2791.robot.commands.RemoveGear;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -12,8 +12,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class GearHopperAuto extends CommandGroup{
 	
 	public GearHopperAuto(){
-		addSequential(new FollowPath("BLUELeftGear", true));
+		addSequential(new FollowPath("BLUELeftGear", true, false));
 		addSequential(new RemoveGear());
+		addSequential(new DelayDrivertrain(1));
 		addSequential(new DriveForward());
 
 	}

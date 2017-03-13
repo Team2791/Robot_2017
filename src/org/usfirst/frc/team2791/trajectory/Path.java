@@ -51,4 +51,5 @@ public class Path {
     Segment lastSegment = getLeftWheelTrajectory().getSegment(numSegments - 1);
     return lastSegment.heading;
   }
+  
 }

@@ -17,7 +17,7 @@ public class RemoveGear extends Command{
 	}
 	
 	protected boolean isFinished(){
-		return false;
+		return true;
 	}
 	
 	protected void end(){
@@ -25,6 +25,5 @@ public class RemoveGear extends Command{
 	}
 	
 	protected void interrupted(){
-		new DriveWithJoystick();
 	}
 }

@@ -16,12 +16,14 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
 	Trajectory trajectory;
 	TrajectoryFollower followerLeft;
 	TrajectoryFollower followerRight;
-	double direction; //reversing constant
+	double direction = 1; //reversing constant
 	double heading;
 	double kTurn; //-3.0/80.0;
 
 	public TrajectoryDriveHelper(boolean reversed_) {
+		
 		reversed = reversed_;
+		
 		kTurn = SmartDashboard.getNumber("kTurn", 0);
 
 		followerLeft = new TrajectoryFollower("left");
@@ -52,6 +54,11 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
 		reset();
 		followerLeft.setTrajectory(leftProfile);
 		followerRight.setTrajectory(rightProfile);
+
+		if(reversed){
+			direction *= -1;
+		}
+		
 		this.direction = direction;
 		this.heading = heading;
 	}
