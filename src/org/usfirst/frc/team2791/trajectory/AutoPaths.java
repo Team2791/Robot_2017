@@ -25,13 +25,19 @@ public class AutoPaths {
 
 	public final static String[] kPathNames = { "BLUELeftGear",
 			"BLUELeftGearToLeftHopper",
+			"BLUEBoilerToRightGear",
+			"CenterGear",
 			"TestingOneTwo",
-			"CenterGear"
+			"BLUELeftGearToLeftWall",
+			"BLUELeftWallToLoadingStation"
 	};
 	public final static String[] kPathDescriptions = { "Left Gear-Blue",
 			"Left Gear to Left Hopper-Blue",
-			"Generic testing Path",
-			"Center Gear-Both"
+			"Blue Boiler to Right Gear",
+			"Center Gear-Both",
+			"Generic Testing Path",
+			"BLUELeftGearToLeftWall",
+			"BLUELeftWallToLoadingStation"
 	};
 	static Hashtable paths_ = new Hashtable();
 

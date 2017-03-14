@@ -49,8 +49,10 @@ public class FollowPath extends Command {
 		
 		reversed = reversed_;
 		trajHelper=new TrajectoryDriveHelper(reversed);
-		
-		System.out.println("Beginning to Follow"+ path.getName());
+		//if(path.getName() == null){
+		//	System.out.println("here");
+		//}
+		//System.out.println("Beginning to Follow"+ path.getName());
 	}
 	
 

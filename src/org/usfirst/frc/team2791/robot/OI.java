@@ -60,7 +60,7 @@ public class OI {
 		Button operatorY = new JoystickButton(operator, 4);
 		Button operatorLB = new JoystickButton(operator,5);
 		Button operatorRB = new JoystickButton(operator,6);
-		Button operatorSelect = new JoystickButton(operator,7);
+		Button operatorBack = new JoystickButton(operator,7);
 		Button operatorStart = new JoystickButton(operator, 8);
 		Button operatorLS = new JoystickButton(operator,9);
 		Button operatorRS = new JoystickButton(operator,10);
@@ -177,36 +177,35 @@ public class OI {
 		};
 
 		/*
-		 *Button Assignments
+		 * Operator Button Assignments
 		 */
 		operatorX.whileHeld(new RunWallShot());
-		operatorY.whileHeld(new RunClimber());
 		operatorA.whileHeld(new RunIntake());
-//		operatorB.whileHeld(new RunIntakeBelt());
-		operatorB.whileHeld(new RunLongShot());
+		operatorB.whileHeld(new RunIntakeBelt());//climbing
+		operatorY.whileHeld(new RunLongShot());
 
+		operatorBack.whenPressed(new StopClimberAndDisengage());
+		operatorStart.whenPressed(new TurnShooterOff());
+
+		operatorDpadDown.whenPressed(new RemoveGear());
+		operatorDpadDown.whenReleased(new ResetGear());
+		
+		operatorDpadLeft.whileHeld(new HopperOn());
+		operatorDpadUp.whenPressed(new StopHopper());
+		operatorDpadRight.whileHeld(new RunHopperBackwards());
+		
+		/*
+		 * Driver Button Assignments
+		 */
 		driverX.whenPressed(new RemoveGear());
 		driverX.whenReleased(new ResetGear());
-		driverY.whileHeld(new RunClimber());
+		driverY.whileHeld(new RunIntakeBelt());//climb
 		
 		driverA.whenReleased(new RunIntake());
 		driverB.whenPressed(new TurnIntakeOff());
 
 		driverLB.whileHeld(new DriveWithJoystick());
 		driverRB.whileHeld(new DriveWithJoystick());
-
-		operatorLB.whenPressed(new StopClimberAndDisengage());//TODO: change to start buttons or something less needed
-		operatorRB.whenPressed(new TurnShooterOff());
-
-		operatorDpadUp.whenPressed(new ResetGear());
-		operatorDpadDown.whenPressed(new RemoveGear());
-		
-		//operatorDpadDown.whenPressed(new RemoveGear());
-		//operatorDpadDown.whenReleased(new ResetGear());
-
-		operatorDpadLeft.whileHeld(new HopperOn());
-		operatorDpadUpLeft.whenPressed(new StopHopper());
-		operatorDpadRight.whileHeld(new RunHopperBackwards());
 		
 		driverBack.whileHeld(new CalibrateGyro());
 	}

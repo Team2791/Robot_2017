@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Timer;
 
 import org.usfirst.frc.team2791.robot.commands.CalibrateGyro;
+import org.usfirst.frc.team2791.robot.commands.ResetGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -22,6 +23,8 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 
 import org.usfirst.frc.team2791.trajectory.AutoPaths;
+import org.usfirst.frc.team2791.robot.commands.autos.BlueCenterGear;
+import org.usfirst.frc.team2791.robot.commands.autos.BlueLeftGearToLoadingStation;
 import org.usfirst.frc.team2791.robot.commands.autos.FollowPath;
 import org.usfirst.frc.team2791.robot.commands.autos.GearHopperAuto;
 
@@ -123,12 +126,15 @@ public class Robot extends IterativeRobot {
 		drivetrain.gyro.reset();
 
 		intake.disengageRatchetWing();
+		gearMechanism.changeGearSolenoidState(false);
 
-		autonomousCommand = new GearHopperAuto();
+		autonomousCommand = new BlueLeftGearToLoadingStation();
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();
-		lastAutonLoopTime = Timer.getFPGATimestamp();
+		
+		gearMechanism.changeGearSolenoidState(false);
+
 	}
 
 	/**
@@ -152,6 +158,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+		
 
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
