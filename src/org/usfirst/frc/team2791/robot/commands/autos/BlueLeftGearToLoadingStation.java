@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2791.robot.commands.autos;
 
-import org.usfirst.frc.team2791.robot.commands.DelayDrivertrain;
+import org.usfirst.frc.team2791.robot.commands.DelayDrivetrain;
 import org.usfirst.frc.team2791.robot.commands.RemoveGear;
 import org.usfirst.frc.team2791.robot.commands.ResetGear;
 
@@ -15,7 +15,7 @@ public class BlueLeftGearToLoadingStation extends CommandGroup{
 	public BlueLeftGearToLoadingStation(){
 		addSequential(new FollowPath("BLUELeftGear", true, false));
 		addSequential(new RemoveGear());
-		addSequential(new DelayDrivertrain(1));
+		addSequential(new DelayDrivetrain(1));
 		addSequential(new FollowPath("BLUELeftGearToLeftWall", false, true));
 		
 		addSequential(new ResetGear());

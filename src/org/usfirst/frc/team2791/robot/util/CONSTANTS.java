@@ -42,15 +42,16 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static final double SHOOTER_LONG_FEED_FORWARD = 0.25;//0.25
 	
 	//Drive PID
-	public static double DRIVE_ANGLE_P = 0.05;
-	public static double DRIVE_ANGLE_I = 0;
-	public static double DRIVE_ANGLE_D = 0.000;
-	public static double STATIONARY_ANGLE_P = 0.15;
-	public static double STATIONARY_ANGLE_I = 1.2;
+	public static double DRIVE_ANGLE_P = 0.1;
+	public static double DRIVE_ANGLE_I = 0.0;
+	public static double DRIVE_ANGLE_D = 0.0;
+	public static double DRIVE_DISTANCE_P = 0.18;
+	public static double DRIVE_DISTANCE_I = 1.5;
+	public static double DRIVE_DISTANCE_D = 0.02;
+	
+	public static double STATIONARY_ANGLE_P = 0.075;
+	public static double STATIONARY_ANGLE_I = 0.6;
 	public static double STATIONARY_ANGLE_D = 0.0;
-	public static double DRIVE_DISTANCE_P = 1.3;
-	public static double DRIVE_DISTANCE_I = 0.01;
-	public static double DRIVE_DISTANCE_D = 0.2;
 	
 	// Path following constants
     public static double kPathFollowingLookahead = 24.0; // inches

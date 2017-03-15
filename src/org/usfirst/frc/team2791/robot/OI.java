@@ -201,8 +201,9 @@ public class OI {
 		driverX.whenReleased(new ResetGear());
 		driverY.whileHeld(new RunIntakeBelt());//climb
 		
-		driverA.whenReleased(new RunIntake());
-		driverB.whenPressed(new TurnIntakeOff());
+		driverA.toggleWhenPressed(new RunIntake());
+//		driverA.whenReleased(new RunIntake());
+//		driverB.whenPressed(new TurnIntakeOff());
 
 		driverLB.whileHeld(new DriveWithJoystick());
 		driverRB.whileHeld(new DriveWithJoystick());

@@ -18,10 +18,10 @@ public class RunIntakeBelt extends Command{
 	protected void initialize(){}
 	
 	protected void execute(){
-		Robot.intake.disengageRatchetWing();//hard-coded in to ensure no destruction
+		Robot.intake.engageRatchetWing();//hard-coded in to ensure no destruction
 		
 		if(Robot.intake.isRatchetWingDisengaged()){
-			Robot.intake.motorOnIntake();
+			Robot.intake.motorOnClimber();
 		}
 	}
 	

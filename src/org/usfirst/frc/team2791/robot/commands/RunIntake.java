@@ -9,7 +9,10 @@ public class RunIntake extends Command{
 		super("RunIntake");
 		requires(Robot.intake);
 	}
-	protected void initialize(){}
+	protected void initialize(){
+		Robot.intake.disengageRatchetWing();
+		Robot.intake.motorOnClimber();
+	}
 	
 	protected void execute(){
 		Robot.intake.disengageRatchetWing();

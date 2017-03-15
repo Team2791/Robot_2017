@@ -20,6 +20,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShakerDrivetrain extends Subsystem{
+	
+	private final double VBUS_RAMP_RATE = 5;// in %vbus per second
+	protected double last_vbus_output_left = 0;
+	protected double last_vbus_output_right = 0;
+	protected double last_ramp_update_time = -1;
 
 	protected Encoder leftDriveEncoder = null;
 	protected Encoder rightDriveEncoder = null;
@@ -31,20 +36,6 @@ public class ShakerDrivetrain extends Subsystem{
 
 	private Talon leftSpark;    
 	private Talon rightSpark;
-
-	protected static BasicPID movingAnglePID;
-	protected static BasicPID distancePID;
-	protected static BasicPID stationaryAnglePID;
-
-	protected static boolean usingPID = false;
-
-	protected double driveTimePIDGoodTime = 0;
-	protected double angleTimePIDGoodTime = 0;
-
-	protected double angleTarget = 0.0;
-	protected double turnPIDMaxOutput = 0.5;
-	protected boolean PIDAtTarget = false;
-	protected boolean anglePIDQuickExit = false;
 
 	protected double previousRate = 0;
 	protected double previousRateTime = 0;
@@ -64,7 +55,7 @@ public class ShakerDrivetrain extends Subsystem{
 	protected double rightFilteredAccel = 0;
 
 	private double distancePerPulse = Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER_IN_FEET);
-
+	
 	/* 
 	 * Spark speed controllers can be controlled with the WPI Talon class.
 	 * Each Side of the robot has 3 talons, which all recieve signal/send feedback through 1 PWM Port
@@ -91,18 +82,6 @@ public class ShakerDrivetrain extends Subsystem{
 		leftDriveEncoder.setDistancePerPulse(distancePerPulse); 
 		rightDriveEncoder.setDistancePerPulse(-distancePerPulse); 
 
-		movingAnglePID = new BasicPID(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
-		distancePID = new BasicPID(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);
-		stationaryAnglePID = new BasicPID(CONSTANTS.STATIONARY_ANGLE_P, CONSTANTS.STATIONARY_ANGLE_I, CONSTANTS.STATIONARY_ANGLE_D);
-
-		movingAnglePID.setInvertOutput(true);
-		stationaryAnglePID.setInvertOutput(true);
-		movingAnglePID.setMaxOutput(0.5);
-		movingAnglePID.setMinOutput(-0.5);
-
-		stationaryAnglePID.setIZone(6);
-		distancePID.setIZone(0.25);
-		movingAnglePID.setIZone(4);
 		try{
 			gyro = new ADXRS450_Gyro();//SPI.Port.kOnboardCS1
 			gyro.calibrate();
@@ -121,10 +100,30 @@ public class ShakerDrivetrain extends Subsystem{
 		shakyDrive.stopMotor();
 	}
 
-
+	// TODO put this in a util method
+	public double limitWithRampRate(double previousOutput, double currentDesiredOutput, double timeDiff) {
+		double maxLimitedOutput = Math.abs(previousOutput) + timeDiff * VBUS_RAMP_RATE;
+		
+		if(Math.abs(currentDesiredOutput) > maxLimitedOutput) {
+			return Math.copySign(maxLimitedOutput, currentDesiredOutput);
+		} else {
+			return currentDesiredOutput;
+		}
+	}
+	
 	/** @param left motor output
 	 * @param right motor output*/
 	public void setLeftRightMotorOutputs(double left, double right){
+		double currentTime = Timer.getFPGATimestamp();
+		double timeDiff = currentTime - last_ramp_update_time;
+		last_ramp_update_time = currentTime;
+		
+		left = limitWithRampRate(last_vbus_output_left, left, timeDiff);
+		last_vbus_output_left = left;
+		
+		right = limitWithRampRate(last_vbus_output_right, right, timeDiff);
+		last_vbus_output_right = right;
+		
 		SmartDashboard.putString("LeftOutput vs RightOutput", left+":"+right);
 		shakyDrive.setLeftRightMotorOutputs(left, right);
 	}
@@ -132,7 +131,6 @@ public class ShakerDrivetrain extends Subsystem{
 	//************** Gyro and Encoder Helper Methods **************//
 
 	public void debug() {
-
 
 		SmartDashboard.putNumber("Left Drive Encoders Rate", leftDriveEncoder.getRate());
 		SmartDashboard.putNumber("Right Drive Encoders Rate", rightDriveEncoder.getRate());
@@ -154,22 +152,19 @@ public class ShakerDrivetrain extends Subsystem{
 
 	}
 
-	/**TODO: Get rid of this redundant method**/
-	public double getAngle() {
-		return getAngleEncoder();
-	}
-
+	@Deprecated
 	public double getAngleEncoder() {
 		return (360 / 7.9) * (getLeftDistance() - getRightDistance()) / 2.0;
 	}
 
 	public double getGyroAngle() {
-		if(!gyroDisabled)
+		if(!gyroDisabled)  
 			return gyro.getAngle();
 		System.err.println("Gyro is Disabled, Angle is Incorrect");
 		return 0.0;
 	}
-
+	
+	@Deprecated
 	public double getEncoderAngleRate() {
 		return (360/7.9) * (leftDriveEncoder.getRate() - rightDriveEncoder.getRate()) / 2.0;
 	}
@@ -292,20 +287,6 @@ public class ShakerDrivetrain extends Subsystem{
 		return leftDriveEncoder.getDistance();
 	}
 
-	//************** PID Helper Methods **************//
-
-	public boolean isUsingPID() {
-		return usingPID;
-	}
-
-	public void usePID() {
-		usingPID = true;
-	}
-
-	public void doneUsingPID() {
-		usingPID = false;
-	}
-
 	//*****************Debugging Methods*****************//
 
 	public double getCurrentUsage() {
@@ -317,32 +298,6 @@ public class ShakerDrivetrain extends Subsystem{
 			totalCurrent += Robot.pdp.getCurrent(i);
 		}
 		return totalCurrent;
-	}
-
-
-	@SuppressWarnings("deprecation")
-	public void updateSmartDash() {
-		// put values on the smart dashboard
-		CONSTANTS.STATIONARY_ANGLE_P = SmartDashboard.getNumber("Stat Angle P");
-		CONSTANTS.STATIONARY_ANGLE_I = SmartDashboard.getNumber("Stat Angle I");
-		CONSTANTS.STATIONARY_ANGLE_D = SmartDashboard.getNumber("Stat Angle D");
-
-		CONSTANTS.DRIVE_ANGLE_P = SmartDashboard.getNumber("Angle P");
-		CONSTANTS.DRIVE_ANGLE_I = SmartDashboard.getNumber("Angle I");
-		CONSTANTS.DRIVE_ANGLE_D = SmartDashboard.getNumber("Angle D");
-
-		CONSTANTS.DRIVE_DISTANCE_P = SmartDashboard.getNumber("DISTANCE P");
-		CONSTANTS.DRIVE_DISTANCE_I = SmartDashboard.getNumber("DISTANCE I");
-		CONSTANTS.DRIVE_DISTANCE_D = SmartDashboard.getNumber("Distance D");
-		debug();
-		updatePIDGains();
-	}
-
-	public void updatePIDGains() {
-		movingAnglePID.changeGains(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
-		distancePID.changeGains(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);
-		stationaryAnglePID.changeGains(CONSTANTS.STATIONARY_ANGLE_P, CONSTANTS.STATIONARY_ANGLE_I,
-				CONSTANTS.STATIONARY_ANGLE_D);
 	}
 
 }

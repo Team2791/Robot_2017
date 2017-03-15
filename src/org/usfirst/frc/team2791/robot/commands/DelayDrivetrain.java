@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DelayDrivertrain extends Command {
+public class DelayDrivetrain extends Command {
 	
 	private Timer timer = new Timer();
 	private double delayTime;
 
-    public DelayDrivertrain(double delayTime_) {
+    public DelayDrivetrain(double delayTime_) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	super("DelayDrivertrain");

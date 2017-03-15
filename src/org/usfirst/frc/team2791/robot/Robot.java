@@ -2,31 +2,23 @@
 
 package org.usfirst.frc.team2791.robot;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team2791.robot.Robot.GamePeriod;
-
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.Timer;
-
-import org.usfirst.frc.team2791.robot.commands.CalibrateGyro;
-import org.usfirst.frc.team2791.robot.commands.ResetGear;
+import org.usfirst.frc.team2791.robot.commands.auton.BLeftGearAuton;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
+import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 
-import org.usfirst.frc.team2791.trajectory.AutoPaths;
-import org.usfirst.frc.team2791.robot.commands.autos.BlueCenterGear;
-import org.usfirst.frc.team2791.robot.commands.autos.BlueLeftGearToLoadingStation;
-import org.usfirst.frc.team2791.robot.commands.autos.FollowPath;
-import org.usfirst.frc.team2791.robot.commands.autos.GearHopperAuto;
+import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -70,7 +62,7 @@ public class Robot extends IterativeRobot {
 		compressor = new Compressor(RobotMap.PCM_MODULE);
 		compressor.setClosedLoopControl(true);
 		compressor.start();
-		CameraServer.getInstance().startAutomaticCapture();
+//		CameraServer.getInstance().startAutomaticCapture();
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
@@ -86,6 +78,19 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("kv",0.09);
 			SmartDashboard.putNumber("ka",0.033);
 		}
+		
+		SmartDashboard.putNumber("Stat Angle P", CONSTANTS.STATIONARY_ANGLE_P);
+		SmartDashboard.putNumber("Stat Angle I", CONSTANTS.STATIONARY_ANGLE_I);
+		SmartDashboard.putNumber("Stat Angle D", CONSTANTS.STATIONARY_ANGLE_D);
+		SmartDashboard.putNumber("Moving Angle P", CONSTANTS.DRIVE_ANGLE_P);
+		SmartDashboard.putNumber("Moving Angle I", CONSTANTS.DRIVE_ANGLE_I);
+		SmartDashboard.putNumber("Moving Angle D", CONSTANTS.DRIVE_ANGLE_D);
+		SmartDashboard.putNumber("Distance P", CONSTANTS.DRIVE_DISTANCE_P);
+		SmartDashboard.putNumber("Distance I", CONSTANTS.DRIVE_DISTANCE_I);
+		SmartDashboard.putNumber("Distance D", CONSTANTS.DRIVE_DISTANCE_D);
+		
+		SmartDashboard.putNumber("TUNE PID Distance", 0.0);
+		SmartDashboard.putNumber("TUNE PID Stat Angle", 0.0);
 	}
 
 	/**
@@ -128,12 +133,13 @@ public class Robot extends IterativeRobot {
 		intake.disengageRatchetWing();
 		gearMechanism.changeGearSolenoidState(false);
 
-		autonomousCommand = new BlueLeftGearToLoadingStation();
-
+		//autonomousCommand = new BlueLeftGearToLoadingStation();
+		autonomousCommand = new BLeftGearAuton();
+//		autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7);
+//		autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1);
+		
 		if (autonomousCommand != null)
 			autonomousCommand.start();
-		
-		gearMechanism.changeGearSolenoidState(false);
 
 	}
 
@@ -144,11 +150,6 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		debug();
-		
-		if(oi.driver.getButtonSt()){
-			drivetrain.resetEncoders();
-			drivetrain.calibrateGyro();
-		}
 
 		double thisAutoLoopTime = Timer.getFPGATimestamp();
 		double timeDiff = thisAutoLoopTime - lastAutonLoopTime;
