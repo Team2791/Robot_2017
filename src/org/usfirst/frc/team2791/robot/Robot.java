@@ -5,6 +5,7 @@ package org.usfirst.frc.team2791.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2791.robot.Robot.GamePeriod;
 
@@ -23,10 +24,7 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 
 import org.usfirst.frc.team2791.trajectory.AutoPaths;
-import org.usfirst.frc.team2791.robot.commands.autos.BlueCenterGear;
-import org.usfirst.frc.team2791.robot.commands.autos.BlueLeftGearToLoadingStation;
-import org.usfirst.frc.team2791.robot.commands.autos.FollowPath;
-import org.usfirst.frc.team2791.robot.commands.autos.GearHopperAuto;
+import org.usfirst.frc.team2791.robot.commands.autos.*;
 
 
 /**
@@ -48,17 +46,14 @@ public class Robot extends IterativeRobot {
 	public static ShakerGear gearMechanism;
 	public static ShakerDrivetrain drivetrain;
 
-	private double lastAutonLoopTime;
-
-	/**
-	 * setting autonomousCommand to a Command will cause that Command to run in autonomous init
-	 */
 	public Command autonomousCommand;
-	//SendableChooser<Command> chooser = new SendableChooser<>();
+	public SendableChooser autoChooser;
 
+	
 	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
+	 * Initializes all Subsystems.
+	 * Starts Compressor and Camera.
+	 * Sends information to SmartDashboard for Auto
 	 */
 	@Override
 	public void robotInit() {
@@ -79,6 +74,15 @@ public class Robot extends IterativeRobot {
 
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 
+		
+		autoChooser = new SendableChooser();
+		autoChooser.addDefault("Center Gear", new BLUEDropCenterGear());
+		autoChooser.addObject("LeftGear-LeftHopper", new BLUELeftGearLeftHopper());
+		autoChooser.addObject("LeftGear-LoadingStation", new BLUELeftGearLoadingStation());
+		autoChooser.addObject("Shoot-RightGear", new BLUEShootRightGear());
+		autoChooser.addObject("RightGear-Hopper-Shoot", new BLUERightGearRightHopperShoot());
+		SmartDashboard.putData("Autonomous Chooser", autoChooser);
+		
 		if(SmartDashboard.getNumber("kp", -2791) == -2791){
 			SmartDashboard.putNumber("kp",7.0);
 			SmartDashboard.putNumber("ki",0);
@@ -89,8 +93,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
-	 * This function is called once each time the robot enters Disabled mode.
-	 * You can use it to reset any subsystem information you want to clear when
+	 *Reset any subsystem information you want to clear when
 	 * the robot is disabled.
 	 */
 	@Override
@@ -110,15 +113,9 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
+	 * Gyro and Encoders reset at StartUp.
+	 * Ratchet and Wings start disengaged.
+	 * Gear Mechanism Starts Up and Ends Auto Up.
 	 */
 	@Override
 	public void autonomousInit() {
@@ -128,8 +125,9 @@ public class Robot extends IterativeRobot {
 		intake.disengageRatchetWing();
 		gearMechanism.changeGearSolenoidState(false);
 
-		autonomousCommand = new BlueLeftGearToLoadingStation();
-
+//		autonomousCommand = new BLUELeftGearLoadingStation();
+		autonomousCommand = (Command) autoChooser.getSelected();
+		
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 		
@@ -137,9 +135,6 @@ public class Robot extends IterativeRobot {
 
 	}
 
-	/**
-	 * This function is called periodically during autonomous
-	 */
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
@@ -149,11 +144,6 @@ public class Robot extends IterativeRobot {
 			drivetrain.resetEncoders();
 			drivetrain.calibrateGyro();
 		}
-
-		double thisAutoLoopTime = Timer.getFPGATimestamp();
-		double timeDiff = thisAutoLoopTime - lastAutonLoopTime;
-		//		System.out.println("Auton time diff = "+timeDiff+"s rate = "+(1.0/timeDiff)+"hz");
-		//		lastAutonLoopTime = thisAutoLoopTime;
 	}
 
 	@Override
@@ -171,9 +161,7 @@ public class Robot extends IterativeRobot {
 		//intake.wingDeployment();
 	}
 
-	/**
-	 * This function is called periodically during operator control
-	 */
+
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
@@ -181,9 +169,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	
-	/**
-	 * This function is called periodically during test mode
-	 */
+
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();

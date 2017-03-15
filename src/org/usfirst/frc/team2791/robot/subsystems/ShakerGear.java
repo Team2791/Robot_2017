@@ -9,6 +9,7 @@ public class ShakerGear extends Subsystem{
 	private Solenoid gearSolenoid;
 	public ShakerGear(){
 		gearSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.GEAR_CHANNEL);
+		gearSolenoid.set(false);
 	}
 	public void initDefaultCommand(){
 		gearSolenoid.set(false);

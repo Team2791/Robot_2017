@@ -32,7 +32,7 @@ public class DriveForward extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return timer.hasPeriodPassed(1.0);
+        return timer.hasPeriodPassed(0.5);
     }
 
     // Called once after isFinished returns true
