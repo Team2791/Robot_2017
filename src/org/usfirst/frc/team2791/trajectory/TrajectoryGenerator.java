@@ -258,6 +258,7 @@ public class TrajectoryGenerator {
     return traj;
   }
 
+  //Currently using SCurveStrategy, i think this is for trajectories with too high of speeds, TODO: look at this
   public static Strategy chooseStrategy(double start_vel, double goal_vel,
           double max_vel) {
     Strategy strategy;

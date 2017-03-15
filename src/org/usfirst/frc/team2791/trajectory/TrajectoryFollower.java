@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TrajectoryFollower {
 
 	private double kp_;
-	private double ki_;  // Not currently used, but might be in the future.
+	private double ki_; 
 	private double kd_;
 	private double kv_;
 	private double ka_;
@@ -25,11 +25,11 @@ public class TrajectoryFollower {
 
 	public TrajectoryFollower(String name) {
 		this.name = name;
-		kp_ = SmartDashboard.getNumber("kp", 0);
+		kp_ = SmartDashboard.getNumber("kp", 2.0);
 		ki_ = SmartDashboard.getNumber("ki", 0);
-		kd_ = SmartDashboard.getNumber("kd", 0);
-		kv_ = SmartDashboard.getNumber("kv", 0);
-		ka_ = SmartDashboard.getNumber("ka", 0);
+		kd_ = SmartDashboard.getNumber("kd", 0.25);
+		kv_ = SmartDashboard.getNumber("kv", 0.09);
+		ka_ = SmartDashboard.getNumber("ka", 0.033);
 	}
 
 	public void configure(double kp, double ki, double kd, double kv, double ka) {
@@ -103,11 +103,9 @@ public class TrajectoryFollower {
 		if(name == "left") {
 			currentVelocity = Robot.drivetrain.getLeftVelocity(); 
 			currentAcceleration = Robot.drivetrain.getLeftAcceleration(); 
-			//System.out.println("ACC:"+currentAcceleration);
 		} else {
 			currentVelocity = Robot.drivetrain.getRightVelocity(); 
 			currentAcceleration = Robot.drivetrain.getRightAcceleration(); 
-			//System.out.println("ACC:"+currentAcceleration);
 		}
 
 		double velocityError = segment.vel-currentVelocity;

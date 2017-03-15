@@ -23,13 +23,14 @@ public class AutoPaths {
 	public static final int WALL_LANE_ID = 2;
 	public static String fileLocation="/paths/";
 
-	public final static String[] kPathNames = { "BLUELeftGear",
+	public final static String[] kPathNames = { "TestingOneTwo",
+			"BLUELeftGear",
+			"BLUELeftGearToLeftWall",
+			"BLUELeftWallToLoadingStation",
+			"CenterGear",
 			"BLUELeftGearToLeftHopper",
 			"BLUEBoilerToRightGear",
-			"CenterGear",
-			"TestingOneTwo",
-			"BLUELeftGearToLeftWall",
-			"BLUELeftWallToLoadingStation"
+			"BLUERightGearToRightHopper"
 	};
 	public final static String[] kPathDescriptions = { "Left Gear-Blue",
 			"Left Gear to Left Hopper-Blue",
@@ -61,8 +62,8 @@ public class AutoPaths {
 	public AutoPaths(){
 		loadPaths();
 	}
-	
-	/*
+
+	/**
 	 * loads all paths so that they can be accessed 
 	 */
 	public static void loadPaths() {
@@ -83,7 +84,7 @@ public class AutoPaths {
 
 	}
 
-	/*
+	/**
 	 * @param name is a String that is the path and file's name
 	 * @return is the Path that is you want generated
 	 */
@@ -93,11 +94,10 @@ public class AutoPaths {
 		return (Path)paths_.get(name);
 	}
 
-	/*
+	/**
 	 * @param name is the index of the path and file's name
 	 * @return is the Path that is you want generated
 	 */
-
 	public static Path getByIndex(int index) {
 		loadPaths();
 		return (Path)paths_.get(kPathNames[index]);

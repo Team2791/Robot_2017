@@ -116,7 +116,7 @@ public class ChezyMath {
   }
 
   /**
-   * Get the difference in angle between two angles.
+   * Get the difference in angle between two angles in degrees.
    *
    * @param from The first angle
    * @param to The second angle

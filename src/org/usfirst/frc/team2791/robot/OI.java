@@ -184,8 +184,8 @@ public class OI {
 		operatorB.whileHeld(new RunIntakeBelt());//climbing
 		operatorY.whileHeld(new RunLongShot());
 
-		operatorBack.whenPressed(new StopClimberAndDisengage());
-		operatorStart.whenPressed(new TurnShooterOff());
+		operatorBack.whenPressed(new StopClimberAndDisengage()); //EStop for Intake Motor
+		operatorStart.whenPressed(new TurnShooterOff());//EStop for Shooter Motor and Hopper Motor
 
 		operatorDpadDown.whenPressed(new RemoveGear());
 		operatorDpadDown.whenReleased(new ResetGear());
@@ -208,6 +208,7 @@ public class OI {
 		driverRB.whileHeld(new DriveWithJoystick());
 		
 		driverBack.whileHeld(new CalibrateGyro());
+		//TODO: Give Driver estops as well
 	}
 
 	public void checkForAction(){

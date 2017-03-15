@@ -5,6 +5,7 @@ package org.usfirst.frc.team2791.trajectory;
  * mechanism.
  *
  * @author Jared341
+ * @author unbun
  */
 public class Trajectory {
   
@@ -18,6 +19,12 @@ public class Trajectory {
     public Trajectory right;
   }
 
+  /**
+   * Segments read from files in the following format:
+   * pos vel acc jerk heading dt x y
+   * @author unbun
+   *
+   */
   public static class Segment {
 
     public double pos, vel, acc, jerk, heading, dt, x, y;

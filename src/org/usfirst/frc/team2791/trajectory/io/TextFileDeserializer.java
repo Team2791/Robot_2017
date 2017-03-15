@@ -38,6 +38,7 @@ public class TextFileDeserializer implements IPathDeserializer {
       
       left.setSegment(i, segment);
     }
+    
     Trajectory right = new Trajectory(num_elements);
     for (int i = 0; i < num_elements; ++i) {
       Trajectory.Segment segment = new Trajectory.Segment();

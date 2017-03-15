@@ -7,13 +7,16 @@ package org.usfirst.frc.team2791.trajectory.io;
  * @author Jared341
  */
 public class FastParser {
-  // Assumes the format %.Nf, where N is constant and leading zeros are present.
+  /**
+   *  Assumes the format %.Nf, where N is constant and leading zeros are present.
+   *  @return 0.0 if string is not formatted correctly
+   */
   public static double parseFormattedDouble(String string) {
     // Find the decimal point
     int decimal = string.indexOf('.');
     
     if (decimal == -1 || decimal + 1 >= string.length()) {
-      // The string is not formatted correctly.
+      //  The string is not formatted correctly.
       return 0.0;
     }
     
