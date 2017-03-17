@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class CenterGearAuton extends CommandGroup {
 
-	public CenterGearAuton() {
-    	addSequential(new DriveStraightEncoderGyro(-100/12, .7));
+	public CenterGearAuton(boolean red) {
+    	addSequential(new DriveStraightEncoderGyro(-(106.5-36)/12, .7, 10)); 
     	addSequential(new RemoveGear());
     	addSequential(new DelayDrivetrain(1.0));
-    	addSequential(new DriveStraightEncoderGyro(3.0, .7));
+    	addSequential(new DriveStraightEncoderGyro(3.0, .7, 4));
     	addSequential(new ResetGear());
 
 

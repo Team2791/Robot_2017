@@ -17,6 +17,11 @@ public class StationaryGyroTurn extends Command {
 	protected static BasicPID stationaryAnglePID;
 	private double angleToTurn;
 	
+	/**
+	 * 
+	 * @param angleToTurn negative if counterclockwise
+	 * @param maxOutput
+	 */
     public StationaryGyroTurn(double angleToTurn, double maxOutput) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.drivetrain);
