@@ -137,9 +137,9 @@ public class Robot extends IterativeRobot {
 
 		boolean red = false;
 
-		autonomousCommand = new CenterGearAuton(red);
+//		autonomousCommand = new CenterGearAuton(red);
 //		autonomousCommand = new BoilerGearAuton(red);
-//		autonomousCommand = new LoadingStationGearAuton(red);
+		autonomousCommand = new LoadingStationGearAuton(red);
 
 //		autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7);
 //		autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1);

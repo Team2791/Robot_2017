@@ -179,11 +179,14 @@ public class OI {
 		/*
 		 * Operator Button Assignments
 		 */
-		operatorX.whileHeld(new RunWallShot());
+//		operatorX.whileHeld(new RunWallShot());
+//		operatorY.whileHeld(new RunLongShot()); 
+		operatorX.whileHeld(new RunWallShotFullHopper());  //Done at TVR Q42
+		operatorY.whileHeld(new RunLongShotFullHopper());
+		
 		operatorA.whileHeld(new RunIntake());
 		operatorB.whileHeld(new RunClimber());//climbing
 		operatorLB.whileHeld(new EngageRope());
-		operatorY.whileHeld(new RunLongShot());
 
 		operatorBack.whenPressed(new StopClimberAndDisengage());
 		operatorStart.whenPressed(new TurnShooterOff());

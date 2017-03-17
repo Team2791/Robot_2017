@@ -13,14 +13,14 @@ public class BoilerGearAuton extends CommandGroup {
 
 	public BoilerGearAuton(boolean red) {
 
-		addSequential(new DriveStraightEncoderGyro(-(128-36)/12, .7, 10));
+		addSequential(new DriveStraightEncoderGyro(-(128-33)/12, .7, 10));
 		
 		if(red){
 			addSequential(new StationaryGyroTurn((-60.0/12),.7));
 		}else{
 			addSequential(new StationaryGyroTurn((60.0/12),.7));
 		}
-		double dist = Math.cos(Math.PI/6)/90.5 - 36;
+		double dist = Math.cos(Math.PI/6)/90.5 - 33;
 		addSequential(new DriveStraightEncoderGyro(-dist/12.0, .7, 10));
 		addSequential(new RemoveGear());
 		addSequential(new DelayDrivetrain(1.0));
