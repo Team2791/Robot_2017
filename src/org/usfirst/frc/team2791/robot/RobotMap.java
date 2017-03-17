@@ -14,11 +14,11 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int JOYSTICK_OPERATOR_PORT = 1;
 	
 	// DIO
-	public static final int LEFT_DRIVE_ENCODER_PORT_A = 9;
-	public static final int LEFT_DRIVE_ENCODER_PORT_B = 8;
+	public static final int LEFT_DRIVE_ENCODER_PORT_A = 3;
+	public static final int LEFT_DRIVE_ENCODER_PORT_B = 2;
 	
-	public static final int RIGHT_DRIVE_ENCODER_PORT_A = 7;
-	public static final int RIGHT_DRIVE_ENCODER_PORT_B = 6;
+	public static final int RIGHT_DRIVE_ENCODER_PORT_A = 1;
+	public static final int RIGHT_DRIVE_ENCODER_PORT_B = 0;
 	
 	// PWM PORTS
 	public static final int DRIVE_SPARK_LEFT_PORT = 9;
@@ -27,7 +27,7 @@ public class RobotMap {//to map ports; constants are in separate class
 	
 	public static final int INTAKE_SPARK_PORT = 6;
 	
-	public static final int HOPPER_SPARK_PORT = 4;//try on a different port
+	public static final int HOPPER_SPARK_PORT = 7;//try on a different port
 
 	// ANALOG
 	public static final int IR_SENSOR_1 = 0;
