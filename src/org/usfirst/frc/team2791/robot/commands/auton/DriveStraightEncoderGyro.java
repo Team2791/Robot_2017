@@ -26,6 +26,9 @@ public class DriveStraightEncoderGyro extends Command {
     	movingAnglePID = new BasicPID(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
 		distancePID = new BasicPID(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);
 		
+		distancePID.setInvertOutput(true);
+		movingAnglePID.setInvertOutput(true);
+		
 		movingAnglePID.setMaxOutput(0.5);
 		movingAnglePID.setMinOutput(-0.5);
 		
@@ -47,7 +50,7 @@ public class DriveStraightEncoderGyro extends Command {
     	// uncomment this line if we are debugging
 		updatePIDGains();
 
-        double drivePIDOutput = -distancePID.updateAndGetOutput(Robot.drivetrain.getAverageDist());
+        double drivePIDOutput = distancePID.updateAndGetOutput(Robot.drivetrain.getAverageDist());
         double anglePIDOutput = movingAnglePID.updateAndGetOutput(Robot.drivetrain.getGyroAngle());
 
         //setLeftRightVoltage(drivePIDOutput + anglePIDOutput, drivePIDOutput - anglePIDOutput);

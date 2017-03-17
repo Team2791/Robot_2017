@@ -2,7 +2,7 @@
 
 package org.usfirst.frc.team2791.robot;
 
-import org.usfirst.frc.team2791.robot.commands.auton.BLeftGearAuton;
+import org.usfirst.frc.team2791.robot.commands.auton.DriveStraightEncoderGyro;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -10,7 +10,6 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -134,8 +133,8 @@ public class Robot extends IterativeRobot {
 		gearMechanism.changeGearSolenoidState(false);
 
 		//autonomousCommand = new BlueLeftGearToLoadingStation();
-		autonomousCommand = new BLeftGearAuton();
-//		autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7);
+//		autonomousCommand = new BLeftGearAuton();
+		autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7);
 //		autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1);
 		
 		if (autonomousCommand != null)
