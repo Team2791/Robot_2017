@@ -181,7 +181,8 @@ public class OI {
 		 */
 		operatorX.whileHeld(new RunWallShot());
 		operatorA.whileHeld(new RunIntake());
-		operatorB.whileHeld(new RunIntakeBelt());//climbing
+		operatorB.whileHeld(new RunClimber());//climbing
+		operatorLB.whileHeld(new EngageRope());
 		operatorY.whileHeld(new RunLongShot());
 
 		operatorBack.whenPressed(new StopClimberAndDisengage());

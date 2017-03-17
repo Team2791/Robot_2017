@@ -15,11 +15,11 @@ public class RunClimber extends Command{
 	protected void execute(){
 		Robot.intake.debug();
 		Robot.intake.engageRatchetWing();
-		if(Robot.intake.getCurrentUsage()<56.0){
+//		if(Robot.intake.getCurrentUsage()<56.0){
 			Robot.intake.motorOnClimber();
-		}
-		else
-			Robot.intake.motorOffIntake();
+//		}
+//		else
+//			Robot.intake.motorOffIntake();
 	}
 	
 	protected boolean isFinished(){

@@ -4,6 +4,7 @@ import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.util.BasicPID;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -18,7 +19,12 @@ public class DriveStraightEncoderGyro extends Command {
 	protected static BasicPID distancePID;
 	double distanceToDrive, maxOutput;
 	
+	private Timer timer =new Timer();
+	private double distRequest;
+	
 	public DriveStraightEncoderGyro(double distanceToDrive, double maxOutput) {
+		distRequest = distanceToDrive;
+		
     	requires(Robot.drivetrain);
     	this.distanceToDrive = distanceToDrive;
     	this.maxOutput = maxOutput;
@@ -37,6 +43,8 @@ public class DriveStraightEncoderGyro extends Command {
 
 		distancePID.setIZone(0.15);
 		movingAnglePID.setIZone(4);
+		
+		timer.start();
     }
 
     // Called just before this Command runs the first time
@@ -63,10 +71,11 @@ public class DriveStraightEncoderGyro extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Math.abs(distancePID.getError()) < 0.05 &&
+    	boolean isPIDDone = (Math.abs(distancePID.getError()) < 0.05 &&
     		   Math.abs(movingAnglePID.getError()) < 1.5 &&
     		   Math.abs(Robot.drivetrain.getLeftVelocity()) < 0.01 &&
-    		   Math.abs(Robot.drivetrain.getRightVelocity()) < 0.01;
+    		   Math.abs(Robot.drivetrain.getRightVelocity()) < 0.01);
+    	return (isPIDDone || timer.hasPeriodPassed((distRequest*.75)));
     }
 
     // Called once after isFinished returns true

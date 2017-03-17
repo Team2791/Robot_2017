@@ -26,6 +26,8 @@ public class StationaryGyroTurn extends Command {
 		stationaryAnglePID.setIZone(6);
 		stationaryAnglePID.setMaxOutput(maxOutput);
 		stationaryAnglePID.setMinOutput(-maxOutput);
+		
+		stationaryAnglePID.setInvertOutput(true);
     }
 
     // Called just before this Command runs the first time

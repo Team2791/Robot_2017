@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * The Combined Intake/Climber Subsystem for Stoker
  */
-public class ShakerIntake extends Subsystem{
+public class ShakerIntake extends Subsystem {
 	private final double BALLS_IN_POWER = -1.0;
 	private final double CLIMBING_VBUS = 0.75;
 
@@ -66,7 +66,15 @@ public class ShakerIntake extends Subsystem{
 
 	public void motorOnClimber(){//should be positive
 		ratchetWingSolenoid.set(false);
-		intakeSpark.setSpeed(SmartDashboard.getNumber("Climbing Vbus",CLIMBING_VBUS));
+		// SmartDashboard.getNumber("Climbing Vbus",CLIMBING_VBUS)
+		intakeSpark.setSpeed(1.0);
+
+	}
+	
+	public void motorOnClimberSlow(){//should be positive
+		ratchetWingSolenoid.set(false);
+		// SmartDashboard.getNumber("Climbing Vbus",CLIMBING_VBUS)
+		intakeSpark.setSpeed(0.35);
 
 	}
 
