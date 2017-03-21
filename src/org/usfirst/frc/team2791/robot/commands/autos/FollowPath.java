@@ -20,41 +20,33 @@ public class FollowPath extends Command {
 	double heading; //not sure where this is assigned a value
 	protected Path path;
 	private boolean reversed;
-	
-	public FollowPath(Path path_, double angle, boolean reversed_, boolean invertY) {// double angle may not be correct
+
+	/**
+	 * 
+	 * @param path_ String name of path, should match the file name
+	 * @param color enum for Color of team
+	 * @param direction enum for Direction, forward or reverse
+	 */
+	public FollowPath(String path_, Color color, Direction direction) {
 		super("FollowPath");
 		requires(Robot.drivetrain);
-		
-		path=path_;
-		if(invertY) {
-			path.goRight();
+
+		path=AutoPaths.get(path_);
+
+		switch(color){
+		case BLUE: path.goRight();
+		case RED: path.goLeft();
 		}
-		heading=angle;
+
+		switch(direction){
+		case FORWARD: reversed = false;
+		case REVERSE: reversed = true;
+		}
 		
-		reversed = reversed_;
 		trajHelper=new TrajectoryDriveHelper(reversed);
 
 		System.out.println("Beginning to Follow"+ path.getName());
 	}
-
-	public FollowPath(String path_, boolean reversed_, boolean invertY) {// double angle may not be correct
-		super("FollowPath");
-		requires(Robot.drivetrain);
-		path = AutoPaths.get(path_);
-		heading = 0;
-		
-		if(invertY) {
-			path.goRight();
-		}
-		
-		reversed = reversed_;
-		trajHelper=new TrajectoryDriveHelper(reversed);
-		//if(path.getName() == null){
-		//	System.out.println("here");
-		//}
-		//System.out.println("Beginning to Follow"+ path.getName());
-	}
-	
 
 	// Called just before this Command runs the first time
 	@Override
@@ -78,7 +70,7 @@ public class FollowPath extends Command {
 	@Override
 	protected boolean isFinished() {
 		return !trajHelper.enabled();
-//		return false; //UNTESTED
+		//		return false; //UNTESTED
 	}
 
 	// Called once after isFinished returns true
@@ -93,6 +85,15 @@ public class FollowPath extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+	}
+
+	//Enums
+	public enum Color{
+		RED, BLUE
+	}
+
+	public enum Direction{
+		FORWARD, REVERSE
 	}
 
 }
