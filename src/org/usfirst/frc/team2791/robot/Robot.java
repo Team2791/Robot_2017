@@ -2,8 +2,9 @@
 
 package org.usfirst.frc.team2791.robot;
 
-import org.usfirst.frc.team2791.robot.commands.auton.CenterGearAuton;
-import org.usfirst.frc.team2791.robot.commands.auton.LoadingStationGearAuton;
+import org.usfirst.frc.team2791.robot.commands.autos.*;
+import org.usfirst.frc.team2791.robot.commands.autos.FollowPath.Color;
+import org.usfirst.frc.team2791.robot.commands.autos.FollowPath.Direction;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -11,7 +12,6 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 
-import org.usfirst.frc.team2791.robot.commands.auton.BoilerGearAuton;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -135,11 +135,15 @@ public class Robot extends IterativeRobot {
 		intake.disengageRatchetWing();
 		gearMechanism.changeGearSolenoidState(false);
 
-		boolean red = false;
-
+		Color color = Color.RED;
+		Direction direction = Direction.REVERSE;
+		
+		autonomousCommand = new CenterGear(color, direction);
+		
+//		boolean red = false;
 //		autonomousCommand = new CenterGearAuton(red);
 //		autonomousCommand = new BoilerGearAuton(red);
-		autonomousCommand = new LoadingStationGearAuton(red);
+//		autonomousCommand = new LoadingStationGearAuton(red);
 
 //		autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7);
 //		autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1);
