@@ -19,7 +19,6 @@ public class LoadingStationGearAuton extends CommandGroup {
 			addSequential(new DriveStraightEncoderGyro(-(119.5-36)/12.0, .7, 5));//was 129.5 at TVR Q48
 			addSequential(new StationaryGyroTurn(60.0, 1));
 		}else{
-
 			// 128.5, qm52 - too much
 			// decrease to 120.5 -- see qm57
 			addSequential(new DriveStraightEncoderGyro(-(120.5-33-4)/12.0, .7, 5)); //130.5 was too much TVR Q48

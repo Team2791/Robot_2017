@@ -6,14 +6,12 @@ import org.usfirst.frc.team2791.robot.commands.ResetGear;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-/**
- * Created by team2791 on 3/15/2016.
- */
 public class BoilerGearAuton extends CommandGroup {
 
+	//These distances are as measured on Thursday and are untested
 	public BoilerGearAuton(boolean red) {
 
-		addSequential(new DriveStraightEncoderGyro(-(128-33)/12, .7, 10));
+		addSequential(new DriveStraightEncoderGyro(-(127.0-33)/12.0, .7, 10));
 		
 		if(red){
 			addSequential(new StationaryGyroTurn((-60.0/12),.7));

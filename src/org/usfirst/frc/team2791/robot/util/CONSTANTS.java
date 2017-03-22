@@ -6,8 +6,7 @@ package org.usfirst.frc.team2791.robot.util;
  *
  * This class holds all important ports and constants that are used throughout the code
  * This is rarely changed, only when ports are switched or pid's are re-tuned
- * @author unbun
- * @author Akhil Jacobs
+ * 
  */
 public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 
@@ -22,7 +21,6 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static final int SHOOTER_ENCODER_TICKS = 128;
 	public static final double SHOOTER_WHEEL_DIAMETER = 4.0;
 	
-	// 2016 Constants = can be changed as needed
 	// PID VALUES
 	// Shooter PID
 	public static double SHOOTER_P = 1.5; //1.5
