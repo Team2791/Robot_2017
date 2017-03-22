@@ -135,7 +135,7 @@ public class Robot extends IterativeRobot {
 		intake.disengageRatchetWing();
 		gearMechanism.changeGearSolenoidState(false);
 
-		boolean red = false;
+		boolean red = true;
 
 //		autonomousCommand = new CenterGearAuton(red);
 //		autonomousCommand = new BoilerGearAuton(red);

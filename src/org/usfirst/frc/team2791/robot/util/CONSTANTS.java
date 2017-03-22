@@ -31,7 +31,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	
 	public static final double SHOOTER_FEED_FORWARD = 0.24; //0.24
 	
-	public static final double SHOOTER_SET_POINT = 2800; //2800
+	public static final double SHOOTER_SET_POINT = 2840; //2800
 	public static final double SHOOTER_LONG_SET_POINT = 3650; //3650
 	
 	public static final int SHOOTER_I_ZONE = 40; //40
@@ -50,7 +50,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static double DRIVE_DISTANCE_D = 0.03;
 	
 	public static double STATIONARY_ANGLE_P = 0.025;
-	public static double STATIONARY_ANGLE_I = 0.15; //.1 was too little TVR Q48
+	public static double STATIONARY_ANGLE_I = 0.12; //.1 was too little TVR Q48
 	public static double STATIONARY_ANGLE_D = 0.001;
 	
 	// Path following constants

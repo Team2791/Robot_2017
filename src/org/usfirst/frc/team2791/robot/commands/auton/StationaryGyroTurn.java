@@ -54,7 +54,7 @@ public class StationaryGyroTurn extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Math.abs(stationaryAnglePID.getError()) < 0.25 &&
+        return Math.abs(stationaryAnglePID.getError()) < 1 &&
         	   Math.abs(Robot.drivetrain.getGyroRate()) < 0.1;
     }
 

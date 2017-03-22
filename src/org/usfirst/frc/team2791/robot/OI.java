@@ -184,6 +184,9 @@ public class OI {
 		operatorX.whileHeld(new RunWallShotFullHopper());  //Done at TVR Q42
 		operatorY.whileHeld(new RunLongShotFullHopper());
 		
+		operatorRS.whileHeld(new ExtendIntake());
+		
+		
 		operatorA.whileHeld(new RunIntake());
 		operatorB.whileHeld(new RunClimber());//climbing
 		operatorLB.whileHeld(new EngageRope());
@@ -203,7 +206,7 @@ public class OI {
 		 */
 		driverX.whenPressed(new RemoveGear());
 		driverX.whenReleased(new ResetGear());
-		driverY.whileHeld(new RunIntakeBelt());//climb
+		driverY.whileHeld(new RunClimber());
 		
 		driverA.toggleWhenPressed(new RunIntake());
 //		driverA.whenReleased(new RunIntake());
