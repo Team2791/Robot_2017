@@ -12,11 +12,12 @@ import org.usfirst.frc.team2791.trajectory.io.TextFileDeserializer;
 /**
  * Load ALL autonomous mode paths and access them
  * Uses txt files that contain Trajectory Parameters that are generated from TrajectoryGenerator
- * Init this with loadPaths() to create all the Paths and use get() to access those Pats
+ * Init this with loadPaths() to create all the Paths and use get() to access those Paths
+ * All paths are initially designed for the Blue Side, going forward
  * 
  * @author Jared341
  * @author Stephen Pinkerton
- * @author Unnas Hussain
+ * @author team2791
  */
 public class AutoPaths {
 	// Make sure these match up!
@@ -62,7 +63,7 @@ public class AutoPaths {
 		loadPaths();
 	}
 	
-	/*
+	/**
 	 * loads all paths so that they can be accessed 
 	 */
 	public static void loadPaths() {
@@ -83,7 +84,7 @@ public class AutoPaths {
 
 	}
 
-	/*
+	/**
 	 * @param name is a String that is the path and file's name
 	 * @return is the Path that is you want generated
 	 */
@@ -93,7 +94,7 @@ public class AutoPaths {
 		return (Path)paths_.get(name);
 	}
 
-	/*
+	/**
 	 * @param name is the index of the path and file's name
 	 * @return is the Path that is you want generated
 	 */

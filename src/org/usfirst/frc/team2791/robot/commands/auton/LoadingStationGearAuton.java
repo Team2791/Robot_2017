@@ -1,8 +1,8 @@
 package org.usfirst.frc.team2791.robot.commands.auton;
 
 import org.usfirst.frc.team2791.robot.commands.DelayDrivetrain;
-import org.usfirst.frc.team2791.robot.commands.RemoveGear;
-import org.usfirst.frc.team2791.robot.commands.ResetGear;
+import org.usfirst.frc.team2791.robot.commands.GearMechDown;
+import org.usfirst.frc.team2791.robot.commands.GearMechUp;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -24,10 +24,10 @@ public class LoadingStationGearAuton extends CommandGroup {
 		double dist = 88.5/Math.cos(Math.PI/6) - 36;
 		
 		addSequential(new DriveStraightEncoderGyro(-dist/12.0, .7, 6));
-    	addSequential(new RemoveGear());
+    	addSequential(new GearMechDown());
     	addSequential(new DelayDrivetrain(1.0));
     	addSequential(new DriveStraightEncoderGyro(1.0, .7, 4));
-    	addSequential(new ResetGear());
+    	addSequential(new GearMechUp());
 
 
     }

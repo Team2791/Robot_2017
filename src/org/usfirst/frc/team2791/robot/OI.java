@@ -4,8 +4,8 @@ import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
 import org.usfirst.frc.team2791.robot.commands.CalibrateGyro;
 import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
-import org.usfirst.frc.team2791.robot.commands.RemoveGear;
-import org.usfirst.frc.team2791.robot.commands.ResetGear;
+import org.usfirst.frc.team2791.robot.commands.GearMechDown;
+import org.usfirst.frc.team2791.robot.commands.GearMechUp;
 import org.usfirst.frc.team2791.robot.commands.RunClimber;
 import org.usfirst.frc.team2791.robot.commands.RunHopperBackwards;
 import org.usfirst.frc.team2791.robot.commands.RunIntake;
@@ -179,20 +179,17 @@ public class OI {
 		/*
 		 * Operator Button Assignments
 		 */
-//		operatorX.whileHeld(new RunWallShot());
-//		operatorY.whileHeld(new RunLongShot()); 
-		operatorX.whileHeld(new RunWallShotFullHopper());  //Done at TVR Q42
+		operatorX.whileHeld(new RunWallShotFullHopper()); 
 		operatorY.whileHeld(new RunLongShotFullHopper());
 		
 		operatorA.whileHeld(new RunIntake());
-		operatorB.whileHeld(new RunClimber());//climbing
+		operatorB.whileHeld(new RunClimber());
 		operatorLB.whileHeld(new EngageRope());
-
+		
 		operatorBack.whenPressed(new StopClimberAndDisengage());
 		operatorStart.whenPressed(new TurnShooterOff());
 
-		operatorDpadDown.whenPressed(new RemoveGear());
-		operatorDpadDown.whenReleased(new ResetGear());
+		operatorDpadDown.toggleWhenPressed(new IntakeGear());
 		
 		operatorDpadLeft.whileHeld(new HopperOn());
 		operatorDpadUp.whenPressed(new StopHopper());
@@ -201,14 +198,12 @@ public class OI {
 		/*
 		 * Driver Button Assignments
 		 */
-		driverX.whenPressed(new RemoveGear());
-		driverX.whenReleased(new ResetGear());
-		driverY.whileHeld(new RunIntakeBelt());//climb
+		driverX.whenPressed(new GearMechDown());
+		driverX.whenReleased(new GearMechUp());
 		
+		driverY.whileHeld(new RunClimber());
 		driverA.toggleWhenPressed(new RunIntake());
-//		driverA.whenReleased(new RunIntake());
-//		driverB.whenPressed(new TurnIntakeOff());
-
+		
 		driverLB.whileHeld(new DriveWithJoystick());
 		driverRB.whileHeld(new DriveWithJoystick());
 		

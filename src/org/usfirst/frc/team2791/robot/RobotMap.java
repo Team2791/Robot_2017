@@ -27,8 +27,10 @@ public class RobotMap {//to map ports; constants are in separate class
 	
 	public static final int INTAKE_SPARK_PORT = 6;
 	
-	public static final int HOPPER_SPARK_PORT = 7;//try on a different port
-
+	public static final int HOPPER_SPARK_PORT = 4;
+	
+	public static final int GEAR_SPARK_PORT = 3;
+	
 	// ANALOG
 	public static final int IR_SENSOR_1 = 0;
 	public static final int IR_SENSOR_2 = 1;
@@ -64,4 +66,5 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int POWER_PRIMARY_SHOOTER = 4;
 	public static final int POWER_FOLLOWER_SHOOTER = 11;
 	
+	public static final int POWER_GEAR_INTAKE = 5;
 }

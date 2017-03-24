@@ -20,12 +20,18 @@ public class Path {
   
   public String getName() { return name_; }
   
+  /**
+   * Uninverts y axis
+   */
   public void goLeft() { 
     go_left_ = true; 
     go_left_pair_.left.setInvertedY(false);
     go_left_pair_.right.setInvertedY(false);
   }
   
+  /**
+   * Inverts Y axis
+   */
   public void goRight() {
     go_left_ = false; 
     go_left_pair_.left.setInvertedY(true);
