@@ -5,8 +5,7 @@ import org.usfirst.frc.team2791.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * TODO: Refactor to RunClimb
- * @author team2791
+ * Runs intake belt without actuating the intake
  *
  */
 public class RunIntakeBelt extends Command{

@@ -4,17 +4,22 @@ import org.usfirst.frc.team2791.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * There is currenly a bug where if the operator or driver climbs, stops climbing, then starts again, it will not work
+ */
 public class RunClimber extends Command{
 	public RunClimber(){
 		super("RunClimber");
 		requires(Robot.intake);
 	}
 	
-	protected void initialize(){}
+	protected void initialize(){
+		
+	}
 	
 	protected void execute(){
+		Robot.intake.engageRatchetWing();//TODO: put this in initialize and see if that fixes double climb bug
 		Robot.intake.debug();
-		Robot.intake.engageRatchetWing();
 //		if(Robot.intake.getCurrentUsage()<56.0){
 			Robot.intake.motorOnClimber();
 //		}

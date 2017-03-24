@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ *Gear Intake goes down and runs, then goes up after.
  */
 public class IntakeGear extends Command {
 
@@ -14,12 +14,10 @@ public class IntakeGear extends Command {
         requires(Robot.gearMechanism);
     }
 
-    // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.gearMechanism.changeGearSolenoidState(true);
+    	Robot.gearMechanism.changeGearSolenoidState(true); //gear does down
     }
 
-    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.gearMechanism.runGearIntake();
     }
@@ -29,7 +27,7 @@ public class IntakeGear extends Command {
     }
 
     protected void end() {
-    	Robot.gearMechanism.changeGearSolenoidState(false);
+    	new GearIntakeUp();
     }
     protected void interrupted() {
     	end();

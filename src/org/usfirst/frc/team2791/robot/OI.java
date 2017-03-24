@@ -4,8 +4,8 @@ import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
 import org.usfirst.frc.team2791.robot.commands.CalibrateGyro;
 import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
-import org.usfirst.frc.team2791.robot.commands.GearMechDown;
-import org.usfirst.frc.team2791.robot.commands.GearMechUp;
+import org.usfirst.frc.team2791.robot.commands.GearIntakeDown;
+import org.usfirst.frc.team2791.robot.commands.GearIntakeUp;
 import org.usfirst.frc.team2791.robot.commands.RunClimber;
 import org.usfirst.frc.team2791.robot.commands.RunHopperBackwards;
 import org.usfirst.frc.team2791.robot.commands.RunIntake;
@@ -183,11 +183,9 @@ public class OI {
 		operatorY.whileHeld(new RunLongShotFullHopper());
 		
 		operatorA.whileHeld(new RunIntake());
+		
 		operatorB.whileHeld(new RunClimber());
 		operatorLB.whileHeld(new EngageRope());
-		
-		operatorBack.whenPressed(new StopClimberAndDisengage());
-		operatorStart.whenPressed(new TurnShooterOff());
 
 		operatorDpadDown.toggleWhenPressed(new IntakeGear());
 		
@@ -195,11 +193,14 @@ public class OI {
 		operatorDpadUp.whenPressed(new StopHopper());
 		operatorDpadRight.whileHeld(new RunHopperBackwards());
 		
+		operatorBack.whenPressed(new StopClimberAndDisengage());//safety
+		operatorStart.whenPressed(new TurnShooterOff());//safety
+		
 		/*
 		 * Driver Button Assignments
 		 */
-		driverX.whenPressed(new GearMechDown());
-		driverX.whenReleased(new GearMechUp());
+		driverX.whenPressed(new GearIntakeDown());
+		driverX.whenReleased(new GearIntakeUp());
 		
 		driverY.whileHeld(new RunClimber());
 		driverA.toggleWhenPressed(new RunIntake());

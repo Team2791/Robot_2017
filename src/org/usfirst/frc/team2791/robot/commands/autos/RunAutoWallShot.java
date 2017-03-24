@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2791.robot.commands.auton;
+package org.usfirst.frc.team2791.robot.commands.autos;
 
 
 import org.usfirst.frc.team2791.robot.Robot;
