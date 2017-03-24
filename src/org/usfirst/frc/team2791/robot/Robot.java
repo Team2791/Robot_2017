@@ -136,9 +136,8 @@ public class Robot extends IterativeRobot {
 		gearMechanism.changeGearSolenoidState(false);
 
 		Color color = Color.RED;
-		Direction direction = Direction.REVERSE;
 		
-		autonomousCommand = new CenterGear(color, direction);
+		autonomousCommand = new CenterGear(color);
 		
 //		boolean red = false;
 //		autonomousCommand = new CenterGearAuton(red);

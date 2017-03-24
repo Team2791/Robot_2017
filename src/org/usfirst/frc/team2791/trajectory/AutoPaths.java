@@ -24,21 +24,28 @@ public class AutoPaths {
 	public static final int WALL_LANE_ID = 2;
 	public static String fileLocation="/paths/";
 
-	public final static String[] kPathNames = { "BLUELeftGear",
-			"BLUELeftGearToLeftHopper",
-			"BLUEBoilerToRightGear",
+	//TODO: load these paths to rio
+	public final static String[] kPathNames = { "BoilerGear",
 			"CenterGear",
-			"TestingOneTwo",
-			"BLUELeftGearToLeftWall",
-			"BLUELeftWallToLoadingStation"
+			"CloseShotToBoilerGear",
+			"FarHopper",
+			"FarHopperNoTrigger",
+			"GearToHopper",
+			"GearToMidFieldPart1",
+			"GearToMidFieldPart2",
+			"LoadingStationGear",
+			"TestingOneTwo"
 	};
-	public final static String[] kPathDescriptions = { "Left Gear-Blue",
-			"Left Gear to Left Hopper-Blue",
-			"Blue Boiler to Right Gear",
-			"Center Gear-Both",
-			"Generic Testing Path",
-			"BLUELeftGearToLeftWall",
-			"BLUELeftWallToLoadingStation"
+	public final static String[] kPathDescriptions = { "Wall To Boiler-Side Gear",
+			"Wall To Center Gear",
+			"Shoots 10 fuel from Boiler Wall then hangs gear",
+			"Wall to Far Hopper",
+			"Wall to Far Hopper w/o Triggering Hopper",
+			"Boiler Side Gear to Hopper",
+			"Lines up to run to Midfield from loading station gear",
+			"Goes from line up to midfield",
+			"Wall to Loading StationGear",
+			"Generic Testing Path"
 	};
 	static Hashtable paths_ = new Hashtable();
 

@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  */
-public class CenterGear extends CommandGroup{
+public class BoilerGear extends CommandGroup{
 	
-	public CenterGear(Color color){
-		addSequential(new FollowPath("BLUECenterGear", color, Direction.REVERSE));
+	public BoilerGear(Color color, Direction direction){
+		addSequential(new FollowPath("BoilerGear", color, Direction.REVERSE));
 		addSequential(new GearIntakeDown());
 		addSequential(new DelayDrivetrain(1));
 		addSequential(new DriveForward());
