@@ -8,9 +8,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *Gear Intake goes down and runs, then goes up after.
  */
-public class IntakeGear extends Command {
-
-    public IntakeGear() {
+public class GroundIntakeGear extends Command {
+	Timer timer = new Timer();
+	private double motorRunTime = .5;
+	
+    public GroundIntakeGear() {
         requires(Robot.gearMechanism);
     }
 
@@ -19,7 +21,6 @@ public class IntakeGear extends Command {
     }
 
     protected void execute() {
-    	System.out.println("GearIntake execute");
     	Robot.gearMechanism.runGearIntake();
     }
 
@@ -28,11 +29,13 @@ public class IntakeGear extends Command {
     }
 
     protected void end() {
-    	System.out.println("GearIntake end");
-    	new GearIntakeUp();
+    	timer.start();
+    	Robot.gearMechanism.changeGearSolenoidState(false);
+    	while(!timer.hasPeriodPassed(motorRunTime))
+    		Robot.gearMechanism.runGearIntake();
+    	Robot.gearMechanism.stopGearIntake();
     }
     protected void interrupted() {
-    	System.out.println("GearIntake interrupted");
     	end();
     }
 }

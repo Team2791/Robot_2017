@@ -84,7 +84,7 @@ public class OI {
 		operatorB.whileHeld(new RunClimber());
 		operatorLB.whileHeld(new EngageRope());
 
-		operatorDpadDown.toggleWhenPressed(new IntakeGear());
+		operatorDpadDown.toggleWhenPressed(new GroundIntakeGear());
 		
 		operatorDpadLeft.whileHeld(new HopperOn());
 		operatorDpadUp.whenPressed(new StopHopper());
