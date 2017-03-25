@@ -33,6 +33,13 @@ import org.usfirst.frc.team2791.robot.commands.*;
 public class OI {
 	public static ShakerDriver driver;
 	public static ShakerOperator operator;
+	
+	//This allows the button assignment code to be cleaner by putting all Dpad assignments into their own method
+	protected Button driverDpadUp, driverDpadUpRight, driverDpadRight, driverDpadDownRight, driverDpadDown,
+		driverDpadDownLeft, driverDpadLeft, driverDpadUpLeft;
+	protected Button operatorDpadUp, operatorDpadUpRight, operatorDpadRight, operatorDpadDownRight, 
+		operatorDpadDown, operatorDpadDownLeft, operatorDpadLeft, operatorDpadUpLeft;
+	
 	public OI(){
 		System.out.println("OI initialized");
 		driver = new ShakerDriver();///increase driver control expiration to 0.5
@@ -65,117 +72,7 @@ public class OI {
 		Button operatorLS = new JoystickButton(operator,9);
 		Button operatorRS = new JoystickButton(operator,10);
 
-
-		/*
-		 * DPad Inits
-		 */
-		Button driverDpadUp = new Button(){
-			@Override
-			public boolean get(){
-				return driver.getDpadUp();
-			}
-		};
-
-		Button driverDpadUpRight = new Button(){
-			@Override
-			public boolean get(){
-				return driver.getDpadUpRight();
-			}
-		};
-
-		Button driverDpadRight = new Button(){
-			@Override
-			public boolean get(){
-				return driver.getDpadRight();
-			}
-		};
-
-		Button driverDpadDownRight = new Button(){
-			@Override
-			public boolean get(){
-				return driver.getDpadDownRight();
-			}
-		};
-
-		Button driverDpadDown = new Button(){
-			@Override
-			public boolean get(){
-				return driver.getDpadDown();
-			}
-		};
-
-		Button driverDpadDownLeft = new Button(){
-			@Override
-			public boolean get(){
-				return driver.getDpadDownLeft();
-			}
-		};
-
-		Button driverDpadLeft = new Button(){
-			@Override
-			public boolean get(){
-				return driver.getDpadLeft();
-			}
-		};
-
-		Button driverDpadUpLeft = new Button(){
-			@Override
-			public boolean get(){
-				return driver.getDpadUpLeft();
-			}
-		};
-
-		Button operatorDpadUp = new Button(){
-			@Override
-			public boolean get(){
-				return operator.getDpadUp();
-			}
-		};
-
-		Button operatorDpadUpRight = new Button(){
-			@Override
-			public boolean get(){
-				return operator.getDpadUpRight();
-			}
-		};
-
-		Button operatorDpadRight = new Button(){
-			@Override
-			public boolean get(){
-				return operator.getDpadRight();
-			}
-		};
-		Button operatorDpadDownRight = new Button(){
-			@Override
-			public boolean get(){
-				return operator.getDpadDownRight();
-			}
-		};
-		Button operatorDpadDown = new Button(){
-			@Override
-			public boolean get(){
-				return operator.getDpadDown();
-			}
-		};
-		Button operatorDpadDownLeft = new Button(){
-			@Override
-			public boolean get(){
-				return operator.getDpadDownLeft();
-			}
-		};
-		Button operatorDpadLeft = new Button(){
-			@Override
-			public boolean get(){
-				return operator.getDpadLeft();
-			}
-		};
-		Button operatorDpadUpLeft = new Button(){
-			@Override
-			public boolean get(){
-				return operator.getDpadUpLeft();
-			}
-		};
-
+		initDpad();
 		/*
 		 * Operator Button Assignments
 		 */
@@ -210,7 +107,117 @@ public class OI {
 		
 		driverBack.whileHeld(new CalibrateGyro());
 	}
+	private void initDpad(){
+		/*
+		 * DPad Inits
+		 */
+		driverDpadUp = new Button(){
+			@Override
+			public boolean get(){
+				return driver.getDpadUp();
+			}
+		};
 
+		driverDpadUpRight = new Button(){
+			@Override
+			public boolean get(){
+				return driver.getDpadUpRight();
+			}
+		};
+
+		driverDpadRight = new Button(){
+			@Override
+			public boolean get(){
+				return driver.getDpadRight();
+			}
+		};
+
+		driverDpadDownRight = new Button(){
+			@Override
+			public boolean get(){
+				return driver.getDpadDownRight();
+			}
+		};
+
+		driverDpadDown = new Button(){
+			@Override
+			public boolean get(){
+				return driver.getDpadDown();
+			}
+		};
+
+		driverDpadDownLeft = new Button(){
+			@Override
+			public boolean get(){
+				return driver.getDpadDownLeft();
+			}
+		};
+
+		driverDpadLeft = new Button(){
+			@Override
+			public boolean get(){
+				return driver.getDpadLeft();
+			}
+		};
+
+		driverDpadUpLeft = new Button(){
+			@Override
+			public boolean get(){
+				return driver.getDpadUpLeft();
+			}
+		};
+
+		operatorDpadUp = new Button(){
+			@Override
+			public boolean get(){
+				return operator.getDpadUp();
+			}
+		};
+
+		operatorDpadUpRight = new Button(){
+			@Override
+			public boolean get(){
+				return operator.getDpadUpRight();
+			}
+		};
+
+		operatorDpadRight = new Button(){
+			@Override
+			public boolean get(){
+				return operator.getDpadRight();
+			}
+		};
+		operatorDpadDownRight = new Button(){
+			@Override
+			public boolean get(){
+				return operator.getDpadDownRight();
+			}
+		};
+		operatorDpadDown = new Button(){
+			@Override
+			public boolean get(){
+				return operator.getDpadDown();
+			}
+		};
+		operatorDpadDownLeft = new Button(){
+			@Override
+			public boolean get(){
+				return operator.getDpadDownLeft();
+			}
+		};
+		operatorDpadLeft = new Button(){
+			@Override
+			public boolean get(){
+				return operator.getDpadLeft();
+			}
+		};
+		operatorDpadUpLeft = new Button(){
+			@Override
+			public boolean get(){
+				return operator.getDpadUpLeft();
+			}
+		};
+	}
 	public void checkForAction(){
 
 		if(Math.abs(driver.getAxisLeftX())>0.0){}//left joystick

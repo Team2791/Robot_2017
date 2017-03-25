@@ -19,6 +19,7 @@ public class IntakeGear extends Command {
     }
 
     protected void execute() {
+    	System.out.println("GearIntake execute");
     	Robot.gearMechanism.runGearIntake();
     }
 
@@ -27,9 +28,11 @@ public class IntakeGear extends Command {
     }
 
     protected void end() {
+    	System.out.println("GearIntake end");
     	new GearIntakeUp();
     }
     protected void interrupted() {
+    	System.out.println("GearIntake interrupted");
     	end();
     }
 }

@@ -32,6 +32,7 @@ public class GearIntakeUp extends Command{
 	}
 	
 	protected void end(){
+		System.out.println("GearIntake stopped while up");
 		Robot.gearMechanism.stopGearIntake();
 	}
 	
