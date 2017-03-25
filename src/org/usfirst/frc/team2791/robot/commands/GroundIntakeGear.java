@@ -25,7 +25,7 @@ public class GroundIntakeGear extends Command {
     }
 
     protected boolean isFinished() {
-        return false;
+        return Robot.gearMechanism.getLimitSwitchState();
     }
 
     protected void end() {

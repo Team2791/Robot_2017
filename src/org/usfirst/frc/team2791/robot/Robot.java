@@ -64,7 +64,7 @@ public class Robot extends IterativeRobot {
 		compressor = new Compressor(RobotMap.PCM_MODULE);
 		compressor.setClosedLoopControl(true);
 		compressor.start();
-		CameraServer.getInstance().startAutomaticCapture();
+//		CameraServer.getInstance().startAutomaticCapture();
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
@@ -217,7 +217,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Climber/Intake current",intake.getCurrentUsage());
 		SmartDashboard.putNumber("Hopper current",hopper.getCurrentUsage());
 		SmartDashboard.putNumber("Shooter total current",shooter.getCurrentUsage());
-
+		
+		gearMechanism.debug();
 		shooter.debug();
 		drivetrain.debug();
 		
