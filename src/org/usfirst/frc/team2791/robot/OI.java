@@ -70,8 +70,6 @@ public class OI {
 		operatorLB.whileHeld(new EngageRope());
 
 		operatorDpadDown.toggleWhenPressed(new GroundIntakeGear());
-//		operatorDpadDown.whileHeld(new GearIntakeDown());
-//		operatorDpadDown.whenReleased(new GearIntakeUp());
 		
 		operatorDpadLeft.whileHeld(new HopperOn());
 		operatorDpadUp.whenPressed(new StopHopper());
@@ -83,8 +81,7 @@ public class OI {
 		/*
 		 * Driver Button Assignments
 		 */
-		driverX.whenPressed(new GearIntakeDown());
-		driverX.whenReleased(new GearIntakeUp());
+		driverX.whileHeld(new ScoreGear());
 		
 		driverY.whileHeld(new RunClimber());
 		driverA.toggleWhenPressed(new RunIntake());

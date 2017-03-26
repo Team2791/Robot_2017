@@ -1,14 +1,15 @@
 package org.usfirst.frc.team2791.robot.commands;
 
+
 import org.usfirst.frc.team2791.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Sets the Gear Position to down and runs the intake motors
+ * Puts Gear Mechanism down w/o motor running
  */
-public class GearIntakeDown extends Command{
-	public GearIntakeDown (){
+public class ScoreGear extends Command{
+	public ScoreGear (){
 		super("RemoveGear");
 		requires(Robot.gearMechanism);
 	}
@@ -18,16 +19,15 @@ public class GearIntakeDown extends Command{
 	}
 	
 	protected void execute(){
-//		Robot.gearMechanism.runGearIntake();
+		System.out.println("Unnas says hehehe");
 	}
 	
 	protected boolean isFinished(){
-		return true;
-//		return false;
+		return false;
 	}
 	
 	protected void end(){
-//		Robot.gearMechanism.stopGearIntake();		
+		Robot.gearMechanism.changeGearSolenoidState(false);
 	}
 	
 	protected void interrupted(){
