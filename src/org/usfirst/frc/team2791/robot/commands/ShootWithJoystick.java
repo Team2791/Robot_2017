@@ -5,6 +5,12 @@ import org.usfirst.frc.team2791.robot.util.GTADrive;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * This command was used when first testing the shooter
+ * TODO: get rid of this unused command
+ * @author Unnas
+ *
+ */
 public class ShootWithJoystick extends Command {
 	public ShootWithJoystick() {
 		super("ShootWithJoystick");

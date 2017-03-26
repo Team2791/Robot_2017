@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2791.robot.commands.autos;
 
-import org.usfirst.frc.team2791.robot.commands.DelayDrivetrain;
 import org.usfirst.frc.team2791.robot.commands.GearIntakeDown;
+import org.usfirst.frc.team2791.robot.commands.auton.DelayDrivetrain;
 import org.usfirst.frc.team2791.robot.commands.autos.FollowPath.Color;
 import org.usfirst.frc.team2791.robot.commands.autos.FollowPath.Direction;
 

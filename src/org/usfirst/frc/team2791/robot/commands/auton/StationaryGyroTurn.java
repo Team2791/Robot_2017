@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ *Uses BasicPID util class to create a PID for auto-turning. PID makes sure that the angle is correct
+ *@see BasicPID
  */
 public class StationaryGyroTurn extends Command {
 	
@@ -18,9 +19,8 @@ public class StationaryGyroTurn extends Command {
 	private double angleToTurn;
 	
 	/**
-	 * 
-	 * @param angleToTurn negative if counterclockwise
-	 * @param maxOutput
+	 * @param angleToTurn the angle in degrees you would like to turn, ***negative if counterclockwise*** *
+	 * @param maxOutput the maximum output you would like the motors to receive (up to 1.0)
 	 */
     public StationaryGyroTurn(double angleToTurn, double maxOutput) {
         // Use requires() here to declare subsystem dependencies

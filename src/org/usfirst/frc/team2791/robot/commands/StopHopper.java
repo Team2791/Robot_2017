@@ -4,6 +4,9 @@ import org.usfirst.frc.team2791.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Stops the Hopper motors safely
+ */
 public class StopHopper extends Command{
 	public StopHopper(){
 		super("StopHopper");

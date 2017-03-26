@@ -5,6 +5,10 @@ import org.usfirst.frc.team2791.robot.util.GTADrive;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Uses the GTADrive I/O Logic to control the drivetrain.
+ * @see GTADrive
+ */
 public class DriveWithJoystick extends Command {
 
 	private double speedMultiplier = 1.0;

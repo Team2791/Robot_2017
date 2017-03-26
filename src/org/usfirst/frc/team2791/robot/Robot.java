@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	
 	public static OI oi;
 	public static GamePeriod gamePeriod;
 	public static PowerDistributionPanel pdp; //CAN ID has to be 0 for current sensing
@@ -56,6 +57,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+	
+		
 		System.out.println("Starting to init my systems.");
 		gamePeriod = GamePeriod.DISABLED;
 

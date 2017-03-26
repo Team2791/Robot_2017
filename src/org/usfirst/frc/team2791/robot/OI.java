@@ -1,23 +1,5 @@
 package org.usfirst.frc.team2791.robot;
 
-import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
-import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
-import org.usfirst.frc.team2791.robot.commands.CalibrateGyro;
-import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
-import org.usfirst.frc.team2791.robot.commands.GearIntakeDown;
-import org.usfirst.frc.team2791.robot.commands.GearIntakeUp;
-import org.usfirst.frc.team2791.robot.commands.RunClimber;
-import org.usfirst.frc.team2791.robot.commands.RunHopperBackwards;
-import org.usfirst.frc.team2791.robot.commands.RunIntake;
-import org.usfirst.frc.team2791.robot.commands.RunIntakeBelt;
-import org.usfirst.frc.team2791.robot.commands.RunLongShot;
-import org.usfirst.frc.team2791.robot.commands.RunWallShot;
-import org.usfirst.frc.team2791.robot.commands.StopClimberAndDisengage;
-//import org.usfirst.frc.team2791.robot.commands.RunWallShot;
-import org.usfirst.frc.team2791.robot.commands.StopHopper;
-import org.usfirst.frc.team2791.robot.commands.TurnIntakeOff;
-import org.usfirst.frc.team2791.robot.commands.TurnShooterOff;
-
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -40,6 +22,9 @@ public class OI {
 	protected Button operatorDpadUp, operatorDpadUpRight, operatorDpadRight, operatorDpadDownRight, 
 		operatorDpadDown, operatorDpadDownLeft, operatorDpadLeft, operatorDpadUpLeft;
 	
+	/**
+	 * This is where the Buttons are initialized and are mapped to certain commands
+	 */
 	public OI(){
 		System.out.println("OI initialized");
 		driver = new ShakerDriver();///increase driver control expiration to 0.5
@@ -84,7 +69,9 @@ public class OI {
 		operatorB.whileHeld(new RunClimber());
 		operatorLB.whileHeld(new EngageRope());
 
-		operatorDpadDown.toggleWhenPressed(new GroundIntakeGear());
+//		operatorDpadDown.toggleWhenPressed(new GroundIntakeGear());
+		operatorDpadDown.whileHeld(new GearIntakeDown());
+		operatorDpadDown.whenReleased(new GearIntakeUp());
 		
 		operatorDpadLeft.whileHeld(new HopperOn());
 		operatorDpadUp.whenPressed(new StopHopper());
@@ -107,10 +94,11 @@ public class OI {
 		
 		driverBack.whileHeld(new CalibrateGyro());
 	}
+	
+	/**
+	 * Initializes all Dpad Buttons
+	 */
 	private void initDpad(){
-		/*
-		 * DPad Inits
-		 */
 		driverDpadUp = new Button(){
 			@Override
 			public boolean get(){

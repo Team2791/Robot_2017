@@ -4,6 +4,9 @@ import org.usfirst.frc.team2791.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Runs the Climber at a slower speed to catch the rope.
+ */
 public class EngageRope extends Command{
 	public EngageRope(){
 		super("EngageRope");

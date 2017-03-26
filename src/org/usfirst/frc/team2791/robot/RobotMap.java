@@ -6,19 +6,18 @@ package org.usfirst.frc.team2791.robot;
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  */
-public class RobotMap {//to map ports; constants are in separate class
-	//if all ports are not correctly throughout code (i.e. ports utilized more than once), startCompetition() error comes
+public class RobotMap {
 	
 	// JOYSTICK PORTS
 	public static final int JOYSTICK_DRIVER_PORT = 0;
 	public static final int JOYSTICK_OPERATOR_PORT = 1;
-	
+//	
 	// DIO
-	public static final int LEFT_DRIVE_ENCODER_PORT_A = 9;
-	public static final int LEFT_DRIVE_ENCODER_PORT_B = 8;
+	public static final int LEFT_DRIVE_ENCODER_PORT_A = 9; // 3 on Comp
+	public static final int LEFT_DRIVE_ENCODER_PORT_B = 8; // 2 on Comp
 	
-	public static final int RIGHT_DRIVE_ENCODER_PORT_A = 7;
-	public static final int RIGHT_DRIVE_ENCODER_PORT_B = 6;
+	public static final int RIGHT_DRIVE_ENCODER_PORT_A = 7; // 1 on Comp
+	public static final int RIGHT_DRIVE_ENCODER_PORT_B = 6; // 0 on Comp
 	
 	// PWM PORTS
 	public static final int DRIVE_SPARK_LEFT_PORT = 9;
@@ -27,9 +26,9 @@ public class RobotMap {//to map ports; constants are in separate class
 	
 	public static final int INTAKE_SPARK_PORT = 6;
 	
-	public static final int HOPPER_SPARK_PORT = 4;
+	public static final int HOPPER_SPARK_PORT = 4; // 7 on Comp
 	
-	public static final int GEAR_SPARK_PORT = 3;
+	public static final int GEAR_SPARK_PORT = 3; // Need to add on Comp
 	
 	// ANALOG
 	public static final int IR_SENSOR_1 = 0;
@@ -66,5 +65,5 @@ public class RobotMap {//to map ports; constants are in separate class
 	public static final int POWER_PRIMARY_SHOOTER = 4;
 	public static final int POWER_FOLLOWER_SHOOTER = 11;
 	
-	public static final int POWER_GEAR_INTAKE = 5;
+	public static final int POWER_GEAR_INTAKE = 5; // Need to add on Comp
 }

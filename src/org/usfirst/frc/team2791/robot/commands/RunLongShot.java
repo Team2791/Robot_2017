@@ -4,6 +4,10 @@ package org.usfirst.frc.team2791.robot.commands;
 import org.usfirst.frc.team2791.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Simultanesouly runs the shooter and hopper. Sets shooter speed and hood for longShot. The hopper is set to meter its speed.
+ * TODO: get rid of this unused command
+ */
 public class RunLongShot extends Command{
 	public RunLongShot() {
 		super("RunLongShot");

@@ -5,7 +5,9 @@ import org.usfirst.frc.team2791.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * There is currenly a bug where if the operator or driver climbs, stops climbing, then starts again, it will not work
+ * 
+ * Runs the intake motors and actuates the intake to the outward position
+ * TODO: There is currently a bug where if the operator or driver climbs, stops climbing, then starts again, it will not work
  */
 public class RunIntake extends Command{
 	public RunIntake(){

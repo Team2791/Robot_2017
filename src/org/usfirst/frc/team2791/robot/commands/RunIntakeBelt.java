@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Runs intake belt without actuating the intake
- *
+ * TODO: get rid of this unused command
  */
 public class RunIntakeBelt extends Command{
 	public RunIntakeBelt(){

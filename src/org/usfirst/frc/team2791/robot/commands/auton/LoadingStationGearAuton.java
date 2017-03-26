@@ -1,16 +1,19 @@
 package org.usfirst.frc.team2791.robot.commands.auton;
 
-import org.usfirst.frc.team2791.robot.commands.DelayDrivetrain;
 import org.usfirst.frc.team2791.robot.commands.GearIntakeDown;
 import org.usfirst.frc.team2791.robot.commands.GearIntakeUp;
+import org.usfirst.frc.team2791.robot.util.BasicPID;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ * Starts at LoadingStation/Wall corner and Hangs the loading station side gear with PID 
  */
 public class LoadingStationGearAuton extends CommandGroup {
 
+	/**
+	 * @param red  true if you are on the red side;  false if you are on the blue side
+	 */
     public LoadingStationGearAuton(boolean red) {
     	
     	if(red){

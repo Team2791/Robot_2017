@@ -5,6 +5,9 @@ import org.usfirst.frc.team2791.robot.Robot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Set the Gear Intake position to up and runs to motor for .5 secs to hold the gear in
+ */
 public class GearIntakeUp extends Command{
 	
 	Timer timer = new Timer();
@@ -18,7 +21,7 @@ public class GearIntakeUp extends Command{
 	protected void initialize(){
 		timer.start();
 		
-		System.out.println("Gear Mech doing up");
+		System.out.println("Gear Mech going up");
 		Robot.gearMechanism.changeGearSolenoidState(false);
 	}
 	

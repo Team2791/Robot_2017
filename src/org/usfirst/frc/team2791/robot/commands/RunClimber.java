@@ -5,7 +5,8 @@ import org.usfirst.frc.team2791.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * There is currenly a bug where if the operator or driver climbs, stops climbing, then starts again, it will not work
+ * Runs the climber and Engages the Ratchet to prevent the robot from falling down the rope
+ * TODO: There is currenly a bug where if the operator or driver climbs, stops climbing, then starts again, it will not work
  */
 public class RunClimber extends Command{
 	public RunClimber(){

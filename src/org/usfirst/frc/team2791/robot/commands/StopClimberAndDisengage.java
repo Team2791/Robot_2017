@@ -4,6 +4,9 @@ import org.usfirst.frc.team2791.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Stops the climber motor and disengages the ratchet. This is if we need to safely come off the rope for any reason.
+ */
 public class StopClimberAndDisengage extends Command{
 	
 	public StopClimberAndDisengage(){
