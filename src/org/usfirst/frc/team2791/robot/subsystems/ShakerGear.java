@@ -28,8 +28,8 @@ public class ShakerGear extends Subsystem{
 		gearSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.GEAR_CHANNEL);
 		gearSpark = new Talon(RobotMap.GEAR_SPARK_PORT);
 		
-		limitSwitchLong = new DigitalInput(0);
-		limitSwitchShort = new DigitalInput(1);
+		limitSwitchLong = new DigitalInput(RobotMap.GEAR_INTAKE_LIMIT_SWITCH_A);
+		limitSwitchShort = new DigitalInput(RobotMap.GEAR_INTAKE_LIMIT_SWITCH_B);
 	}
 	
 	public void initDefaultCommand(){
@@ -69,7 +69,7 @@ public class ShakerGear extends Subsystem{
 	}
 	
 	public double getCurrentUsage(){
-		return Robot.pdp.getCurrent(9);
+		return Robot.pdp.getCurrent(RobotMap.POWER_GEAR_INTAKE);
 	}
 	
 	public void debug(){
