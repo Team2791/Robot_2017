@@ -44,7 +44,7 @@ public class RobotMap {
 	public static final int FOLLOWER_SHOOTER_TALON_PORT = 11;
 	public static final int SECONDARY_FOLLOWER_SHOOTER_TALON_PORT = 63;
 	
-	//PCM Ports--note: due to use of single solenoids, solenoids will default to false state while disabled
+	//PCM Ports--note: due to use of only single solenoids, ALL solenoids will default to false state while disabled
 	public static final int INTAKE_CHANNEL = 7;
 	public static final int WING_CHANNEL = 4;
 	public static final int GEAR_CHANNEL = 6;

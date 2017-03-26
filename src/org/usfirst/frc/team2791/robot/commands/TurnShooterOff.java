@@ -29,7 +29,7 @@ public class TurnShooterOff extends Command{
 
 	@Override
 	protected void end() {
-		Robot.shooter.disable();
+		Robot.shooter.stopMotors();
 	}
 
 	@Override

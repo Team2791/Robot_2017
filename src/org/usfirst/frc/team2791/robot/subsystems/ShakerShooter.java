@@ -19,6 +19,14 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * This class corresponds to the shooter system. There are two 775 pros controlled by two Talon SRX speed controllers.
+ * A 128-count Greyhill encoder on the shooter axle is wired into one of the Talon SRXs. That one is set to be the master
+ * and the other is set to be a follower. PID was found experimentally after starting from the velocity closed-loop
+ * walkthrough in the CTRE software reference manual. The shooter has a piston-actuated hood which is down by default.
+ * 
+ * @author team2791: See Robot.java for contact info
+ */
 public class ShakerShooter extends Subsystem {
 	
 	private final double ERROR_THRESHOLD = 40;//25
@@ -27,22 +35,21 @@ public class ShakerShooter extends Subsystem {
 
     protected Encoder shooterEncoder = null;
 
-    private CANTalon primaryShooterTalon = null;
+    private CANTalon primaryShooterTalon = null; //has encoder input
     private CANTalon followerShooterTalonA = null;
-    //private CANTalon powerShooterTalon = null; //Potential third Talon for extra shooter power
 
     private Solenoid shooterSolenoid;
 
-    protected boolean autoFire = false;
     protected boolean longShot = false;
         
     public ShakerShooter() {
     	shooterSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.SHOOTER_CHANNEL);
-    	shooterSolenoid.set(false);//default state
     	
         primaryShooterTalon = new CANTalon(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
         primaryShooterTalon.setInverted(true);
+        
         followerShooterTalonA = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT);
+        
         primaryShooterTalon.configPeakOutputVoltage(0, -12.0f);
         followerShooterTalonA.configPeakOutputVoltage(0, -12.0f);
         
@@ -61,52 +68,65 @@ public class ShakerShooter extends Subsystem {
         }
 
         primaryShooterTalon.setIZone(CONSTANTS.SHOOTER_I_ZONE);
+        
         primaryShooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
         primaryShooterTalon.configEncoderCodesPerRev(CONSTANTS.SHOOTER_ENCODER_TICKS);
-        primaryShooterTalon.changeControlMode(TalonControlMode.Speed);
+        primaryShooterTalon.changeControlMode(TalonControlMode.Speed); //control the primary SRX by RPM
 
         followerShooterTalonA.changeControlMode(TalonControlMode.Follower);
         followerShooterTalonA.set(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
 
-        // NOT sure what this does
         primaryShooterTalon.enableControl();
         followerShooterTalonA.enableControl();
         
         primaryShooterTalon.enable();
         followerShooterTalonA.enable();
         
-//        primaryShooterTalon.setP(CONSTANTS.SHOOTER_P);
-//        primaryShooterTalon.setI(CONSTANTS.SHOOTER_I);
-//        primaryShooterTalon.setD(CONSTANTS.SHOOTER_D);
-        
         primaryShooterTalon.configNominalOutputVoltage(0, 0);
         followerShooterTalonA.configNominalOutputVoltage(0, 0);
     }
     
     public void initDefaultCommand(){
-    	
+    	shooterSolenoid.set(false);
     }
     
-    public void setShooterSolenoidState(boolean key){
-    	shooterSolenoid.set(key);
+    /**
+     * @param up true = hood up / false = hood down
+     */
+    public void setShooterSolenoidState(boolean up){
+    	shooterSolenoid.set(up);
     }
     
+    /**
+     * Initiates a wall shot
+     */
     public void prepWallShot() {
     	longShot = false;
         setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Setpoint", 0));
     }
-    public void prepLongShot() {
+    
+    /**
+     * Initiates a far hopper shot
+     */
+    public void prepFarHopperShot() {
     	longShot = true;
     	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Long Setpoint", 0));
 	}
 
+    /**
+     * @return true = shooter is within accepted error range of target speed / false = shooter speed outside error range
+     */
     public boolean atSpeed() {
         return shooterGoodDelayedBoolean.update(
         		Math.abs(primaryShooterTalon.getError()) < ERROR_THRESHOLD);
     }
 
+    /**
+     * Uses PID to start shooter motors and keep shooter speed at target RPM
+     * @param targetSpeed target RPM of shooter wheels (positive number)
+     */
 	public void setShooterSpeedsPID(double targetSpeed) {
-        //If PID is used then we have to switch CANTalons to velocity mode
+		
         primaryShooterTalon.changeControlMode(TalonControlMode.Speed);
         
         //Update the PID and FeedForward values
@@ -122,60 +142,38 @@ public class ShakerShooter extends Subsystem {
 	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter D", 0));
 	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter FeedForward", 0));
         }
-
-//            //Set speeds (IN RPMS)
-//            primaryShooterTalon.setP(CONSTANTS.SHOOTER_P);
-//            primaryShooterTalon.setI(CONSTANTS.SHOOTER_I);
-//            primaryShooterTalon.setD(CONSTANTS.SHOOTER_D);
-//            primaryShooterTalon.setF(CONSTANTS.SHOOTER_FEED_FORWARD);
         
         primaryShooterTalon.set(targetSpeed);
-        System.out.println("Coming up to speed and my error is "+primaryShooterTalon.getError());
         debug();
     }
 	
+	/**
+	 * Sets shooter output vbus for both 775pros; if unacceptable value entered prints error message
+	 * @param vbus -1.0 to +1.0 accepted
+	 */
 	public void setShooterSpeedVBus(double vbus) {
-        //If shooter is not autofiring or prepping the shot, use inputs given (including 0)
-        primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
-        primaryShooterTalon.set(vbus);
+		primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
+		
+		if(vbus<1.0 && vbus>-1.0){
+			primaryShooterTalon.set(vbus);
+		}
+		else
+			System.out.println("Shooter vbus unacceptable: Outside range");
 	}
 
-    public void updateSmartDash() {
-        SmartDashboard.putBoolean("Is auto firing", autoFire);
-    }
-
-	public void debug() {
-		
-		SmartDashboard.putNumber("Primary Talon Speed",primaryShooterTalon.getSpeed());
-		SmartDashboard.putNumber("Primary Talon Error (Setpoint)", primaryShooterTalon.getError());
-		SmartDashboard.putNumber("Primary Talon Closed Loop Error (Sensor value)", primaryShooterTalon.getClosedLoopError());
-    	 
-		
-		/* 	
-    	   * SmartDashboard.putNumber("LeftShooterSpeed", primaryShooterTalon.getSpeed());
-    	   
-	      SmartDashboard.putNumber("RightShooterSpeed", followerShooterTalonA.getSpeed());
-	      SmartDashboard.putNumber("Left Shooter Error", primaryShooterTalon.getClosedLoopError());
-	      SmartDashboard.putNumber("Right Shooter Error", -followerShooterTalonA.getClosedLoopError());
-	      SmartDashboard.putString("Current shooter setpoint", getShooterHeight());
-	      SmartDashboard.putNumber("left output voltage", primaryShooterTalon.getOutputVoltage());
-	      SmartDashboard.putNumber("left speed", -primaryShooterTalon.getEncVelocity());
-	      SmartDashboard.putNumber("right output voltage", followerShooterTalonA.getOutputVoltage());
-	      SmartDashboard.putNumber("right speed", followerShooterTalonA.getEncVelocity());
-	      SmartDashboard.putNumber("Right error", followerShooterTalonA.getError());
-	      SmartDashboard.putNumber("Left error", primaryShooterTalon.getError());
-	      */
-//	      leftShooterTalon.set(SmartDashboard.getNumber("setpoint"));
-//	      rightShooterTalon.set(SmartDashboard.getNumber("setpoint"));
-//	      powerShooterTalon.set(SmartDashboard.getNumber("setpoint"));
-    }
-
+	/**
+	 * @return far = hood up / close = hood down
+	 */
     private String getShooterHeight() {
 		if(shooterSolenoid.get())
 			return "far";
     	return "close";
 	}
 
+    /**
+     * Resets the two Talon SRXs;
+     * stops the shooter motors
+     */
 	public void reset() {
         stopMotors();
         primaryShooterTalon.reset();
@@ -187,27 +185,45 @@ public class ShakerShooter extends Subsystem {
     	primaryShooterTalon.set(0);
     }
 
-    public void disable() {
-    	primaryShooterTalon.disableControl();
-        
-//        SmartDashboard.putNumber("right speed", followerShooterTalonA.getSpeed());
-//        SmartDashboard.putNumber("left speed", primaryShooterTalon.getSpeed());
-    }
+    /**
+     * @return total shooter current usage
+     */
     public double getCurrentUsage(){
     	return primaryShooterTalon.getOutputCurrent()+followerShooterTalonA.getOutputCurrent();
     }
-	@SuppressWarnings("deprecation")
+    
+    /**
+     * Used for trigger-based manual shooting
+     * @param Vbus -1.0 to +1.0
+     */
 	public void setVBusWithTrigger(double Vbus) {
-		// TODO Auto-generated method stub
-		primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);//percent v bus
-        followerShooterTalonA.changeControlMode(TalonControlMode.Follower);
-        followerShooterTalonA.set(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
+		primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
+		
 		SmartDashboard.putNumber("Shooter percent Vbus",Vbus);
+		
         primaryShooterTalon.set(Vbus);
        
 	}
+	
+	/**
+	 * @return primary shooter Talon SRX error from setpoint
+	 */
 	public double getError() {
-		// TODO Auto-generated method stub
 		return primaryShooterTalon.getError();
 	}
+	
+	/**
+	 * shooter sfx debugging outputs
+	 */
+	public void debug() {
+		SmartDashboard.putNumber("Primary Talon Speed",primaryShooterTalon.getSpeed());
+		SmartDashboard.putNumber("Primary Talon Error (Setpoint)", primaryShooterTalon.getError());
+		SmartDashboard.putNumber("Primary Talon Closed Loop Error (Sensor value)", primaryShooterTalon.getClosedLoopError());
+		
+		SmartDashboard.putNumber("Shooter primary output voltage", primaryShooterTalon.getOutputVoltage());
+		SmartDashboard.putNumber("Shooter follower output voltage", followerShooterTalonA.getOutputVoltage());
+		
+		SmartDashboard.putNumber("Shooter total current output", getCurrentUsage());
+		SmartDashboard.putString("Shooter primary output current vs follower output current", primaryShooterTalon.getOutputCurrent()+":"+followerShooterTalonA.getOutputCurrent());	
+    }
 }
