@@ -140,8 +140,7 @@ public class Robot extends IterativeRobot {
 
 		Color color = Color.RED;
 		
-		autonomousCommand = new FollowPath("TestingOneTwo",Color.RED,Direction.REVERSE);
-//		autonomousCommand = new CenterGear(color);
+		autonomousCommand = new CenterGear(color);
 		
 //		boolean red = false;
 //		autonomousCommand = new CenterGearAuton(red);
