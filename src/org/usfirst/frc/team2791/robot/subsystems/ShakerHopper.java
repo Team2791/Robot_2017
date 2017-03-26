@@ -82,4 +82,11 @@ public class ShakerHopper extends Subsystem{
 		return Robot.pdp.getCurrent(RobotMap.POWER_HOPPER_FLOOR);
 	}
 	
+	/**
+	 * Fuel hopper sfx debug utilities
+	 */
+	public void debug(){
+		SmartDashboard.putNumber("Hopper Output", hopperSpark.get());
+		SmartDashboard.putNumber("Hopper Current Usage", getCurrentUsage());
+	}
 }

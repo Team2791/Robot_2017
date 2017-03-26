@@ -1,5 +1,3 @@
-
-
 package org.usfirst.frc.team2791.robot;
 
 import org.usfirst.frc.team2791.robot.commands.autos.*;
@@ -63,11 +61,13 @@ public class Robot extends IterativeRobot {
 		gamePeriod = GamePeriod.DISABLED;
 
 		pdp = new PowerDistributionPanel(RobotMap.PDP); //CAN id has to be 0
-
+		
 		compressor = new Compressor(RobotMap.PCM_MODULE);
 		compressor.setClosedLoopControl(true);
 		compressor.start();
+		
 //		CameraServer.getInstance().startAutomaticCapture();
+		
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
@@ -76,26 +76,8 @@ public class Robot extends IterativeRobot {
 
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 
-		if(SmartDashboard.getNumber("kp", -2791) == -2791){
-			SmartDashboard.putNumber("kp",7.0);
-			SmartDashboard.putNumber("ki",0);
-			SmartDashboard.putNumber("kd",0.25);
-			SmartDashboard.putNumber("kv",0.09);
-			SmartDashboard.putNumber("ka",0.033);
-		}
-		
-		SmartDashboard.putNumber("Stat Angle P", CONSTANTS.STATIONARY_ANGLE_P);
-		SmartDashboard.putNumber("Stat Angle I", CONSTANTS.STATIONARY_ANGLE_I);
-		SmartDashboard.putNumber("Stat Angle D", CONSTANTS.STATIONARY_ANGLE_D);
-		SmartDashboard.putNumber("Moving Angle P", CONSTANTS.DRIVE_ANGLE_P);
-		SmartDashboard.putNumber("Moving Angle I", CONSTANTS.DRIVE_ANGLE_I);
-		SmartDashboard.putNumber("Moving Angle D", CONSTANTS.DRIVE_ANGLE_D);
-		SmartDashboard.putNumber("Distance P", CONSTANTS.DRIVE_DISTANCE_P);
-		SmartDashboard.putNumber("Distance I", CONSTANTS.DRIVE_DISTANCE_I);
-		SmartDashboard.putNumber("Distance D", CONSTANTS.DRIVE_DISTANCE_D);
-		
-		SmartDashboard.putNumber("TUNE PID Distance", 0.0);
-		SmartDashboard.putNumber("TUNE PID Stat Angle", 0.0);
+		drivetrain.setAutoPID();
+		debug();
 	}
 
 	/**
@@ -110,12 +92,14 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		
+		//allows us to reset the gyro and both encoders while disabled
 		if(oi.driver.getButtonSt()){
-			drivetrain.resetEncoders();
-			drivetrain.gyro.reset();
+			drivetrain.reset();
 		}
 		
-		debug();
+		debug(); //allows us to debug (e.g. encoders and gyro) while disabled
+		
 		Scheduler.getInstance().run();
 	}
 
@@ -132,13 +116,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		drivetrain.resetEncoders();
-		drivetrain.gyro.reset();
+		
+		drivetrain.reset();
 
 		intake.disengageRatchetWing();
 		gearMechanism.changeGearSolenoidState(false);
 
-		Color color = Color.RED;
+		Color color = Color.RED;//allows us to choose the side we are on and which auto we want to do
 		
 		autonomousCommand = new FollowPath("TestingOneTwo",Color.RED,Direction.REVERSE);
 //		autonomousCommand = new CenterGear(color);
@@ -162,6 +146,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		
 		debug();
 
 		double thisAutoLoopTime = Timer.getFPGATimestamp();
@@ -173,16 +158,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		
-
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		
 		drivetrain.resetEncoders();
 		gamePeriod = GamePeriod.TELEOP;
 		intake.disengageRatchetWing();
-		//gearMechanism.changeGearSolenoidState(false);//makes it stay up when it turns on; just initiating it as up in the subsystem isn't working
-		//intake.moveIntakeOut(false);
-		//intake.wingDeployment();
 	}
 
 	/**
@@ -203,10 +184,6 @@ public class Robot extends IterativeRobot {
 		LiveWindow.run();
 	}
 
-	public enum GamePeriod {
-		AUTONOMOUS, TELEOP, DISABLED
-	}
-
 	public void debug() {
 		
 		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
@@ -215,9 +192,14 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Hopper current",hopper.getCurrentUsage());
 		SmartDashboard.putNumber("Shooter total current",shooter.getCurrentUsage());
 		
-		gearMechanism.debug();
-		shooter.debug();
 		drivetrain.debug();
+		shooter.debug();
+		gearMechanism.debug();
+		hopper.debug();
 		
+	}
+
+	public enum GamePeriod {
+		AUTONOMOUS, TELEOP, DISABLED
 	}
 }

@@ -134,6 +134,32 @@ public class ShakerDrivetrain extends Subsystem{
 	}
 
 	/**
+	 * Sets PID values for Stationary Angle, Moving Angle, and Distance for use in auto
+	 */
+	public void setAutoPID(){
+		if(SmartDashboard.getNumber("kp", -2791) == -2791){
+			SmartDashboard.putNumber("kp",7.0);
+			SmartDashboard.putNumber("ki",0);
+			SmartDashboard.putNumber("kd",0.25);
+			SmartDashboard.putNumber("kv",0.09);
+			SmartDashboard.putNumber("ka",0.033);
+		}
+		
+		SmartDashboard.putNumber("Stat Angle P", CONSTANTS.STATIONARY_ANGLE_P);
+		SmartDashboard.putNumber("Stat Angle I", CONSTANTS.STATIONARY_ANGLE_I);
+		SmartDashboard.putNumber("Stat Angle D", CONSTANTS.STATIONARY_ANGLE_D);
+		SmartDashboard.putNumber("Moving Angle P", CONSTANTS.DRIVE_ANGLE_P);
+		SmartDashboard.putNumber("Moving Angle I", CONSTANTS.DRIVE_ANGLE_I);
+		SmartDashboard.putNumber("Moving Angle D", CONSTANTS.DRIVE_ANGLE_D);
+		SmartDashboard.putNumber("Distance P", CONSTANTS.DRIVE_DISTANCE_P);
+		SmartDashboard.putNumber("Distance I", CONSTANTS.DRIVE_DISTANCE_I);
+		SmartDashboard.putNumber("Distance D", CONSTANTS.DRIVE_DISTANCE_D);
+		
+		SmartDashboard.putNumber("TUNE PID Distance", 0.0);
+		SmartDashboard.putNumber("TUNE PID Stat Angle", 0.0);
+	}
+	
+	/**
 	 * Drivetrain sfx outputs
 	 */
 	public void debug() {

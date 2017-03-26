@@ -16,7 +16,10 @@ public class OI {
 	public static ShakerDriver driver;
 	public static ShakerOperator operator;
 	
-	//This allows the button assignment code to be cleaner by putting all Dpad assignments into their own method
+	protected Button driverA, driverB, driverX, driverY, driverLB, driverRB, driverBack, driverStart, driverLS, driverRS;
+	protected Button operatorA, operatorB, operatorX, operatorY, operatorLB, operatorRB, operatorBack, operatorStart, 
+		operatorLS, operatorRS;
+
 	protected Button driverDpadUp, driverDpadUpRight, driverDpadRight, driverDpadDownRight, driverDpadDown,
 		driverDpadDownLeft, driverDpadLeft, driverDpadUpLeft;
 	protected Button operatorDpadUp, operatorDpadUpRight, operatorDpadRight, operatorDpadDownRight, 
@@ -27,40 +30,14 @@ public class OI {
 	 */
 	public OI(){
 		System.out.println("OI initialized");
-		driver = new ShakerDriver();///increase driver control expiration to 0.5
+		driver = new ShakerDriver();
 		operator = new ShakerOperator();
 
-		/*
-		 * Button Inits
-		 */
-
-		Button driverA = new JoystickButton(driver,1);
-		Button driverB = new JoystickButton(driver,2);
-		Button driverX = new JoystickButton(driver,3);
-		Button driverY = new JoystickButton(driver,4);
-		Button driverLB = new JoystickButton(driver,5);
-		Button driverRB = new JoystickButton(driver,6);
-		Button driverBack = new JoystickButton(driver,7);
-		Button driverStart = new JoystickButton(driver,8);
-		Button driverLS = new JoystickButton(driver,9);
-		Button driverRS = new JoystickButton(driver,10);
-		
-
-		Button operatorA = new JoystickButton(operator, 1);
-		Button operatorB = new JoystickButton(operator, 2);
-		Button operatorX = new JoystickButton(operator, 3);
-		Button operatorY = new JoystickButton(operator, 4);
-		Button operatorLB = new JoystickButton(operator,5);
-		Button operatorRB = new JoystickButton(operator,6);
-		Button operatorBack = new JoystickButton(operator,7);
-		Button operatorStart = new JoystickButton(operator, 8);
-		Button operatorLS = new JoystickButton(operator,9);
-		Button operatorRS = new JoystickButton(operator,10);
-
+		initButtons();
 		initDpad();
-		/*
-		 * Operator Button Assignments
-		 */
+		
+		/********************************** Operator Button Assignments ****************************************/
+		
 		operatorX.whileHeld(new RunWallShotFullHopper()); 
 		operatorY.whileHeld(new RunLongShotFullHopper());
 		
@@ -78,9 +55,8 @@ public class OI {
 		operatorBack.whenPressed(new StopClimberAndDisengage());//safety
 		operatorStart.whenPressed(new TurnShooterOff());//safety
 		
-		/*
-		 * Driver Button Assignments
-		 */
+		/********************************** Driver Button Assignments ****************************************/
+		
 		driverX.whileHeld(new ScoreGear());
 		
 		driverY.whileHeld(new RunClimber());
@@ -90,6 +66,33 @@ public class OI {
 		driverRB.whileHeld(new DriveWithJoystick());
 		
 		driverBack.whileHeld(new CalibrateGyro());
+	}
+	
+	/**
+	 * Initializes all Buttons
+	 */
+	private void initButtons(){
+		driverA = new JoystickButton(driver,1);
+		driverB = new JoystickButton(driver,2);
+		driverX = new JoystickButton(driver,3);
+		driverY = new JoystickButton(driver,4);
+		driverLB = new JoystickButton(driver,5);
+		driverRB = new JoystickButton(driver,6);
+		driverBack = new JoystickButton(driver,7);
+		driverStart = new JoystickButton(driver,8);
+		driverLS = new JoystickButton(driver,9);
+		driverRS = new JoystickButton(driver,10);
+		
+		operatorA = new JoystickButton(operator, 1);
+		operatorB = new JoystickButton(operator, 2);
+		operatorX = new JoystickButton(operator, 3);
+		operatorY = new JoystickButton(operator, 4);
+		operatorLB = new JoystickButton(operator,5);
+		operatorRB = new JoystickButton(operator,6);
+		operatorBack = new JoystickButton(operator,7);
+		operatorStart = new JoystickButton(operator, 8);
+		operatorLS = new JoystickButton(operator,9);
+		operatorRS = new JoystickButton(operator,10);
 	}
 	
 	/**
@@ -202,26 +205,5 @@ public class OI {
 				return operator.getDpadUpLeft();
 			}
 		};
-	}
-	public void checkForAction(){
-
-		if(Math.abs(driver.getAxisLeftX())>0.0){}//left joystick
-		if(Math.abs(driver.getAxisRT())>0.0){}//right trigger
-		if(operator.getDpadUpLeft()){}
-		if(Math.abs(driver.getAxisLT())>0.0){}//left trigger
-		if(Math.abs(driver.getXVal())>0.0){}
-		if(Math.abs(driver.getYVal())>0.0){}
-		if(Math.abs(driver.getAxisLeftY())>0.0){}	
-		if(Math.abs(driver.getAxisRightX())>0.0){}//right joystick
-		if(Math.abs(driver.getAxisRightY())>0.0){}	
-
-		if(Math.abs(operator.getXVal())>0.0){}
-		if(Math.abs(operator.getYVal())>0.0){}
-		if(Math.abs(operator.getAxisLeftX())>0.0){}	
-		if(Math.abs(operator.getAxisLeftY())>0.0){}	
-		if(operator.getAxisRT()>0.0){}
-		if(Math.abs(operator.getAxisRightX())>0.0){}
-		if(Math.abs(operator.getAxisRightY())>0.0){}
-
 	}
 }

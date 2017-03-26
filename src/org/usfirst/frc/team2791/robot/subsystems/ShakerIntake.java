@@ -34,24 +34,12 @@ public class ShakerIntake extends Subsystem {
 
 		intakeSolenoid = new Solenoid(RobotMap.PCM_MODULE, RobotMap.INTAKE_CHANNEL);
 		ratchetWingSolenoid = new Solenoid(RobotMap.PCM_MODULE, RobotMap.WING_CHANNEL);
-		
+
+		disengageRatchetWing();//do not want as default command operator lets go of climb before t=0 (do not want disengaging)
 	}
 	
 	public void initDefaultCommand(){
-		ratchetWingSolenoid.set(true);
-		intakeSolenoid.set(false);//all Pistons should be closed (false) at beginning
-	}
-	
-	//***********Ratchet Wing***********//
-	public void engageRatchetWing(){
-		ratchetWingSolenoid.set(false);
-	}
-	
-	public void disengageRatchetWing(){
-		ratchetWingSolenoid.set(true);
-	}
-	public boolean isRatchetWingDisengaged(){
-		return ratchetWingSolenoid.get();
+		moveIntakeOut(false);
 	}
 	
 	//***********Intake/Climber Helper Methods***********//
@@ -64,7 +52,7 @@ public class ShakerIntake extends Subsystem {
 	}
 
 	public void motorOnIntake(){//negative is proper direction
-		ratchetWingSolenoid.set(true);
+		disengageRatchetWing();
 		intakeSpark.setSpeed(SmartDashboard.getNumber("Intake Speed (positive ONLY for climb)",BALLS_IN_POWER));
 	}
 
@@ -73,14 +61,26 @@ public class ShakerIntake extends Subsystem {
 	}
 
 	public void motorOnClimber(){//should be positive
-		ratchetWingSolenoid.set(false);
+		engageRatchetWing();
 		intakeSpark.setSpeed(CLIMBING_VBUS);
 	}
 	
 	public void motorOnClimberSlow(){//should be positive
-		ratchetWingSolenoid.set(false);
+		engageRatchetWing();
 		intakeSpark.setSpeed(CLIMBING_VBUS_SLOW);
 
+	}
+
+	//***********Ratchet Wing***********//
+	public void engageRatchetWing(){
+		ratchetWingSolenoid.set(false);
+	}
+	
+	public void disengageRatchetWing(){
+		ratchetWingSolenoid.set(true);
+	}
+	public boolean isRatchetWingDisengaged(){
+		return ratchetWingSolenoid.get();
 	}
 	
 	//***********Debug Helper Methods***********//
