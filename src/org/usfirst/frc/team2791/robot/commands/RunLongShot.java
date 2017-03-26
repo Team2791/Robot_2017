@@ -17,13 +17,13 @@ public class RunLongShot extends Command{
 
 	@Override
 	protected void initialize() {
-		Robot.shooter.prepLongShot();
+		Robot.shooter.prepFarHopperShot();
 	}
 
 	@Override
 	protected void execute() {
 		Robot.shooter.setShooterSolenoidState(true); // down position is false
-		Robot.shooter.prepLongShot(); // bringing shooter up to speed
+		Robot.shooter.prepFarHopperShot(); // bringing shooter up to speed
 		
 		// if we need more balls or the shooter is ready
 		if(!Robot.hopper.isBallAtTop() || Robot.shooter.atSpeed()) {

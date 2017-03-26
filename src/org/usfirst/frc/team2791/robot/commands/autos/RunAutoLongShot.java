@@ -24,13 +24,13 @@ public class RunAutoLongShot extends Command{
 	@Override
 	protected void initialize() {
 		timer.start();
-		Robot.shooter.prepLongShot();
+		Robot.shooter.prepFarHopperShot();
 	}
 
 	@Override
 	protected void execute() {
 		Robot.shooter.setShooterSolenoidState(true); // down position is false
-		Robot.shooter.prepLongShot(); // bringing shooter up to speed
+		Robot.shooter.prepFarHopperShot(); // bringing shooter up to speed
 
 		Robot.hopper.runHopper();
 	}

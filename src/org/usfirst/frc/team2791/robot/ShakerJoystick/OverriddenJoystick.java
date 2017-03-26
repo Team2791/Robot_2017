@@ -4,6 +4,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.Util;
 
+/**
+ * We use Gamepad controllers. See Driver Station for button mapping.
+ * 
+ * @author team2791: See Robot.java for contact info
+ */
 public class OverriddenJoystick extends Joystick {
 	public static double offset = 0;//to account for any slack in the system
 	
@@ -115,7 +120,10 @@ public class OverriddenJoystick extends Joystick {
         return Util.deadzone(CONSTANTS.DEADZONE, super.getRawAxis(5), 1.0);
     }
     
-
+    /**
+     * Uses left trigger for drive speed
+     * @return output value for left drive motors (double)
+     */
     public double getGtaDriveLeft() {
         // Does the math to get Gta Drive Type on left motor
         double leftAxis;
@@ -131,6 +139,10 @@ public class OverriddenJoystick extends Joystick {
         return combined;
     }
 
+    /**
+     * Uses right trigger for drive speed
+     * @return output value for right drive motors (double)
+     */
     public double getGtaDriveRight() {
         // Does the math to get Gta Drive Type on right motor
         double leftAxis;

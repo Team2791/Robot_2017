@@ -16,7 +16,7 @@ public class StopHopper extends Command{
 	protected void initialize(){}
 	
 	protected void execute(){
-		Robot.hopper.stopHopper();
+		Robot.hopper.setHopperSpeed(0.0);
 	}
 	
 	protected boolean isFinished(){
@@ -24,7 +24,7 @@ public class StopHopper extends Command{
 	}
 	
 	protected void end(){
-		Robot.hopper.stopMotor();
+		Robot.hopper.setHopperSpeed(0.0);
 	}
 	
 	protected void interrupted(){

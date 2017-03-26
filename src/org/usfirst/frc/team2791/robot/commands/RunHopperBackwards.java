@@ -24,7 +24,7 @@ public class RunHopperBackwards extends Command{
 	}
 	
 	protected void end(){
-		Robot.hopper.stopMotor();
+		Robot.hopper.setHopperSpeed(0.0);
 	}
 	
 	protected void interrupted(){

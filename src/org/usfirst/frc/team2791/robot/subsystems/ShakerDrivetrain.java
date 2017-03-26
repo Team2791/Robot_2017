@@ -19,13 +19,20 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * This class corresponds to the drivetrain. The drivetrain is 6 wheel, center drop with 2 CIMs, 1 miniCIM on each
+ * side. Each motor output is controlled by a Spark speed controller. The Rio outputs signal through a single PWM 
+ * per side which is branched off to all three speed controllers. There is a 256 count Greyhill encoder on each side.
+ * We have an ADXRS453 gyro in the robot (writing side up). Max velocity ~15 feet/sec.
+ * 
+ * @author team2791: See Robot.java for contact info
+ */
 public class ShakerDrivetrain extends Subsystem{
-	
-	private final double VBUS_RAMP_RATE = 5;// in %vbus per second
-	protected double last_vbus_output_left = 0;
-	protected double last_vbus_output_right = 0;
-	protected double last_ramp_update_time = -1;
 
+	//Spark speed controllers can be controlled with the WPI Talon class.
+	private Talon leftSpark;    
+	private Talon rightSpark;
+	
 	protected Encoder leftDriveEncoder = null;
 	protected Encoder rightDriveEncoder = null;
 
@@ -34,9 +41,11 @@ public class ShakerDrivetrain extends Subsystem{
 
 	protected RobotDrive shakyDrive = null;
 
-	private Talon leftSpark;    
-	private Talon rightSpark;
-
+	private final double VBUS_RAMP_RATE = 5;// in %vbus per second
+	protected double last_vbus_output_left = 0;
+	protected double last_vbus_output_right = 0;
+	protected double last_ramp_update_time = -1;
+	
 	protected double previousRate = 0;
 	protected double previousRateTime = 0;
 	protected double currentRate = 0;
@@ -54,37 +63,38 @@ public class ShakerDrivetrain extends Subsystem{
 	protected double rightCurrentTime = 0;
 	protected double rightFilteredAccel = 0;
 
+	//Determines the amount of distance traveled for every pulse read on the encoders
 	private double distancePerPulse = Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER_IN_FEET);
-	
-	/* 
-	 * Spark speed controllers can be controlled with the WPI Talon class.
-	 * Each Side of the robot has 3 talons, which all recieve signal/send feedback through 1 PWM Port
-	 */
 
 	public ShakerDrivetrain(){
+		
 		leftSpark = new Talon(RobotMap.DRIVE_SPARK_LEFT_PORT);
 		rightSpark = new Talon(RobotMap.DRIVE_SPARK_RIGHT_PORT);
 
 		leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
 		rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);
 
-		// use the talons to create a roboDrive (it has methods that allow for easier control)
+		//Uses the Sparks to create a robotDrive (it has methods that allow for easier control of the whole drivetrain at once)
 		shakyDrive = new RobotDrive(leftSpark, rightSpark);
+		
+		//Inverts the motor outputs so that the right and left motors both turn the right direction for forward drive
 		shakyDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
 		shakyDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 
-		// stop all motors right away just in case
+		// stops all motors right away just in case
 		shakyDrive.stopMotor();
 
 		leftDriveEncoder.reset();
 		rightDriveEncoder.reset();
 
+		//configures the encoder so that it can be used in drive PID functions
 		leftDriveEncoder.setDistancePerPulse(distancePerPulse); 
 		rightDriveEncoder.setDistancePerPulse(-distancePerPulse); 
 
+		//keeps the gyro from throwing startCompetition() errors and allows us to troubleshoot errors
 		try{
 			gyro = new ADXRS450_Gyro();//SPI.Port.kOnboardCS1
-			gyro.calibrate();
+			gyro.calibrate(); //takes 5 seconds
 			gyro.reset();
 		}catch(NullPointerException e){
 			gyroDisabled = true;
@@ -92,44 +102,40 @@ public class ShakerDrivetrain extends Subsystem{
 		}
 
 	}
+	
 	public void initDefaultCommand() {
 		setDefaultCommand(new DriveWithJoystick());
 	}
 
+	/**
+	 * Stops the drivetrain
+	 */
 	public void disable() {
 		shakyDrive.stopMotor();
 	}
-
-	// TODO put this in a util method
-	public double limitWithRampRate(double previousOutput, double currentDesiredOutput, double timeDiff) {
-		double maxLimitedOutput = Math.abs(previousOutput) + timeDiff * VBUS_RAMP_RATE;
-		
-		if(Math.abs(currentDesiredOutput) > maxLimitedOutput) {
-			return Math.copySign(maxLimitedOutput, currentDesiredOutput);
-		} else {
-			return currentDesiredOutput;
-		}
-	}
 	
-	/** @param left motor output
+	/** 
+	 * Drivetrain motor outputs; Accepts values between -1.0 and +1.0
+	 * @param left motor output
 	 * @param right motor output*/
 	public void setLeftRightMotorOutputs(double left, double right){
 		double currentTime = Timer.getFPGATimestamp();
 		double timeDiff = currentTime - last_ramp_update_time;
 		last_ramp_update_time = currentTime;
 		
-		left = limitWithRampRate(last_vbus_output_left, left, timeDiff);
+		left = Util.limitWithRampRate(last_vbus_output_left, left, timeDiff, VBUS_RAMP_RATE);
 		last_vbus_output_left = left;
 		
-		right = limitWithRampRate(last_vbus_output_right, right, timeDiff);
+		right = Util.limitWithRampRate(last_vbus_output_right, right, timeDiff, VBUS_RAMP_RATE);
 		last_vbus_output_right = right;
 		
 		SmartDashboard.putString("LeftOutput vs RightOutput", left+":"+right);
 		shakyDrive.setLeftRightMotorOutputs(left, right);
 	}
 
-	//************** Gyro and Encoder Helper Methods **************//
-
+	/**
+	 * Drivetrain sfx outputs
+	 */
 	public void debug() {
 
 		SmartDashboard.putNumber("Left Drive Encoders Rate", leftDriveEncoder.getRate());
@@ -148,9 +154,12 @@ public class ShakerDrivetrain extends Subsystem{
 		SmartDashboard.putString("LDist vs RDist vs AvgDist", getLeftDistance()+":"+getRightDistance()+":"+getAverageDist());
 		SmartDashboard.putString("LVel vs RVel vs AvgVel", getLeftVelocity()+":"+getRightVelocity()+":"+getAverageVelocity());
 		SmartDashboard.putString("LAcc vs RAcc vs AvgAcc", getLeftAcceleration()+":"+getRightAcceleration()+":"+getAverageAcceleration());
-
-
+		
 	}
+	
+	
+	
+	//************** Gyro and Encoder Helper Methods **************//
 
 	@Deprecated
 	public double getAngleEncoder() {
@@ -168,11 +177,27 @@ public class ShakerDrivetrain extends Subsystem{
 	public double getEncoderAngleRate() {
 		return (360/7.9) * (leftDriveEncoder.getRate() - rightDriveEncoder.getRate()) / 2.0;
 	}
+	
+	public double getGyroRate() {
+		if(!gyroDisabled)
+			return gyro.getRate();
+		System.err.println("Gyro is Disabled, Rate is Incorrect");
+		return 0.0;
+	}
 
+	public double getGyroAngleInRadians() {
+		return getGyroAngle() * (Math.PI/180);
+	}
+
+	/**
+	 * resets the left and right drive encoders;
+	 * resets the gyro;
+	 * stops the drivetrain
+	 */
 	public void reset() {
 		disable();
-		rightDriveEncoder.reset();
-		leftDriveEncoder.reset();
+		resetGyro();
+		resetEncoders();
 	}
 
 	public void resetEncoders() {
@@ -187,23 +212,53 @@ public class ShakerDrivetrain extends Subsystem{
 			System.err.println("Gyro is Disabled, Unable to Reset");
 		}
 	}
-
-	public double getGyroRate() {
-		if(!gyroDisabled)
-			return gyro.getRate();
-		System.err.println("Gyro is Disabled, Rate is Incorrect");
-		return 0.0;
+	
+	public void calibrateGyro() {
+		if(!gyroDisabled){
+			System.out.println("Gyro calibrating");
+			gyro.calibrate();
+			System.out.println("Done calibrating " + " The current rate is " + gyro.getRate());
+		}
 	}
 
-	public double getGyroAngleInRadians() {
-		return getGyroAngle() * (Math.PI/180);
-	}
-
-	/**recalibrates the gyro*/
-
-
+		
+	
 	//************** Pos/Vel/Acc Helper Methods **************// 
+	
+	/**
+	 * @return distance traveled by left side based on encoder
+	 */
+	public double getLeftDistance() {
+		return leftDriveEncoder.getDistance();
+	}
+	
+	/**
+	 * @return distance traveled by right side based on encoder
+	 */
+	public double getRightDistance() {
+		return rightDriveEncoder.getDistance();
+	}
 
+	/**@return average distance of both encoder velocities */
+	public double getAverageDist() {
+//		return (getLeftDistance() + getRightDistance()) / 2;
+//		left side commented out due to potential wiring issues
+		return getLeftDistance();
+	}
+	
+	public double getLeftVelocity() {
+		return leftDriveEncoder.getRate();
+	}
+
+	public double getRightVelocity() {
+		return rightDriveEncoder.getRate();
+	}
+
+	/**@return average velocity of both encoder velocities */
+	public double getAverageVelocity() {
+		return (getLeftVelocity() + getRightVelocity()) / 2;
+	}
+	
 	public double getLeftAcceleration() {
 
 		leftCurrentRate = getLeftVelocity();
@@ -221,10 +276,8 @@ public class ShakerDrivetrain extends Subsystem{
 
 	public double getRightAcceleration() {
 
-
 		rightCurrentRate = getLeftVelocity();
 		rightCurrentTime = Timer.getFPGATimestamp();
-
 
 		double acceleration = (rightCurrentRate - rightPreviousRate) / (rightCurrentTime - rightPreviousTime);
 
@@ -238,7 +291,6 @@ public class ShakerDrivetrain extends Subsystem{
 
 	public double getAverageAcceleration() {
 
-
 		currentRate = getAverageVelocity();
 		currentTime = Timer.getFPGATimestamp();
 
@@ -250,46 +302,13 @@ public class ShakerDrivetrain extends Subsystem{
 		return acceleration;
 	}
 
-	public double getRightDistance() {
-		// distance of right encoder
-		return rightDriveEncoder.getDistance();
-	}
-
-	public double getLeftVelocity() {
-		return leftDriveEncoder.getRate();
-	}
-
-	public double getRightVelocity() {
-		return rightDriveEncoder.getRate();
-	}
-
-	/**@return average velocity of both encoder velocities */
-	public double getAverageVelocity() {
-		return (getLeftVelocity() + getRightVelocity()) / 2;
-	}
-
-	/**@return average distance of both encoder velocities */
-	public double getAverageDist() {
-//		return (getLeftDistance() + getRightDistance()) / 2;
-		return getLeftDistance();
-	}
-
-	public void calibrateGyro() {
-		if(!gyroDisabled){
-			System.out.println("Gyro calibrating");
-			gyro.calibrate();
-			System.out.println("Done calibrating " + " The current rate is " + gyro.getRate());
-		}
-	}
-
-	/**@return distance of left encoder
-	 * TODO: determine which units we are given and which units we need*/
-	public double getLeftDistance() {
-		return leftDriveEncoder.getDistance();
-	}
-
+	
+	
 	//*****************Debugging Methods*****************//
 
+	/**
+	 * @return total current usage for all 6 motors in the drivetrain
+	 */
 	public double getCurrentUsage() {
 		double totalCurrent = 0.0;
 		for(int i=0; i<=2; i++){
