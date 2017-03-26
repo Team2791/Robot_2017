@@ -52,6 +52,16 @@ public class Util {
         return (wheelDiameter_inFeet * Math.PI / encoderTicks);
     }
 
+    public static double limitWithRampRate(double previousOutput, double currentDesiredOutput, double timeDiff, double VBUS_RAMP_RATE) {
+		double maxLimitedOutput = Math.abs(previousOutput) + timeDiff * VBUS_RAMP_RATE;
+		
+		if(Math.abs(currentDesiredOutput) > maxLimitedOutput) {
+			return Math.copySign(maxLimitedOutput, currentDesiredOutput);
+		} else {
+			return currentDesiredOutput;
+		}
+	}
+    
     public enum UnitLength {
         FEET(1.0 / 12.0, "ft"), INCHES(1.0, "in");
         private double unitsPerInch;

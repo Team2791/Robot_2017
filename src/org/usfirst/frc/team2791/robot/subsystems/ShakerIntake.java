@@ -9,7 +9,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * The Combined Intake/Climber Subsystem for Stoker
+ * This class corresponds to the combined intake/climber subsystem. There are two 775pros running off of two Sparks which
+ * receive signal from a branched PWM. This motor output controls the intake belts and also the climbing axle. The system
+ * has a ratcheting gear which is joined with a pall during climbing. The pall is activated with a piston. This piston is
+ * controlled by the same solenoid that controls the wing expansions at the beginning of the game. The intake is also on 
+ * two pistons which push it out to pick up balls.
+ * 
+ * @author team2791: See Robot.java for contact info
  */
 public class ShakerIntake extends Subsystem {
 	private final double BALLS_IN_POWER = -1.0;

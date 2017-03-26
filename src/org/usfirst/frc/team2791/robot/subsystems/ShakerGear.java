@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2791.robot.subsystems;
 
+import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Solenoid;
@@ -13,9 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * and a bag motor on a Spark to run the roller intake. There are limit switches in the intake to automatically
  * raise the intake once a gear is pulled in.
  * 
- * @author Gaurab Banerjee
- * @author Unnas Hussain
- *
+ * @author team2791: See Robot.java for contact info
  */
 public class ShakerGear extends Subsystem{
 	
@@ -69,9 +68,14 @@ public class ShakerGear extends Subsystem{
 		return !limitSwitchLong.get() || !limitSwitchShort.get();
 	}
 	
+	public double getCurrentUsage(){
+		return Robot.pdp.getCurrent(9);
+	}
+	
 	public void debug(){
 		SmartDashboard.putBoolean("Gear Intake Status",getLimitSwitchState());
 		SmartDashboard.putBoolean("Gear state", gearSolenoid.get());
 		SmartDashboard.putNumber("Gear Motor Output", gearSpark.get());
+		SmartDashboard.putNumber("Gear intake Current Usage", getCurrentUsage());
 	}
 }
