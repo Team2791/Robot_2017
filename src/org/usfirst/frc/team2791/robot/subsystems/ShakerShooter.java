@@ -6,9 +6,9 @@
 package org.usfirst.frc.team2791.robot.subsystems;
 
 import org.usfirst.frc.team2791.robot.RobotMap;
-import org.usfirst.frc.team2791.robot.commands.ShootWithJoystick;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.DelayedBoolean;
+import org.usfirst.frc.team2791.robot.util.Util;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -148,17 +148,14 @@ public class ShakerShooter extends Subsystem {
     }
 	
 	/**
-	 * Sets shooter output vbus for both 775pros; if unacceptable value entered prints error message
+	 * Sets shooter output vbus for both 775pros; if unacceptable value entered, 
+	 * then full speed in corresponding direction is given
 	 * @param vbus -1.0 to +1.0 accepted
 	 */
 	public void setShooterSpeedVBus(double vbus) {
 		primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
 		
-		if(vbus<1.0 && vbus>-1.0){
-			primaryShooterTalon.set(vbus);
-		}
-		else
-			System.out.println("Shooter vbus unacceptable: Outside range");
+		primaryShooterTalon.set(Util.limit(vbus, 1.0));
 	}
 
 	/**

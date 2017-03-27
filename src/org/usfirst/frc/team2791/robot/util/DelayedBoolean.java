@@ -2,6 +2,10 @@ package org.usfirst.frc.team2791.robot.util;
 
 import edu.wpi.first.wpilibj.Timer;
 
+/**
+ * @author team2791: See Robot.java for contact info
+ * @see Robot
+ */
 public class DelayedBoolean {
 
 	private double trueStartTime = 0;

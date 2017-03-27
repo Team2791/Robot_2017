@@ -1,27 +1,26 @@
 package org.usfirst.frc.team2791.robot.util;
 
-//import edu.wpi.first.wpilibj.DoubleSolenoid;
-
 /**
- *
- * This class holds all important ports and constants that are used throughout the code
- * This is rarely changed, only when ports are switched or pid's are re-tuned
+ * This class holds all important constants that are used in the code.
+ * Our main utility in here is for PID tuning constants which we have found experimentally.
  * 
+ * @author team2791: See Robot.java for contact info
  */
 public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 
 	// JOYSTICK CONSTANTS
 	public static final double DEADZONE = 0.08;
 	
-	public static double driveEncoderTicks = 256;
+	public static double driveEncoderTicks = 256;//Greyhill
 	
-	public static final double WHEEL_DIAMETER_IN_IN = 4.0;
+	public static final double WHEEL_DIAMETER_IN_IN = 4.0;//Drive wheels - Colson
 	public static final double WHEEL_DIAMETER_IN_FEET = WHEEL_DIAMETER_IN_IN/12.0;
 
-	public static final int SHOOTER_ENCODER_TICKS = 128;
-	public static final double SHOOTER_WHEEL_DIAMETER = 4.0;
+	public static final int SHOOTER_ENCODER_TICKS = 128;//Greyhill
+	public static final double SHOOTER_WHEEL_DIAMETER = 4.0;//Colson (in inches)
 	
-	// PID VALUES
+	/*******************************PID VALUES****************************************/
+	
 	// Shooter PID
 	public static double SHOOTER_P = 1.5; //1.5
 	public static double SHOOTER_I = 0.000;//0.000
