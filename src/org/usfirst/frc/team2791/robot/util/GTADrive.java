@@ -1,8 +1,10 @@
 package org.usfirst.frc.team2791.robot.util;
-/*
- * Created by Gaurab on 2/20/2017
+/**
+ * @author Created by Gaurab Banerjee on 2/20/2017
+ * This allows you to easily adapt your controller to a tank drive
  */
 import org.usfirst.frc.team2791.robot.ShakerJoystick.OverriddenJoystick;
+
 
 public class GTADrive {
 	public static double getLeftValue(OverriddenJoystick joystick){

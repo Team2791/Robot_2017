@@ -4,7 +4,12 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SensorBase;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+/**
+ * This is an utility we do not use in this year's code. This is a driver we wrote for the ADXRS453 Gyro. We used this gyro in past
+ * years when WPI did not have any code for the gyro.
+ * 
+ * @author Max Llewellyn
+ */
 public class ShakerGyro extends SensorBase implements Runnable {
     private static final double calibrationTime = 5.0;
     private static final int updateDelayMs = 1000 / 50; // run at 100 Hz

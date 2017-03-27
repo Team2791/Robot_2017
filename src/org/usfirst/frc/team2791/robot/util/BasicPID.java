@@ -2,6 +2,12 @@ package org.usfirst.frc.team2791.robot.util;
 
 import edu.wpi.first.wpilibj.Timer;
 
+/**
+ * This utility provides Basic PID based functions for any sort of control system.
+ * We used it in our PID based auto commands.
+ * 
+ * @author team2791: See Robot.java for contact info
+ */
 public class BasicPID {
     // P, I and D constants
     protected double m_p;
@@ -146,7 +152,7 @@ public class BasicPID {
         if (m_previousTime == 0.0 || m_d == 0.0)
             return 0.0;
 
-        // calculate the driv (change in X over change in Y), multiply by Kd and
+        // calculate the drive (change in X over change in Y), multiply by Kd and
         // return
         return m_d * ((m_currentError - m_previousError) / (m_currentTime - m_previousTime));
     }

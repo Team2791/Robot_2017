@@ -1,9 +1,9 @@
 package org.usfirst.frc.team2791.robot.util;
 
 /**
- * Created by Akhil on 4/10/2016.
+ * @author Created by Akhil Jacob on 4/10/2016.
  * This class daisy chains speed controllers so you can put them into roboDrive as one set this allows you
- * to use multiple cims
+ * to use multiple CIMs easily
  */
 
 import edu.wpi.first.wpilibj.SpeedController;

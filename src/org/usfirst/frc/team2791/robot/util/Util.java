@@ -1,5 +1,10 @@
 package org.usfirst.frc.team2791.robot.util;
 
+/**
+ * This is a class with several useful methods that are invoked throughout our code
+ * 
+ * @author team2791
+ */
 public class Util {
     //A class with a bunch of useful tools(methods)
     public static String newline = System.lineSeparator();
@@ -7,6 +12,12 @@ public class Util {
     private Util() {
     }
 
+    /**
+     * Used to make sure that speed controllers and other systems do not receive numbers they cannot handle (i.e. 2.3 on a PWM)
+     * @param val given value
+     * @param limit the bound of the system
+     * @return the value if it is within the limits; -1 if negative value given, +1 if positive number given
+     */
     public static double limit(double val, double limit) {
         return Math.abs(val) < limit ? val : limit * (val < 0 ? -1 : 1);
     }
