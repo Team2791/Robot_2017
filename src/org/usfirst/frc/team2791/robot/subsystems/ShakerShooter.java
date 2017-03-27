@@ -6,7 +6,6 @@
 package org.usfirst.frc.team2791.robot.subsystems;
 
 import org.usfirst.frc.team2791.robot.RobotMap;
-import org.usfirst.frc.team2791.robot.commands.ShootWithJoystick;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.DelayedBoolean;
 

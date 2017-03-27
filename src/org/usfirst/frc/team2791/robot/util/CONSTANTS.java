@@ -1,7 +1,5 @@
 package org.usfirst.frc.team2791.robot.util;
 
-//import edu.wpi.first.wpilibj.DoubleSolenoid;
-
 /**
  *
  * This class holds all important ports and constants that are used throughout the code

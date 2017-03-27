@@ -3,17 +3,12 @@ package org.usfirst.frc.team2791.robot.subsystems;
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
-import org.usfirst.frc.team2791.robot.util.BasicPID;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
-//import org.usfirst.frc.team2791.shakerJoystick.ShakerDriver;
-//import org.usfirst.frc.team2791.util.RobotMap;
-import org.usfirst.frc.team2791.robot.util.ShakerGyro;
 import org.usfirst.frc.team2791.robot.util.Util;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;

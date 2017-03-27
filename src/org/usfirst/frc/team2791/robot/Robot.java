@@ -1,16 +1,9 @@
 package org.usfirst.frc.team2791.robot;
 
-import org.usfirst.frc.team2791.robot.commands.autos.*;
+import org.usfirst.frc.team2791.robot.commands.autos.CenterGear;
 import org.usfirst.frc.team2791.robot.commands.autos.FollowPath.Color;
-import org.usfirst.frc.team2791.robot.commands.autos.FollowPath.Direction;
-import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
-import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
-import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
-import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
-import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
-import org.usfirst.frc.team2791.robot.util.CONSTANTS;
+import org.usfirst.frc.team2791.robot.subsystems.*;
 
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -27,6 +20,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
+ * 
+ * ***************Feel free to email the authors for info on this package.
+ * @author team2791 - 
+ * @author Gaurab Banerjee: gaurab.banerjee97@gmail.com
+ * @author Unnas Hussain: uwh.547@gmail.com
  */
 public class Robot extends IterativeRobot {
 	

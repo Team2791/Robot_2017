@@ -1,12 +1,11 @@
 package org.usfirst.frc.team2791.robot;
 
+import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
+import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
+import org.usfirst.frc.team2791.robot.commands.*;
+
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
-import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
-import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
-
-import org.usfirst.frc.team2791.robot.commands.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -26,7 +25,7 @@ public class OI {
 		operatorDpadDown, operatorDpadDownLeft, operatorDpadLeft, operatorDpadUpLeft;
 	
 	/**
-	 * This is where the Buttons are initialized and are mapped to certain commands
+	 * This is where the joysticks are initialized and buttons are mapped to certain commands (driver and operator controls)
 	 */
 	public OI(){
 		System.out.println("OI initialized");
@@ -35,6 +34,7 @@ public class OI {
 
 		initButtons();
 		initDpad();
+		//note: the triggers are called in GTADrive and in the joystick objects themselves so we do not have to map them here, esp. since they are for default commands
 		
 		/********************************** Operator Button Assignments ****************************************/
 		
@@ -96,7 +96,7 @@ public class OI {
 	}
 	
 	/**
-	 * Initializes all Dpad Buttons
+	 * Initializes the Dpad
 	 */
 	private void initDpad(){
 		driverDpadUp = new Button(){

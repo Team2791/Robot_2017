@@ -1,13 +1,11 @@
 package org.usfirst.frc.team2791.robot.util;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.*;
 
 
 //import com.sun.squawk.microedition.io.FileConnection;

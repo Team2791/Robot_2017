@@ -1,13 +1,12 @@
 package org.usfirst.frc.team2791.trajectory;
 
 
-import edu.wpi.first.wpilibj.Timer;
-
-import java.io.IOException;
 import java.util.Hashtable;
 
 import org.usfirst.frc.team2791.robot.util.TextFileReader;
 import org.usfirst.frc.team2791.trajectory.io.TextFileDeserializer;
+
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * Load ALL autonomous mode paths and access them

@@ -2,12 +2,12 @@
 package org.usfirst.frc.team2791.robot.commands.autos;
 
 
-import edu.wpi.first.wpilibj.command.Command;
-
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.trajectory.AutoPaths;
 import org.usfirst.frc.team2791.trajectory.Path;
 import org.usfirst.frc.team2791.trajectory.TrajectoryDriveHelper;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Follows a given path using Trajectory Lib

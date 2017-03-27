@@ -2,7 +2,6 @@ package org.usfirst.frc.team2791.robot.commands.auton;
 
 import org.usfirst.frc.team2791.robot.commands.GearIntakeUp;
 import org.usfirst.frc.team2791.robot.commands.ScoreGear;
-import org.usfirst.frc.team2791.robot.util.BasicPID;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

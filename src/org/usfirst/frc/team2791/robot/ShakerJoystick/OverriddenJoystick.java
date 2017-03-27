@@ -1,8 +1,9 @@
 package org.usfirst.frc.team2791.robot.ShakerJoystick;
 
-import edu.wpi.first.wpilibj.Joystick;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.Util;
+
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  * We use Gamepad controllers. See Driver Station for button mapping.
