@@ -20,7 +20,7 @@ public class GroundIntakeGear extends Command {
 	/**
 	 * checks if we have the gear and are ready to lift the gear into the bot
 	 */
-	private boolean unnas = false;
+	private boolean timerReset = false;
 	
 	public GroundIntakeGear() {
 		requires(Robot.gearMechanism);
@@ -28,15 +28,15 @@ public class GroundIntakeGear extends Command {
 
 	protected void initialize() {
 		Robot.gearMechanism.changeGearSolenoidState(true); //gear does down
-		unnas = true;
+		timerReset = true;
 	}
 
 	protected void execute() {
 		Robot.gearMechanism.runGearIntake();
 		
-		if(unnas && Robot.gearMechanism.getLimitSwitchState()){
+		if(timerReset && Robot.gearMechanism.getLimitSwitchState()){
 			timer.reset();
-			unnas = false;
+			timerReset = false;
 		}
 		if(Robot.gearMechanism.getLimitSwitchState()){
 			Robot.gearMechanism.changeGearSolenoidState(false);
