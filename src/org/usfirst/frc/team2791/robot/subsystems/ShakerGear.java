@@ -64,7 +64,7 @@ public class ShakerGear extends Subsystem{
 	 */
 	public boolean getLimitSwitchState(){
 		//limit switches are all normally open which is why the values are returned inverted
-		return !limitSwitch.get();
+		return limitSwitch.get();
 	}
 	
 	public double getCurrentUsage(){

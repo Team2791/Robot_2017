@@ -29,41 +29,46 @@ public class GroundIntakeGear extends Command {
 	}
 
 	protected void initialize() {
-		timer.start();
+//		timer.start();
 		Robot.gearMechanism.changeGearSolenoidState(true); //gear does down
 	}
 
 	protected void execute() {
 		Robot.gearMechanism.runGearIntake();
 		
-		if(readyForLiftoff){
-			System.out.println("bringing gear up");
-			Robot.gearMechanism.changeGearSolenoidState(false);//bring the piston up
-
-			startTime = timer.get();
+		if(Robot.gearMechanism.getLimitSwitchState()){
+			Robot.gearMechanism.changeGearSolenoidState(false);
+			timer.start();
 		}
-		
-		readyForLiftoff = Robot.gearMechanism.getLimitSwitchState() &&  //checks if has gear
-				Robot.gearMechanism.isDown() && //checks if gear mechanism is down
-				(startTime == -1.0);  //makes sure we set startTime only once
+//		if(readyForLiftoff){
+//			System.out.println("bringing gear up");
+//			Robot.gearMechanism.changeGearSolenoidState(false);//bring the piston up
+//
+//			startTime = timer.get();
+//		}
+//		
+//		readyForLiftoff = Robot.gearMechanism.getLimitSwitchState() &&  //checks if has gear
+//				Robot.gearMechanism.isDown() && //checks if gear mechanism is down
+//				(startTime == -1.0);  //makes sure we set startTime only once
 	}
 
 	protected boolean isFinished() {
-		boolean done = (motorRunTime == timer.get() - startTime);
-		System.out.println(done);
-		return done;
+//		boolean done = (motorRunTime == timer.get() - startTime);
+//		System.out.println(done);
+		return timer.get() >= 0.5;
 	}
 
 	protected void end(){
-		System.out.println("Ended at time:" +timer.get());
-		Robot.gearMechanism.changeGearSolenoidState(false);//bring the piston up
+//		System.out.println("Ended at time:" +timer.get());
+//		Robot.gearMechanism.changeGearSolenoidState(false);//bring the piston up
+//		Robot.gearMechanism.stopGearIntake();
+//		timer.reset();
 		Robot.gearMechanism.stopGearIntake();
-		timer.reset();
 
 	}
 	
 	protected void interrupted() {
-		Robot.gearMechanism.runGearIntake();
+		Robot.gearMechanism.changeGearSolenoidState(false);
 		end();
 	}
 }
