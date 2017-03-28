@@ -20,7 +20,7 @@ public class GroundIntakeGear extends Command {
 	/**
 	 * checks if we have the gear and are ready to lift the gear into the bot
 	 */
-	private boolean timerReset = false;
+	private boolean timerReset;
 	
 	public GroundIntakeGear() {
 		requires(Robot.gearMechanism);
@@ -28,6 +28,7 @@ public class GroundIntakeGear extends Command {
 
 	protected void initialize() {
 		Robot.gearMechanism.changeGearSolenoidState(true); //gear does down
+		timer.reset();
 		timerReset = true;
 	}
 
@@ -50,7 +51,7 @@ public class GroundIntakeGear extends Command {
 
 	protected void end(){
 		Robot.gearMechanism.stopGearIntake();
-
+		timer.stop();
 	}
 	
 	protected void interrupted() {
