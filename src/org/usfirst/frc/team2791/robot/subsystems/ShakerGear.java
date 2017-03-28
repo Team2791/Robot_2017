@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team2791.robot.commands.RunGearMotor;
 
 /**
  * This class corresponds to the gear subsystem which uses pistons to actuate the scoring mechanism 
@@ -23,6 +24,7 @@ public class ShakerGear extends Subsystem{
 	
 	private Talon gearSpark;
 	private DigitalInput limitSwitch;
+	private double motorSpeed = 1.0;
 	
 	public ShakerGear(){
 		gearSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.GEAR_CHANNEL);
@@ -32,7 +34,7 @@ public class ShakerGear extends Subsystem{
 	}
 	
 	public void initDefaultCommand(){
-		gearSolenoid.set(false);
+		setDefaultCommand(new RunGearMotor());
 	}
 	
 	public void runGearIntake(){
@@ -48,7 +50,7 @@ public class ShakerGear extends Subsystem{
 	 * @param state_ true = down / false = up
 	 */
 	public void changeGearSolenoidState(boolean state_){
-		state=state_;
+		state = state_;
 		gearSolenoid.set(state);
 	}
 	

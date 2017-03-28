@@ -2,40 +2,45 @@ package org.usfirst.frc.team2791.robot.commands;
 
 import org.usfirst.frc.team2791.robot.Robot;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *Runs the Gear Intake's motors
+ *Runs the Gear Intake's motors as long as the gear mechanism is down and the switches aren't activated
  */
 public class RunGearMotor extends Command {
 
-	private Timer timer = new Timer();
-	private double runTime;
 	
-    public RunGearMotor(double runTime) {
-    	requires(Robot.gearMechanism);
-    	this.runTime = runTime;
-    	
-    }
+	public RunGearMotor() {
+		requires(Robot.gearMechanism);
 
-    protected void initialize() {
-    	timer.start();
-    }
+	}
 
-    protected void execute() {
-    	Robot.gearMechanism.runGearIntake();
-    }
+	protected void initialize() {
+	}
 
-    protected boolean isFinished() {
-        return timer.hasPeriodPassed(runTime);
-    }
+	protected void execute() {
+		
+		if(Robot.gearMechanism.isDown()){
+			Robot.gearMechanism.runGearIntake();
+			if(Robot.gearMechanism.getLimitSwitchState()){
+				Robot.gearMechanism.changeGearSolenoidState(false);
+			}
+			
+		}else{
+			Robot.gearMechanism.stopGearIntake();
+		}
 
-    protected void end() {
-    	Robot.gearMechanism.stopGearIntake();
-    }
+	}
 
-    protected void interrupted() {
-    	end();
-    }
+	protected boolean isFinished() {
+		return false;
+	}
+
+	protected void end() {
+		Robot.gearMechanism.stopGearIntake();    
+	}
+
+	protected void interrupted() {
+		end();
+	}
 }

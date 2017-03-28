@@ -49,21 +49,24 @@ public class OI {
 		operatorB.whileHeld(new RunClimber());
 		operatorLB.whileHeld(new EngageRope());
 
-		operatorDpadDown.toggleWhenPressed(new GroundIntakeGear());
+		operatorDpadDown.whenPressed(new GearMechDown()); // noah wants to hit the button to start intaking and hit a button to finish intaking
+		operatorDpadUp.whenPressed(new GearMechUp());
 		
 		operatorDpadLeft.whileHeld(new HopperOn());
-		operatorDpadUp.whenPressed(new StopHopper());
 		operatorDpadRight.whileHeld(new RunHopperBackwards());
 		
+		operatorRB.whenPressed(new StopHopper());
 		operatorBack.whenPressed(new StopClimberAndDisengage());//safety
 		operatorStart.whenPressed(new TurnShooterOff());//safety
 		
 		/********************************** Driver Button Assignments ****************************************/
 		
-		driverX.whileHeld(new ScoreGear());
+		driverX.whileHeld(new ScoreGear()); //karan wants to hold the button down to score and let go to let the gear mech back up
 		
 		driverY.whileHeld(new RunClimber());
 		driverA.toggleWhenPressed(new RunIntake());
+		
+		driverB.whileHeld(new GearDownOverrideSwitches());
 		
 		driverLB.whileHeld(new DriveWithJoystick());
 		driverRB.whileHeld(new DriveWithJoystick());

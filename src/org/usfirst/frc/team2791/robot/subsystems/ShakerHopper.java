@@ -24,7 +24,7 @@ public class ShakerHopper extends Subsystem{
 
 	private static double hopperSetpoint = -0.66;
 	private final double distanceSensorCutoffPoint = 1.5;
-	
+		
 	public ShakerHopper(){
 		hopperSpark = new Talon(RobotMap.HOPPER_SPARK_PORT);
 		
@@ -49,7 +49,7 @@ public class ShakerHopper extends Subsystem{
 	 * Runs hopper at full-speed
 	 */
 	public void runHopper() {
-		System.out.print("runHopper accessor");
+		System.out.print("Running hopper");
 		hopperSpark.setSpeed(1.0);
 	}
 	
@@ -57,7 +57,7 @@ public class ShakerHopper extends Subsystem{
 	 * Runs hopper at half-speed
 	 */
 	public void slowHopper() {
-		System.out.print("slowHopper accessor");
+		System.out.print("Running hopper half speed");
 		hopperSpark.setSpeed(0.5);
 	}
 	
@@ -66,12 +66,12 @@ public class ShakerHopper extends Subsystem{
 	 * @param speed between -1.0 and +1.0
 	 */
 	public void setHopperSpeed(double speed){
-		System.out.print("setHopperSpeed accessor");
+		System.out.print("Running Hopper at " +speed);
 		hopperSpark.setSpeed(speed);
-	}
+	} 
 	
 	public void stopHopper(){
-		System.out.print("stopHopper accessor");
+		System.out.print("Stopping Hopper");
 		hopperSpark.setSpeed(0.0);
 	}
 

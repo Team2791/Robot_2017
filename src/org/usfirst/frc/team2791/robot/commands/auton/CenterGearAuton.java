@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2791.robot.commands.auton;
 
-import org.usfirst.frc.team2791.robot.commands.GearIntakeUp;
+import org.usfirst.frc.team2791.robot.commands.GearMechUp;
 import org.usfirst.frc.team2791.robot.commands.ScoreGear;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -18,7 +18,7 @@ public class CenterGearAuton extends CommandGroup {
     	addSequential(new ScoreGear());
     	addSequential(new DelayDrivetrain(1.0));
     	addSequential(new DriveStraightEncoderGyro(3.0, .7, 2));
-    	addSequential(new GearIntakeUp());
+    	addSequential(new GearMechUp());
 
 
     }
