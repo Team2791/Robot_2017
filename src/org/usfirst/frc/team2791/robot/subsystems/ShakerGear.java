@@ -22,14 +22,13 @@ public class ShakerGear extends Subsystem{
 	private static boolean state;
 	
 	private Talon gearSpark;
-	private DigitalInput limitSwitchLong, limitSwitchShort;
+	private DigitalInput limitSwitch;
 	
 	public ShakerGear(){
 		gearSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.GEAR_CHANNEL);
 		gearSpark = new Talon(RobotMap.GEAR_SPARK_PORT);
 		
-		limitSwitchLong = new DigitalInput(RobotMap.GEAR_INTAKE_LIMIT_SWITCH_A);
-		limitSwitchShort = new DigitalInput(RobotMap.GEAR_INTAKE_LIMIT_SWITCH_B);
+		limitSwitch = new DigitalInput(RobotMap.GEAR_INTAKE_LIMIT_SWITCH_A);
 	}
 	
 	public void initDefaultCommand(){
@@ -65,7 +64,7 @@ public class ShakerGear extends Subsystem{
 	 */
 	public boolean getLimitSwitchState(){
 		//limit switches are all normally open which is why the values are returned inverted
-		return !limitSwitchLong.get() || !limitSwitchShort.get();
+		return !limitSwitch.get();
 	}
 	
 	public double getCurrentUsage(){
