@@ -44,7 +44,7 @@ public class GroundIntakeGear extends Command {
 		}
 		
 		readyForLiftoff = Robot.gearMechanism.getLimitSwitchState() &&  //checks if has gear
-				Robot.gearMechanism.getState() && //checks if gear mechanism is down
+				Robot.gearMechanism.isDown() && //checks if gear mechanism is down
 				(startTime == -1.0);  //makes sure we set startTime only once
 	}
 
@@ -56,8 +56,9 @@ public class GroundIntakeGear extends Command {
 
 	protected void end(){
 		System.out.println("Ended at time:" +timer.get());
-		Robot.gearMechanism.changeGearSolenoidState(false);//bring the piston u
+		Robot.gearMechanism.changeGearSolenoidState(false);//bring the piston up
 		Robot.gearMechanism.stopGearIntake();
+		timer.reset();
 
 	}
 	

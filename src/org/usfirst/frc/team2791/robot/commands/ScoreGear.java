@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ScoreGear extends Command{
 	public ScoreGear (){
-		super("RemoveGear");
+		super("ScoreGear");
 		requires(Robot.gearMechanism);
 	}
 	
@@ -19,11 +19,11 @@ public class ScoreGear extends Command{
 	}
 	
 	protected void execute(){
-		System.out.println("Unnas says hehehe");
+		Robot.gearMechanism.changeGearSolenoidState(true);
 	}
 	
 	protected boolean isFinished(){
-		return false;
+		return false;//don't return true with condition because want command to end when driver releases button
 	}
 	
 	protected void end(){

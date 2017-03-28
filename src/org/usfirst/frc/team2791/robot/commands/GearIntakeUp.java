@@ -19,11 +19,11 @@ public class GearIntakeUp extends Command{
 	}
 	
 	protected void execute(){
-		System.out.println("Unnas says hehehe");
+		Robot.gearMechanism.changeGearSolenoidState(true);
 	}
 	
 	protected boolean isFinished(){
-		return false;
+		return !Robot.gearMechanism.isDown();
 	}
 	
 	protected void end(){

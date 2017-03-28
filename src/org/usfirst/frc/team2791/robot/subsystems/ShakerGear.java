@@ -55,7 +55,7 @@ public class ShakerGear extends Subsystem{
 	/**
 	 * @return State of gear actuation solenoid. true = down / false = up
 	 */
-	public boolean getState(){
+	public boolean isDown(){
 		return state;
 	}
 	
