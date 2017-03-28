@@ -11,10 +11,18 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class GroundIntakeGear extends Command {
 
-	Timer timer = new Timer();
-	private double startTime = -1;
+	Timer timer = new Timer(); //must start before isFinished is called
 
+	/**
+	 * this is -1.0 at the beginning so we can tell if we have started timing already
+	 */
+	private double startTime = -1.0;
 	private double motorRunTime = .5;
+
+	/**
+	 * checks if we have the gear and are ready to lift the gear into the bot
+	 */
+	private boolean readyForLiftoff = false;
 
 	public GroundIntakeGear() {
 		requires(Robot.gearMechanism);
@@ -27,12 +35,17 @@ public class GroundIntakeGear extends Command {
 
 	protected void execute() {
 		Robot.gearMechanism.runGearIntake();
-
-		if(Robot.gearMechanism.getLimitSwitchState() && Robot.gearMechanism.getState() &&  startTime != -1){ //if you have the gear and the piston is down
+		
+		if(readyForLiftoff){
 			System.out.println("bringing gear up");
 			Robot.gearMechanism.changeGearSolenoidState(false);//bring the piston up
+
 			startTime = timer.get();
 		}
+		
+		readyForLiftoff = Robot.gearMechanism.getLimitSwitchState() &&  //checks if has gear
+				Robot.gearMechanism.getState() && //checks if gear mechanism is down
+				(startTime == -1.0);  //makes sure we set startTime only once
 	}
 
 	protected boolean isFinished() {
@@ -47,7 +60,9 @@ public class GroundIntakeGear extends Command {
 		Robot.gearMechanism.stopGearIntake();
 
 	}
+	
 	protected void interrupted() {
+		Robot.gearMechanism.runGearIntake();
 		end();
 	}
 }

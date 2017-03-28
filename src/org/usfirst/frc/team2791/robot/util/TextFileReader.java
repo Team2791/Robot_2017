@@ -15,7 +15,7 @@ import java.nio.charset.Charset;
  * Read a text file into a string.
  * @param String uri is the name of the file and the path (should be the same)
  *
- * @author Jared341
+ * @author Unnas Hussain
  */
 public class TextFileReader{
 

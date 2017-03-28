@@ -10,14 +10,17 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
+ * This class does not handle the joysticks driving , which is handled in GTADrive
+ * @see GTADrive
  */
 public class OI {
 	public static ShakerDriver driver;
 	public static ShakerOperator operator;
 	
+	
 	protected Button driverA, driverB, driverX, driverY, driverLB, driverRB, driverBack, driverStart, driverLS, driverRS;
 	protected Button operatorA, operatorB, operatorX, operatorY, operatorLB, operatorRB, operatorBack, operatorStart, 
-		operatorLS, operatorRS;
+		operatorLS, operatorRS; 
 
 	protected Button driverDpadUp, driverDpadUpRight, driverDpadRight, driverDpadDownRight, driverDpadDown,
 		driverDpadDownLeft, driverDpadLeft, driverDpadUpLeft;

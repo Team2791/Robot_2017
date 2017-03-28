@@ -1,36 +1,50 @@
 package org.usfirst.frc.team2791.robot.util;
+
 /**
- * @author Created by Gaurab Banerjee on 2/20/2017
- * This allows you to easily adapt your controller to a tank drive
+ * This allows you to easily adapt your controller to our specialized tank drive
  */
 import org.usfirst.frc.team2791.robot.ShakerJoystick.OverriddenJoystick;
 
 
 public class GTADrive {
+	
+	/**
+	 * @param joystick the controller that is controlling the drivetrain (typically Driver)
+	 * @return the output value for the left motors, based the amount the trigger is pressed or if the bumpers are pressed
+	 */
 	public static double getLeftValue(OverriddenJoystick joystick){
 		double combinedLeft = 0;
 		
-		if(joystick.getButtonRB()){
-			combinedLeft=0.35+joystick.getAxisLeftX()/3;
-		} else if(joystick.getButtonLB()){
-			combinedLeft=-1*(0.35+joystick.getAxisLeftX()/3);
-		} else{
-		 	combinedLeft=joystick.getGtaDriveLeft();
+		if(joystick.getButtonRB()){ //if the Right Bumpers are calling GTA
+			combinedLeft=0.35+joystick.getAxisLeftX()/3; //nudge the drivetrain forward
+			
+		} else if(joystick.getButtonLB()){//if the Left Bumpes are calling GTA
+			combinedLeft=-1*(0.35+joystick.getAxisLeftX()/3);//nudge the drivetrain Backwards
+			
+		} else{//otherwise, the Triggers must be calling GTA, and only LT calls this method
+		 	combinedLeft=joystick.getGtaDriveLeft();//return an output based on the amount LT is pressed
 		}
 		
 		return combinedLeft;
 	}
+	
+	/**
+	 * @param joystick the controller that is controlling the drivetrain (typically Driver)
+	 * @return the output value for the right motors, based the amount the trigger is pressed or if the bumpers are pressed
+	 */
 	public static double getRightValue(OverriddenJoystick joystick){
 		double combinedRight = 0;
 		
-		if(joystick.getButtonRB()){
-			combinedRight=0.35-(double) (joystick.getAxisLeftX())/3.0;
-	    } else if(joystick.getButtonLB()){
-			combinedRight=-1*(0.35-joystick.getAxisLeftX()/3);
-	    } else{
+		if(joystick.getButtonRB()){//if the Right Bumpers are calling GTA
+			combinedRight=0.35-(double) (joystick.getAxisLeftX())/3.0;//nudge the drivetrain forward
+			
+	    } else if(joystick.getButtonLB()){//if the Left Bumpes are calling GTA
+			combinedRight=-1*(0.35-joystick.getAxisLeftX()/3);//nudge the drivetrain Backwards
+			
+	    } else{//otherwise, the Triggers must be calling GTA, and only LT calls this method
 		 	combinedRight=joystick.getGtaDriveRight();
 	    }
 		
-		return combinedRight;
+		return combinedRight;;//return an output based on the amount LT is pressed
 	}
 }

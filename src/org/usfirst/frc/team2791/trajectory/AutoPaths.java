@@ -9,14 +9,15 @@ import org.usfirst.frc.team2791.trajectory.io.TextFileDeserializer;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
- * Load ALL autonomous mode paths and access them
- * Uses txt files that contain Trajectory Parameters that are generated from TrajectoryGenerator
- * Init this with loadPaths() to create all the Paths and use get() to access those Paths
- * All paths are initially designed for the Blue Side, going forward
+ * Load ALL autonomous mode paths and access them.
+ * Uses txt files that contain Trajectory Parameters that are generated from TrajectoryGenerator.
+ * </p>
+ * Init all paths with loadPaths() to create all the Paths and use get() to access those Paths
+ * All paths are initially designed for the Red Side, going forward
  * 
  * @author Jared341
  * @author Stephen Pinkerton
- * @author team2791
+ * @author Unnas Hussain
  */
 public class AutoPaths {
 	// Make sure these match up!

@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Timer;
  * We used it in our PID based auto commands.
  * 
  * @author team2791: See Robot.java for contact info
+ * @see Robot
  */
 public class BasicPID {
     // P, I and D constants
