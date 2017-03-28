@@ -44,7 +44,7 @@ public class GearIntakeDown extends Command {
 		}
 		
 		readyForLiftoff = Robot.gearMechanism.getLimitSwitchState() &&  //checks if has gear
-				Robot.gearMechanism.getState() && //checks if gear mechanism is down
+				Robot.gearMechanism.isDown() && //checks if gear mechanism is down
 				(startTime == -1.0);  //makes sure we set startTime only once
 	}
 
