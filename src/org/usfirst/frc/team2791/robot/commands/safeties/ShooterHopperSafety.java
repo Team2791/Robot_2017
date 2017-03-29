@@ -4,10 +4,10 @@ import org.usfirst.frc.team2791.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Safely turns shooter motors off, Shooter Talons should be set to Coast.
+ * Safely turns shooter and hopper motors off, Shooter Talons should be set to Coast.
  */
-public class TurnShooterOff extends Command{
-	public TurnShooterOff() {
+public class ShooterHopperSafety extends Command{
+	public ShooterHopperSafety() {
 		super("StopShot");
 		requires(Robot.shooter);
 		requires(Robot.hopper);
@@ -29,12 +29,13 @@ public class TurnShooterOff extends Command{
 
 	@Override
 	protected void end() {
+		Robot.hopper.stopHopper();
 		Robot.shooter.stopMotors();
 	}
 
 	@Override
 	protected void interrupted() {
-		new TurnShooterOff();
+		new ShooterHopperSafety();
 	}
 }
 

@@ -6,7 +6,7 @@ import org.usfirst.frc.team2791.robot.commands.*;
 import org.usfirst.frc.team2791.robot.commands.safeties.StopClimberAndDisengage;
 import org.usfirst.frc.team2791.robot.commands.safeties.StopHopper;
 import org.usfirst.frc.team2791.robot.commands.safeties.ToggleGearSwitches;
-import org.usfirst.frc.team2791.robot.commands.safeties.TurnShooterOff;
+import org.usfirst.frc.team2791.robot.commands.safeties.ShooterHopperSafety;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -62,7 +62,7 @@ public class OI {
 		
 		operatorRB.whenPressed(new StopHopper());//safety
 		operatorBack.whenPressed(new StopClimberAndDisengage());//safety
-		operatorStart.whenPressed(new TurnShooterOff());//safety
+		operatorStart.whenPressed(new ShooterHopperSafety());//safety
 		
 		/********************************** Driver Button Assignments ****************************************/
 		
