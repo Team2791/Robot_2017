@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2791.robot.commands;
+package org.usfirst.frc.team2791.robot.commands.safeties;
 
 import org.usfirst.frc.team2791.robot.Robot;
 
@@ -19,7 +19,7 @@ public class TurnIntakeOff extends Command{
 	
 	protected void execute(){
 		Robot.intake.motorOffIntake();
-		Robot.intake.moveIntakeOut(false);
+		Robot.intake.setIntakePosition(false);
 	}
 	
 	protected boolean isFinished(){
@@ -27,10 +27,10 @@ public class TurnIntakeOff extends Command{
 	}
 	
 	protected void end(){
-		Robot.intake.moveIntakeOut(false);
+		Robot.intake.setIntakePosition(false);
 	}
 	
 	protected void interrupted(){
-		Robot.intake.moveIntakeOut(false);
+		Robot.intake.setIntakePosition(false);
 	}
 }

@@ -5,8 +5,10 @@ import org.usfirst.frc.team2791.robot.Robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;;
 /**
  * TrajectoryDriveController.java
- * This controller drives the robot along a specified trajectory.
+ * This controller drives the robot along a specified trajectory. Uses inputs from Trajectory Followers for each side of the bot
+ * @see TrajectoryFollower
  * @author Tom Bottiglieri
+ * @author Unnas Hussain 
  */
 public class TrajectoryDriveHelper{ //eventually implements Loopale 
 

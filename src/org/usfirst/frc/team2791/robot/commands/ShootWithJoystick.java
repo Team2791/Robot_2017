@@ -6,9 +6,8 @@ import org.usfirst.frc.team2791.robot.util.GTADrive;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * This command was used when first testing the shooter
+ * This command was used when first testing the shooter. It runs the shooter at varying speeds according to the Joystick
  * TODO: get rid of this unused command
- * @author Unnas
  *
  */
 public class ShootWithJoystick extends Command {

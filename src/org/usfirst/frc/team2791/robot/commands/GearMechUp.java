@@ -5,7 +5,7 @@ import org.usfirst.frc.team2791.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *Puts the Gear mechanism and keeps the motors running
+ *Puts the Gear mechanism without effecting the motors
  */
 public class GearMechUp extends Command {
 

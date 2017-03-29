@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * 
  * Runs the intake motors and actuates the intake to the outward position
- * TODO: There is currently a bug where if the operator or driver climbs, stops climbing, then starts again, it will not work
  */
 public class RunIntake extends Command{
 	public RunIntake(){
@@ -23,7 +22,7 @@ public class RunIntake extends Command{
 		Robot.intake.disengageRatchetWing();//TODO: get rid of this here to fix double climb bug
 		
 		if(Robot.intake.isRatchetWingDisengaged()){
-			Robot.intake.moveIntakeOut(true);
+			Robot.intake.setIntakePosition(true);
 			Robot.intake.motorOnIntake();
 		}
 	}
@@ -32,10 +31,10 @@ public class RunIntake extends Command{
 	}
 	protected void end(){
 		Robot.intake.motorOffIntake();
-		Robot.intake.moveIntakeOut(false);
+		Robot.intake.setIntakePosition(false);
 	}
 	protected void interrupted(){
 		Robot.intake.motorOffIntake();
-		Robot.intake.moveIntakeOut(false);
+		Robot.intake.setIntakePosition(false);
 	}
 }

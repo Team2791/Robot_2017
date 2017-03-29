@@ -24,13 +24,14 @@ public class ShakerGear extends Subsystem{
 	
 	private Talon gearSpark;
 	private DigitalInput limitSwitch;
-	private double motorSpeed = 1.0;
+	private static boolean switchesEnabled;
 	
 	public ShakerGear(){
 		gearSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.GEAR_CHANNEL);
 		gearSpark = new Talon(RobotMap.GEAR_SPARK_PORT);
 		
 		limitSwitch = new DigitalInput(RobotMap.GEAR_INTAKE_LIMIT_SWITCH_A);
+		enableLimitSwitches();
 	}
 	
 	public void initDefaultCommand(){
@@ -62,11 +63,35 @@ public class ShakerGear extends Subsystem{
 	}
 	
 	/**
-	 * @return Summary state of limit switches in the intake. true = gear inside / false = no gear in intake
+	 * @return Summary state of limit switches in the intake. true = gear inside / false = no gear in intake </p>The operator needs the ability to override the switches, so if the switches are disables, this will return false
 	 */
 	public boolean getLimitSwitchState(){
-		//limit switches are all normally open which is why the values are returned inverted
-		return limitSwitch.get();
+
+		if(areSwitchesEnabled())
+			return limitSwitch.get();
+		else
+			return false;
+	}
+	
+	/**
+	 * Disables the limit switches.
+	 */
+	public void disableLimitSwitches(){
+		switchesEnabled = false;
+	}
+	
+	/**
+	 * Enables the limit switches
+	 */
+	public void enableLimitSwitches(){
+		switchesEnabled = true;
+	}
+	
+	/**
+	 * @return if the limit switches are enabled
+	 */
+	public boolean areSwitchesEnabled(){
+		return switchesEnabled;
 	}
 	
 	public double getCurrentUsage(){
@@ -74,8 +99,11 @@ public class ShakerGear extends Subsystem{
 	}
 	
 	public void debug(){
-		SmartDashboard.putBoolean("Gear Intake Status",getLimitSwitchState());
+		SmartDashboard.putBoolean("Gear Intake Status", getLimitSwitchState());
+		SmartDashboard.putBoolean("Gear Intake Switches Enabled", areSwitchesEnabled());
+		
 		SmartDashboard.putBoolean("Gear state", gearSolenoid.get());
+		
 		SmartDashboard.putNumber("Gear Motor Output", gearSpark.get());
 		SmartDashboard.putNumber("Gear intake Current Usage", getCurrentUsage());
 	}

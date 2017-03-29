@@ -3,6 +3,10 @@ package org.usfirst.frc.team2791.robot;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
 import org.usfirst.frc.team2791.robot.commands.*;
+import org.usfirst.frc.team2791.robot.commands.safeties.StopClimberAndDisengage;
+import org.usfirst.frc.team2791.robot.commands.safeties.StopHopper;
+import org.usfirst.frc.team2791.robot.commands.safeties.ToggleGearSwitches;
+import org.usfirst.frc.team2791.robot.commands.safeties.TurnShooterOff;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -41,33 +45,32 @@ public class OI {
 		
 		/********************************** Operator Button Assignments ****************************************/
 		
-		operatorX.whileHeld(new RunWallShotFullHopper()); 
-		operatorY.whileHeld(new RunLongShotFullHopper());
+		operatorX.whileHeld(new RunWallShot()); 
+		operatorY.whileHeld(new RunLongShot());
 		
 		operatorA.whileHeld(new RunIntake());
 		
 		operatorB.whileHeld(new RunClimber());
 		operatorLB.whileHeld(new EngageRope());
 
-		operatorDpadDown.whenPressed(new GearMechDown()); // noah wants to hit the button to start intaking and hit a button to finish intaking
+		operatorDpadDown.whenPressed(new GearMechDown()); 
 		operatorDpadUp.whenPressed(new GearMechUp());
+		operatorLS.toggleWhenPressed(new ToggleGearSwitches());
 		
 		operatorDpadLeft.whileHeld(new HopperOn());
 		operatorDpadRight.whileHeld(new RunHopperBackwards());
 		
-		operatorRB.whenPressed(new StopHopper());
+		operatorRB.whenPressed(new StopHopper());//safety
 		operatorBack.whenPressed(new StopClimberAndDisengage());//safety
 		operatorStart.whenPressed(new TurnShooterOff());//safety
 		
 		/********************************** Driver Button Assignments ****************************************/
 		
-		driverX.whileHeld(new ScoreGear()); //karan wants to hold the button down to score and let go to let the gear mech back up
+		driverX.whileHeld(new ScoreGear()); 
 		
 		driverY.whileHeld(new RunClimber());
 		driverA.toggleWhenPressed(new RunIntake());
-		
-		driverB.whileHeld(new GearDownOverrideSwitches());
-		
+				
 		driverLB.whileHeld(new DriveWithJoystick());
 		driverRB.whileHeld(new DriveWithJoystick());
 		

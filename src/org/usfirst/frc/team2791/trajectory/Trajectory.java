@@ -2,9 +2,12 @@ package org.usfirst.frc.team2791.trajectory;
 
 /**
  * Implementation of a Trajectory using arrays as the underlying storage
- * mechanism.
+ * mechanism. </br>
+ * Trajectories consist of many Segments, each containing information as to how to follow the current Trajectory
+ * @see Trajectory.Segment
  *
  * @author Jared341
+ * @author Unnas Hussain
  */
 public class Trajectory {
   
@@ -18,6 +21,18 @@ public class Trajectory {
     public Trajectory right;
   }
 
+  /**
+   * A Segment contains 8 variables that describe what the robot should be doing at a certain point in the path
+   * </p>pos - the current position in the array of segments
+   * </br>vel - the current desired velocity
+   * </br>acc - the current desired acceleration
+   * </br>jerk - the current desired change in acceleration
+   * </br>heading - the current angle to be heading, in radians absolute to the starting position
+   * </br>dt - the time before the next segment should be called
+   * </br>x - the current desired x position of the robot
+   * </br>y - the current desired y position of the robot
+   * @author Jared341
+   */
   public static class Segment {
 
     public double pos, vel, acc, jerk, heading, dt, x, y;

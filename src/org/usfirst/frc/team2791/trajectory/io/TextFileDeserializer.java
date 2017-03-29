@@ -7,8 +7,10 @@ import org.usfirst.frc.team2791.trajectory.Trajectory;
 
 
 /**
- *
- * @author Jared341
+ *Uses FastParser to read the textfiles with the Segments. Helps with the Autopaths logic
+ *@see FastParser
+ *@see AutoPaths
+ * @author Unnas Hussain
  */
 public class TextFileDeserializer implements IPathDeserializer {
 

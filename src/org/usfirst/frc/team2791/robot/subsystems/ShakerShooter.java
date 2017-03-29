@@ -86,9 +86,7 @@ public class ShakerShooter extends Subsystem {
         followerShooterTalonA.configNominalOutputVoltage(0, 0);
     }
     
-    public void initDefaultCommand(){
-    	shooterSolenoid.set(false);
-    }
+    public void initDefaultCommand(){  }
     
     /**
      * @param up true = hood up / false = hood down

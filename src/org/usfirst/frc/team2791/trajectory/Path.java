@@ -4,8 +4,10 @@ import org.usfirst.frc.team2791.trajectory.Trajectory.Segment;
 
 /**
  * Base class for an autonomous path.
- * 
+ * A path has a pair of Trajectories, one left and right. </p>
+ * Paths can be inverted in the x and y axis
  * @author Jared341
+ * @author Unnas Hussain
  */
 public class Path {
   protected Trajectory.Pair go_left_pair_;

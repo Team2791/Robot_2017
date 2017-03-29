@@ -2,7 +2,10 @@ package org.usfirst.frc.team2791.trajectory;
 
 /**
  * This class holds a bunch of static methods and variables needed for
- * mathematics
+ * more complicated mathematics
+ * 
+ * @author team254
+ * @author Unnas Hussain
  */
 public class ChezyMath {
   // constants

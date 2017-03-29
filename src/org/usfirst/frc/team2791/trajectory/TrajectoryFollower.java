@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * PID + Feedforward controller for following a Trajectory.
  *
  * @author Jared341
+ * @author Unnas Hussain
  */
 public class TrajectoryFollower {
 

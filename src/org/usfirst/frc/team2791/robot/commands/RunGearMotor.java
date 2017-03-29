@@ -9,23 +9,21 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RunGearMotor extends Command {
 
-	
 	public RunGearMotor() {
+		super("RunGearMotor");
 		requires(Robot.gearMechanism);
 
 	}
 
-	protected void initialize() {
-	}
+	protected void initialize() {	}
 
 	protected void execute() {
-		
+
 		if(Robot.gearMechanism.isDown()){
 			Robot.gearMechanism.runGearIntake();
 			if(Robot.gearMechanism.getLimitSwitchState()){
 				Robot.gearMechanism.changeGearSolenoidState(false);
 			}
-			
 		}else{
 			Robot.gearMechanism.stopGearIntake();
 		}

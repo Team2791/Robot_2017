@@ -2,6 +2,7 @@ package org.usfirst.frc.team2791.robot.subsystems;
 
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
+import org.usfirst.frc.team2791.robot.commands.safeties.StopHopper;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Talon;
@@ -33,7 +34,7 @@ public class ShakerHopper extends Subsystem{
 	}
 	
 	public void initDefaultCommand(){
-		stopHopper();
+		setDefaultCommand(new StopHopper());
 	}
 	
 	/**

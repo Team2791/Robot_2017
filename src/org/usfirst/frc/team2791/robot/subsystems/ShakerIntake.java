@@ -38,16 +38,14 @@ public class ShakerIntake extends Subsystem {
 		disengageRatchetWing();//do not want as default command operator lets go of climb before t=0 (do not want disengaging)
 	}
 	
-	public void initDefaultCommand(){
-		moveIntakeOut(false);
-	}
+	public void initDefaultCommand(){}
 	
 	//***********Intake/Climber Helper Methods***********//
 
 	/**
 	 * @param inOrOut true = open intake to pull in balls / false = keep intake closed
 	 */
-	public void moveIntakeOut(boolean inOrOut){
+	public void setIntakePosition(boolean inOrOut){
 		intakeSolenoid.set(inOrOut);
 	}
 

@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Simultanesouly runs the shooter and hopper. Sets shooter speed and hood for longShot. The hopper is set to meter its speed.
- * TODO: get rid of this unused command
  */
 public class RunLongShot extends Command{
 	public RunLongShot() {
@@ -24,13 +23,9 @@ public class RunLongShot extends Command{
 	protected void execute() {
 		Robot.shooter.setShooterSolenoidState(true); // down position is false
 		Robot.shooter.prepFarHopperShot(); // bringing shooter up to speed
-		
+
 		// if we need more balls or the shooter is ready
-		if(!Robot.hopper.isBallAtTop() || Robot.shooter.atSpeed()) {
-			Robot.hopper.runHopper();
-		} else {
-			Robot.hopper.stopHopper();
-		}
+		Robot.hopper.runHopper();
 	}
 
 	@Override

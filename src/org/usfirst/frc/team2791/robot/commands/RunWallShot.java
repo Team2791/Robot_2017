@@ -6,11 +6,10 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Simultanesouly runs the shooter and hopper. Sets shooter speed and hood for wallShot. The hopper is set to meter its speed.
- * TODO: get rid of this unused command
  */
 public class RunWallShot extends Command{
 	public RunWallShot() {
-		super("RunWallShot");
+		super("RunWallShotFullHopper");
 		requires(Robot.shooter);
 		requires(Robot.hopper);
 		System.out.print("shooter construct");
@@ -27,13 +26,9 @@ public class RunWallShot extends Command{
 		System.out.print("shooter execute");
 		Robot.shooter.setShooterSolenoidState(false); //down position
 		Robot.shooter.prepWallShot(); //bringing shooter up to speed
-		
+
 		// if we need more balls or the shooter is ready
-		if(Robot.shooter.atSpeed()) {
-			Robot.hopper.runHopper();
-		} else {
-			Robot.hopper.slowHopper();
-		}
+		Robot.hopper.runHopper();
 	}
 
 	@Override
