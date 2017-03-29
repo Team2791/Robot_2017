@@ -31,7 +31,7 @@ public class ShakerGear extends Subsystem{
 		gearSpark = new Talon(RobotMap.GEAR_SPARK_PORT);
 		
 		limitSwitch = new DigitalInput(RobotMap.GEAR_INTAKE_LIMIT_SWITCH_A);
-		enableLimitSwitches();
+//		enableLimitSwitches();
 	}
 	
 	public void initDefaultCommand(){
@@ -63,7 +63,8 @@ public class ShakerGear extends Subsystem{
 	}
 	
 	/**
-	 * @return Summary state of limit switches in the intake. true = gear inside / false = no gear in intake </p>The operator needs the ability to override the switches, so if the switches are disables, this will return false
+	 * @return Summary state of limit switches in the intake. true = gear inside / false = no gear in intake 
+	 * </br>The operator needs the ability to override the switches, so if the switches are disables, this will return false
 	 */
 	public boolean getLimitSwitchState(){
 
@@ -71,6 +72,10 @@ public class ShakerGear extends Subsystem{
 			return limitSwitch.get();
 		else
 			return false;
+	}
+	
+	public void toggleSwitchEnables(){
+		switchesEnabled = !this.areSwitchesEnabled();
 	}
 	
 	/**

@@ -21,7 +21,7 @@ public class ToggleGearSwitches extends Command{
 	}
 	
 	protected void initialize(){
-		Robot.gearMechanism.disableLimitSwitches();
+		Robot.gearMechanism.toggleSwitchEnables();
 
 	}
 	
@@ -33,7 +33,6 @@ public class ToggleGearSwitches extends Command{
 	}
 	
 	protected void end(){
-		Robot.gearMechanism.enableLimitSwitches();
 	}
 	
 	protected void interrupted(){

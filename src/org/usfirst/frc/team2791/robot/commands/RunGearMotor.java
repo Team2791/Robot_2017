@@ -22,6 +22,7 @@ public class RunGearMotor extends Command {
 		if(Robot.gearMechanism.isDown()){
 			Robot.gearMechanism.runGearIntake();
 			if(Robot.gearMechanism.getLimitSwitchState()){
+				System.out.println("RunGearMotor is bringing the piston up");
 				Robot.gearMechanism.changeGearSolenoidState(false);
 			}
 		}else{

@@ -46,6 +46,6 @@ public class GTADrive {
 		 	combinedRight=joystick.getGtaDriveRight();
 	    }
 		
-		return combinedRight;;//return an output based on the amount LT is pressed
+		return combinedRight;//return an output based on the amount LT is pressed
 	}
 }
