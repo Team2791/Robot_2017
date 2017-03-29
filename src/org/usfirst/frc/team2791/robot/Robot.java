@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2791.robot;
 
-import org.usfirst.frc.team2791.robot.commands.autos.CenterGear;
+import org.usfirst.frc.team2791.robot.commands.autos.*;
 import org.usfirst.frc.team2791.robot.commands.autos.FollowPath.Color;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
 	 * setting autonomousCommand to a Command will cause that Command to run in autonomous init
 	 */
 	public Command autonomousCommand;
-	SendableChooser<Command> auto = new SendableChooser<>();
+	SendableChooser<Command> autoChooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -84,8 +84,10 @@ public class Robot extends IterativeRobot {
 		debug();
 		
 
-		auto.addObject("Center Gear Auton - red", new CenterGear(Color.RED));
-		SmartDashboard.putData("auto Gaurab", auto);
+		autoChooser.addObject("Center Gear - red", new CenterGear(Color.RED));
+		autoChooser.addObject("Boiler Gear - red", new LoadingStationGear(Color.RED));
+		
+		SmartDashboard.putData("Auto Selector", autoChooser);
 	}
 
 	/**

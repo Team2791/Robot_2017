@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class LoadingStationGear extends CommandGroup{
 	
-	public LoadingStationGear(Color color, Direction direction){
+	public LoadingStationGear(Color color){
 		addSequential(new FollowPath("LoadingStationGear", color, Direction.REVERSE));
 		addSequential(new ScoreGear());
 		addSequential(new DelayDrivetrain(1));
