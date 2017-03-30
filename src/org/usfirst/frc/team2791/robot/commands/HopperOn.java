@@ -5,7 +5,7 @@ import org.usfirst.frc.team2791.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Runs the hopper to feed balls into the shooter
+ * Runs the {@link ShakerHopper Hopper} to feed balls into the shooter
  */
 public class HopperOn extends Command {
 	public HopperOn (){

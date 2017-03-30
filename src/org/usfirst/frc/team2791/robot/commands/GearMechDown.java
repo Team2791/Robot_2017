@@ -5,7 +5,7 @@ import org.usfirst.frc.team2791.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *Puts the Gear mechanism down without effecting the motors
+ *Puts the {@link ShakerGear Gear Intake} down without effecting the motors
  */
 public class GearMechDown extends Command {
 	

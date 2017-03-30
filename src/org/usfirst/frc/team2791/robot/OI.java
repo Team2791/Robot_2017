@@ -14,25 +14,32 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
- * This class does not handle the joysticks driving , which is handled in GTADrive
+ * This class does not handle the joysticks driving , which is handled in GTADrive.
+ * </br> We are currently using 
+ * <a href="http://support.logitech.com/en_us/product/gamepad-f310"> 
+ * Logitech Gamepad F310 controllers </a>
  * @see GTADrive
  */
 public class OI {
 	public static ShakerDriver driver;
 	public static ShakerOperator operator;
-	
-	
+
+
 	protected Button driverA, driverB, driverX, driverY, driverLB, driverRB, driverBack, driverStart, driverLS, driverRS;
 	protected Button operatorA, operatorB, operatorX, operatorY, operatorLB, operatorRB, operatorBack, operatorStart, 
-		operatorLS, operatorRS; 
+	operatorLS, operatorRS; 
 
 	protected Button driverDpadUp, driverDpadUpRight, driverDpadRight, driverDpadDownRight, driverDpadDown,
-		driverDpadDownLeft, driverDpadLeft, driverDpadUpLeft;
+	driverDpadDownLeft, driverDpadLeft, driverDpadUpLeft;
 	protected Button operatorDpadUp, operatorDpadUpRight, operatorDpadRight, operatorDpadDownRight, 
-		operatorDpadDown, operatorDpadDownLeft, operatorDpadLeft, operatorDpadUpLeft;
-	
+	operatorDpadDown, operatorDpadDownLeft, operatorDpadLeft, operatorDpadUpLeft;
+
 	/**
-	 * This is where the joysticks are initialized and buttons are mapped to certain commands (driver and operator controls)
+	 * This is where the joysticks are initialized and buttons are mapped to certain commands 
+	 * (driver and operator controls)
+	 * </br> We are currently using 
+	 *<a href="http://support.logitech.com/en_us/product/gamepad-f310"> 
+	 * Logitech Gamepad F310 controllers </a>
 	 */
 	public OI(){
 		System.out.println("OI initialized");
@@ -42,42 +49,42 @@ public class OI {
 		initButtons();
 		initDpad();
 		//note: the triggers are called in GTADrive and in the joystick objects themselves so we do not have to map them here, esp. since they are for default commands
-		
+
 		/********************************** Operator Button Assignments ****************************************/
-		
+
 		operatorX.whileHeld(new RunWallShot()); 
 		operatorY.whileHeld(new RunLongShot());
-		
+
 		operatorA.whileHeld(new RunIntake());
-		
+
 		operatorB.whileHeld(new RunClimber());
 		operatorLB.whileHeld(new EngageRope());
 
 		operatorDpadDown.whenPressed(new GearMechDown()); 
 		operatorDpadUp.whenPressed(new GearMechUp());
-		
+
 		operatorLS.whenPressed(new ToggleGearSwitchEnabled());
-		
+
 		operatorDpadLeft.whileHeld(new HopperOn());
 		operatorDpadRight.whileHeld(new RunHopperBackwards());
-		
+
 		operatorRB.whenPressed(new StopHopper());//safety - TODO: if this isnt used, we could replace this with togglegearswitches
 		operatorBack.whenPressed(new StopClimberAndDisengage());//safety
 		operatorStart.whenPressed(new ShooterHopperSafety());//safety
-		
+
 		/********************************** Driver Button Assignments ****************************************/
-		
+
 		driverX.whileHeld(new ScoreGear()); 
-		
+
 		driverY.whileHeld(new RunClimber());
 		driverA.toggleWhenPressed(new RunIntake());
-				
+
 		driverLB.whileHeld(new DriveWithJoystick());
 		driverRB.whileHeld(new DriveWithJoystick());
-		
+
 		driverBack.whileHeld(new CalibrateGyro());
 	}
-	
+
 	/**
 	 * Initializes all Buttons
 	 */
@@ -92,7 +99,7 @@ public class OI {
 		driverStart = new JoystickButton(driver,8);
 		driverLS = new JoystickButton(driver,9);
 		driverRS = new JoystickButton(driver,10);
-		
+
 		operatorA = new JoystickButton(operator, 1);
 		operatorB = new JoystickButton(operator, 2);
 		operatorX = new JoystickButton(operator, 3);
@@ -104,7 +111,7 @@ public class OI {
 		operatorLS = new JoystickButton(operator,9);
 		operatorRS = new JoystickButton(operator,10);
 	}
-	
+
 	/**
 	 * Initializes the Dpad
 	 */

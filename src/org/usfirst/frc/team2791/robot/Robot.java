@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
- * Robot.java for Stoker, the 2017 robot from FRC2791 Shaker Robotics
+ * <b><i>Robot.java for Stoker, the 2017 robot from FRC2791 Shaker Robotics</i></b>
  * 
  * </p>
  * The VM is configured to automatically run this class, and to call the
@@ -31,7 +31,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  *</p> 
- * Feel free to email the authors for info on this package or any other aspect of the source code.
+ * <i>Feel free to email the authors for info on this package or any other aspect of the source code.</i>
  * </p>
  * @author Unnas Hussain: 
  * <a href="uwh.547@gmail.com"> uwh.547@gmail.com </a>

@@ -6,8 +6,12 @@ import org.usfirst.frc.team2791.trajectory.Trajectory.Segment;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * PID + Feedforward controller for following a Trajectory.
+ * PID + Feedforward controller for following a {@link Trajectory}.
+ * </br> The key factor of this object is its fast Feedforward loop. 
+ * Using {@link TrajectoryFollower#calculate(double) calculate()} to properly calculate error on the 
+ * Motion Profile, the code can accurately assess where it is based on minimal sensor feedback or PID gains
  *
+ *@see Trajectory
  * @author Jared341
  * @author Unnas Hussain
  */

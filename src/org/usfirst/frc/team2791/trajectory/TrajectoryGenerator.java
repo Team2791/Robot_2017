@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2791.trajectory;
 
 /**
- * Factory class for creating Trajectories.
+ * Factory class for creating {@link Trajectory Trajectories}.
  * This takes goal points and starting points along with configs, and generates the 
  * Trajectory parameters for the txt files 
  * @see Trajectory

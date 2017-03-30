@@ -7,7 +7,7 @@ import org.usfirst.frc.team2791.trajectory.Trajectory;
 
 
 /**
- *Uses FastParser to read the textfiles with the Segments. Helps with the Autopaths logic
+ *Uses {@link FastParser} to read the text files with the Segments. Helps with the logic in AutoPaths.s
  *@see FastParser
  *@see AutoPaths
  * @author Unnas Hussain

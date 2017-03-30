@@ -22,9 +22,12 @@ import edu.wpi.first.wpilibj.Timer;
 public class AutoPaths {
 	// Make sure these match up!
 	public static final int WALL_LANE_ID = 2;
-	public static String fileLocation="/paths/";
+	public static String fileLocation="/paths/"; //location on the rio
 
-	//TODO: load these paths to rio
+	/**
+	 * Contains the path/path file names for File Parsing.
+	 * <b>THESE MUST BE THE EXACT SAME AS THE FILES ON THE RIO IN /paths</b>
+	 */
 	public final static String[] kPathNames = { "BoilerGear",
 			"CenterGear",
 			"CloseShotToBoilerGear",

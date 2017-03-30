@@ -6,7 +6,7 @@ import org.usfirst.frc.team2791.robot.util.GTADrive;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Uses the GTADrive I/O Logic to control the drivetrain.
+ * Uses the {@link GTADrive} I/O Logic to control the {@link ShakerDrivetrain Drivetrain}.
  * @see GTADrive
  */
 public class DriveWithJoystick extends Command {

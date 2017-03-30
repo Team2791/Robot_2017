@@ -5,7 +5,7 @@ import org.usfirst.frc.team2791.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *Puts the Gear mechanism without effecting the motors
+ *Puts the {@link ShakerGear Gear Intake} without effecting the motors
  */
 public class GearMechUp extends Command {
 

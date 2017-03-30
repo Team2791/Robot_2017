@@ -14,6 +14,11 @@ public class Path {
   protected String name_;
   protected boolean go_left_;
   
+  
+  /**
+   * @param name name of the Path, must be a valid Java Class name 
+   * @param go_left_pair the left-right Pair
+   */
   public Path(String name, Trajectory.Pair go_left_pair) {
     name_ = name;
     go_left_pair_ = go_left_pair;
@@ -48,12 +53,19 @@ public class Path {
     return (go_left_ ? go_left_pair_.right : go_left_pair_.left);
   }
   
+  /**
+   * @param segmentNum segment that needs to be checked for inverting
+   * @return true if the left and right segment have the same position and velocity
+   */
   public boolean canFlip(int segmentNum) {
     Segment a = go_left_pair_.right.getSegment(segmentNum);
     Segment b = go_left_pair_.left.getSegment(segmentNum);
     return (a.pos == b.pos) && (a.vel == b.vel);
   }
 
+  /**
+   * @return the final angle the robot will be heading
+   */
   public double getEndHeading() {
     int numSegments = getLeftWheelTrajectory().getNumSegments();
     Segment lastSegment = getLeftWheelTrajectory().getSegment(numSegments - 1);
