@@ -24,6 +24,10 @@ public class ShakerGear extends Subsystem{
 	
 	private Talon gearSpark;
 	private DigitalInput limitSwitch;
+	
+	/**
+	 * true = switch logic is active/ false = switches disabled
+	 */
 	private static boolean switchesEnabled;
 	
 	public ShakerGear(){
@@ -31,7 +35,7 @@ public class ShakerGear extends Subsystem{
 		gearSpark = new Talon(RobotMap.GEAR_SPARK_PORT);
 		
 		limitSwitch = new DigitalInput(RobotMap.GEAR_INTAKE_LIMIT_SWITCH_A);
-//		enableLimitSwitches();
+		enableLimitSwitch();
 	}
 	
 	public void initDefaultCommand(){
@@ -68,34 +72,39 @@ public class ShakerGear extends Subsystem{
 	 */
 	public boolean getLimitSwitchState(){
 
-		if(areSwitchesEnabled())
+		if(isSwitchEnabled())
 			return limitSwitch.get();
 		else
 			return false;
 	}
 	
-	public void toggleSwitchEnables(){
-		switchesEnabled = !this.areSwitchesEnabled();
+	/**
+	 * Changes the enabled status to whatever it wasn't
+	 */
+	public void toggleSwitchEnabled(){
+		boolean currentEnable = this.isSwitchEnabled();
+		switchesEnabled = !currentEnable;
 	}
 	
 	/**
 	 * Disables the limit switches.
 	 */
-	public void disableLimitSwitches(){
+	public void disableLimitSwitch(){
 		switchesEnabled = false;
 	}
 	
 	/**
 	 * Enables the limit switches
 	 */
-	public void enableLimitSwitches(){
+	public void enableLimitSwitch(){
 		switchesEnabled = true;
 	}
 	
 	/**
+	 * true = enabled / false = disabled
 	 * @return if the limit switches are enabled
 	 */
-	public boolean areSwitchesEnabled(){
+	public boolean isSwitchEnabled(){
 		return switchesEnabled;
 	}
 	
@@ -105,7 +114,7 @@ public class ShakerGear extends Subsystem{
 	
 	public void debug(){
 		SmartDashboard.putBoolean("Gear Intake Status", getLimitSwitchState());
-		SmartDashboard.putBoolean("Gear Intake Switches Enabled", areSwitchesEnabled());
+		SmartDashboard.putBoolean("Gear Intake Switches Enabled", isSwitchEnabled());
 		
 		SmartDashboard.putBoolean("Gear state", gearSolenoid.get());
 		

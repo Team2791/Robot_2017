@@ -5,7 +5,7 @@ import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
 import org.usfirst.frc.team2791.robot.commands.*;
 import org.usfirst.frc.team2791.robot.commands.safeties.StopClimberAndDisengage;
 import org.usfirst.frc.team2791.robot.commands.safeties.StopHopper;
-import org.usfirst.frc.team2791.robot.commands.safeties.ToggleGearSwitches;
+import org.usfirst.frc.team2791.robot.commands.safeties.ToggleGearSwitchEnabled;
 import org.usfirst.frc.team2791.robot.commands.safeties.ShooterHopperSafety;
 
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -55,12 +55,13 @@ public class OI {
 
 		operatorDpadDown.whenPressed(new GearMechDown()); 
 		operatorDpadUp.whenPressed(new GearMechUp());
-		operatorLS.toggleWhenPressed(new ToggleGearSwitches());
+		
+		operatorLS.whenPressed(new ToggleGearSwitchEnabled());
 		
 		operatorDpadLeft.whileHeld(new HopperOn());
 		operatorDpadRight.whileHeld(new RunHopperBackwards());
 		
-		operatorRB.whenPressed(new StopHopper());//safety
+		operatorRB.whenPressed(new StopHopper());//safety - TODO: if this isnt used, we could replace this with togglegearswitches
 		operatorBack.whenPressed(new StopClimberAndDisengage());//safety
 		operatorStart.whenPressed(new ShooterHopperSafety());//safety
 		

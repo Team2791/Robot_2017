@@ -6,7 +6,8 @@ import org.usfirst.frc.team2791.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Puts Gear Mechanism down and stops the gear motors from running
+ * Puts Gear Mechanism down and stops the gear motors from running.</br>
+ * This will work regardless of the status of the limit switches
  */
 public class ScoreGear extends Command{
 	public ScoreGear (){
@@ -19,16 +20,16 @@ public class ScoreGear extends Command{
 	}
 	
 	protected void execute(){
-		Robot.gearMechanism.stopGearIntake();
-		Robot.gearMechanism.changeGearSolenoidState(true);
+		Robot.gearMechanism.stopGearIntake(); // might get rid of this 
+		Robot.gearMechanism.changeGearSolenoidState(true); //might get rid of this
 	}
 	
 	protected boolean isFinished(){
-		return false;//don't return true because we want command to end when driver releases button
+		return false;
 	}
 	
 	protected void end(){
-		Robot.gearMechanism.stopGearIntake();
+		Robot.gearMechanism.stopGearIntake(); //might get rid of this
 		Robot.gearMechanism.changeGearSolenoidState(false);
 	}
 	

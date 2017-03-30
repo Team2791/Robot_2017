@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *Runs the Gear Intake's motors as long as the gear mechanism is down and the switches aren't activated
+ *</br> This is the default command for the ShakerGear Subsystem
  */
 public class RunGearMotor extends Command {
 
@@ -21,13 +22,14 @@ public class RunGearMotor extends Command {
 
 		if(Robot.gearMechanism.isDown()){
 			Robot.gearMechanism.runGearIntake();
+
 			if(Robot.gearMechanism.getLimitSwitchState()){
-				System.out.println("RunGearMotor is bringing the piston up");
+				//System.out.println("The Limit Switch is bringing the piston up");
 				Robot.gearMechanism.changeGearSolenoidState(false);
+			}}else{
+				Robot.gearMechanism.stopGearIntake();
+				
 			}
-		}else{
-			Robot.gearMechanism.stopGearIntake();
-		}
 
 	}
 
