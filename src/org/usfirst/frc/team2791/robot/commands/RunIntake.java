@@ -1,12 +1,12 @@
 package org.usfirst.frc.team2791.robot.commands;
 
 import org.usfirst.frc.team2791.robot.Robot;
-
+import org.usfirst.frc.team2791.robot.subsystems.*;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * 
- * Runs the intake motors and actuates the intake to the outward position
+ * Runs the {@link ShakerIntake} motors and actuates the intake to the outward position
  */
 public class RunIntake extends Command{
 	public RunIntake(){

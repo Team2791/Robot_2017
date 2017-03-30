@@ -1,11 +1,11 @@
 package org.usfirst.frc.team2791.robot.commands.safeties;
 
 import org.usfirst.frc.team2791.robot.Robot;
-
+import org.usfirst.frc.team2791.robot.subsystems.*;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Stops the Hopper motors safely
+ * Stops the {@link ShakerHopper} motors safely
  */
 public class StopHopper extends Command{
 	public StopHopper(){

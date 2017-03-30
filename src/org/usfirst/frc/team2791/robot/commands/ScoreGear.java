@@ -2,11 +2,11 @@ package org.usfirst.frc.team2791.robot.commands;
 
 
 import org.usfirst.frc.team2791.robot.Robot;
-
+import org.usfirst.frc.team2791.robot.subsystems.*;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Puts Gear Mechanism down and stops the gear motors from running.</br>
+ * Puts {@link ShakerGear} Mechanism down and stops the gear motors from running.</br>
  * This will work regardless of the status of the limit switches
  */
 public class ScoreGear extends Command{

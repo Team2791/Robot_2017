@@ -3,9 +3,9 @@ package org.usfirst.frc.team2791.robot.commands;
 
 import org.usfirst.frc.team2791.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
-
+import org.usfirst.frc.team2791.robot.subsystems.*;
 /**
- * Simultanesouly runs the shooter and hopper. Sets shooter speed and hood for wallShot. The hopper is set to meter its speed.
+ * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for wallShot. The hopper is set to meter its speed.
  */
 public class RunWallShot extends Command{
 	public RunWallShot() {
