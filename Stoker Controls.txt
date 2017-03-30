@@ -1,4 +1,4 @@
-_*Operator Control*_
+*****Operator Control*****
 
 X - Run Wall Shot
 Y - Run Long Shot
@@ -17,7 +17,7 @@ DPadRight - Hopper Reverse
 Back - Climber EStop
 Start - Shooter/Hopper EStop
 
-_*Driver Control*_
+*****Driver Control*****
 
 LT -Reverse GTA Drive
 RT - Forward GTA Drive
