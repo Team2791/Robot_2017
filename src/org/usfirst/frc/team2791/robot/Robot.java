@@ -21,16 +21,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
+ * Robot.java for Stoker, the 2017 robot from FRC2791 Shaker Robotics
+ * 
+ * </p>
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
- * 
- * ***************Feel free to email the authors for info on this package.
- * @author team2791 - 
- * @author Gaurab Banerjee: gaurab.banerjee97@gmail.com
- * @author Unnas Hussain: uwh.547@gmail.com
+ *</p> 
+ * Feel free to email the authors for info on this package or any other aspect of the source code.
+ * </p>
+ * @author Gaurab Banerjee: 
+ * <a href="gbanerjee97@gmail.com"> gbanerjee97@gmail.com </a>
+ * @author Unnas Hussain: 
+ * <a href="uwh.547@gmail.com"> uwh.547@gmail.com </a>
+
  */
 public class Robot extends IterativeRobot {
 	
