@@ -1,0 +1,30 @@
+_*Operator Control*_
+
+X - Run Wall Shot
+Y - Run Long Shot
+
+A - Run Intake
+B - Run Climber
+LB - Engage Rope
+
+DPadUp - Gear Intake Up
+DPadDown - Gear Intake Down (Motor Running)
+LS Button - Gear Switch On/Off
+
+DPadLeft - Hopper Forward
+DPadRight - Hopper Reverse
+
+Back - Climber EStop
+Start - Shooter/Hopper EStop
+
+_*Driver Control*_
+
+LT -Reverse GTA Drive
+RT - Forward GTA Drive
+
+X - Score Gear (Deadman)
+Y - Run Climber
+
+A - Toggle Intake
+
+Back - Calibrate Gyro 
