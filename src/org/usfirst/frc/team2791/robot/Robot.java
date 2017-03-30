@@ -32,14 +32,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *</p> 
  * Feel free to email the authors for info on this package or any other aspect of the source code.
  * </p>
- * @author Gaurab Banerjee: 
- * <a href="gbanerjee97@gmail.com"> gbanerjee97@gmail.com </a>
  * @author Unnas Hussain: 
  * <a href="uwh.547@gmail.com"> uwh.547@gmail.com </a>
-
+ * @author Gaurab Banerjee: 
+ * <a href="gbanerjee97@gmail.com"> gbanerjee97@gmail.com </a>
  */
 public class Robot extends IterativeRobot {
-	
+
 	public static OI oi;
 	public static GamePeriod gamePeriod;
 	public static PowerDistributionPanel pdp; //CAN ID has to be 0 for current sensing
@@ -57,7 +56,8 @@ public class Robot extends IterativeRobot {
 	 * setting autonomousCommand to a Command will cause that Command to run in autonomous init
 	 */
 	public Command autonomousCommand;
-	SendableChooser<Command> autoChooser = new SendableChooser<>();
+	SendableChooser<Command> autoChooser;
+	SendableChooser<Color> colorChooser;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -65,19 +65,19 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-	
-		
+
+
 		System.out.println("Starting to init my systems.");
 		gamePeriod = GamePeriod.DISABLED;
 
 		pdp = new PowerDistributionPanel(RobotMap.PDP); //CAN id has to be 0
-		
+
 		compressor = new Compressor(RobotMap.PCM_MODULE);
 		compressor.setClosedLoopControl(true);
 		compressor.start();
-		
+
 		CameraServer.getInstance().startAutomaticCapture();
-		
+
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
@@ -88,12 +88,21 @@ public class Robot extends IterativeRobot {
 
 		drivetrain.setAutoPID();
 		debug();
-		
 
-		autoChooser.addObject("Center Gear - red", new CenterGear(Color.RED));
-		autoChooser.addObject("Boiler Gear - red", new LoadingStationGear(Color.RED));
-		
+		autoChooser = new SendableChooser<>();
+		colorChooser = new SendableChooser<>();
+
+
+		autoChooser.addObject("Center Gear", new CenterGear(Color.RED));
+		autoChooser.addObject("Boiler Gear", new BoilerGear(Color.RED));
+		autoChooser.addObject("Loading Station Gear", new LoadingStationGear(Color.RED));
+
+		colorChooser.addDefault("Red", Color.RED);
+		colorChooser.addObject("Blue", Color.BLUE);
+
 		SmartDashboard.putData("Auto Selector", autoChooser);
+		SmartDashboard.putData("Color Selector", colorChooser);
+
 	}
 
 	/**
@@ -103,19 +112,23 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		SmartDashboard.putData("Auto Selector", autoChooser);
+		SmartDashboard.putData("Color Selector", colorChooser);
+
+
 		gamePeriod = GamePeriod.DISABLED;
 	}
 
 	@Override
 	public void disabledPeriodic() {
-		
+
 		//allows us to reset the gyro and both encoders while disabled
 		if(oi.driver.getButtonSt()){
 			drivetrain.reset();
 		}
-		
+
 		debug(); //allows us to debug (e.g. encoders and gyro) while disabled
-		
+
 		Scheduler.getInstance().run();
 	}
 
@@ -132,24 +145,26 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		
+
 		drivetrain.reset();
 
 		intake.disengageRatchetWing();
 		gearMechanism.changeGearSolenoidState(false);
 
+		//		autonomousCommand = autoChooser.getSelected();
+		//		Color color = colorChooser.getSelected();
+		
 		Color color = Color.RED;//allows us to choose the side we are on and which auto we want to do
-		
-//		autonomousCommand = new CenterGear(color);
-		
-//		boolean red = false;
-//		autonomousCommand = new CenterGearAuton(red);
-//		autonomousCommand = new BoilerGearAuton(red);
-//		autonomousCommand = new LoadingStationGearAuton(red);
+		autonomousCommand = new CenterGear(color);
 
-//		autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7);
-//		autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1);
-		
+		//		boolean red = false;
+		//		autonomousCommand = new CenterGearAuton(red);
+		//		autonomousCommand = new BoilerGearAuton(red);
+		//		autonomousCommand = new LoadingStationGearAuton(red);
+
+		//		autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7);
+		//		autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1);
+
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 
@@ -161,7 +176,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		
+
 		debug();
 
 		double thisAutoLoopTime = Timer.getFPGATimestamp();
@@ -172,10 +187,10 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		
+
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		
+
 		drivetrain.resetEncoders();
 		gamePeriod = GamePeriod.TELEOP;
 		intake.disengageRatchetWing();
@@ -190,7 +205,7 @@ public class Robot extends IterativeRobot {
 		debug();
 	}
 
-	
+
 	/**
 	 * This function is called periodically during test mode
 	 */
@@ -202,18 +217,18 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void debug() {
-		
+
 		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
 		SmartDashboard.putNumber("Drivetrain total current", drivetrain.getCurrentUsage());
 		SmartDashboard.putNumber("Climber/Intake current",intake.getCurrentUsage());
 		SmartDashboard.putNumber("Hopper current",hopper.getCurrentUsage());
 		SmartDashboard.putNumber("Shooter total current",shooter.getCurrentUsage());
-		
+
 		drivetrain.debug();
 		shooter.debug();
 		gearMechanism.debug();
 		hopper.debug();
-		
+
 	}
 
 	public enum GamePeriod {

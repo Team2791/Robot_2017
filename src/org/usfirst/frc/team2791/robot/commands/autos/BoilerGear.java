@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class BoilerGear extends CommandGroup{
 	
-	public BoilerGear(Color color, Direction direction){
+	public BoilerGear(Color color){
 		addSequential(new FollowPath("BoilerGear", color, Direction.REVERSE));
 		addSequential(new ScoreGear());
 		addSequential(new DelayDrivetrain(1));
