@@ -113,7 +113,8 @@ public class ShakerGear extends Subsystem{
 	}
 	
 	public void debug(){
-		SmartDashboard.putBoolean("Gear Intake Status", getLimitSwitchState());
+		
+		SmartDashboard.putBoolean("Gear Intake Status", limitSwitch.get());
 		SmartDashboard.putBoolean("Gear Intake Switches Enabled", isSwitchEnabled());
 		
 		SmartDashboard.putBoolean("Gear state", gearSolenoid.get());

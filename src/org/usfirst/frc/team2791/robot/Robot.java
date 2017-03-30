@@ -2,6 +2,7 @@ package org.usfirst.frc.team2791.robot;
 
 import org.usfirst.frc.team2791.robot.commands.autos.*;
 import org.usfirst.frc.team2791.robot.commands.autos.FollowPath.Color;
+
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -112,9 +113,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		SmartDashboard.putData("Auto Selector", autoChooser);
-		SmartDashboard.putData("Color Selector", colorChooser);
-
 
 		gamePeriod = GamePeriod.DISABLED;
 	}
@@ -151,19 +149,19 @@ public class Robot extends IterativeRobot {
 		intake.disengageRatchetWing();
 		gearMechanism.changeGearSolenoidState(false);
 
-		//		autonomousCommand = autoChooser.getSelected();
-		//		Color color = colorChooser.getSelected();
-		
-		Color color = Color.RED;//allows us to choose the side we are on and which auto we want to do
-		autonomousCommand = new CenterGear(color);
+		autonomousCommand = (Command) autoChooser.getSelected();
+		Color color = (Color) colorChooser.getSelected();
 
-		//		boolean red = false;
-		//		autonomousCommand = new CenterGearAuton(red);
-		//		autonomousCommand = new BoilerGearAuton(red);
-		//		autonomousCommand = new LoadingStationGearAuton(red);
+//		Color color = Color.RED;//allows us to choose the side we are on and which auto we want to do
+//		autonomousCommand = new CenterGear(color);
 
-		//		autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7);
-		//		autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1);
+		//boolean red = false;
+		//autonomousCommand = new CenterGearAuton(red);
+		//autonomousCommand = new BoilerGearAuton(red);
+		//autonomousCommand = new LoadingStationGearAuton(red);
+
+		//autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7);
+		//autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1);
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();
