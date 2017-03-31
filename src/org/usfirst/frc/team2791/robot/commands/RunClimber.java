@@ -3,10 +3,10 @@ package org.usfirst.frc.team2791.robot.commands;
 import org.usfirst.frc.team2791.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team2791.robot.subsystems.*;
+import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 
 /**
- * Runs the {@link ShakerIntake Climber} and Engages the {link ShakerIntake# Ratchet to prevent the robot from falling down the rope
+ * Runs the {@link ShakerIntake Climber} and Engages the {@link ShakerIntake#ratchetWingSolenoid ratchet} to prevent the robot from falling down the rope
  */
 public class RunClimber extends Command{
 	public RunClimber(){

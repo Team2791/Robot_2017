@@ -2,11 +2,12 @@ package org.usfirst.frc.team2791.robot.commands.safeties;
 
 
 import org.usfirst.frc.team2791.robot.Robot;
+import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Disables/Enables Gear Limit Switches </p>
+ * Disables/Enables {@link ShakerGear Gear} {@link ShakerGear#limitSwitch Limit Switches} </p>
  * In case the switches get stuck or become unresponsive, this will disable the limit switches.
  * After the limit switches are disabled, the gear mechanism will work the same as always, except that
  * it will not automatically come up when it gets a gear. However, the operator will be able to bring the intake down,

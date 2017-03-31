@@ -1,12 +1,12 @@
 package org.usfirst.frc.team2791.robot.commands;
 
 import org.usfirst.frc.team2791.robot.Robot;
-import org.usfirst.frc.team2791.robot.subsystems.*;
+import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *Runs the {@link ShakerIntake} motors as long as the gear mechanism is down and the switches aren't activated
- *</br> This is the default command for the ShakerGear Subsystem
+ *Runs the {@link ShakerGear Gear Intake} motors as long as the gear mechanism is down and the switches aren't activated
+ *</br> This is the default command for the {@link ShakerGear} Subsystem
  */
 public class RunGearMotor extends Command {
 

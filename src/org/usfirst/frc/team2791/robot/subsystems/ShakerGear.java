@@ -23,6 +23,10 @@ public class ShakerGear extends Subsystem{
 	private static boolean state;
 	
 	private Talon gearSpark;
+	
+	/**
+	 * A limit switch at the bottom of the gear intake that is activated when a gear is in the intake 
+	 */
 	private DigitalInput limitSwitch;
 	
 	/**

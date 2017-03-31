@@ -26,6 +26,10 @@ public class ShakerIntake extends Subsystem {
 	public Talon intakeSpark;
 	
 	private Solenoid intakeSolenoid;
+	
+	/**
+	 * safety solenoid that activateds the pall piston to prevent slipping during a climb
+	 */
 	public Solenoid ratchetWingSolenoid;
 	
 	public ShakerIntake(){
