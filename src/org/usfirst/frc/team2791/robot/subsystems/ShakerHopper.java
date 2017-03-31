@@ -28,6 +28,7 @@ public class ShakerHopper extends Subsystem{
 		
 	public ShakerHopper(){
 		hopperSpark = new Talon(RobotMap.HOPPER_SPARK_PORT);
+		hopperSpark.setInverted(true);
 		
 		ballSensor1 = new AnalogInput(0);
 		ballSensor2 = new AnalogInput(1);
