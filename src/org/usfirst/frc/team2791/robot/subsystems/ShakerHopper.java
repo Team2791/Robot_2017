@@ -64,11 +64,19 @@ public class ShakerHopper extends Subsystem{
 	}
 	
 	/**
+	 * Runs hopper backwards.
+	 */
+	public void runHopperBackwards() {
+		System.out.print("Running hopper backwards");
+		hopperSpark.setSpeed(1.0);
+	}
+	
+	/**
 	 * Sets the hopper VBus output
 	 * @param speed between -1.0 and +1.0
 	 */
 	public void setHopperSpeed(double speed){
-		System.out.print("Running Hopper at " +speed);
+//		System.out.print("Running Hopper at " +speed);
 		hopperSpark.setSpeed(speed);
 	} 
 	
