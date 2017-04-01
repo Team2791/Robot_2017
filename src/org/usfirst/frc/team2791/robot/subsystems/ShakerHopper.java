@@ -52,7 +52,7 @@ public class ShakerHopper extends Subsystem{
 	 */
 	public void runHopper() {
 		System.out.print("Running hopper");
-		hopperSpark.setSpeed(-1.0);
+		hopperSpark.setSpeed(-0.75);
 	}
 	
 	/**
@@ -68,7 +68,7 @@ public class ShakerHopper extends Subsystem{
 	 */
 	public void runHopperBackwards() {
 		System.out.print("Running hopper backwards");
-		hopperSpark.setSpeed(1.0);
+		hopperSpark.setSpeed(0.75);
 	}
 	
 	/**
