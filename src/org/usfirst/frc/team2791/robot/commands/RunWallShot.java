@@ -5,12 +5,14 @@ import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for wallShot. The hopper is set to meter its speed.
  */
 public class RunWallShot extends Command{
+	Timer timer;
 	public RunWallShot() {
 		super("RunWallShotFullHopper");
 		requires(Robot.shooter);
@@ -20,8 +22,12 @@ public class RunWallShot extends Command{
 
 	@Override
 	protected void initialize() {
+		timer = new Timer();
 		System.out.print("shooter init");
 		Robot.shooter.prepWallShot();
+		while(timer.get()<1.0){
+			Robot.hopper.setHopperSpeed(1.0);
+		}
 	}
 
 	@Override
