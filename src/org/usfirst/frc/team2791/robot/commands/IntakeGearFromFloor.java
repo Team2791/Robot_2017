@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class IntakeGearFromFloor extends Command {
 
 	Timer timer = new Timer();
+	boolean gotGear;
 	
 	public IntakeGearFromFloor() {
 		super("IntakeGearFromFloor");
@@ -21,18 +22,26 @@ public class IntakeGearFromFloor extends Command {
 	protected void initialize() {
 		Robot.gearMechanism.setGearIntakeDown(true);
 		Robot.gearMechanism.runGearIntake();
+		gotGear = false;
+		
 		timer.stop();
 		timer.reset();
 	}
 
 	protected void execute() {
 
-		if(Robot.gearMechanism.hasGear()){
-			Robot.gearMechanism.setGearIntakeDown(false);
+		System.out.println("gear pickup timer = " + timer.get());
+		
+		if(Robot.gearMechanism.hasGear() && !gotGear){
+			gotGear = true;
 			timer.start();
 		}
 		
-		if(timer.get() > 1) {
+		if(timer.get() > 0.5) {
+			Robot.gearMechanism.setGearIntakeDown(false);
+		}
+		
+		if(timer.get() > 1.5) {
 			Robot.gearMechanism.stopGearIntake();
 		} else {
 			Robot.gearMechanism.runGearIntake();
@@ -40,7 +49,7 @@ public class IntakeGearFromFloor extends Command {
 	}
 
 	protected boolean isFinished() {
-		return timer.get() > 1;
+		return timer.get() > 1.51;
 	}
 
 	protected void end() {

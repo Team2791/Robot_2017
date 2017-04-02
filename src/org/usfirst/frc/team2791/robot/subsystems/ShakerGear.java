@@ -31,7 +31,7 @@ public class ShakerGear extends Subsystem{
 	/**
 	 * true = switch logic is active/ false = switches disabled
 	 */
-	private static boolean switchesEnabled;
+	private static boolean switchesEnabled = true;
 	
 	public ShakerGear(){
 		gearSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.GEAR_CHANNEL);

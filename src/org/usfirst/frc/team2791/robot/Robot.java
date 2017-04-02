@@ -1,8 +1,12 @@
 package org.usfirst.frc.team2791.robot;
 
 import org.usfirst.frc.team2791.robot.commands.autos.*;
-import org.usfirst.frc.team2791.robot.commands.autos.FollowPath.Color;
-import org.usfirst.frc.team2791.robot.commands.autos.FollowPath.Direction;
+import org.usfirst.frc.team2791.robot.commands.autos.traj.BoilerGear;
+import org.usfirst.frc.team2791.robot.commands.autos.traj.CenterGear;
+import org.usfirst.frc.team2791.robot.commands.autos.traj.FollowPath;
+import org.usfirst.frc.team2791.robot.commands.autos.traj.LoadingStationGear;
+import org.usfirst.frc.team2791.robot.commands.autos.traj.FollowPath.Color;
+import org.usfirst.frc.team2791.robot.commands.autos.traj.FollowPath.Direction;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
