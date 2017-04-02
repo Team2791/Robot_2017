@@ -22,7 +22,7 @@ public class GearMechDownRunMotors extends Command{
 	
 	protected void execute(){
 		Robot.gearMechanism.runGearIntake(); 
-	}
+}
 	
 	protected boolean isFinished(){
 		return false;
@@ -30,7 +30,7 @@ public class GearMechDownRunMotors extends Command{
 	
 	protected void end(){
 		Robot.gearMechanism.stopGearIntake();
-	}
+}
 	
 	protected void interrupted(){
 		end();

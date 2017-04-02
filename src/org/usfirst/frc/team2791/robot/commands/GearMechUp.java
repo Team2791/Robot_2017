@@ -5,13 +5,16 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *Puts the {@link ShakerGear Gear Intake} without effecting the motors
+ *Puts the {@link ShakerGear Gear Intake} up and runs the gears for .5 secs
  */
 public class GearMechUp extends Command {
 
+	private double timeout = 0.5;
+	
     public GearMechUp() {
     	super("GearMechDown");
     	requires(Robot.gearMechanism);
+    	setTimeout(timeout);
     }
 
     protected void initialize() {
@@ -29,6 +32,7 @@ public class GearMechUp extends Command {
 
     protected void end() {
     	Robot.gearMechanism.stopGearIntake();
+
 
     }
 

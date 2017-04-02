@@ -13,13 +13,13 @@ import edu.wpi.first.wpilibj.command.Command;
 public class GearMechDown extends Command{
 	public GearMechDown (){
 		super("ScoreGear");
+
 		requires(Robot.gearMechanism);
 	}
 	
 	protected void initialize(){
 		Robot.gearMechanism.setGearIntakeDown(true);
-	}
-	
+	}	
 	protected void execute(){
 		Robot.gearMechanism.stopGearIntake(); 
 	}
@@ -34,5 +34,6 @@ public class GearMechDown extends Command{
 	
 	protected void interrupted(){
 		end();
+
 	}
 }
