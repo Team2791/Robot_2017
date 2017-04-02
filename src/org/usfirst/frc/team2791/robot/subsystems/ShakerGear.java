@@ -74,11 +74,8 @@ public class ShakerGear extends Subsystem{
 	 * @return true = gear inside / false = no gear in intake
 	 */
 	public boolean hasGear(){
-
-		if(isSwitchEnabled())
-			return limitSwitch.get();
-		else
-			return false;
+		return limitSwitch.get();
+		
 	}
 	
 	/**
@@ -124,5 +121,12 @@ public class ShakerGear extends Subsystem{
 		
 		SmartDashboard.putNumber("Gear Motor Output", gearSpark.get());
 		SmartDashboard.putNumber("Gear intake Current Usage", getCurrentUsage());
+	}
+
+	public void changeGearSolenoidState(boolean state_) {
+		
+		gearSolenoid.set(state_);
+		// TODO Auto-generated method stub
+		
 	}
 }

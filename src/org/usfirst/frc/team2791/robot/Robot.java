@@ -94,19 +94,19 @@ public class Robot extends IterativeRobot {
 		drivetrain.setAutoPID();
 		debug();
 
-		autoChooser = new SendableChooser<>();
-		colorChooser = new SendableChooser<>();
-
-
-		autoChooser.addObject("Center Gear", new CenterGear(Color.RED));
-		autoChooser.addObject("Boiler Gear", new BoilerGear(Color.RED));
-		autoChooser.addObject("Loading Station Gear", new LoadingStationGear(Color.RED));
-
-		colorChooser.addDefault("Red", Color.RED);
-		colorChooser.addObject("Blue", Color.BLUE);
-
-		SmartDashboard.putData("Auto Selector", autoChooser);
-		SmartDashboard.putData("Color Selector", colorChooser);
+//		autoChooser = new SendableChooser<>();
+//		colorChooser = new SendableChooser<>();
+//
+//
+//		autoChooser.addObject("Center Gear", new CenterGear(Color.RED));
+//		autoChooser.addObject("Boiler Gear", new BoilerGear(Color.RED));
+//		autoChooser.addObject("Loading Station Gear", new LoadingStationGear(Color.RED));
+//
+//		colorChooser.addDefault("Red", Color.RED);
+//		colorChooser.addObject("Blue", Color.BLUE);
+//
+//		SmartDashboard.putData("Auto Selector", autoChooser);
+//		SmartDashboard.putData("Color Selector", colorChooser);
 
 	}
 
