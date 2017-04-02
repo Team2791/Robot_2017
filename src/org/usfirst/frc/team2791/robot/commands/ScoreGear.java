@@ -18,11 +18,11 @@ public class ScoreGear extends Command{
 	
 	protected void initialize(){
 		Robot.gearMechanism.changeGearSolenoidState(true);
+		Robot.gearMechanism.stopGearIntake(); //uh
 	}
 	
 	protected void execute(){
-		Robot.gearMechanism.stopGearIntake(); // might get rid of this 
-		Robot.gearMechanism.changeGearSolenoidState(true); //might get rid of this
+//		Robot.gearMechanism.changeGearSolenoidState(true);
 	}
 	
 	protected boolean isFinished(){
@@ -30,7 +30,7 @@ public class ScoreGear extends Command{
 	}
 	
 	protected void end(){
-		Robot.gearMechanism.stopGearIntake(); //might get rid of this
+//		Robot.gearMechanism.stopGearIntake();
 		Robot.gearMechanism.changeGearSolenoidState(false);
 	}
 	

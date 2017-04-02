@@ -2,13 +2,13 @@ package org.usfirst.frc.team2791.robot.subsystems;
 
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
+import org.usfirst.frc.team2791.robot.commands.WaitForGearSwitches;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team2791.robot.commands.RunGearMotor;
 
 /**
  * This class corresponds to the gear subsystem which uses pistons to actuate the scoring mechanism 
@@ -43,7 +43,8 @@ public class ShakerGear extends Subsystem{
 	}
 	
 	public void initDefaultCommand(){
-		setDefaultCommand(new RunGearMotor());
+//		setDefaultCommand(new RunGearMotor());
+		setDefaultCommand(new WaitForGearSwitches());
 	}
 	
 	public void runGearIntake(){
@@ -74,7 +75,7 @@ public class ShakerGear extends Subsystem{
 	 * @return Summary state of limit switches in the intake. true = gear inside / false = no gear in intake 
 	 * </br>The operator needs the ability to override the switches, so if the switches are disables, this will return false
 	 */
-	public boolean getLimitSwitchState(){
+	public boolean hasGear(){
 
 		if(isSwitchEnabled())
 			return limitSwitch.get();
