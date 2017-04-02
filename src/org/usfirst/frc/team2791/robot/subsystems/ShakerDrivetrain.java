@@ -171,6 +171,9 @@ public class ShakerDrivetrain extends Subsystem{
 		SmartDashboard.putNumber("Gyro rate", gyro.getRate());
 
 		SmartDashboard.putNumber("Avg Acceleration", getAverageAcceleration());
+		
+		SmartDashboard.putNumber("Drivetrain total current", getCurrentUsage());
+
 
 		SmartDashboard.putString("LDist vs RDist vs AvgDist", getLeftDistance()+":"+getRightDistance()+":"+getAverageDist());
 		SmartDashboard.putString("LVel vs RVel vs AvgVel", getLeftVelocity()+":"+getRightVelocity()+":"+getAverageVelocity());

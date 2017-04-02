@@ -15,17 +15,21 @@ public class GearMechUp extends Command {
     }
 
     protected void initialize() {
-    	Robot.gearMechanism.changeGearSolenoidState(false);
+    	Robot.gearMechanism.setGearIntakeDown(false);
+    	setTimeout(0.75);
     }
 
     protected void execute() {
+    	Robot.gearMechanism.runGearIntake();
     }
 
     protected boolean isFinished() {
-        return true;
+        return this.isTimedOut();
     }
 
     protected void end() {
+    	Robot.gearMechanism.stopGearIntake();
+
     }
 
     protected void interrupted() {

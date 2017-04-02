@@ -2,7 +2,7 @@ package org.usfirst.frc.team2791.robot;
 
 import org.usfirst.frc.team2791.robot.commands.autos.*;
 import org.usfirst.frc.team2791.robot.commands.autos.FollowPath.Color;
-
+import org.usfirst.frc.team2791.robot.commands.autos.FollowPath.Direction;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -147,13 +147,13 @@ public class Robot extends IterativeRobot {
 		drivetrain.reset();
 
 		intake.disengageRatchetWing();
-		gearMechanism.changeGearSolenoidState(false);
+		gearMechanism.setGearIntakeDown(false);
 
-		autonomousCommand = (Command) autoChooser.getSelected();
-		Color color = (Color) colorChooser.getSelected();
+//		autonomousCommand = (Command) autoChooser.getSelected();
+//		Color color = (Color) colorChooser.getSelected();
 
-//		Color color = Color.RED;//allows us to choose the side we are on and which auto we want to do
-//		autonomousCommand = new CenterGear(color);
+		Color color = Color.RED;//allows us to choose the side we are on and which auto we want to do
+		autonomousCommand = new FollowPath("TestingOneTwo", color, Direction.FORWARD);
 
 		//boolean red = false;
 		//autonomousCommand = new CenterGearAuton(red);
@@ -192,6 +192,7 @@ public class Robot extends IterativeRobot {
 		drivetrain.resetEncoders();
 		gamePeriod = GamePeriod.TELEOP;
 		intake.disengageRatchetWing();
+		gearMechanism.setGearIntakeDown(false);
 	}
 
 	/**

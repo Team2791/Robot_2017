@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team2791.robot.commands.RunGearMotor;
 
 /**
  * This class corresponds to the gear subsystem which uses pistons to actuate the scoring mechanism 
@@ -43,7 +42,6 @@ public class ShakerGear extends Subsystem{
 	}
 	
 	public void initDefaultCommand(){
-		setDefaultCommand(new RunGearMotor());
 	}
 	
 	public void runGearIntake(){
@@ -58,7 +56,7 @@ public class ShakerGear extends Subsystem{
 	 * 
 	 * @param state_ true = down / false = up
 	 */
-	public void changeGearSolenoidState(boolean state_){
+	public void setGearIntakeDown(boolean state_){
 		state = state_;
 		gearSolenoid.set(state);
 	}
@@ -71,10 +69,11 @@ public class ShakerGear extends Subsystem{
 	}
 	
 	/**
-	 * @return Summary state of limit switches in the intake. true = gear inside / false = no gear in intake 
-	 * </br>The operator needs the ability to override the switches, so if the switches are disables, this will return false
+	 * The operator needs the ability to override the switches, so if the switches are disables, this will return false
+	 * </br>Summary state of limit switches in the intake. true = gear inside / false = no gear in intake 
+	 * @return true = gear inside / false = no gear in intake
 	 */
-	public boolean getLimitSwitchState(){
+	public boolean hasGear(){
 
 		if(isSwitchEnabled())
 			return limitSwitch.get();
@@ -118,10 +117,10 @@ public class ShakerGear extends Subsystem{
 	
 	public void debug(){
 		
-		SmartDashboard.putBoolean("Gear Intake Status", limitSwitch.get());
-		SmartDashboard.putBoolean("Gear Intake Switches Enabled", isSwitchEnabled());
+		SmartDashboard.putBoolean("Gear Intake Gear Status", limitSwitch.get()); //Green when a gear is in the intake
+		SmartDashboard.putBoolean("Gear Intake Switch Logic Status", isSwitchEnabled()); //Green when logic is enabled
 		
-		SmartDashboard.putBoolean("Gear state", gearSolenoid.get());
+		SmartDashboard.putBoolean("Gear Intake Down or Up", gearSolenoid.get()); //Green when intake is down
 		
 		SmartDashboard.putNumber("Gear Motor Output", gearSpark.get());
 		SmartDashboard.putNumber("Gear intake Current Usage", getCurrentUsage());

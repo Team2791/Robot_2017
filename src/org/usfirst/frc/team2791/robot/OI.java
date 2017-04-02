@@ -60,7 +60,7 @@ public class OI {
 		operatorB.whileHeld(new RunClimber());
 		operatorLB.whileHeld(new EngageRope());
 
-		operatorDpadDown.whenPressed(new GearMechDown()); 
+		operatorDpadDown.whenPressed(new IntakeGearFromFloor()); 
 		operatorDpadUp.whenPressed(new GearMechUp());
 
 		operatorLS.whenPressed(new ToggleGearSwitchEnabled());
@@ -74,7 +74,7 @@ public class OI {
 
 		/********************************** Driver Button Assignments ****************************************/
 
-		driverX.whileHeld(new ScoreGear()); 
+		driverX.whileHeld(new ScoreGearAutoReturn()); 
 
 		driverY.whileHeld(new RunClimber());
 		driverA.toggleWhenPressed(new RunIntake());
