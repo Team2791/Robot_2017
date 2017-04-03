@@ -8,11 +8,12 @@ import java.net.InetAddress;
 
 
 /**
+ * Camera automatically starts on power on; 
  * Socket Switch keys:
- * </br> 0 -- camerastart
- * </br> 1 -- vision targeting
+ * </br> 0 -- server testing
+ * </br> 1 -- vision targeting 
  * </br> 2 -- pishutdown
- * </br> 3 -- server testing
+ * </br> 3 -- stop program
  */
 public class ShakerVisionServer {
 
@@ -27,8 +28,6 @@ public class ShakerVisionServer {
 	 * Initializing this server will start the camera and collect all the data
 	 */
 	public ShakerVisionServer(){
-		
-		this.startCamera();
 		data = getDataFromSocket().split(":",3);
 	}
 	

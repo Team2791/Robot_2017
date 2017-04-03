@@ -54,6 +54,8 @@ public class Robot extends IterativeRobot {
 	public static ShakerGear gearMechanism;
 	public static ShakerDrivetrain drivetrain;
 
+	public ShakerVisionServer vision;
+	
 	private double lastAutonLoopTime;
 
 	/**
@@ -138,9 +140,9 @@ public class Robot extends IterativeRobot {
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
 
-//		ShakerVisionServer vision = new ShakerVisionServer();
-//		System.out.println("Pi angle delta: " + vision.getCameraAngle());
-//		System.out.println("Pi distancce: " + vision.getCameraDistance());
+		vision = new ShakerVisionServer();
+		System.out.println("Pi angle delta: " + vision.getCameraAngle());
+		System.out.println("Pi distancce: " + vision.getCameraDistance());
 
 //		Color color = Color.RED;//allows us to choose the side we are on and which auto we want to do
 //		autonomousCommand = new FollowPath("TestingOneTwo", color, Direction.FORWARD);
