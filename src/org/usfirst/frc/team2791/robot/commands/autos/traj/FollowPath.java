@@ -20,6 +20,7 @@ public class FollowPath extends Command {
 	double heading; //not sure where this is assigned a value
 	protected Path path;
 	private boolean reversed;
+	private double direction;
 
 	/**
 	 * 
@@ -27,6 +28,33 @@ public class FollowPath extends Command {
 	 * @param color enum for Color of team
 	 * @param direction enum for Direction, forward or reverse
 	 */
+	public FollowPath(String path_, String color, String direction) {
+		super("FollowPath");
+		requires(Robot.drivetrain);
+
+		path=AutoPaths.get(path_);
+
+		switch(color){
+			case "BLUE": path.goRight();
+				break;
+			case "RED": path.goLeft();
+				break;
+		}
+
+		switch(direction){
+			case "FORWARD": reversed = true;
+				this.direction = 1.0;
+				break;
+			case "REVERSE": reversed = false;
+				this.direction = -1.0;
+				break;
+		}
+		
+		trajHelper=new TrajectoryDriveHelper(reversed);
+
+		System.out.println("Beginning to Follow"+ path.getName());
+	}
+
 	public FollowPath(String path_, Color color, Direction direction) {
 		super("FollowPath");
 		requires(Robot.drivetrain);
@@ -35,24 +63,30 @@ public class FollowPath extends Command {
 
 		switch(color){
 		case BLUE: path.goRight();
+			break;
 		case RED: path.goLeft();
+			break;
 		}
 
 		switch(direction){
-		case FORWARD: reversed = true;
-		case REVERSE: reversed = false;
+			case FORWARD: reversed = true;
+				this.direction = 1.0;
+				break;
+			case REVERSE: reversed = false;
+				this.direction = -1.0;
+				break;
 		}
 		
 		trajHelper=new TrajectoryDriveHelper(reversed);
 
 		System.out.println("Beginning to Follow"+ path.getName());
 	}
-
+	
 	@Override
 	protected void initialize() {
 		//System.out.println("Init Drive " + Timer.getFPGATimestamp());
 		Robot.drivetrain.resetEncoders();
-		trajHelper.loadProfile(path.getLeftWheelTrajectory(), path.getRightWheelTrajectory(), 1.0, heading);
+		trajHelper.loadProfile(path.getLeftWheelTrajectory(), path.getRightWheelTrajectory(), direction, heading);
 		trajHelper.enable();
 		System.out.println("I have started trajHelper");
 

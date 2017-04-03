@@ -1,17 +1,13 @@
 package org.usfirst.frc.team2791.robot;
 
-import org.usfirst.frc.team2791.robot.commands.autos.*;
-import org.usfirst.frc.team2791.robot.commands.autos.traj.BoilerGear;
-import org.usfirst.frc.team2791.robot.commands.autos.traj.CenterGear;
-import org.usfirst.frc.team2791.robot.commands.autos.traj.FollowPath;
-import org.usfirst.frc.team2791.robot.commands.autos.traj.LoadingStationGear;
 import org.usfirst.frc.team2791.robot.commands.autos.traj.FollowPath.Color;
-import org.usfirst.frc.team2791.robot.commands.autos.traj.FollowPath.Direction;
+import org.usfirst.frc.team2791.robot.commands.autos.traj.TrajTesting;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
+import org.usfirst.frc.team2791.robot.util.ShakerVisionServer;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
@@ -23,6 +19,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc.team2791.robot.commands.autos.traj.FollowPath;
+import org.usfirst.frc.team2791.robot.commands.autos.traj.FollowPath.*;
 
 
 /**
@@ -81,7 +80,7 @@ public class Robot extends IterativeRobot {
 		compressor.setClosedLoopControl(true);
 		compressor.start();
 
-		CameraServer.getInstance().startAutomaticCapture();
+//		CameraServer.getInstance().startAutomaticCapture();
 
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
@@ -93,20 +92,6 @@ public class Robot extends IterativeRobot {
 
 		drivetrain.setAutoPID();
 		debug();
-
-//		autoChooser = new SendableChooser<>();
-//		colorChooser = new SendableChooser<>();
-//
-//
-//		autoChooser.addObject("Center Gear", new CenterGear(Color.RED));
-//		autoChooser.addObject("Boiler Gear", new BoilerGear(Color.RED));
-//		autoChooser.addObject("Loading Station Gear", new LoadingStationGear(Color.RED));
-//
-//		colorChooser.addDefault("Red", Color.RED);
-//		colorChooser.addObject("Blue", Color.BLUE);
-//
-//		SmartDashboard.putData("Auto Selector", autoChooser);
-//		SmartDashboard.putData("Color Selector", colorChooser);
 
 	}
 
@@ -153,20 +138,22 @@ public class Robot extends IterativeRobot {
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
 
-//		autonomousCommand = (Command) autoChooser.getSelected();
-//		Color color = (Color) colorChooser.getSelected();
+//		ShakerVisionServer vision = new ShakerVisionServer();
+//		System.out.println("Pi angle delta: " + vision.getCameraAngle());
+//		System.out.println("Pi distancce: " + vision.getCameraDistance());
 
-		Color color = Color.RED;//allows us to choose the side we are on and which auto we want to do
-		autonomousCommand = new FollowPath("TestingOneTwo", color, Direction.FORWARD);
+//		Color color = Color.RED;//allows us to choose the side we are on and which auto we want to do
+//		autonomousCommand = new FollowPath("TestingOneTwo", color, Direction.FORWARD);
 
 		//boolean red = false;
 		//autonomousCommand = new CenterGearAuton(red);
 		//autonomousCommand = new BoilerGearAuton(red);
-		//autonomousCommand = new LoadingStationGearAuton(red);
+//		autonomousCommand = new LoadingStationGearAuton(red);
 
 		//autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7);
 		//autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1);
-
+		autonomousCommand = new TrajTesting("BLUE");
+		
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 
@@ -207,7 +194,6 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		debug();
 	}
-
 
 	/**
 	 * This function is called periodically during test mode

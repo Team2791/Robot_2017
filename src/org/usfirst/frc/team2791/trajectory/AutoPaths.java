@@ -37,7 +37,8 @@ public class AutoPaths {
 			"GearToMidFieldPart1",
 			"GearToMidFieldPart2",
 			"LoadingStationGear",
-			"TestingOneTwo"
+			"TestingOneTwo",
+			"RedLoadingAutoJack"
 	};
 	public final static String[] kPathDescriptions = { "Wall To Boiler-Side Gear",
 			"Wall To Center Gear",
@@ -48,7 +49,8 @@ public class AutoPaths {
 			"Lines up to run to Midfield from loading station gear",
 			"Goes from line up to midfield",
 			"Wall to Loading StationGear",
-			"Generic Testing Path"
+			"Generic Testing Path",
+			"Gear only far red side"
 	};
 	static Hashtable paths_ = new Hashtable();
 

@@ -56,12 +56,12 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
 	public void loadProfile(Trajectory leftProfile, Trajectory rightProfile, double direction, double heading) {
 		reset();
 
-		if(reversed){
-			this.direction = direction;
-		}
-		else{
-			direction = Math.abs(direction);
-		}
+//		if(reversed){
+//			this.direction = direction;
+//		}
+//		else{
+//			direction = Math.abs(direction);
+//		}
 		
 		followerLeft.setTrajectory(leftProfile);
 		followerRight.setTrajectory(rightProfile);

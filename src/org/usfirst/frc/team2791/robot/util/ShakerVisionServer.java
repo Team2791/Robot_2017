@@ -23,6 +23,15 @@ public class ShakerVisionServer {
 	 */
 	protected String data[];
 	
+	/**
+	 * Initializing this server will start the camera and collect all the data
+	 */
+	public ShakerVisionServer(){
+		
+		this.startCamera();
+		data = getDataFromSocket().split(":",3);
+	}
+	
 	public void startCamera(){
 		String  result = "";
 		try {
@@ -47,9 +56,7 @@ public class ShakerVisionServer {
 		} catch (NumberFormatException | IOException e) {
 			e.printStackTrace();
 		}
-		String fullResult = result;
 		
-		data = fullResult.split(":", 3);
 		return result;
 	}	
 	
