@@ -13,9 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;;
  */
 public class TrajectoryDriveHelper{ //eventually implements Loopale 
 
-	private boolean reversed = false;
-	
-
 	Trajectory trajectory;
 	TrajectoryFollower followerLeft;
 	TrajectoryFollower followerRight;
@@ -23,19 +20,8 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
 	double heading;
 	double kTurn; //-3.0/80.0;
 
-	public TrajectoryDriveHelper(boolean reversed_) {
-		
-		reversed = reversed_;
-		kTurn = SmartDashboard.getNumber("kTurn", 0.0375);
-
-		followerLeft = new TrajectoryFollower("left");
-		followerRight = new TrajectoryFollower("right");
-		init();
-	}
-	
 	public TrajectoryDriveHelper() {
-		reversed = false;
-		kTurn = SmartDashboard.getNumber("kTurn", 0.0375);
+		kTurn = SmartDashboard.getNumber("kTurn", 0);
 
 		followerLeft = new TrajectoryFollower("left");
 		followerRight = new TrajectoryFollower("right");
@@ -55,13 +41,6 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
 
 	public void loadProfile(Trajectory leftProfile, Trajectory rightProfile, double direction, double heading) {
 		reset();
-
-//		if(reversed){
-//			this.direction = direction;
-//		}
-//		else{
-//			direction = Math.abs(direction);
-//		}
 		
 		followerLeft.setTrajectory(leftProfile);
 		followerRight.setTrajectory(rightProfile);

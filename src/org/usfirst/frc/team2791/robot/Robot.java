@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2791.robot.commands.autos.traj.FollowPath;
@@ -62,8 +61,6 @@ public class Robot extends IterativeRobot {
 	 * setting autonomousCommand to a Command will cause that Command to run in autonomous init
 	 */
 	public Command autonomousCommand;
-	SendableChooser<Command> autoChooser;
-	SendableChooser<Color> colorChooser;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -140,10 +137,8 @@ public class Robot extends IterativeRobot {
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
 
-		
 //		Color color = Color.RED;//allows us to choose the side we are on and which auto we want to do
-//		autonomousCommand = new FollowPath("TestingOneTwo", color, Direction.FORWARD);
-
+//		autonomousCommand = new CenterGear(color);
 		//boolean red = false;
 		//autonomousCommand = new CenterGearAuton(red);
 		//autonomousCommand = new BoilerGearAuton(red);
@@ -223,4 +218,30 @@ public class Robot extends IterativeRobot {
 	public enum GamePeriod {
 		AUTONOMOUS, TELEOP, DISABLED
 	}
+	
+	/**
+	 * Allows the trajectory auto to be automatically set a certain side (red or blue),
+	 * and for the path to be reversed 
+	 */
+	public enum AutoMode {
+		RED(1.0), BLUE(1.0), RED_REVERSED(-1.0), BLUE_REVERSED( -1.0);
+		
+		
+		private double reversingConstant;
+		
+		AutoMode(double constant){
+			this.reversingConstant = constant;
+			
+		}
+		
+		/**
+		 * @return 1.0 = forward / -1.0 = reverse
+		 */
+		public double getConstant(){
+			return this.reversingConstant;
+			
+		}
+		
+	}
+	
 }

@@ -23,6 +23,7 @@ public class GearMechDown extends Command{
 	protected void execute(){
 		Robot.gearMechanism.stopGearIntake(); 
 	}
+
 	
 	protected boolean isFinished(){
 		return true;
