@@ -30,21 +30,13 @@ public class AutoPaths {
 	 */
 	public final static String[] kPathNames = { "BoilerGear",
 			"CenterGear",
-			"CloseShotToBoilerGear",
-			"FarHopper",
-			"FarHopperNoTrigger",
-			"GearToHopper",
-			"GearToMidFieldPart1",
-			"GearToMidFieldPart2",
+			"CenterShotToGear",
+			"CloseShotToGear",
 			"LoadingStationGear",
 			"TestingOneTwo",
 			"RedLoadingAutoJack"
 	};
 	public final static String[] kPathDescriptions = { "Wall To Boiler-Side Gear",
-			"Wall To Center Gear",
-			"Shoots 10 fuel from Boiler Wall then hangs gear",
-			"Wall to Far Hopper",
-			"Wall to Far Hopper w/o Triggering Hopper",
 			"Boiler Side Gear to Hopper",
 			"Lines up to run to Midfield from loading station gear",
 			"Goes from line up to midfield",

@@ -147,11 +147,11 @@ public class Robot extends IterativeRobot {
 		//autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7);
 		//autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1);
 		
-		autonomousCommand = new TrajTesting("BLUE");
+		autonomousCommand = new TrajTesting("RED");
 		
 		if (autonomousCommand != null)
 			autonomousCommand.start();
-
+		
 	}
 
 	/**
