@@ -140,10 +140,7 @@ public class Robot extends IterativeRobot {
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
 
-		vision = new ShakerVisionServer();
-		System.out.println("Pi angle delta: " + vision.getCameraAngle());
-		System.out.println("Pi distancce: " + vision.getCameraDistance());
-
+		
 //		Color color = Color.RED;//allows us to choose the side we are on and which auto we want to do
 //		autonomousCommand = new FollowPath("TestingOneTwo", color, Direction.FORWARD);
 
@@ -154,6 +151,7 @@ public class Robot extends IterativeRobot {
 
 		//autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7);
 		//autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1);
+		
 		autonomousCommand = new TrajTesting("BLUE");
 		
 		if (autonomousCommand != null)

@@ -28,47 +28,41 @@ public class FollowPath extends Command {
 	 * @param color enum for Color of team
 	 * @param direction enum for Direction, forward or reverse
 	 */
-	public FollowPath(String path_, String color, String direction) {
+	public FollowPath(String path_, String color_, String direction_) {
 		super("FollowPath");
 		requires(Robot.drivetrain);
 
 		path=AutoPaths.get(path_);
-
-		switch(color){
-			case "BLUE": path.goRight();
-				break;
-			case "RED": path.goLeft();
-				break;
-		}
-
-		switch(direction){
-			case "FORWARD": reversed = true;
-				this.direction = 1.0;
-				break;
-			case "REVERSE": reversed = false;
-				this.direction = -1.0;
-				break;
-		}
+		
+		if(color_.equals("BLUE"))
+			path.goRight();
+		else
+			path.goLeft();
+		
+		if(direction_.equals("FORWARD"))
+			this.direction = 1.0;
+		else
+			this.direction = -1.0;
 		
 		trajHelper=new TrajectoryDriveHelper(reversed);
 
 		System.out.println("Beginning to Follow"+ path.getName());
 	}
 
-	public FollowPath(String path_, Color color, Direction direction) {
+	public FollowPath(String path_, Color color_, Direction direction_) {
 		super("FollowPath");
 		requires(Robot.drivetrain);
 
 		path=AutoPaths.get(path_);
 
-		switch(color){
+		switch(color_){
 		case BLUE: path.goRight();
 			break;
 		case RED: path.goLeft();
 			break;
 		}
 
-		switch(direction){
+		switch(direction_){
 			case FORWARD: reversed = true;
 				this.direction = 1.0;
 				break;

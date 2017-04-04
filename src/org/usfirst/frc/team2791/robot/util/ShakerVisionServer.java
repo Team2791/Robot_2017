@@ -22,7 +22,7 @@ public class ShakerVisionServer {
 	/**
 	 * data[0] = Camera Success/Failure</br> data[1] = Camera Angle</br> data[2] = Camera Distance
 	 */
-	protected String data[];
+	protected String data[] = {"nothing", "was", "initialized", "bro"};
 	
 	/**
 	 * Initializing this server will start the camera and collect all the data
@@ -49,9 +49,9 @@ public class ShakerVisionServer {
 	public String getDataFromSocket(){
 		String  result = "";
 		try {
-			System.out.println("*******Getting Data*******");
+			System.out.println("*******Getting Data from Socket*******");
 			result = readSocket("10.27.91.9", serverPort, "001");
-			System.out.println("*******Getting Data Result********** = " + result );
+			System.out.println("*******Getting Data Result from Socket********** = " + result );
 		} catch (NumberFormatException | IOException e) {
 			e.printStackTrace();
 		}
@@ -78,7 +78,7 @@ public class ShakerVisionServer {
 		String  result = "";
 		try {
 			System.out.println("*******Testing*******");
-			result = readSocket("10.27.91.9", serverPort, "003");
+			result = readSocket("10.27.91.9", serverPort, "000");
 			System.out.println("*******Testing Result********** = " + result );
 		} catch (NumberFormatException | IOException e) {
 			e.printStackTrace();
@@ -129,7 +129,7 @@ public class ShakerVisionServer {
 			}
 			
 			System.out.println("Socket is done");
-		} catch (IOException e) {
+		} catch (IOException | NumberFormatException e) {
 			System.out.println("Socket error: " + e.toString());
 		}
 		
