@@ -26,11 +26,14 @@ public class GearMechDown extends Command {
 
 	protected boolean isFinished() {
 		//return true;
-		return false;
+		return 	Robot.gearMechanism.hasGear();
+;
 	}
 
 	protected void end() {
 		//
+		System.out.println("Calling GearMechUp from GearMechDown")
+		new GearMechUp();
 	}
 
 	protected void interrupted() {

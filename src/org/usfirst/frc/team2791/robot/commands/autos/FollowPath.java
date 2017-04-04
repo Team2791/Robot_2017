@@ -3,6 +3,7 @@ package org.usfirst.frc.team2791.robot.commands.autos;
 
 
 import org.usfirst.frc.team2791.robot.Robot;
+import org.usfirst.frc.team2791.robot.Robot.AutoMode;
 import org.usfirst.frc.team2791.trajectory.AutoPaths;
 import org.usfirst.frc.team2791.trajectory.Path;
 import org.usfirst.frc.team2791.trajectory.TrajectoryDriveHelper;
@@ -19,7 +20,7 @@ public class FollowPath extends Command {
 
 	double heading; //not sure where this is assigned a value
 	protected Path path;
-	private boolean reversed;
+	protected AutoMode mode;
 
 	/**
 	 * 
@@ -27,23 +28,20 @@ public class FollowPath extends Command {
 	 * @param color enum for Color of team
 	 * @param direction enum for Direction, forward or reverse
 	 */
-	public FollowPath(String path_, Color color, Direction direction) {
+	public FollowPath(String path_, AutoMode mode_) {
 		super("FollowPath");
 		requires(Robot.drivetrain);
 
 		path=AutoPaths.get(path_);
 
-		switch(color){
-		case BLUE: path.goRight();
-		case RED: path.goLeft();
+		
+		if(mode_ == AutoMode.RED || mode_ == AutoMode.RED_REVERSED){
+			path.goLeft();
+		}else if(mode_ == AutoMode.BLUE || mode_ == AutoMode.BLUE_REVERSED){
+			path.goLeft();
 		}
 
-		switch(direction){
-		case FORWARD: reversed = true;
-		case REVERSE: reversed = false;
-		}
-		
-		trajHelper=new TrajectoryDriveHelper(reversed);
+		trajHelper=new TrajectoryDriveHelper();
 
 		System.out.println("Beginning to Follow"+ path.getName());
 	}
@@ -52,9 +50,19 @@ public class FollowPath extends Command {
 	protected void initialize() {
 		//System.out.println("Init Drive " + Timer.getFPGATimestamp());
 		Robot.drivetrain.resetEncoders();
-		trajHelper.loadProfile(path.getLeftWheelTrajectory(), path.getRightWheelTrajectory(), 1.0, heading);
+		
+		double direction_ = 1.0;
+		
+		if(mode == AutoMode.RED_REVERSED || mode == AutoMode.BLUE_REVERSED){
+			direction_ = -1.0;
+		}else if(mode == AutoMode.RED || mode == AutoMode.BLUE){
+			direction_ = 1.0;
+		}
+		
+		trajHelper.loadProfile(path.getLeftWheelTrajectory(), path.getRightWheelTrajectory(), direction_, heading);
+
 		trajHelper.enable();
-		System.out.println("I have started trajHelper");
+		System.out.println("I have started trajHelper with a direction of " + direction_);
 
 	}
 
@@ -86,13 +94,5 @@ public class FollowPath extends Command {
 	protected void interrupted() {
 	}
 
-	//Enums
-	public enum Color{
-		RED, BLUE
-	}
-
-	public enum Direction{
-		FORWARD, REVERSE
-	}
 
 }

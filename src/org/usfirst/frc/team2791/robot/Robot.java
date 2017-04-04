@@ -90,20 +90,6 @@ public class Robot extends IterativeRobot {
 		drivetrain.setAutoPID();
 		debug();
 
-		autoChooser = new SendableChooser<>();
-		colorChooser = new SendableChooser<>();
-
-
-		autoChooser.addObject("Center Gear", new CenterGear(Color.RED));
-		autoChooser.addObject("Boiler Gear", new BoilerGear(Color.RED));
-		autoChooser.addObject("Loading Station Gear", new LoadingStationGear(Color.RED));
-
-		colorChooser.addDefault("Red", Color.RED);
-		colorChooser.addObject("Blue", Color.BLUE);
-
-		SmartDashboard.putData("Auto Selector", autoChooser);
-		SmartDashboard.putData("Color Selector", colorChooser);
-
 	}
 
 	/**
@@ -149,12 +135,9 @@ public class Robot extends IterativeRobot {
 		intake.disengageRatchetWing();
 		gearMechanism.changeGearSolenoidState(false);
 
-		autonomousCommand = (Command) autoChooser.getSelected();
-		Color color = (Color) colorChooser.getSelected();
 
 //		Color color = Color.RED;//allows us to choose the side we are on and which auto we want to do
 //		autonomousCommand = new CenterGear(color);
-
 		//boolean red = false;
 		//autonomousCommand = new CenterGearAuton(red);
 		//autonomousCommand = new BoilerGearAuton(red);
@@ -232,4 +215,9 @@ public class Robot extends IterativeRobot {
 	public enum GamePeriod {
 		AUTONOMOUS, TELEOP, DISABLED
 	}
+	
+	public enum AutoMode {
+		RED, BLUE, RED_REVERSED, BLUE_REVERSED
+	}
+	
 }
