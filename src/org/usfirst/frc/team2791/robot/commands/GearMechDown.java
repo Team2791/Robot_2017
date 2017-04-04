@@ -1,43 +1,40 @@
 package org.usfirst.frc.team2791.robot.commands;
 
+
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *Puts the {@link ShakerGear Gear Intake} down and runs the gear intake
+ * Puts {@link ShakerGear} Mechanism down and stops the gear motors from running.</br>
+ * This will work regardless of the status of the limit switches
  */
-public class GearMechDown extends Command {
+public class GearMechDown extends Command{
+	public GearMechDown (){
+		super("ScoreGear");
 
-
-	public GearMechDown() {
-		super("GearMechDown");
 		requires(Robot.gearMechanism);
 	}
-
-	protected void initialize() {
-		Robot.gearMechanism.changeGearSolenoidState(true);
+	
+	protected void initialize(){
+		Robot.gearMechanism.setGearIntakeDown(true);
+	}	
+	protected void execute(){
+		Robot.gearMechanism.stopGearIntake(); 
 	}
 
-	protected void execute() {
-		//
-		Robot.gearMechanism.runGearIntake();
+	
+	protected boolean isFinished(){
+		return true;
 	}
-
-	protected boolean isFinished() {
-		//return true;
-		return 	Robot.gearMechanism.hasGear();
-;
-	}
-
-	protected void end() {
-		//
-		System.out.println("Calling GearMechUp from GearMechDown")
-		new GearMechUp();
-	}
-
-	protected void interrupted() {
+	
+	protected void end(){
 		Robot.gearMechanism.stopGearIntake();
-		end();   
+	}
+	
+	protected void interrupted(){
+		end();
+
 	}
 }

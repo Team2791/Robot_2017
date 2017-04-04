@@ -33,8 +33,9 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
 	}
 
 	private void init() {
-		followerLeft.configure(1.5, 0, 0, 1.0/15.0, 1.0/34.0);
-		followerRight.configure(1.5, 0, 0, 1.0/15.0, 1.0/34.0);
+		
+		followerLeft.configure(3.0, 0, 0, .09, .033);
+		followerRight.configure(3.0, 0, 0, .09, .033);
 
 	}
 

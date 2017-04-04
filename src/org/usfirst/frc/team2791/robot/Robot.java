@@ -1,8 +1,5 @@
 package org.usfirst.frc.team2791.robot;
 
-import org.usfirst.frc.team2791.robot.commands.autos.*;
-import org.usfirst.frc.team2791.robot.commands.autos.FollowPath.Color;
-
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -17,7 +14,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -57,8 +53,6 @@ public class Robot extends IterativeRobot {
 	 * setting autonomousCommand to a Command will cause that Command to run in autonomous init
 	 */
 	public Command autonomousCommand;
-	SendableChooser<Command> autoChooser;
-	SendableChooser<Color> colorChooser;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -133,7 +127,7 @@ public class Robot extends IterativeRobot {
 		drivetrain.reset();
 
 		intake.disengageRatchetWing();
-		gearMechanism.changeGearSolenoidState(false);
+		gearMechanism.setGearIntakeDown(false);
 
 
 //		Color color = Color.RED;//allows us to choose the side we are on and which auto we want to do
@@ -175,6 +169,7 @@ public class Robot extends IterativeRobot {
 		drivetrain.resetEncoders();
 		gamePeriod = GamePeriod.TELEOP;
 		intake.disengageRatchetWing();
+		gearMechanism.setGearIntakeDown(false);
 	}
 
 	/**
@@ -216,8 +211,29 @@ public class Robot extends IterativeRobot {
 		AUTONOMOUS, TELEOP, DISABLED
 	}
 	
+	/**
+	 * Allows the trajectory auto to be automatically set a certain side (red or blue),
+	 * and for the path to be reversed 
+	 */
 	public enum AutoMode {
-		RED, BLUE, RED_REVERSED, BLUE_REVERSED
+		RED(1.0), BLUE(1.0), RED_REVERSED(-1.0), BLUE_REVERSED( -1.0);
+		
+		
+		private double reversingConstant;
+		
+		AutoMode(double constant){
+			this.reversingConstant = constant;
+			
+		}
+		
+		/**
+		 * @return 1.0 = forward / -1.0 = reverse
+		 */
+		public double getConstant(){
+			return this.reversingConstant;
+			
+		}
+		
 	}
 	
 }

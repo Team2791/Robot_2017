@@ -2,7 +2,6 @@ package org.usfirst.frc.team2791.robot.subsystems;
 
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
-import org.usfirst.frc.team2791.robot.commands.WaitForGearSwitches;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -32,7 +31,7 @@ public class ShakerGear extends Subsystem{
 	/**
 	 * true = switch logic is active/ false = switches disabled
 	 */
-	private static boolean switchesEnabled;
+	private static boolean switchesEnabled = true;
 	
 	public ShakerGear(){
 		gearSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.GEAR_CHANNEL);
@@ -43,8 +42,6 @@ public class ShakerGear extends Subsystem{
 	}
 	
 	public void initDefaultCommand(){
-//		setDefaultCommand(new RunGearMotor());
-		setDefaultCommand(new WaitForGearSwitches());
 	}
 	
 	public void runGearIntake(){
@@ -59,7 +56,7 @@ public class ShakerGear extends Subsystem{
 	 * 
 	 * @param state_ true = down / false = up
 	 */
-	public void changeGearSolenoidState(boolean state_){
+	public void setGearIntakeDown(boolean state_){
 		state = state_;
 		gearSolenoid.set(state);
 	}
@@ -72,15 +69,13 @@ public class ShakerGear extends Subsystem{
 	}
 	
 	/**
-	 * @return Summary state of limit switches in the intake. true = gear inside / false = no gear in intake 
-	 * </br>The operator needs the ability to override the switches, so if the switches are disables, this will return false
+	 * The operator needs the ability to override the switches, so if the switches are disables, this will return false
+	 * </br>Summary state of limit switches in the intake. true = gear inside / false = no gear in intake 
+	 * @return true = gear inside / false = no gear in intake
 	 */
 	public boolean hasGear(){
-
-		if(isSwitchEnabled())
-			return limitSwitch.get();
-		else
-			return false;
+		return limitSwitch.get();
+		
 	}
 	
 	/**
@@ -119,12 +114,19 @@ public class ShakerGear extends Subsystem{
 	
 	public void debug(){
 		
-		SmartDashboard.putBoolean("Gear Intake Status", limitSwitch.get());
-		SmartDashboard.putBoolean("Gear Intake Switches Enabled", isSwitchEnabled());
+		SmartDashboard.putBoolean("Gear Intake Gear Status", limitSwitch.get()); //Green when a gear is in the intake
+		SmartDashboard.putBoolean("Gear Intake Switch Logic Status", isSwitchEnabled()); //Green when logic is enabled
 		
-		SmartDashboard.putBoolean("Gear state", gearSolenoid.get());
+		SmartDashboard.putBoolean("Gear Intake Down or Up", gearSolenoid.get()); //Green when intake is down
 		
 		SmartDashboard.putNumber("Gear Motor Output", gearSpark.get());
 		SmartDashboard.putNumber("Gear intake Current Usage", getCurrentUsage());
+	}
+
+	public void changeGearSolenoidState(boolean state_) {
+		
+		gearSolenoid.set(state_);
+		// TODO Auto-generated method stub
+		
 	}
 }

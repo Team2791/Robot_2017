@@ -135,10 +135,10 @@ public class ShakerShooter extends Subsystem {
 	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter Long D", 0));
 	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter Long FeedForward", 0));
         }else{
-	        primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter P", 0));
+	        primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter P", 1.5));
 	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter I", 0));
-	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter D", 0));
-	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter FeedForward", 0));
+	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter D", 30));
+	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter FeedForward", 2920));
         }
         
         primaryShooterTalon.set(targetSpeed);

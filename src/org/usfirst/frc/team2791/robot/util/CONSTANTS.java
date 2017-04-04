@@ -14,7 +14,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	
 	public static double driveEncoderTicks = 256;//Greyhill
 	
-	public static final double WHEEL_DIAMETER_IN_IN = 4.0;//Drive wheels - Colson
+	public static final double WHEEL_DIAMETER_IN_IN = 3.88;//Drive wheels - Colson
 	public static final double WHEEL_DIAMETER_IN_FEET = WHEEL_DIAMETER_IN_IN/12.0;
 
 	public static final int SHOOTER_ENCODER_TICKS = 128;//Greyhill
@@ -30,13 +30,13 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static final double SHOOTER_FEED_FORWARD = 0.24; //0.24
 	
 	public static final double SHOOTER_SET_POINT = 2920; //2800
-	public static final double SHOOTER_LONG_SET_POINT = 3650; //3650
+	public static final double SHOOTER_LONG_SET_POINT = 3600; //3650
 	
 	public static final int SHOOTER_I_ZONE = 40; //40
 
 	public static final double SHOOTER_LONG_P = 1.5;//1.5
 	public static final double SHOOTER_LONG_I = 0.0000;//0.0000
-	public static final double SHOOTER_LONG_D = 30.0;//30.0
+	public static final double SHOOTER_LONG_D = 15.0;//30.0
 	public static final double SHOOTER_LONG_FEED_FORWARD = 0.25;//0.25
 	
 	//Drive PID

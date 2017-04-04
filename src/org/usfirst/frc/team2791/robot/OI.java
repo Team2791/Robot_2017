@@ -5,7 +5,6 @@ import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
 import org.usfirst.frc.team2791.robot.commands.*;
 import org.usfirst.frc.team2791.robot.commands.safeties.StopClimberAndDisengage;
 import org.usfirst.frc.team2791.robot.commands.safeties.StopHopper;
-import org.usfirst.frc.team2791.robot.commands.safeties.ToggleGearSwitchEnabled;
 import org.usfirst.frc.team2791.robot.commands.safeties.ShooterHopperSafety;
 
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -60,10 +59,10 @@ public class OI {
 		operatorB.whileHeld(new RunClimber());
 		operatorLB.whileHeld(new EngageRope());
 
-		operatorDpadDown.whenPressed(new GearMechDown()); 
+		operatorDpadDown.whenPressed(new IntakeGearFromFloor()); 
 		operatorDpadUp.whenPressed(new GearMechUp());
 
-		operatorLS.whenPressed(new ToggleGearSwitchEnabled());
+		operatorLS.whenPressed(new GearMechDownRunMotors());
 
 		operatorDpadLeft.whileHeld(new HopperOn());
 		operatorDpadRight.whileHeld(new RunHopperBackwards());
@@ -74,7 +73,7 @@ public class OI {
 
 		/********************************** Driver Button Assignments ****************************************/
 
-		driverX.whileHeld(new ScoreGear()); 
+		driverX.whileHeld(new ScoreGearAutoReturn()); 
 
 		driverY.whileHeld(new RunClimber());
 		driverA.toggleWhenPressed(new RunIntake());
