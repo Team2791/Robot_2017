@@ -136,10 +136,10 @@ public class Robot extends IterativeRobot {
 
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
+		
+		
+//		autonomousCommand = new FollowPath("TestingOneTwo", "RED", "BACKWARDS");
 
-//		Color color = Color.RED;//allows us to choose the side we are on and which auto we want to do
-//		autonomousCommand = new CenterGear(color);
-		//boolean red = false;
 		//autonomousCommand = new CenterGearAuton(red);
 		//autonomousCommand = new BoilerGearAuton(red);
 //		autonomousCommand = new LoadingStationGearAuton(red);

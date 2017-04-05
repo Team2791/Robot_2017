@@ -13,11 +13,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TrajTesting extends CommandGroup{
 	
 	public TrajTesting(String color){
-		addSequential(new FollowPath("TestingOneTwo", color, "BACKWARD"));
-		System.out.println("traj path followed");
+//		addSequential(new RunAutoLongShot(2.0));
+		addSequential(new FollowPath("TestingOneTwo", "RED", "BACKWARDS"));
 //		addSequential(new GearMechDown());
-//		addSequential(new DelayDrivetrain(1));
-//		addSequential(new DriveForward());
+		addSequential(new DelayDrivetrain(1));
+		addSequential(new DriveForward());
 //		addSequential(new StationaryGyroTurn((-90),.7));
 //		addSequential(new RunAutoLongShot(10));
 
