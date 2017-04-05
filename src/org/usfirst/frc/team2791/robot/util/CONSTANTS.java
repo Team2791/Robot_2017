@@ -31,6 +31,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	
 	public static final double SHOOTER_SET_POINT = 2920; //2800
 	public static final double SHOOTER_LONG_SET_POINT = 3600; //3650
+	public static final double SHOOTER_AUTO_CENTER_SET_POINT = 3255;
 	
 	public static final int SHOOTER_I_ZONE = 40; //40
 
@@ -38,6 +39,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static final double SHOOTER_LONG_I = 0.0000;//0.0000
 	public static final double SHOOTER_LONG_D = 15.0;//30.0
 	public static final double SHOOTER_LONG_FEED_FORWARD = 0.25;//0.25
+
 	
 	//Drive PID
 	public static double DRIVE_ANGLE_P = 0.025;

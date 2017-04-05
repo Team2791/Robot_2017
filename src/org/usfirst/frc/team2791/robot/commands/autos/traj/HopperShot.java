@@ -13,7 +13,7 @@ public class HopperShot extends CommandGroup{
 	public HopperShot(Color color, Direction direction){
 		addSequential(new FollowPath("FarHopper", color, Direction.REVERSE));
 		addSequential(new DelayDrivetrain(.5));
-		addSequential(new RunAutoLongShot(15));
+		addSequential(new RunCenterAutoLongShot(15));
 
 	}
 }

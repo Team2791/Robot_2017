@@ -65,6 +65,8 @@ public class ShakerShooter extends Subsystem {
 	        SmartDashboard.putNumber("Shooter Long D", CONSTANTS.SHOOTER_LONG_D);
 	        SmartDashboard.putNumber("Shooter Long FeedForward", CONSTANTS.SHOOTER_LONG_FEED_FORWARD);
 	        SmartDashboard.putNumber("Shooter Long Setpoint", CONSTANTS.SHOOTER_LONG_SET_POINT);
+	        
+	        SmartDashboard.putNumber("Shooter Auto Center Setpoint", CONSTANTS.SHOOTER_AUTO_CENTER_SET_POINT);
         }
 
         primaryShooterTalon.setIZone(CONSTANTS.SHOOTER_I_ZONE);
@@ -111,6 +113,10 @@ public class ShakerShooter extends Subsystem {
     	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Long Setpoint", 0));
 	}
 
+    public void prepAutoCenterShot() {
+    	longShot = true;
+    	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Auto Center Setpoint", CONSTANTS.SHOOTER_AUTO_CENTER_SET_POINT));
+	}
     /**
      * @return true = shooter is within accepted error range of target speed / false = shooter speed outside error range
      */
