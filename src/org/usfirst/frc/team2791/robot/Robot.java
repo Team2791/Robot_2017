@@ -79,7 +79,7 @@ public class Robot extends IterativeRobot {
 		compressor.setClosedLoopControl(true);
 		compressor.start();
 
-//		CameraServer.getInstance().startAutomaticCapture();
+		CameraServer.getInstance().startAutomaticCapture();
 
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
