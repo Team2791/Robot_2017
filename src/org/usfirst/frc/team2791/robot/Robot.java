@@ -80,8 +80,19 @@ public class Robot extends IterativeRobot {
 		compressor.setClosedLoopControl(true);
 		compressor.start();
 
-		CameraServer.getInstance().startAutomaticCapture("Front Camera",0);
-		CameraServer.getInstance().startAutomaticCapture("Gear Camera",1);
+		try{
+			CameraServer.getInstance().startAutomaticCapture("Front Camera",0);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		try{
+			CameraServer.getInstance().startAutomaticCapture("Gear Camera",1);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
