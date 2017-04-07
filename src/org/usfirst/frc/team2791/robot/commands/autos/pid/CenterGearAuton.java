@@ -13,8 +13,8 @@ public class CenterGearAuton extends CommandGroup {
 	/**
 	 * @param red  true if you are on the red side;  false if you are on the blue side
 	 */
-	public CenterGearAuton(boolean red) {
-    	addSequential(new DriveStraightEncoderGyro(-(111.25-36.0)/12, .7, 6)); //Q42, 112 in was too far
+	public CenterGearAuton(String red) {
+    	addSequential(new DriveStraightEncoderGyro(-(109.5-36.0)/12, .7, 6));
     	addSequential(new ScoreGearAutoReturn());
     	addSequential(new DelayDrivetrain(1.0));
     	addSequential(new DriveStraightEncoderGyro(3.0, .7, 2));

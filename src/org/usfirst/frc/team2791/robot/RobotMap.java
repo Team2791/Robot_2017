@@ -16,11 +16,11 @@ public class RobotMap {
 	public static final int JOYSTICK_OPERATOR_PORT = 1;
 
 	// DIO
-	public static final int LEFT_DRIVE_ENCODER_PORT_A = 9; //3 on Comp
-	public static final int LEFT_DRIVE_ENCODER_PORT_B = 8; //2 on Comp
+	public static final int LEFT_DRIVE_ENCODER_PORT_A = 3; //9 on Comp
+	public static final int LEFT_DRIVE_ENCODER_PORT_B = 2; //8 on Comp
 	
-	public static final int RIGHT_DRIVE_ENCODER_PORT_A = 7; //1 on Comp
-	public static final int RIGHT_DRIVE_ENCODER_PORT_B = 6; //0 on Comp
+	public static final int RIGHT_DRIVE_ENCODER_PORT_A = 1; //7 on Comp
+	public static final int RIGHT_DRIVE_ENCODER_PORT_B = 0; //6 on Comp
 	
 	public static final int GEAR_INTAKE_LIMIT_SWITCH_A = 0;//need to add on Comp
 	
@@ -29,7 +29,7 @@ public class RobotMap {
 	public static final int DRIVE_SPARK_RIGHT_PORT = 8;
 	
 	public static final int INTAKE_SPARK_PORT = 6;
-	public static final int HOPPER_SPARK_PORT = 4; //7 on Comp
+	public static final int HOPPER_SPARK_PORT = 7; //4 on Comp
 	public static final int GEAR_SPARK_PORT = 3; //Need to add on Comp
 	
 	// ANALOG

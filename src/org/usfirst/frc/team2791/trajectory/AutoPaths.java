@@ -28,21 +28,15 @@ public class AutoPaths {
 	 * Contains the path/path file names for File Parsing.
 	 * <b>THESE MUST BE THE EXACT SAME AS THE FILES ON THE RIO IN /paths</b>
 	 */
-	public final static String[] kPathNames = { "BoilerGear",
-			"CenterGear",
-			"CenterShotToGear",
-			"CloseShotToGear",
-			"LoadingStationGear",
-			"TestingOneTwo",
-			"RedLoadingAutoJack"
+	public final static String[] kPathNames = { 
+			"CenterShotToCenterGear",
+			"BoilerWallToBoilerGear",
+			"TestingOneTwo"
 	};
-	public final static String[] kPathDescriptions = { "Wall To Boiler-Side Gear",
-			"Boiler Side Gear to Hopper",
-			"Lines up to run to Midfield from loading station gear",
-			"Goes from line up to midfield",
-			"Wall to Loading StationGear",
-			"Generic Testing Path",
-			"Gear only far red side"
+	public final static String[] kPathDescriptions = { 
+			"Center Shot to Center Gear",
+			"Close Shot to Boiler Gear",
+			"Generic Testing Path"
 	};
 	static Hashtable paths_ = new Hashtable();
 

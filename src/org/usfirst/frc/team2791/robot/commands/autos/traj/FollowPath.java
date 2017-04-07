@@ -35,9 +35,9 @@ public class FollowPath extends Command {
 		path=AutoPaths.get(path_);
 		
 		if(color_.equals("BLUE"))
-			path.goRight();
+			path.goRight(); //don't worry about right or left right now
 		else
-			path.goLeft();
+			path.goLeft(); //don't worry about right or left right now
 		
 		if(direction_.equals("FORWARD"))
 			this.direction = 1.0;

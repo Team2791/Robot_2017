@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2791.robot.commands.autos.traj;
 
-import org.usfirst.frc.team2791.robot.commands.GearMechDown;
+import org.usfirst.frc.team2791.robot.commands.ScoreGearAutoReturn;
 import org.usfirst.frc.team2791.robot.commands.autos.pid.DelayDrivetrain;
 import org.usfirst.frc.team2791.robot.commands.autos.traj.FollowPath.Color;
 import org.usfirst.frc.team2791.robot.commands.autos.traj.FollowPath.Direction;
@@ -9,15 +9,15 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  */
-public class CenterGear extends CommandGroup{
+public class WallShot_BoilerGear extends CommandGroup{
 	
-	public CenterGear(Color color){
-		addSequential(new FollowPath("CenterGear", color, Direction.FORWARD));
-		addSequential(new GearMechDown());
+	public WallShot_BoilerGear(String color){
+		
+		addSequential(new RunAutoWallShot(5.0));
+		addSequential(new FollowPath("BoilerWallToBoilerGear", color, "BACKWARDS"));
+		addSequential(new ScoreGearAutoReturn());
 		addSequential(new DelayDrivetrain(1));
-//		addSequential(new DriveForward());
-//		addSequential(new StationaryGyroTurn((-90),.7));
-//		addSequential(new RunAutoLongShot(10));
+		addSequential(new DriveForward());
 
 	}
 }

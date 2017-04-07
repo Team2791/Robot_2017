@@ -13,17 +13,21 @@ public class LoadingStationGearAuton extends CommandGroup {
 	/**
 	 * @param red  true if you are on the red side;  false if you are on the blue side
 	 */
-    public LoadingStationGearAuton(boolean red) {
+    public LoadingStationGearAuton(String color) {
     	
-    	if(red){
-        	addSequential(new DriveStraightEncoderGyro(-(127.5-36)/12.0, .7, 6));//was 129.5 at TVR Q48, wasn't run
+    	double dist;
+    	if(color.equals("RED")){
+        	addSequential(new DriveStraightEncoderGyro(-(129-36)/12.0, .7, 6));
         	addSequential(new StationaryGyroTurn(60.0, 1));
+    		dist = 87.5/Math.cos(Math.PI/6) - 36;
+
     	}else{
-    		addSequential(new DriveStraightEncoderGyro(-(128.5-33)/12.0, .7, 6)); //130.5 was too much TVR Q48
+    		addSequential(new DriveStraightEncoderGyro(-(132-33)/12.0, .7, 6)); 
         	addSequential(new StationaryGyroTurn(-60.0, 1));
+    		dist = 91/Math.cos(Math.PI/6) - 36;
+
     	}
     	
-		double dist = 88.5/Math.cos(Math.PI/6) - 36;
 		
 		addSequential(new DriveStraightEncoderGyro(-dist/12.0, .7, 6));
     	addSequential(new ScoreGearAutoReturn());

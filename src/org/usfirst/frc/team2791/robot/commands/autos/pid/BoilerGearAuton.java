@@ -13,16 +13,20 @@ public class BoilerGearAuton extends CommandGroup {
 	/**
 	 * @param red  true if you are on the red side;  false if you are on the blue side
 	 */
-	public BoilerGearAuton(boolean red) {
+	public BoilerGearAuton(String red) {
 
-		addSequential(new DriveStraightEncoderGyro(-(127.0-33)/12.0, .7, 10));
-		
-		if(red){
+		double dist = 0;
+		if(red.equals("RED")){
+			addSequential(new DriveStraightEncoderGyro(-(125.0-33)/12.0, .7, 10));
 			addSequential(new StationaryGyroTurn((-60.0/12),.7));
+			dist = Math.cos(Math.PI/6)/91.0 - 33; //91.0 is the lateral distance
+
 		}else{
+			addSequential(new DriveStraightEncoderGyro(-(132.0-33)/12.0, .7, 10));
 			addSequential(new StationaryGyroTurn((60.0/12),.7));
+			dist = Math.cos(Math.PI/6)/89.5 - 33; //89.5 is the lateral distance
+
 		}
-		double dist = Math.cos(Math.PI/6)/90.5 - 33;
 		addSequential(new DriveStraightEncoderGyro(-dist/12.0, .7, 10));
 		addSequential(new ScoreGearAutoReturn());
 		addSequential(new DelayDrivetrain(1.0));
