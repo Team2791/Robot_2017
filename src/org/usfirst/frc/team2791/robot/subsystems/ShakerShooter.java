@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ShakerShooter extends Subsystem {
 	
-	private final double ERROR_THRESHOLD = 60;//25
+	private final double ERROR_THRESHOLD = 100;//40
 	private final double SHOOTER_GOOD_TIME = 0.1;
 	private DelayedBoolean shooterGoodDelayedBoolean = new DelayedBoolean(SHOOTER_GOOD_TIME);
 

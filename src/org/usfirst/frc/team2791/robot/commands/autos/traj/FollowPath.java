@@ -33,12 +33,13 @@ public class FollowPath extends Command {
 		requires(Robot.drivetrain);
 
 		path=AutoPaths.get(path_);
+		path.goRight();
 		
-		if(color_.equals("BLUE"))
-			path.goRight(); //don't worry about right or left right now
-		else
-			path.goLeft(); //don't worry about right or left right now
-		
+//		if(color_.equals("BLUE"))
+//			path.goRight();
+//		else
+//			path.goLeft();
+//		
 		if(direction_.equals("FORWARD"))
 			this.direction = 1.0;
 		else

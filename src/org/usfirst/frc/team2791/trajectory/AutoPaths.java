@@ -29,14 +29,18 @@ public class AutoPaths {
 	 * <b>THESE MUST BE THE EXACT SAME AS THE FILES ON THE RIO IN /paths</b>
 	 */
 	public final static String[] kPathNames = { 
-			"CenterShotToCenterGear",
-			"BoilerWallToBoilerGear",
+			"BLUE_CenterShotToCenterGear",
+			"BLUE_BoilerWallToBoilerGear",
+			"RED_CenterShotToCenterGear",
+			"RED_BoilerWallToBoilerGear",
 			"TestingOneTwo"
 	};
 	public final static String[] kPathDescriptions = { 
-			"Center Shot to Center Gear",
-			"Close Shot to Boiler Gear",
-			"Generic Testing Path"
+			"BLUE_CenterShotToCenterGear",
+			"BLUE_BoilerWallToBoilerGear",
+			"RED_CenterShotToCenterGear",
+			"RED_BoilerWallToBoilerGear",
+			"TestingOneTwo"
 	};
 	static Hashtable paths_ = new Hashtable();
 

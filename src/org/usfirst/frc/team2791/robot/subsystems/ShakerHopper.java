@@ -81,7 +81,7 @@ public class ShakerHopper extends Subsystem{
 	} 
 	
 	public void stopHopper(){
-		System.out.print("Stopping Hopper");
+//		System.out.print("Stopping Hopper");
 		hopperSpark.setSpeed(0.0);
 	}
 
