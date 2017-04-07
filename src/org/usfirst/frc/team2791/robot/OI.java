@@ -64,10 +64,10 @@ public class OI {
 
 		operatorLS.whenPressed(new GearMechDownRunMotors());
 
-		operatorDpadLeft.whileHeld(new HopperOn());
-		operatorDpadRight.whileHeld(new RunHopperBackwards());
+		operatorRB.whileHeld(new HopperOn());
+		operatorLB.whileHeld(new RunHopperBackwards());
 
-		operatorRB.whenPressed(new StopHopper());//safety - TODO: if this isnt used, we could replace this with togglegearswitches
+		operatorDpadLeft.whenPressed(new StopHopper());//safety - TODO: if this isnt used, we could replace this with togglegearswitches
 		operatorBack.whenPressed(new StopClimberAndDisengage());//safety
 		operatorStart.whenPressed(new ShooterHopperSafety());//safety
 
