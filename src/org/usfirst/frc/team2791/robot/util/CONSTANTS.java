@@ -14,7 +14,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	
 	public static double driveEncoderTicks = 256;//Greyhill
 	
-	public static final double WHEEL_DIAMETER_IN_IN = 3.88;//Drive wheels - Colson
+	public static final double WHEEL_DIAMETER_IN_IN = 3.9;//Drive wheels - Colson
 	public static final double WHEEL_DIAMETER_IN_FEET = WHEEL_DIAMETER_IN_IN/12.0;
 
 	public static final int SHOOTER_ENCODER_TICKS = 128;//Greyhill

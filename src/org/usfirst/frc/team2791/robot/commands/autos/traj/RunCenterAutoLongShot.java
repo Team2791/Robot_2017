@@ -38,11 +38,11 @@ public class RunCenterAutoLongShot extends Command{
 			shooterSpunUp = true;
 		}
 		
-		if(timer.get() > 0.7) {
+		if(timer.get() > 0.3) {
 			if(shooterSpunUp) {
 				Robot.hopper.runHopper();
 			} else {
-				Robot.hopper.stopHopper();
+				Robot.hopper.slowHopper();
 			}
 		} else {
 			Robot.hopper.runHopperBackwards();

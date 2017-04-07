@@ -154,13 +154,13 @@ public class Robot extends IterativeRobot {
 		 *  vvvv  AUTO SELECTION vvv
 		 */
 		
-		String teamColor = "RED"; 
-//		String teamColor = "BLUE"; 
-
+//		String teamColor = "RED"; 
+		String teamColor = "BLUE"; 
+//NOAH - pick an auto with GearAuton (Not the below two)
 //		autonomousCommand = new WallShot_BoilerGear(teamColor);
-//		autonomousCommand = new CenterShot_CenterGear(teamColor);
+		autonomousCommand = new CenterShot_CenterGear(teamColor);
 		
-		autonomousCommand = new CenterGearAuton(teamColor);
+//		autonomousCommand = new CenterGearAuton(teamColor);
 //		autonomousCommand = new BoilerGearAuton(teamColor);
 //		autonomousCommand = new LoadingStationGearAuton(teamColor);
 		
