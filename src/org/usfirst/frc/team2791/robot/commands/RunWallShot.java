@@ -42,7 +42,7 @@ public class RunWallShot extends Command{
 		}
 		// first run the hopper backwards to clear out ball jams
 		// then wait for the shooter to spin up to start running
-		if(hopperBackwardsTimer.get() > 0.7) {
+		if(hopperBackwardsTimer.get() > 0.3) {
 			if(shooterSpunUp) {
 				Robot.hopper.runHopper();
 			} else {

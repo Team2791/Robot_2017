@@ -51,8 +51,8 @@ public class ShakerHopper extends Subsystem{
 	 * Runs hopper at full-speed
 	 */
 	public void runHopper() {
-		System.out.print("Running hopper");
-		hopperSpark.setSpeed(-0.75);
+		System.out.print("Hopper FOR C:" + this.getCurrentUsage());
+		hopperSpark.setSpeed(0.75);
 	}
 	
 	/**
@@ -60,15 +60,15 @@ public class ShakerHopper extends Subsystem{
 	 */
 	public void slowHopper() {
 		System.out.print("Running hopper half speed");
-		hopperSpark.setSpeed(-0.5);
+		hopperSpark.setSpeed(0.5);
 	}
 	
 	/**
 	 * Runs hopper backwards.
 	 */
 	public void runHopperBackwards() {
-		System.out.print("Running hopper backwards");
-		hopperSpark.setSpeed(0.75);
+		System.out.print("Hopper FOR C:" + this.getCurrentUsage());
+		hopperSpark.setSpeed(-0.75);
 	}
 	
 	/**
@@ -97,6 +97,6 @@ public class ShakerHopper extends Subsystem{
 	 */
 	public void debug(){
 		SmartDashboard.putNumber("Hopper Output", hopperSpark.get());
-		SmartDashboard.putNumber("Hopper Current Usage", getCurrentUsage());
+		SmartDashboard.putNumber("Hopper Current Usage", this.getCurrentUsage());
 	}
 }
