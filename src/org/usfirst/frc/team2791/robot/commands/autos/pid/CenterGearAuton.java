@@ -13,7 +13,6 @@ public class CenterGearAuton extends CommandGroup {
 	public CenterGearAuton(String red) {
     	addSequential(new DriveStraightEncoderGyro(-(110.5-36.0)/12, .7, 6)); //110.5 worked
     	addSequential(new AutonGearScore());
-    	addSequential(new DelayDrivetrain(1.0));
     	addSequential(new DriveStraightEncoderGyro(3.0, .7, 2));
     }
 }

@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Puts {@link ShakerGear} Mechanism down and stops the gear motors from running.</br>
+ * The {@link ShakerGear} Mech will come back up after 1.5 secods</br>
  * This will work regardless of the status of the limit switches
  */
 public class AutonGearScore extends Command{
@@ -31,7 +32,7 @@ public class AutonGearScore extends Command{
 	}
 	
 	protected boolean isFinished(){
-		return t.get()>1.0;
+		return t.get()>1.5; //here is where the delay is
 	}
 	
 	protected void end(){
