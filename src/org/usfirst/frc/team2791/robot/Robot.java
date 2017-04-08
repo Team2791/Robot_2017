@@ -1,8 +1,6 @@
 package org.usfirst.frc.team2791.robot;
 
-import org.usfirst.frc.team2791.robot.commands.autos.traj.CenterShot_CenterGear;
-import org.usfirst.frc.team2791.robot.commands.autos.traj.WallShot_BoilerGear;
-import org.usfirst.frc.team2791.robot.commands.autos.traj.TrajTesting;
+
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -19,9 +17,13 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team2791.robot.commands.autos.pid.BoilerGearAuton;
 import org.usfirst.frc.team2791.robot.commands.autos.pid.CenterGearAuton;
 import org.usfirst.frc.team2791.robot.commands.autos.pid.LoadingStationGearAuton;
+import org.usfirst.frc.team2791.robot.commands.autos.traj.CenterShot_CenterGear;
+import org.usfirst.frc.team2791.robot.commands.autos.traj.WallShot_BoilerGear;
+import org.usfirst.frc.team2791.robot.commands.autos.traj.TrajTesting;
 
 
 /**
@@ -84,6 +86,7 @@ public class Robot extends IterativeRobot {
 			CameraServer.getInstance().startAutomaticCapture("Front Camera",0);
 		}
 		catch(Exception e){
+			System.out.println("*****FRONT Camera Failed*****");
 			e.printStackTrace();
 		}
 		
@@ -91,6 +94,7 @@ public class Robot extends IterativeRobot {
 			CameraServer.getInstance().startAutomaticCapture("Gear Camera",1);
 		}
 		catch(Exception e){
+			System.out.println("*****BACK Camera Failed*****");
 			e.printStackTrace();
 		}
 
@@ -156,7 +160,7 @@ public class Robot extends IterativeRobot {
 		
 //		String teamColor = "RED"; 
 		String teamColor = "BLUE"; 
-//NOAH - pick an auto with GearAuton (Not the below two)
+		
 //		autonomousCommand = new WallShot_BoilerGear(teamColor);
 		autonomousCommand = new CenterShot_CenterGear(teamColor);
 		
