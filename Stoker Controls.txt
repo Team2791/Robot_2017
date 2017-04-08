@@ -5,14 +5,14 @@ Y - Run Long Shot
 
 A - Run Intake
 B - Run Climber
-LB - Engage Rope
+LS - Engage Rope
 
 DPadUp - Gear Intake Up
-DPadDown - Gear Intake Down (Motor Running)
-LS Button - Gear Switch On/Off
+DPadDown - Floor Gear Intake (Auto Rise)
+LS Button - Floor Gear Intake
 
-DPadLeft - Hopper Forward
-DPadRight - Hopper Reverse
+LBumper - Hopper Forward
+RBumper - Hopper Reverse
 
 Back - Climber EStop
 Start - Shooter/Hopper EStop
