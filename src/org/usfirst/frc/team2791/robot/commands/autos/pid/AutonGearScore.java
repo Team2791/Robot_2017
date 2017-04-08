@@ -21,6 +21,8 @@ public class AutonGearScore extends Command{
 	protected void initialize(){
 		t.reset();
 		t.start();
+
+		Robot.gearMechanism.stopGearIntake();
 		Robot.gearMechanism.setGearIntakeDown(true);
 	}
 	
@@ -29,12 +31,11 @@ public class AutonGearScore extends Command{
 	}
 	
 	protected boolean isFinished(){
-		return t.get()>2.0;
+		return t.get()>1.0;
 	}
 	
 	protected void end(){
 		Robot.gearMechanism.stopGearIntake();
-		Robot.gearMechanism.setGearIntakeDown(false);
 	}
 	
 	protected void interrupted(){

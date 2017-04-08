@@ -17,7 +17,7 @@ public class BoilerGearAuton extends CommandGroup {
 
 		double dist = 0;
 		if(red.equals("RED")){
-			addSequential(new DriveStraightEncoderGyro(-(125.0-33)/12.0, .7, 10));
+			addSequential(new DriveStraightEncoderGyro(-(129.0-33)/12.0, .7, 10));
 			addSequential(new StationaryGyroTurn((-60.0/12),.7));
 			dist = Math.cos(Math.PI/6)/91.0 - 33; //91.0 is the lateral distance
 

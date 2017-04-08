@@ -162,9 +162,9 @@ public class Robot extends IterativeRobot {
 		String teamColor = "BLUE"; 
 		
 //		autonomousCommand = new WallShot_BoilerGear(teamColor);
-		autonomousCommand = new CenterShot_CenterGear(teamColor);
+//		autonomousCommand = new CenterShot_CenterGear(teamColor);
 		
-//		autonomousCommand = new CenterGearAuton(teamColor);
+		autonomousCommand = new CenterGearAuton(teamColor);
 //		autonomousCommand = new BoilerGearAuton(teamColor);
 //		autonomousCommand = new LoadingStationGearAuton(teamColor);
 		
