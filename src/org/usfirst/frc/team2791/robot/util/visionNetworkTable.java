@@ -8,6 +8,12 @@ public class visionNetworkTable implements ITableListener {
 	
 	private NetworkTable visionTargetsTable;
 	private AnalyzedContour[] foundContours = {};
+
+	public static double FOVX = 47;
+	public static double FOVY = 36.2;
+	public static double INCLINATION = 40;
+	public static int SIZEX = 320;
+	public static int SIZEY = 240;
 	
 	
 	public visionNetworkTable() {
@@ -16,22 +22,28 @@ public class visionNetworkTable implements ITableListener {
 		
 	}
 	
-	public double getBoilerAngleError() {
-		
+	public double getBoilerAngleError() {	
+		double targetX = selectTarget().centerX;
+		double ndcX = 2 * targetX / SIZEX - 1;
+		double angle = Math.atan(Math.tan(Math.toRadians(FOVX / 2)) * ndcX);
+		double x = Math.sin(Math.toRadians(angle));
+		double z = Math.cos(Math.toRadians(angle));
+		z *= Math.cos(Math.toRadians(INCLINATION));
+		return Math.toDegrees(Math.atan(x/z));
+	}
+
+	private AnalyzedContour selectTarget() {
 		AnalyzedContour[] possibleTargets;
 		
 		synchronized (foundContours) {
 			possibleTargets = foundContours;
 		}
-		
-		double targetX;
 		try {
-			targetX = possibleTargets[0].centerX;
-		} catch (Exception e) {
-			targetX = 0;
+			return possibleTargets[0];
+		} catch (IndexOutOfBoundsException e) {
+			return new AnalyzedContour(0,0,0,0,0,0);
 		}
 		
-		return targetX;
 	}
 	
 	@Override
@@ -39,16 +51,12 @@ public class visionNetworkTable implements ITableListener {
 			boolean isNew) {
 //		System.out.println("New value: "+key+" = "+value);
 		
-		
 		synchronized (foundContours) {
-//			while(true) { // Try to get info until it works
-				try {
-					foundContours = getFoundContours();
-//					break;
-				} catch (IndexOutOfBoundsException e){
-					System.out.println("Messed up reading network tables. Trying again?");
-				}
-//			}
+			try {
+				foundContours = getFoundContours();
+			} catch (IndexOutOfBoundsException e){
+				System.out.println("Messed up reading network tables. Trying again?");
+			}
 		}
 		
 	}
