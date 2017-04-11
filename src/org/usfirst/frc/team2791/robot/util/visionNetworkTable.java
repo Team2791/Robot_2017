@@ -3,6 +3,11 @@ package org.usfirst.frc.team2791.robot.util;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class visionNetworkTable {
+	public static double FOVX = 47;
+	public static double FOVY = 36.2;
+	public static double INCLINATION = 40;
+	public static int SIZEX = 320;
+	public static int SIZEY = 240;
 	
 	public static NetworkTable visionTargetsTable;
 	
@@ -11,12 +16,14 @@ public class visionNetworkTable {
 		
 	}
 	
-	public double getBoilerAngleError() {
-		
+	public double getBoilerAngleError() {	
 		double targetX = getFoundContours()[0].centerX;
-		
-
-		return targetX;
+		double ndcX = 2 * targetX / SIZEX - 1;
+		double angle = Math.atan(Math.tan(Math.toRadians(FOVX / 2)) * ndcX);
+		double x = Math.sin(Math.toRadians(angle));
+		double z = Math.cos(Math.toRadians(angle));
+		z *= Math.cos(Math.toRadians(INCLINATION));
+		return Math.toDegrees(Math.atan(x/z));
 	}
 	
 	private AnalyzedContour[] getFoundContours() {
