@@ -29,7 +29,7 @@ public class RobotMap {
 	public static final int DRIVE_SPARK_RIGHT_PORT = 8;
 	
 	public static final int INTAKE_SPARK_PORT = 6;
-	public static final int HOPPER_SPARK_PORT = 7; //4 on prac
+	public static final int HOPPER_SPARK_PORT = 7;
 	public static final int GEAR_SPARK_PORT = 5; //Need to add on Comp
 	
 	// ANALOG
