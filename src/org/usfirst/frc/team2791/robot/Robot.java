@@ -1,14 +1,13 @@
 package org.usfirst.frc.team2791.robot;
 
 
-import org.usfirst.frc.team2791.robot.commands.autos.pid.CenterGearAuton;
 import org.usfirst.frc.team2791.robot.commands.autos.pid.LoadingStationGearAuton;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
-import org.usfirst.frc.team2791.robot.util.ShakerVisionServer;
+import org.usfirst.frc.team2791.robot.util.visionNetworkTable;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
@@ -51,7 +50,9 @@ public class Robot extends IterativeRobot {
 	public static ShakerGear gearMechanism;
 	public static ShakerDrivetrain drivetrain;
 
-	public ShakerVisionServer vision;
+//	public ShakerVisionServer vision;
+	
+	public static visionNetworkTable visionTable; 
 	
 	private double lastAutonLoopTime;
 
@@ -102,6 +103,10 @@ public class Robot extends IterativeRobot {
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 
 		drivetrain.setAutoPID();
+		
+		visionTable = new visionNetworkTable();
+		
+		
 		debug();
 
 	}
@@ -228,6 +233,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Climber/Intake current",intake.getCurrentUsage());
 		SmartDashboard.putNumber("Hopper current",hopper.getCurrentUsage());
 		SmartDashboard.putNumber("Shooter total current",shooter.getCurrentUsage());
+		
+		System.out.println("Vision error = "+ visionTable.getBoilerAngleError());
 
 		drivetrain.debug();
 		shooter.debug();
