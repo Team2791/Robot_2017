@@ -63,10 +63,10 @@ public class OI {
 		
 		operatorRS.whileHeld(new EngageRope());
 
-		operatorDpadDown.whenPressed(new IntakeGearFromFloor()); 
+		operatorLS.whenPressed(new IntakeGearFromFloor()); 
 		operatorDpadUp.whenPressed(new GearMechUp());
 
-		operatorLS.whenPressed(new GearMechDownRunMotors());
+		operatorDpadDown.whenPressed(new GearMechDownRunMotors());
 
 		operatorBack.whenPressed(new StopClimberAndDisengage());//safety
 		operatorStart.whenPressed(new ShooterHopperSafety());//safety

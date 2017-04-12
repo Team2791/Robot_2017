@@ -37,6 +37,7 @@ public class ShakerShooter extends Subsystem {
 
     private CANTalon primaryShooterTalon = null; //has encoder input
     private CANTalon followerShooterTalonA = null;
+    private CANTalon followerShooterTalonB = null;
 
     private Solenoid shooterSolenoid;
 
@@ -48,11 +49,13 @@ public class ShakerShooter extends Subsystem {
         primaryShooterTalon = new CANTalon(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
         primaryShooterTalon.setInverted(true);
         
-        followerShooterTalonA = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT);
+        followerShooterTalonA = new CANTalon(RobotMap.FOLLOWER_A_SHOOTER_TALON_PORT);
+        followerShooterTalonB = new CANTalon(RobotMap.FOLLOWER_B_SHOOTER_TALON_PORT);
         
         primaryShooterTalon.configPeakOutputVoltage(0, -12.0f);
         followerShooterTalonA.configPeakOutputVoltage(0, -12.0f);
-        
+        followerShooterTalonB.configPeakOutputVoltage(0, -12.0f);
+
         if(SmartDashboard.getNumber("Shooter P", -2791) == -2791){
 	        SmartDashboard.putNumber("Shooter P", CONSTANTS.SHOOTER_P);
 	        SmartDashboard.putNumber("Shooter I", CONSTANTS.SHOOTER_I);
@@ -78,14 +81,21 @@ public class ShakerShooter extends Subsystem {
         followerShooterTalonA.changeControlMode(TalonControlMode.Follower);
         followerShooterTalonA.set(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
 
+        followerShooterTalonB.changeControlMode(TalonControlMode.Follower);
+        followerShooterTalonB.set(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
+        
         primaryShooterTalon.enableControl();
         followerShooterTalonA.enableControl();
+        followerShooterTalonB.enableControl();
         
         primaryShooterTalon.enable();
         followerShooterTalonA.enable();
+        followerShooterTalonB.enable();
         
         primaryShooterTalon.configNominalOutputVoltage(0, 0);
         followerShooterTalonA.configNominalOutputVoltage(0, 0);
+        followerShooterTalonB.configNominalOutputVoltage(0, 0);
+
     }
     
     public void initDefaultCommand(){  }
@@ -179,6 +189,7 @@ public class ShakerShooter extends Subsystem {
         stopMotors();
         primaryShooterTalon.reset();
         followerShooterTalonA.reset();
+        followerShooterTalonB.reset();
     }
 
     public void stopMotors() { //Set the motors to 0 to stop
@@ -222,9 +233,10 @@ public class ShakerShooter extends Subsystem {
 		SmartDashboard.putNumber("Primary Talon Closed Loop Error (Sensor value)", primaryShooterTalon.getClosedLoopError());
 		
 		SmartDashboard.putNumber("Shooter primary output voltage", primaryShooterTalon.getOutputVoltage());
-		SmartDashboard.putNumber("Shooter follower output voltage", followerShooterTalonA.getOutputVoltage());
-		
+		SmartDashboard.putNumber("Shooter follower A output voltage", followerShooterTalonA.getOutputVoltage());
+		SmartDashboard.putNumber("Shooter follower  B output voltage", followerShooterTalonB.getOutputVoltage());
+
 		SmartDashboard.putNumber("Shooter total current output", getCurrentUsage());
-		SmartDashboard.putString("Shooter primary output current vs follower output current", primaryShooterTalon.getOutputCurrent()+":"+followerShooterTalonA.getOutputCurrent());	
+		SmartDashboard.putString("Shooter primary output current vs follower A output current vs follower B output", primaryShooterTalon.getOutputCurrent()+":"+followerShooterTalonA.getOutputCurrent()+":"+followerShooterTalonB.getOutputCurrent());	
     }
 }

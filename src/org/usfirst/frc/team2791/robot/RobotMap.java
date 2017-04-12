@@ -32,6 +32,7 @@ public class RobotMap {
 	public static final int HOPPER_SPARK_PORT = 7; //4 on prac
 	public static final int GEAR_SPARK_PORT = 5; //Need to add on Comp
 	
+	public static final int HOPPER_SERVO = 0;
 	// ANALOG
 	public static final int IR_SENSOR_1 = 0;
 	public static final int IR_SENSOR_2 = 1;
@@ -41,7 +42,9 @@ public class RobotMap {
 	public static final int PCM_MODULE = 1;
 	
 	public static final int PRIMARY_SHOOTER_TALON_PORT = 10;
-	public static final int FOLLOWER_SHOOTER_TALON_PORT = 11;
+	public static final int FOLLOWER_A_SHOOTER_TALON_PORT = 11;
+	public static final int FOLLOWER_B_SHOOTER_TALON_PORT = 12;
+
 	public static final int SECONDARY_FOLLOWER_SHOOTER_TALON_PORT = 63;//unused right now (4/7/17)
 	
 	//PCM Ports--note: due to use of only single solenoids, ALL solenoids will default to false state while disabled
@@ -49,6 +52,7 @@ public class RobotMap {
 	public static final int WING_CHANNEL = 4;
 	public static final int GEAR_CHANNEL = 6;
 	public static final int SHOOTER_CHANNEL = 5;
+	
 	
 	//PDP Ports
 	public static final int POWER_RIGHT_DRIVE_A = 0;

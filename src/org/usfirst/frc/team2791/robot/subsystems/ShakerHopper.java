@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.PWM;
+
 
 /**
  * This class corresponds to the fuel hopper. There is a miniCIM run off of a Spark. The system is composed of a double
@@ -26,12 +28,16 @@ public class ShakerHopper extends Subsystem{
 	private static double hopperSetpoint = -0.66;
 	private final double distanceSensorCutoffPoint = 1.5;
 		
+	protected static PWM agitator;
+	
 	public ShakerHopper(){
 		hopperSpark = new Talon(RobotMap.HOPPER_SPARK_PORT);
 //		hopperSpark.setInverted(true);
 		
 		ballSensor1 = new AnalogInput(0);
 		ballSensor2 = new AnalogInput(1);
+		
+		agitator = new PWM(RobotMap.HOPPER_SERVO);
 	}
 	
 	public void initDefaultCommand(){
@@ -53,6 +59,7 @@ public class ShakerHopper extends Subsystem{
 	public void runHopper() {
 		System.out.print("Hopper FOR C:" + this.getCurrentUsage());
 		hopperSpark.setSpeed(0.75);
+		moveServo();
 	}
 	
 	/**
@@ -69,6 +76,7 @@ public class ShakerHopper extends Subsystem{
 	public void runHopperBackwards() {
 		System.out.print("Hopper FOR C:" + this.getCurrentUsage());
 		hopperSpark.setSpeed(-0.75);
+		moveServo();
 	}
 	
 	/**
@@ -76,13 +84,16 @@ public class ShakerHopper extends Subsystem{
 	 * @param speed between -1.0 and +1.0
 	 */
 	public void setHopperSpeed(double speed){
-//		System.out.print("Running Hopper at " +speed);
 		hopperSpark.setSpeed(speed);
+		if(speed!=0.0)
+			moveServo();
+		else
+			stopServo();
 	} 
 	
 	public void stopHopper(){
-//		System.out.print("Stopping Hopper");
 		hopperSpark.setSpeed(0.0);
+		stopServo();
 	}
 
 	/**
@@ -90,6 +101,14 @@ public class ShakerHopper extends Subsystem{
 	 */
 	public double getCurrentUsage() {
 		return Robot.pdp.getCurrent(RobotMap.POWER_HOPPER_FLOOR);
+	}
+	
+	public void moveServo(){
+		agitator.setRaw(255);
+	}
+
+	public void stopServo(){
+		agitator.setDisabled();
 	}
 	
 	/**

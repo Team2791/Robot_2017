@@ -70,26 +70,27 @@ public class DriveStraightEncoderGyro extends Command {
 
 		//setLeftRightVoltage(drivePIDOutput + anglePIDOutput, drivePIDOutput - anglePIDOutput);
 		setLeftRightMotorOutputsPIDDriving(drivePIDOutput + anglePIDOutput, drivePIDOutput - anglePIDOutput);
-		System.out.println("distError: " + distancePID.getError() + " output: " + drivePIDOutput);
-		System.out.println("angleError: " + movingAnglePID.getError() + " output: " + anglePIDOutput);
+//		System.out.println("distError: " + distancePID.getError() + " output: " + drivePIDOutput);
+//		System.out.println("angleError: " + movingAnglePID.getError() + " output: " + anglePIDOutput);
 
 		debug();
 	}
 
+	
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		System.out.println("Stright drive stop conditions");
-		System.out.println(Math.abs(distancePID.getError()) < 0.05);
-		System.out.println(Math.abs(movingAnglePID.getError()) < 1.5);
-		System.out.println(Math.abs(Robot.drivetrain.getLeftVelocity()) < 0.05);
-		System.out.println(Math.abs(Robot.drivetrain.getRightVelocity()) < 0.05);
+//		System.out.println("Stright drive stop conditions");
+//		System.out.println(Math.abs(distancePID.getError()) < 0.05);
+//		System.out.println(Math.abs(movingAnglePID.getError()) < 1.5);
+//		System.out.println(Math.abs(Robot.drivetrain.getLeftVelocity()) < 0.05);
+//		System.out.println(Math.abs(Robot.drivetrain.getRightVelocity()) < 0.05);
 		
 		boolean isPIDDone = (Math.abs(distancePID.getError()) < 0.05 &&
 				Math.abs(movingAnglePID.getError()) < 1.5 &&
 				Math.abs(Robot.drivetrain.getLeftVelocity()) < 0.05 &&
 				Math.abs(Robot.drivetrain.getRightVelocity()) < 0.05);
 		
-		System.out.println(isPIDDone);
+//		System.out.println(isPIDDone);
 
 		return (isPIDDone || timer.hasPeriodPassed(timeForRelease));
 	}

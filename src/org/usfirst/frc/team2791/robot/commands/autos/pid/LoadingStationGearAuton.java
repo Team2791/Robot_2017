@@ -15,14 +15,18 @@ public class LoadingStationGearAuton extends CommandGroup {
 	 */
     public LoadingStationGearAuton(String color) {
     	
+		System.out.println("****************Made it to LSsssssssssssss****************");
+
     	double dist;
     	if(color.equals("RED")){
-        	addSequential(new DriveStraightEncoderGyro(-(111-36)/12.0, .7, 6));
-        	addSequential(new StationaryGyroTurn(60.0, 1));
+    		System.out.println("****************Made it to LS RRRRRRRRRED****************");
+        	addSequential(new DriveStraightEncoderGyro(-(111-36)/12.0, .7, 4.5)); 
+        	addSequential(new StationaryGyroTurn(60.0, .9));
     		dist = 92.5/Math.cos(Math.PI/6) - 36;
 
     	}else{
-    		addSequential(new DriveStraightEncoderGyro(-(110-33)/12.0, .7, 6)); 
+    		System.out.println("****************Made it to LS BLUE****************");
+    		addSequential(new DriveStraightEncoderGyro(-(106-33)/12.0, .7, 4.5));  //107 too far
         	addSequential(new StationaryGyroTurn(-60.0, 1));
     		dist = 91/Math.cos(Math.PI/6) - 36;
 

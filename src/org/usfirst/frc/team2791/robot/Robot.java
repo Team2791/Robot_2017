@@ -3,6 +3,8 @@ package org.usfirst.frc.team2791.robot;
 
 import org.usfirst.frc.team2791.robot.commands.autos.pid.CenterGearAuton;
 import org.usfirst.frc.team2791.robot.commands.autos.pid.LoadingStationGearAuton;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.BoilerGearAuton;
+
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -77,21 +79,21 @@ public class Robot extends IterativeRobot {
 		compressor.setClosedLoopControl(true);
 		compressor.start();
 
-		try{
-			CameraServer.getInstance().startAutomaticCapture("Front Camera",0);
-		}
-		catch(Exception e){
-			System.out.println("*****FRONT Camera Failed*****");
-			e.printStackTrace();
-		}
-		
-		try{
-			CameraServer.getInstance().startAutomaticCapture("Gear Camera",1);
-		}
-		catch(Exception e){
-			System.out.println("*****BACK Camera Failed*****");
-			e.printStackTrace();
-		}
+//		try{
+//			CameraServer.getInstance().startAutomaticCapture("Front Camera",0);
+//		}
+//		catch(Exception e){
+//			System.out.println("*****FRONT Camera Failed*****");
+//			e.printStackTrace();
+//		}
+//		
+//		try{
+//			CameraServer.getInstance().startAutomaticCapture("Gear Camera",1);
+//		}
+//		catch(Exception e){
+//			System.out.println("*****BACK Camera Failed*****");
+//			e.printStackTrace();
+//		}
 
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
@@ -162,7 +164,8 @@ public class Robot extends IterativeRobot {
 //		autonomousCommand = new CenterGearAuton(teamColor);
 //		autonomousCommand = new BoilerGearAuton(teamColor);
 		autonomousCommand = new LoadingStationGearAuton(teamColor);
-		
+//		
+//		autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1);
 //		autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6);
 
 		

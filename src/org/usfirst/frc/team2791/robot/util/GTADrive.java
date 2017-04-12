@@ -16,7 +16,7 @@ public class GTADrive {
 		double combinedLeft = 0;
 		
 		if(joystick.getButtonRB()){ //if the Right Bumpers are calling GTA
-			combinedLeft=0.35+joystick.getAxisLeftX()/3; //nudge the drivetrain forward
+			combinedLeft=0.35+joystick.getAxisLeftX()/3.0; //nudge the drivetrain forward
 			
 		} else if(joystick.getButtonLB()){//if the Left Bumpes are calling GTA
 			combinedLeft=-1*(0.35+joystick.getAxisLeftX()/3);//nudge the drivetrain Backwards
@@ -39,7 +39,7 @@ public class GTADrive {
 			combinedRight=0.35-(double) (joystick.getAxisLeftX())/3.0;//nudge the drivetrain forward
 			
 	    } else if(joystick.getButtonLB()){//if the Left Bumpes are calling GTA
-			combinedRight=-1*(0.35-joystick.getAxisLeftX()/3);//nudge the drivetrain Backwards
+			combinedRight=-1*(0.35-joystick.getAxisLeftX()/3.0);//nudge the drivetrain Backwards
 			
 	    } else{//otherwise, the Triggers must be calling GTA, and only LT calls this method
 		 	combinedRight=joystick.getGtaDriveRight();
