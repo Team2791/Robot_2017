@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2791.robot.util;
 
+import org.usfirst.frc.team2791.robot.Robot;
+
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
@@ -16,6 +18,7 @@ public class visionNetworkTable implements ITableListener {
 	private int SIZEY = 240;
 	
 	private boolean freshImage = false;
+	private double gyroOffset = 0;
 	
 	
 	
@@ -25,7 +28,11 @@ public class visionNetworkTable implements ITableListener {
 		
 	}
 	
-	public double getBoilerAngleError() {
+	public double getRealtimeBoilerAngleError() {
+		return Robot.drivetrain.getGyroAngle() + gyroOffset;
+	}
+	
+	private double calculateTargetAngleError() {
 		double targetX = selectTarget().centerX;
 		double ndcX = 2 * targetX / SIZEX - 1;
 		double angle = Math.atan(Math.tan(Math.toRadians(FOVX / 2)) * ndcX);
@@ -36,6 +43,10 @@ public class visionNetworkTable implements ITableListener {
 		return Math.toDegrees(Math.atan(x/z));
 	}
 
+	/**
+	 * This method will filter the contours and select the target we should aim at (either boiler ring). 
+	 * @return
+	 */
 	private AnalyzedContour selectTarget() {
 		AnalyzedContour[] possibleTargets;
 		
@@ -43,6 +54,8 @@ public class visionNetworkTable implements ITableListener {
 			possibleTargets = foundContours;
 		}
 		
+		// If there are no targets return one right infront of the robot so it stops moving.
+		// TODO tell the robot not to shoot.
 		try {
 			return possibleTargets[0];
 		} catch (IndexOutOfBoundsException e) {
@@ -63,6 +76,9 @@ public class visionNetworkTable implements ITableListener {
 				System.out.println("Messed up reading network tables. Trying again?");
 			}
 		}
+		
+		// update the gyro offset with the latest error information
+		gyroOffset = Robot.drivetrain.getGyroAngle() - calculateTargetAngleError();	
 		
 	}
 	
