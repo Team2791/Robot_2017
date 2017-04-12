@@ -78,7 +78,7 @@ public class visionNetworkTable implements ITableListener {
 		}
 		
 		// update the gyro offset with the latest error information
-		gyroOffset = Robot.drivetrain.getGyroAngle() - calculateTargetAngleError();	
+		gyroOffset = calculateTargetAngleError() - Robot.drivetrain.getGyroAngle();	
 		
 	}
 	
