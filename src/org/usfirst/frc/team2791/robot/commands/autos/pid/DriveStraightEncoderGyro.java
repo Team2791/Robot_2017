@@ -22,8 +22,21 @@ public class DriveStraightEncoderGyro extends Command {
 
 	private Timer timer =new Timer();
 	private double timeForRelease;
-
+	private double drivingErrorThreshold = 1.5;
+	
 	/**
+	  * @param distanceToDrive the distance in feet that you would like to drive ***negative if reversing*** *
+	 * @param maxOutput the maximum output you would like the motors to receive (up to 1.0)
+	 * @param timeOut the time in seconds before you would like to wait before the PID times out and the command ends
+	 * @param maxThreshold the maximum error for driving forward before the PID accepts it and finishes
+	 */
+	public DriveStraightEncoderGyro(double distanceToDrive, double maxOutput, double timeOut, double maxThreshold){
+		this(distanceToDrive, maxOutput, timeOut);
+		this.drivingErrorThreshold = maxThreshold;		
+	}
+	
+	/**
+	 * Driving Error Threshold is defaulted to 1.5
 	 * @param distanceToDrive the distance in feet that you would like to drive ***negative if reversing*** *
 	 * @param maxOutput the maximum output you would like the motors to receive (up to 1.0)
 	 * @param timeOut the time in seconds before you would like to wait before the PID times out and the command ends
@@ -49,7 +62,6 @@ public class DriveStraightEncoderGyro extends Command {
 
 		distancePID.setIZone(0.15);
 		movingAnglePID.setIZone(4);
-
 	}
 
 	// Called just before this Command runs the first time
@@ -79,7 +91,7 @@ public class DriveStraightEncoderGyro extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		System.out.println("Stright drive stop conditions");
-		System.out.println(Math.abs(distancePID.getError()) < 0.05);
+		System.out.println(Math.abs(distancePID.getError()) < drivingErrorThreshold);
 		System.out.println(Math.abs(movingAnglePID.getError()) < 1.5);
 		System.out.println(Math.abs(Robot.drivetrain.getLeftVelocity()) < 0.05);
 		System.out.println(Math.abs(Robot.drivetrain.getRightVelocity()) < 0.05);

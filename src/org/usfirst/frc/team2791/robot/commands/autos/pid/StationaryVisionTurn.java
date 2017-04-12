@@ -4,9 +4,8 @@ import org.usfirst.frc.team2791.robot.Robot;
 
 public class StationaryVisionTurn extends DrivetrainPIDTurn {
 
-	public StationaryVisionTurn(double maxOutput) {
-		super(maxOutput);
-		// TODO Auto-generated constructor stub
+	public StationaryVisionTurn(double maxOutput, double errorThreshold) {
+		super(maxOutput, errorThreshold);
 	}
 	
 	protected double getProcessVaraible() {

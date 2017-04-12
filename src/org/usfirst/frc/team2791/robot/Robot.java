@@ -234,7 +234,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Hopper current",hopper.getCurrentUsage());
 		SmartDashboard.putNumber("Shooter total current",shooter.getCurrentUsage());
 		
-		System.out.println("Vision error = "+ visionTable.getBoilerAngleError());
+		System.out.println("Vision error = "+ visionTable.getRealtimeBoilerAngleError());
 
 		drivetrain.debug();
 		shooter.debug();
