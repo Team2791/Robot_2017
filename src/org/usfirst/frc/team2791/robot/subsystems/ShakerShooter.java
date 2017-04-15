@@ -37,6 +37,8 @@ public class ShakerShooter extends Subsystem {
 
     private CANTalon primaryShooterTalon = null; //has encoder input
     private CANTalon followerShooterTalonA = null;
+    private CANTalon followerShooterTalonB = null;
+
 
     private Solenoid shooterSolenoid;
 
@@ -48,10 +50,13 @@ public class ShakerShooter extends Subsystem {
         primaryShooterTalon = new CANTalon(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
         primaryShooterTalon.setInverted(true);
         
-        followerShooterTalonA = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT);
-        
+        followerShooterTalonA = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT_A);
+        followerShooterTalonB = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT_B);
+
         primaryShooterTalon.configPeakOutputVoltage(0, -12.0f);
         followerShooterTalonA.configPeakOutputVoltage(0, -12.0f);
+        followerShooterTalonB.configPeakOutputVoltage(0, -12.0f);
+
         
         if(SmartDashboard.getNumber("Shooter P", -2791) == -2791){
 	        SmartDashboard.putNumber("Shooter P", CONSTANTS.SHOOTER_P);
@@ -77,15 +82,24 @@ public class ShakerShooter extends Subsystem {
 
         followerShooterTalonA.changeControlMode(TalonControlMode.Follower);
         followerShooterTalonA.set(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
-
+ 
+        followerShooterTalonB.changeControlMode(TalonControlMode.Follower);
+        followerShooterTalonB.set(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
+        
         primaryShooterTalon.enableControl();
         followerShooterTalonA.enableControl();
+        followerShooterTalonB.enableControl();
+
         
         primaryShooterTalon.enable();
         followerShooterTalonA.enable();
+        followerShooterTalonB.enable();
+
         
         primaryShooterTalon.configNominalOutputVoltage(0, 0);
         followerShooterTalonA.configNominalOutputVoltage(0, 0);
+        followerShooterTalonB.configNominalOutputVoltage(0, 0);
+
     }
     
     public void initDefaultCommand(){  }
@@ -190,7 +204,7 @@ public class ShakerShooter extends Subsystem {
      * @return total shooter current usage
      */
     public double getCurrentUsage(){
-    	return primaryShooterTalon.getOutputCurrent()+followerShooterTalonA.getOutputCurrent();
+    	return primaryShooterTalon.getOutputCurrent()+followerShooterTalonA.getOutputCurrent()+followerShooterTalonB.getOutputCurrent();
     }
     
     /**
@@ -224,7 +238,10 @@ public class ShakerShooter extends Subsystem {
 		SmartDashboard.putNumber("Shooter primary output voltage", primaryShooterTalon.getOutputVoltage());
 		SmartDashboard.putNumber("Shooter follower output voltage", followerShooterTalonA.getOutputVoltage());
 		
+		SmartDashboard.putNumber("Shooter primary output %vbus", primaryShooterTalon.getOutputVoltage()/primaryShooterTalon.getBusVoltage());
+		
 		SmartDashboard.putNumber("Shooter total current output", getCurrentUsage());
-		SmartDashboard.putString("Shooter primary output current vs follower output current", primaryShooterTalon.getOutputCurrent()+":"+followerShooterTalonA.getOutputCurrent());	
+		SmartDashboard.putString("Shooter primary output current vs follower output current", primaryShooterTalon.getOutputCurrent()+":"+followerShooterTalonA.getOutputCurrent());
+		SmartDashboard.putString("Shooter primary output vs follower output current", primaryShooterTalon.getOutputCurrent()+":"+followerShooterTalonA.getOutputCurrent());
     }
 }

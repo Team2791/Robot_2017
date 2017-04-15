@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2791.robot;
 
 
-import org.usfirst.frc.team2791.robot.commands.autos.pid.LoadingStationGearAuton;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.StationaryGyroTurn;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -55,6 +55,8 @@ public class Robot extends IterativeRobot {
 	public static visionNetworkTable visionTable; 
 	
 	private double lastAutonLoopTime;
+	
+	private double smartDashBSFix = 0.00001;
 
 	/**
 	 * setting autonomousCommand to a Command will cause that Command to run in autonomous init
@@ -78,21 +80,22 @@ public class Robot extends IterativeRobot {
 		compressor.setClosedLoopControl(true);
 		compressor.start();
 
-		try{
-			CameraServer.getInstance().startAutomaticCapture("Front Camera",0);
-		}
-		catch(Exception e){
-			System.out.println("*****FRONT Camera Failed*****");
-			e.printStackTrace();
-		}
-		
-		try{
-			CameraServer.getInstance().startAutomaticCapture("Gear Camera",1);
-		}
-		catch(Exception e){
-			System.out.println("*****BACK Camera Failed*****");
-			e.printStackTrace();
-		}
+		//I Commented these out because the the prints are SOOO Annoying ya know?
+//		try{
+//			CameraServer.getInstance().startAutomaticCapture("Front Camera",0);
+//		}
+//		catch(Exception e){
+//			System.out.println("*****FRONT Camera Failed*****");
+//			e.printStackTrace();
+//		}
+//		
+//		try{
+//			CameraServer.getInstance().startAutomaticCapture("Gear Camera",1);
+//		}
+//		catch(Exception e){
+//			System.out.println("*****BACK Camera Failed*****");
+//			e.printStackTrace();
+//		}
 
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
@@ -133,6 +136,7 @@ public class Robot extends IterativeRobot {
 		debug(); //allows us to debug (e.g. encoders and gyro) while disabled
 
 		Scheduler.getInstance().run();
+		run();
 	}
 
 	/**
@@ -166,9 +170,10 @@ public class Robot extends IterativeRobot {
 		
 //		autonomousCommand = new CenterGearAuton(teamColor);
 //		autonomousCommand = new BoilerGearAuton(teamColor);
-		autonomousCommand = new LoadingStationGearAuton(teamColor);
+//		autonomousCommand = new LoadingStationGearAuton(teamColor);
 		
 //		autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6);
+		autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1);
 
 		
 		/*
@@ -186,6 +191,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		run();
 
 		debug();
 
@@ -213,6 +219,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		run();
 		debug();
 	}
 
@@ -224,6 +231,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		debug();
 		LiveWindow.run();
+		run();
 	}
 
 	public void debug() {
@@ -234,7 +242,15 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Hopper current",hopper.getCurrentUsage());
 		SmartDashboard.putNumber("Shooter total current",shooter.getCurrentUsage());
 		
-		System.out.println("Vision error = "+ visionTable.getRealtimeBoilerAngleError());
+		SmartDashboard.putNumber("Realtime vision error", visionTable.getRealtimeBoilerAngleError());
+		
+		
+//		SmartDashboard.putNumber("Camera vision error", visionTable.targetError);
+		SmartDashboard.putNumber("Camera vision gyro offset", visionTable.gyroOffset);
+		SmartDashboard.putBoolean("Robot still", visionTable.robotStill.getOutputValue());
+//		smartDashBSFix *= -1;
+		
+//		System.out.println("Vision error = "+ visionTable.getRealtimeBoilerAngleError());
 
 		drivetrain.debug();
 		shooter.debug();
@@ -270,6 +286,11 @@ public class Robot extends IterativeRobot {
 			
 		}
 		
+	}
+	
+	// THROW BACK TO OLD CODE
+	public void run(){
+		visionTable.run();
 	}
 	
 }

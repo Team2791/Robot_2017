@@ -8,13 +8,21 @@ public class StationaryVisionTurn extends DrivetrainPIDTurn {
 		super(maxOutput, errorThreshold);
 	}
 	
+	@Override
 	protected double getProcessVaraible() {
 		return Robot.visionTable.getRealtimeBoilerAngleError();
 	}
 	
     // Called just before this Command runs the first time
+	@Override
     protected void initialize() {
     	stationaryAnglePID.setSetPoint(0);
+    }
+    
+    @Override
+    protected boolean isFinished() {
+        return Math.abs(stationaryAnglePID.getError()) < getThreshold() &&
+        	   Math.abs(Robot.drivetrain.getGyroRate()) < 1;
     }
 
 }

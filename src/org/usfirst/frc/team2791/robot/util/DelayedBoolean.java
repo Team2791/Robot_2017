@@ -19,17 +19,21 @@ public class DelayedBoolean {
 	public boolean update(boolean input) {
 		if(input) {
 			if(counting) {
-				return Timer.getFPGATimestamp() - trueStartTime > delay;
+				return getOutputValue();
 			} else {
 				trueStartTime = Timer.getFPGATimestamp();
 				counting = true;
 				// This will only return true if the delay is 0
-				return Timer.getFPGATimestamp() - trueStartTime > delay;
+				return getOutputValue();
 			}
 		} else {
 			counting = false;
 			return false;
 		}
+	}
+	
+	public boolean getOutputValue() {
+		return Timer.getFPGATimestamp() - trueStartTime > delay; 
 	}
 
 }

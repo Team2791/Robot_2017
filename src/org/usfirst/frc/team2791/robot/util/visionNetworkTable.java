@@ -14,11 +14,14 @@ public class visionNetworkTable implements ITableListener {
 	private double FOVX = 47;
 	private  double FOVY = 36.2;
 	private double INCLINATION = 0;
-	private int SIZEX = 320;
-	private int SIZEY = 240;
+	private int SIZEX = 240;
+	private int SIZEY = 180;
 	
 	private boolean freshImage = false;
-	private double gyroOffset = 0;
+	public double gyroOffset = 0;
+	public double targetError = 0;
+	
+	public DelayedBoolean robotStill = new DelayedBoolean(.25);
 	
 	
 	
@@ -32,7 +35,7 @@ public class visionNetworkTable implements ITableListener {
 		return Robot.drivetrain.getGyroAngle() + gyroOffset;
 	}
 	
-	private double calculateTargetAngleError() {
+	private double calculateTargetAngleError() throws Exception {
 		double targetX = selectTarget().centerX;
 		double ndcX = 2 * targetX / SIZEX - 1;
 		double angle = Math.atan(Math.tan(Math.toRadians(FOVX / 2)) * ndcX);
@@ -40,14 +43,15 @@ public class visionNetworkTable implements ITableListener {
 		double x = Math.sin(Math.toRadians(angle));
 		double z = Math.cos(Math.toRadians(angle));
 		z *= Math.cos(Math.toRadians(INCLINATION));
-		return Math.toDegrees(Math.atan(x/z));
+		return -Math.toDegrees(Math.atan(x/z)) - CONSTANTS.CAMERA_HORIZONTAL_OFFSET;
 	}
 
 	/**
 	 * This method will filter the contours and select the target we should aim at (either boiler ring). 
 	 * @return
+	 * @throws Exception 
 	 */
-	private AnalyzedContour selectTarget() {
+	private AnalyzedContour selectTarget() throws Exception {
 		AnalyzedContour[] possibleTargets;
 		
 		synchronized (foundContours) {
@@ -59,7 +63,8 @@ public class visionNetworkTable implements ITableListener {
 		try {
 			return possibleTargets[0];
 		} catch (IndexOutOfBoundsException e) {
-			return new AnalyzedContour(0,0,0,0,0,0);
+//			return new AnalyzedContour(0,0,0,0,0,0);
+			throw new Exception("No Targets");
 		}
 		
 	}
@@ -77,13 +82,32 @@ public class visionNetworkTable implements ITableListener {
 			}
 		}
 		
-		// update the gyro offset with the latest error information
-		gyroOffset = calculateTargetAngleError() - Robot.drivetrain.getGyroAngle();	
+		// THIS IS A HACK
+		// Ignore images unless we're not moving. This is to compensate for lag.
+		
+		if(!robotStill.update(Math.abs(Robot.drivetrain.gyro.getRate()) < 2)) {
+			return;
+		}
+		
+		try {
+			// update the gyro offset with the latest error information
+			targetError = calculateTargetAngleError();
+			gyroOffset = targetError - Robot.drivetrain.getGyroAngle();	
+			
+			
+		} catch(Exception e) {
+			if(e.getMessage().equals("No Targets")) {
+				System.out.println("Found no targets. Not changing gyro offet");
+			} else {
+				System.out.println("SOMETHING MESSED UP AND WE'RE NOT DEALING WITH IT");
+			}
+		}
+
 		
 	}
 	
 	private AnalyzedContour[] getFoundContours() {
-		double[] defaultArray = {-2791};
+		double[] defaultArray = {};
 		
 		// Get info from network tables
 		double[] areas = visionTargetsTable.getNumberArray("area", defaultArray);
@@ -105,7 +129,11 @@ public class visionNetworkTable implements ITableListener {
 		
 	}
 	
-	
+	// CALL THIS EVERY LOOP
+	// THROW BACK TO NOT COMMAND BASED
+	public void run() {
+		robotStill.update(Math.abs(Robot.drivetrain.gyro.getRate()) < 2);
+	}
 	
 
 }

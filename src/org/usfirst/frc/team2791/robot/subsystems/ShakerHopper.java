@@ -5,6 +5,7 @@ import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.commands.safeties.StopHopper;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,6 +22,7 @@ public class ShakerHopper extends Subsystem{
 	private AnalogInput ballSensor1;
 	private AnalogInput ballSensor2;
 	
+	private PWM servo;
 	private Talon hopperSpark;
 
 	private static double hopperSetpoint = -0.66;
@@ -32,6 +34,8 @@ public class ShakerHopper extends Subsystem{
 		
 		ballSensor1 = new AnalogInput(0);
 		ballSensor2 = new AnalogInput(1);
+		
+		servo = new PWM(2);
 	}
 	
 	public void initDefaultCommand(){
@@ -53,6 +57,7 @@ public class ShakerHopper extends Subsystem{
 	public void runHopper() {
 		System.out.print("Hopper FOR C:" + this.getCurrentUsage());
 		hopperSpark.setSpeed(0.75);
+		servo.setRaw(255);
 	}
 	
 	/**
@@ -61,6 +66,7 @@ public class ShakerHopper extends Subsystem{
 	public void slowHopper() {
 		System.out.print("Running hopper half speed");
 		hopperSpark.setSpeed(0.5);
+		servo.setRaw(255);
 	}
 	
 	/**
@@ -69,11 +75,13 @@ public class ShakerHopper extends Subsystem{
 	public void runHopperBackwards() {
 		System.out.print("Hopper FOR C:" + this.getCurrentUsage());
 		hopperSpark.setSpeed(-0.75);
+		servo.setRaw(255);
 	}
 	
 	/**
 	 * Sets the hopper VBus output
 	 * @param speed between -1.0 and +1.0
+	 * TODO: get rid of
 	 */
 	public void setHopperSpeed(double speed){
 //		System.out.print("Running Hopper at " +speed);
@@ -83,6 +91,7 @@ public class ShakerHopper extends Subsystem{
 	public void stopHopper(){
 //		System.out.print("Stopping Hopper");
 		hopperSpark.setSpeed(0.0);
+		servo.setRaw(0);
 	}
 
 	/**

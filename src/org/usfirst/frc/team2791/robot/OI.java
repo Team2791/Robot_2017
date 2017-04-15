@@ -2,10 +2,23 @@ package org.usfirst.frc.team2791.robot;
 
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
-import org.usfirst.frc.team2791.robot.commands.*;
-import org.usfirst.frc.team2791.robot.commands.safeties.StopClimberAndDisengage;
-import org.usfirst.frc.team2791.robot.commands.safeties.StopHopper;
+import org.usfirst.frc.team2791.robot.commands.CalibrateGyro;
+import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
+import org.usfirst.frc.team2791.robot.commands.EngageRope;
+import org.usfirst.frc.team2791.robot.commands.GearMechDownRunMotors;
+import org.usfirst.frc.team2791.robot.commands.GearMechUp;
+import org.usfirst.frc.team2791.robot.commands.HopperOn;
+import org.usfirst.frc.team2791.robot.commands.IntakeGearFromFloor;
+import org.usfirst.frc.team2791.robot.commands.RunClimber;
+import org.usfirst.frc.team2791.robot.commands.RunHopperBackwards;
+import org.usfirst.frc.team2791.robot.commands.RunIntake;
+import org.usfirst.frc.team2791.robot.commands.RunLongShot;
+import org.usfirst.frc.team2791.robot.commands.RunWallShot;
+import org.usfirst.frc.team2791.robot.commands.ScoreGearAutoReturn;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.StationaryVisionTurn;
 import org.usfirst.frc.team2791.robot.commands.safeties.ShooterHopperSafety;
+import org.usfirst.frc.team2791.robot.commands.safeties.StopClimberAndDisengage;
+import org.usfirst.frc.team2791.robot.util.GTADrive;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -65,6 +78,8 @@ public class OI {
 
 		operatorDpadDown.whenPressed(new IntakeGearFromFloor()); 
 		operatorDpadUp.whenPressed(new GearMechUp());
+		
+		operatorDpadLeft.whenPressed(new StationaryVisionTurn(0.35, 1));
 
 		operatorLS.whenPressed(new GearMechDownRunMotors());
 
