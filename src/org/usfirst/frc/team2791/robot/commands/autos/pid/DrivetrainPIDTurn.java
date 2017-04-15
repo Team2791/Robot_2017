@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public abstract class DrivetrainPIDTurn extends Command {
 	
-	private final double MIN_POWER_TO_TURN = 0.0;
-	protected double errorThreshold = 0.5;
+	private final double MIN_POWER_TO_TURN = 0.23;
+	protected double errorThreshold = 1;
 	protected static BasicPID stationaryAnglePID;
 	
 	/**
@@ -28,9 +28,9 @@ public abstract class DrivetrainPIDTurn extends Command {
         this.errorThreshold = errorThreshold;
         
 		stationaryAnglePID = new BasicPID(CONSTANTS.STATIONARY_ANGLE_P, CONSTANTS.STATIONARY_ANGLE_I, CONSTANTS.STATIONARY_ANGLE_D);
-		stationaryAnglePID.setIZone(15);
-		stationaryAnglePID.setMaxOutput(maxOutput);
-		stationaryAnglePID.setMinOutput(-maxOutput);
+		stationaryAnglePID.setIZone(10);
+		stationaryAnglePID.setMaxOutput(maxOutput - MIN_POWER_TO_TURN);
+		stationaryAnglePID.setMinOutput(-maxOutput + MIN_POWER_TO_TURN);
 		
 		stationaryAnglePID.setInvertOutput(true);
     }

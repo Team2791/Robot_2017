@@ -29,6 +29,7 @@ public class RunWallShot extends Command{
 		hopperBackwardsTimer.start();
 		Robot.hopper.runHopperBackwards();
 		Robot.shooter.prepWallShot();
+		shooterSpunUp = false;
 	}
 
 	@Override

@@ -78,8 +78,6 @@ public class OI {
 
 		operatorDpadDown.whenPressed(new IntakeGearFromFloor()); 
 		operatorDpadUp.whenPressed(new GearMechUp());
-		
-		operatorDpadLeft.whenPressed(new StationaryVisionTurn(0.35, 1));
 
 		operatorLS.whenPressed(new GearMechDownRunMotors());
 
@@ -95,6 +93,8 @@ public class OI {
 
 		driverLB.whileHeld(new DriveWithJoystick());
 		driverRB.whileHeld(new DriveWithJoystick());
+		
+		driverDpadLeft.whenPressed(new StationaryVisionTurn(0.5, 1.5));
 
 		driverBack.whileHeld(new CalibrateGyro());
 	}

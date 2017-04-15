@@ -25,6 +25,7 @@ public class RunLongShot extends Command{
 		timer.reset();
 		timer.start();
 		Robot.shooter.prepFarHopperShot();
+		shooterSpunUp = false;
 	}
 
 	@Override

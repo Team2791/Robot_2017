@@ -23,7 +23,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	/*******************************PID VALUES****************************************/
 	
 	// Shooter PID
-	public static final double CAMERA_HORIZONTAL_OFFSET = 3.75;
+	public static final double CAMERA_HORIZONTAL_OFFSET = 0;
 	
 	public static final double SHOOTER_P = 3.5; //1.5
 	public static final double SHOOTER_I = 0.000;//0.000
@@ -45,15 +45,15 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	
 	//Drive PID
 	public static double DRIVE_ANGLE_P = 0.025;
-	public static double DRIVE_ANGLE_I = 0.1;
-	public static double DRIVE_ANGLE_D = 0.001;
+	public static double DRIVE_ANGLE_I = 0.02;
+	public static double DRIVE_ANGLE_D = 0.003;
 	public static double DRIVE_DISTANCE_P = 0.4;
 	public static double DRIVE_DISTANCE_I = 0.2;
 	public static double DRIVE_DISTANCE_D = 0.03;
 	
 	public static double STATIONARY_ANGLE_P = 0.025;
-	public static double STATIONARY_ANGLE_I = 0.15; //0.1 was too little -TVR Q48
-	public static double STATIONARY_ANGLE_D = 0.001;
+	public static double STATIONARY_ANGLE_I = 0.02; //0.1 was too little -TVR Q48
+	public static double STATIONARY_ANGLE_D = 0.003;
 	
 	// Path following constants
     public static double kPathFollowingLookahead = 24.0; // inches

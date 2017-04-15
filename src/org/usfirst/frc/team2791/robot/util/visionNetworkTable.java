@@ -3,6 +3,7 @@ package org.usfirst.frc.team2791.robot.util;
 import org.usfirst.frc.team2791.robot.Robot;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
 
@@ -23,11 +24,11 @@ public class visionNetworkTable implements ITableListener {
 	
 	public DelayedBoolean robotStill = new DelayedBoolean(.25);
 	
-	
-	
 	public visionNetworkTable() {
 		visionTargetsTable = NetworkTable.getTable("GRIP/myContoursReport");
 		visionTargetsTable.addTableListener(this);
+		
+		SmartDashboard.putNumber("Camera Horizontal Offset", CONSTANTS.CAMERA_HORIZONTAL_OFFSET);
 		
 	}
 	
@@ -43,7 +44,7 @@ public class visionNetworkTable implements ITableListener {
 		double x = Math.sin(Math.toRadians(angle));
 		double z = Math.cos(Math.toRadians(angle));
 		z *= Math.cos(Math.toRadians(INCLINATION));
-		return -Math.toDegrees(Math.atan(x/z)) - CONSTANTS.CAMERA_HORIZONTAL_OFFSET;
+		return -Math.toDegrees(Math.atan(x/z)) - SmartDashboard.getNumber("Camera Horizontal Offset", CONSTANTS.CAMERA_HORIZONTAL_OFFSET);
 	}
 
 	/**

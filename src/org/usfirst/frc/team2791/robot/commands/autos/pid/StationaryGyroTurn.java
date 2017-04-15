@@ -12,8 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *@see BasicPID
  */
 public class StationaryGyroTurn extends DrivetrainPIDTurn {
-	
-	private  final double MIN_POWER_TO_TURN = 0.0;
 
 	private double angleToTurn;
 	

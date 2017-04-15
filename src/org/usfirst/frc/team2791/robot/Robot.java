@@ -2,6 +2,7 @@ package org.usfirst.frc.team2791.robot;
 
 
 import org.usfirst.frc.team2791.robot.commands.autos.pid.StationaryGyroTurn;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.StationaryVisionTurn;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -9,7 +10,6 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 import org.usfirst.frc.team2791.robot.util.visionNetworkTable;
 
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -173,8 +173,8 @@ public class Robot extends IterativeRobot {
 //		autonomousCommand = new LoadingStationGearAuton(teamColor);
 		
 //		autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6);
-		autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1);
-
+		autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1, 1.5);
+//		autonomousCommand = new StationaryVisionTurn(.5, 1.0);
 		
 		/*
 		 *  ^^^ AUTO SELECTION ^^^
