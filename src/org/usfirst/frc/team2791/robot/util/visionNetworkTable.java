@@ -91,15 +91,17 @@ public class visionNetworkTable implements ITableListener {
 		// If there are no targets return one right infront of the robot so it stops moving.
 		// TODO tell the robot not to shoot.
 		try {
-			int index = 0;
-			double minHeight=1000;
-			for(int i=0; i<possibleTargets.length; i++){
-				if(possibleTargets[i].centerY < minHeight){
-					index = i;
-					minHeight = possibleTargets[i].centerY;
+			// select the target with the lowest centerY value. This target is at the top of image.
+			int selectedTargetIndex = 0;
+			double selectedHeight = possibleTargets[0].centerY;
+			for(int i=1; i < possibleTargets.length; i++){
+				if(possibleTargets[i].centerY < selectedHeight){
+					selectedTargetIndex = i;
+					selectedHeight = possibleTargets[i].centerY;
 				}
 			}
-			return possibleTargets[index];
+			return possibleTargets[selectedTargetIndex];
+			
 		} catch (IndexOutOfBoundsException e) {
 //			return new AnalyzedContour(0,0,0,0,0,0);
 			throw new Exception("No Targets");
