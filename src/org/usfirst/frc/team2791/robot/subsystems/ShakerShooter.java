@@ -158,8 +158,7 @@ public class ShakerShooter extends Subsystem {
 		
         primaryShooterTalon.changeControlMode(TalonControlMode.Speed);
         
-        //Update the PID and FeedForward values
-        
+        //Update the PID and FeedForward values    
         if(!longShot){
         	primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter Long P", 0));
 	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter Long I", 0));
@@ -171,6 +170,11 @@ public class ShakerShooter extends Subsystem {
 	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter D", 30));
 	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter FeedForward", 2920));
         }
+        
+//        // if far away give a lot of power
+//        if(primaryShooterTalon.getError() > 50) {
+//        	primaryShooterTalon.setP(10);
+//        }
         
         primaryShooterTalon.set(targetSpeed);
         debug();

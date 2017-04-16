@@ -16,6 +16,7 @@ public class StationaryVisionTurn extends DrivetrainPIDTurn {
     // Called just before this Command runs the first time
 	@Override
     protected void initialize() {
+		System.out.println("Starting vision turn");
     	stationaryAnglePID.setSetPoint(0);
     }
     

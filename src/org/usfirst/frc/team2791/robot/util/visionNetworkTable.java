@@ -29,7 +29,7 @@ public class visionNetworkTable implements ITableListener {
 	public double gyroOffset = 0;
 	public double targetError = 0;
 	
-	public DelayedBoolean robotStill = new DelayedBoolean(.25);
+	public DelayedBoolean robotStill = new DelayedBoolean(.2);
 	
 	public visionNetworkTable() {
 		visionTargetsTable = NetworkTable.getTable("GRIP/myContoursReport");
@@ -47,7 +47,7 @@ public class visionNetworkTable implements ITableListener {
 		try{
 			return calculateTargetDistance();
 		} catch(Exception e){
-			System.out.println("Can't find distance");
+//			System.out.println("Can't find distance");
 		}
 		return 0;
 	}
@@ -70,7 +70,7 @@ public class visionNetworkTable implements ITableListener {
 		double bottomOfImageAngle = INCLINATION - FOVY/2.0;
 		double targetAngleInImage = (contour.centerY / (float) SIZEY) * FOVY;
 		double heightFromCamera = BOILER_TOP_TARGET_HEIGHT - CAMERA_HEIGHT;
-		System.out.println("Target ccamera angle " + (bottomOfImageAngle + targetAngleInImage));
+//		System.out.println("Target ccamera angle " + (bottomOfImageAngle + targetAngleInImage));
 		
 		return heightFromCamera / Math.tan(Math.toRadians(bottomOfImageAngle + targetAngleInImage));
 	}

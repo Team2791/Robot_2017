@@ -23,11 +23,11 @@ public class DelayDrivetrain extends Command {
     }
 
     protected void initialize() {
+    	System.out.println("drive train starting to wait.");
     	timer.start();
     }
 
     protected void execute() {
-    	System.out.println("drive train waiting.");
     	Robot.drivetrain.setLeftRightMotorOutputs(0, 0);
     }
 

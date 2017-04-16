@@ -80,7 +80,7 @@ public class OI {
 		operatorDpadDown.whenPressed(new IntakeGearFromFloor()); 
 		operatorDpadUp.whenPressed(new GearMechUp());
 		operatorDpadLeft.whileHeld(new RunVisionShot());
-		operatorDpadRight.whileHeld(new StationaryVisionTurn(0.5,1.5));
+		operatorDpadRight.whenPressed(new StationaryVisionTurn(0.5,1.5));
 
 		operatorLS.whenPressed(new GearMechDownRunMotors());
 

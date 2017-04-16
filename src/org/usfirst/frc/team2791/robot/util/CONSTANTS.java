@@ -37,10 +37,10 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	
 	public static final int SHOOTER_I_ZONE = 40; //40
 
-	public static final double SHOOTER_LONG_P = 3.5;//1.5
+	public static final double SHOOTER_LONG_P = 2.5;//3.5
 	public static final double SHOOTER_LONG_I = 0.0000;//0.0000
-	public static final double SHOOTER_LONG_D = 50.0;//30.0
-	public static final double SHOOTER_LONG_FEED_FORWARD = 0.231;//0.25
+	public static final double SHOOTER_LONG_D = 70.0;//50.0
+	public static final double SHOOTER_LONG_FEED_FORWARD = 0.228;//0.25 then 0.231 then 0.228
 
 	
 	//Drive PID
