@@ -160,7 +160,7 @@ public class ShakerShooter extends Subsystem {
         
         //Update the PID and FeedForward values
         
-        if(longShot){
+        if(!longShot){
         	primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter Long P", 0));
 	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter Long I", 0));
 	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter Long D", 0));

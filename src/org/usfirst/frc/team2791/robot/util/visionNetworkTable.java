@@ -14,12 +14,12 @@ public class visionNetworkTable implements ITableListener {
 
 	private double FOVX = 47;
 	private  double FOVY = 36.2;
-	private double INCLINATION = 0;//actually at 35 degrees
+	private double INCLINATION = 30;
 	private int SIZEX = 240;
 	private int SIZEY = 180;
 	
 	private final double FOCAL_LENGTH = 261.81; //in mm; from https://us.sourcesecurity.com/technical-details/cctv/image-capture/ip-cameras/axis-communications-axis-m1011.html
-	private final double BOILER_CYLINDER_DIAMETER = 17.5;//inches
+	private final double BOILER_CYLINDER_DIAMETER = 12.0;//inches //17.5
 	
 	private boolean freshImage = false;
 	public double gyroOffset = 0;
@@ -48,16 +48,21 @@ public class visionNetworkTable implements ITableListener {
 		return 0;
 	}
 	
-	private double calculateTargetDistance() throws Exception{
+	private double calculateTargetDistance() throws Exception {
 		/*//uses the relationship: distance = targetWidth * focal length / targetWidthInPixels
 		return (BOILER_CYLINDER_DIAMETER * FOCAL_LENGTH) / selectTarget().width;*/
 		
 		AnalyzedContour contour = selectTarget();
-		double left = contour.centerX - contour.width / 2;
-		double right = contour.centerX + contour.width / 2;
+//		double left = contour.centerX - contour.width / 2;
+//		double right = contour.centerX + contour.width / 2;
+//		
+//		double angle = Math.abs(calculateTargetAngleError(right) - calculateTargetAngleError(left));
+//		return Math.tan(Math.toRadians(angle / 2)) * BOILER_CYLINDER_DIAMETER / 2;
+//		return selectTarget().height;
 		
-		double angle = Math.abs(calculateTargetAngleError(right) - calculateTargetAngleError(left));
-		return Math.tan(angle / 2) * BOILER_CYLINDER_DIAMETER / 2;
+		double FOVSize = (BOILER_CYLINDER_DIAMETER / contour.width) * SIZEX/2.0;
+		
+		return Math.cos(Math.toRadians(INCLINATION)) * (FOVSize / Math.tan(Math.toRadians(FOVX/2.0)));
 	}
 	
 	private double calculateTargetAngleError(double centerX) throws Exception {
@@ -86,7 +91,15 @@ public class visionNetworkTable implements ITableListener {
 		// If there are no targets return one right infront of the robot so it stops moving.
 		// TODO tell the robot not to shoot.
 		try {
-			return possibleTargets[0];
+			int index = 0;
+			double minHeight=1000;
+			for(int i=0; i<possibleTargets.length; i++){
+				if(possibleTargets[i].centerY < minHeight){
+					index = i;
+					minHeight = possibleTargets[i].centerY;
+				}
+			}
+			return possibleTargets[index];
 		} catch (IndexOutOfBoundsException e) {
 //			return new AnalyzedContour(0,0,0,0,0,0);
 			throw new Exception("No Targets");

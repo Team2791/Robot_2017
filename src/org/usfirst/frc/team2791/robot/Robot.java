@@ -250,7 +250,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Robot still", visionTable.robotStill.getOutputValue());
 //		smartDashBSFix *= -1;
 		
-		SmartDashboard.putNumber("Camera distance from target (reflective tape) in Inches", visionTable.getRealtimeBoilerAngleError()); 
+		SmartDashboard.putNumber("Camera distance from target (reflective tape) in Inches", visionTable.getRealtimeDistanceToBoiler()); 
 		
 //		System.out.println("Vision error = "+ visionTable.getRealtimeBoilerAngleError());
 
