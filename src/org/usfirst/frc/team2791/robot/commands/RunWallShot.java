@@ -35,7 +35,7 @@ public class RunWallShot extends Command{
 	@Override
 	protected void execute() {
 		System.out.println("run wall shot execute");
-		Robot.shooter.setShooterSolenoidState(false); //down position
+		Robot.shooter.setShooterSolenoidState(true); //down position
 		Robot.shooter.prepWallShot(); //bringing shooter up to speed
 		
 		if(Robot.shooter.atSpeed()){

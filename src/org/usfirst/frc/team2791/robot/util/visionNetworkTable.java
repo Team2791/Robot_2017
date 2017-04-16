@@ -41,6 +41,7 @@ public class visionNetworkTable implements ITableListener {
 	
 	public double getRealtimeDistanceToBoiler(){
 		try{
+			SmartDashboard.putNumber("target width in pixels", selectTarget().width);
 			return calculateTargetDistance();
 		} catch(Exception e){
 			System.out.println("Can't find distance");

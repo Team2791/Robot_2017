@@ -24,7 +24,7 @@ public class RunLongShotWithMetering extends Command{
 
 	@Override
 	protected void execute() {
-		Robot.shooter.setShooterSolenoidState(true); // down position is false
+		Robot.shooter.setShooterSolenoidState(false); // down position is false
 		Robot.shooter.prepFarHopperShot(); // bringing shooter up to speed
 		
 		// if we need more balls or the shooter is ready

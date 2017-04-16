@@ -110,15 +110,15 @@ public class ShakerShooter extends Subsystem {
     /**
      * @param up true = hood up / false = hood down
      */
-    public void setShooterSolenoidState(boolean up){
-    	shooterSolenoid.set(up);
+    public void setShooterSolenoidState(boolean down){
+    	shooterSolenoid.set(down);
     }
     
     /**
      * Initiates a vision shot
      */
     public void prepVisionShot(double speed) {
-		longShot = true;
+		longShot = false;
 		setShooterSpeedsPID(speed);
 	}
     
@@ -126,7 +126,7 @@ public class ShakerShooter extends Subsystem {
      * Initiates a wall shot
      */
     public void prepWallShot() {
-    	longShot = false;
+    	longShot = true;
         setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Setpoint", 0));
     }
     
@@ -134,12 +134,12 @@ public class ShakerShooter extends Subsystem {
      * Initiates a far hopper shot
      */
     public void prepFarHopperShot() {
-    	longShot = true;
+    	longShot = false;
     	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Long Setpoint", 0));
 	}
 
     public void prepAutoCenterShot() {
-    	longShot = true;
+    	longShot = false;
     	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Auto Center Setpoint", CONSTANTS.SHOOTER_AUTO_CENTER_SET_POINT));
 	}
     /**

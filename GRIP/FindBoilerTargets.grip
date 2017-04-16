@@ -45,8 +45,8 @@
       <grip:Input step="0" socket="0"/>
       <grip:Input step="0" socket="1">
         <value>
-          <double>37.23021582733813</double>
-          <double>89.84719864176569</double>
+          <double>103.59712230215827</double>
+          <double>134.38644778852336</double>
         </value>
       </grip:Input>
       <grip:Input step="0" socket="2">
@@ -57,8 +57,8 @@
       </grip:Input>
       <grip:Input step="0" socket="3">
         <value>
-          <double>29.81115107913669</double>
-          <double>105.63667232597624</double>
+          <double>43.57014388489208</double>
+          <double>166.55817403246087</double>
         </value>
       </grip:Input>
       <grip:Output step="0" socket="0" previewed="true"/>
@@ -73,7 +73,7 @@
     <grip:Step name="Filter Contours">
       <grip:Input step="2" socket="0"/>
       <grip:Input step="2" socket="1">
-        <value>400.0</value>
+        <value>50.0</value>
       </grip:Input>
       <grip:Input step="2" socket="2">
         <value>0.0</value>
@@ -137,20 +137,20 @@
   </steps>
   <connections>
     <grip:Connection>
-      <grip:Output step="0" socket="0" previewed="true"/>
-      <grip:Input step="1" socket="0"/>
+      <grip:Output step="1" socket="0" previewed="false"/>
+      <grip:Input step="2" socket="0"/>
     </grip:Connection>
     <grip:Connection>
       <grip:Output step="2" socket="0" previewed="true"/>
       <grip:Input step="3" socket="0"/>
     </grip:Connection>
     <grip:Connection>
-      <grip:Output source="1" socket="0" previewed="true"/>
-      <grip:Input step="0" socket="0"/>
+      <grip:Output step="0" socket="0" previewed="true"/>
+      <grip:Input step="1" socket="0"/>
     </grip:Connection>
     <grip:Connection>
-      <grip:Output step="1" socket="0" previewed="false"/>
-      <grip:Input step="2" socket="0"/>
+      <grip:Output source="1" socket="0" previewed="true"/>
+      <grip:Input step="0" socket="0"/>
     </grip:Connection>
   </connections>
   <settings>
@@ -166,7 +166,7 @@
     <language>Python</language>
     <className>BoilerVision</className>
     <implementWpilibPipeline>false</implementWpilibPipeline>
-    <saveDir>/Users/mllewellyn/GRIP</saveDir>
+    <saveDir>C:\Users\team2791\GRIP</saveDir>
     <packageName>org.frc.team2719</packageName>
     <moduleName>grip</moduleName>
   </codeGenerationSettings>

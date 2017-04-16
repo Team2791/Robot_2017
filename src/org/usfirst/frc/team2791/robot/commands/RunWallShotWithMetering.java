@@ -28,7 +28,7 @@ public class RunWallShotWithMetering extends Command{
 	@Override
 	protected void execute() {
 		System.out.print("shooter execute");
-		Robot.shooter.setShooterSolenoidState(false); //down position
+		Robot.shooter.setShooterSolenoidState(true); //down position
 		Robot.shooter.prepWallShot(); //bringing shooter up to speed
 		
 		// if we need more balls or the shooter is ready
