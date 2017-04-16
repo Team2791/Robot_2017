@@ -18,6 +18,9 @@ public class visionNetworkTable implements ITableListener {
 	private int SIZEX = 240;
 	private int SIZEY = 180;
 	
+	private final double FOCAL_LENGTH = 4.4;
+	private final double BOILER_CYLINDER_DIAMETER = 17.5;//inches
+	
 	private boolean freshImage = false;
 	public double gyroOffset = 0;
 	public double targetError = 0;
@@ -34,6 +37,12 @@ public class visionNetworkTable implements ITableListener {
 	
 	public double getRealtimeBoilerAngleError() {
 		return Robot.drivetrain.getGyroAngle() + gyroOffset;
+	}
+	
+	public double getRealtimeDistanceToBoiler() throws Exception{
+		//uses the relationship: distance = targetWidth * focal length / targetWidthInPixels
+		return (BOILER_CYLINDER_DIAMETER * FOCAL_LENGTH) / selectTarget().width;
+		
 	}
 	
 	private double calculateTargetAngleError() throws Exception {
