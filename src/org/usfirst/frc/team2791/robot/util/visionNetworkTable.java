@@ -39,12 +39,19 @@ public class visionNetworkTable implements ITableListener {
 		return Robot.drivetrain.getGyroAngle() + gyroOffset;
 	}
 	
-	public double getRealtimeDistanceToBoiler() throws Exception{
-		//uses the relationship: distance = targetWidth * focal length / targetWidthInPixels
-		return (BOILER_CYLINDER_DIAMETER * FOCAL_LENGTH) / selectTarget().width;
-		
+	public double getRealtimeDistanceToBoiler(){
+		try{
+			return calculateTargetDistance();
+		} catch(Exception e){
+			System.out.println("Can't find distance");
+		}
+		return 0;
 	}
 	
+	private double calculateTargetDistance() throws Exception{
+		//uses the relationship: distance = targetWidth * focal length / targetWidthInPixels
+		return (BOILER_CYLINDER_DIAMETER * FOCAL_LENGTH) / selectTarget().width;
+	}
 	private double calculateTargetAngleError() throws Exception {
 		double targetX = selectTarget().centerX;
 		double ndcX = 2 * targetX / SIZEX - 1;

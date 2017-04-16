@@ -8,6 +8,7 @@ package org.usfirst.frc.team2791.robot.subsystems;
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.DelayedBoolean;
+import org.usfirst.frc.team2791.robot.util.ShooterLookupTable;
 import org.usfirst.frc.team2791.robot.util.Util;
 
 import com.ctre.CANTalon;
@@ -43,6 +44,8 @@ public class ShakerShooter extends Subsystem {
     private Solenoid shooterSolenoid;
 
     protected boolean longShot = false;
+    
+    public ShooterLookupTable lookUpTable = new ShooterLookupTable();
         
     public ShakerShooter() {
     	shooterSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.SHOOTER_CHANNEL);
@@ -110,6 +113,14 @@ public class ShakerShooter extends Subsystem {
     public void setShooterSolenoidState(boolean up){
     	shooterSolenoid.set(up);
     }
+    
+    /**
+     * Initiates a vision shot
+     */
+    public void prepVisionShot(double speed) {
+		longShot = true;
+		setShooterSpeedsPID(speed);
+	}
     
     /**
      * Initiates a wall shot

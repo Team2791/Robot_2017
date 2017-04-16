@@ -13,6 +13,7 @@ import org.usfirst.frc.team2791.robot.commands.RunClimber;
 import org.usfirst.frc.team2791.robot.commands.RunHopperBackwards;
 import org.usfirst.frc.team2791.robot.commands.RunIntake;
 import org.usfirst.frc.team2791.robot.commands.RunLongShot;
+import org.usfirst.frc.team2791.robot.commands.RunVisionShot;
 import org.usfirst.frc.team2791.robot.commands.RunWallShot;
 import org.usfirst.frc.team2791.robot.commands.ScoreGearAutoReturn;
 import org.usfirst.frc.team2791.robot.commands.autos.pid.StationaryVisionTurn;
@@ -78,6 +79,7 @@ public class OI {
 
 		operatorDpadDown.whenPressed(new IntakeGearFromFloor()); 
 		operatorDpadUp.whenPressed(new GearMechUp());
+		operatorDpadLeft.whileHeld(new RunVisionShot());
 
 		operatorLS.whenPressed(new GearMechDownRunMotors());
 
