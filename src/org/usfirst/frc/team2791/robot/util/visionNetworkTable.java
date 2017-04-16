@@ -14,11 +14,11 @@ public class visionNetworkTable implements ITableListener {
 
 	private double FOVX = 47;
 	private  double FOVY = 36.2;
-	private double INCLINATION = 0;
+	private double INCLINATION = 0;//actually at 35 degrees
 	private int SIZEX = 240;
 	private int SIZEY = 180;
 	
-	private final double FOCAL_LENGTH = 4.4; //in mm; from https://us.sourcesecurity.com/technical-details/cctv/image-capture/ip-cameras/axis-communications-axis-m1011.html
+	private final double FOCAL_LENGTH = 261.81; //in mm; from https://us.sourcesecurity.com/technical-details/cctv/image-capture/ip-cameras/axis-communications-axis-m1011.html
 	private final double BOILER_CYLINDER_DIAMETER = 17.5;//inches
 	
 	private boolean freshImage = false;
