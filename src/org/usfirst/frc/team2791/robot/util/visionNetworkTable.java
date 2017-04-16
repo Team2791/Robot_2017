@@ -12,14 +12,18 @@ public class visionNetworkTable implements ITableListener {
 	private NetworkTable visionTargetsTable;
 	private AnalyzedContour[] foundContours = {};
 
-	private double FOVX = 47;
-	private  double FOVY = 36.2;
-	private double INCLINATION = 30;
-	private int SIZEX = 240;
-	private int SIZEY = 180;
+	public static final double FOVX = 47;
+	public static final double FOVY = 36.2;
+	public static final double INCLINATION = 30;
+	public static final int SIZEX = 240;
+	public static final int SIZEY = 180;
 	
 	private final double FOCAL_LENGTH = 261.81; //in mm; from https://us.sourcesecurity.com/technical-details/cctv/image-capture/ip-cameras/axis-communications-axis-m1011.html
 	private final double BOILER_CYLINDER_DIAMETER = 12.0;//inches //17.5
+	
+	private final double BOILER_TOP_TARGET_HEIGHT = 86.0;
+	private final double CAMERA_HEIGHT = 23.0;
+	
 	
 	private boolean freshImage = false;
 	public double gyroOffset = 0;
@@ -60,9 +64,15 @@ public class visionNetworkTable implements ITableListener {
 //		return Math.tan(Math.toRadians(angle / 2)) * BOILER_CYLINDER_DIAMETER / 2;
 //		return selectTarget().height;
 		
-		double FOVSize = (BOILER_CYLINDER_DIAMETER / contour.width) * SIZEX/2.0;
+//		double FOVSize = (BOILER_CYLINDER_DIAMETER / contour.width) * SIZEX/2.0;
+//		return Math.cos(Math.toRadians(INCLINATION)) * (FOVSize / Math.tan(Math.toRadians(FOVX/2.0)));
+	
+		double bottomOfImageAngle = INCLINATION - FOVY/2.0;
+		double targetAngleInImage = (contour.centerY / (float) SIZEY) * FOVY;
+		double heightFromCamera = BOILER_TOP_TARGET_HEIGHT - CAMERA_HEIGHT;
+		System.out.println("Target ccamera angle " + (bottomOfImageAngle + targetAngleInImage));
 		
-		return Math.cos(Math.toRadians(INCLINATION)) * (FOVSize / Math.tan(Math.toRadians(FOVX/2.0)));
+		return heightFromCamera / Math.tan(Math.toRadians(bottomOfImageAngle + targetAngleInImage));
 	}
 	
 	private double calculateTargetAngleError(double centerX) throws Exception {
@@ -91,11 +101,11 @@ public class visionNetworkTable implements ITableListener {
 		// If there are no targets return one right infront of the robot so it stops moving.
 		// TODO tell the robot not to shoot.
 		try {
-			// select the target with the lowest centerY value. This target is at the top of image.
+			// select the target with the largest centerY value. This target is at the top of image.
 			int selectedTargetIndex = 0;
 			double selectedHeight = possibleTargets[0].centerY;
 			for(int i=1; i < possibleTargets.length; i++){
-				if(possibleTargets[i].centerY < selectedHeight){
+				if(possibleTargets[i].centerY > selectedHeight){
 					selectedTargetIndex = i;
 					selectedHeight = possibleTargets[i].centerY;
 				}

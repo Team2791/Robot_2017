@@ -6,7 +6,8 @@ public class AnalyzedContour {
 
     public AnalyzedContour(double area, double centerY, double centerX, double height, double width, double solidity) {
         this.area = area;
-        this.centerY = centerY;
+        // TODO make this not a hack. lol like we'll ever get around to that.
+        this.centerY = visionNetworkTable.SIZEY - centerY;
         this.centerX = centerX;
         this.height = height;
         this.width = width;
