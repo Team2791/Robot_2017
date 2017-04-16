@@ -50,11 +50,19 @@ public class visionNetworkTable implements ITableListener {
 	}
 	
 	private double calculateTargetDistance() throws Exception{
-		//uses the relationship: distance = targetWidth * focal length / targetWidthInPixels
-		return (BOILER_CYLINDER_DIAMETER * FOCAL_LENGTH) / selectTarget().width;
+		/*//uses the relationship: distance = targetWidth * focal length / targetWidthInPixels
+		return (BOILER_CYLINDER_DIAMETER * FOCAL_LENGTH) / selectTarget().width;*/
+		
+		AnalyzedContour contour = selectTarget();
+		double left = contour.centerX - contour.width / 2;
+		double right = contour.centerX + contour.width / 2;
+		
+		double angle = Math.abs(calculateTargetAngleError(right) - calculateTargetAngleError(left));
+		return Math.tan(ange / 2) * BOILER_CYLINDER_DIAMETER / 2;
 	}
-	private double calculateTargetAngleError() throws Exception {
-		double targetX = selectTarget().centerX;
+	
+	private double calculateTargetAngleError(double centerX) throws Exception {
+		double targetX = centerX;
 		double ndcX = 2 * targetX / SIZEX - 1;
 		double angle = Math.atan(Math.tan(Math.toRadians(FOVX / 2)) * ndcX);
 		angle = Math.toDegrees(angle);
@@ -109,7 +117,7 @@ public class visionNetworkTable implements ITableListener {
 		
 		try {
 			// update the gyro offset with the latest error information
-			targetError = calculateTargetAngleError();
+			targetError = calculateTargetAngleError(selectTarget().centerX);
 			gyroOffset = targetError - Robot.drivetrain.getGyroAngle();	
 			
 			
