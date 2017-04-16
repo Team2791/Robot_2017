@@ -18,7 +18,7 @@ public class visionNetworkTable implements ITableListener {
 	private int SIZEX = 240;
 	private int SIZEY = 180;
 	
-	private final double FOCAL_LENGTH = 4.4;
+	private final double FOCAL_LENGTH = 4.4; //in mm; from https://us.sourcesecurity.com/technical-details/cctv/image-capture/ip-cameras/axis-communications-axis-m1011.html
 	private final double BOILER_CYLINDER_DIAMETER = 17.5;//inches
 	
 	private boolean freshImage = false;
