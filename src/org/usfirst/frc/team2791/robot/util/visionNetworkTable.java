@@ -58,7 +58,7 @@ public class visionNetworkTable implements ITableListener {
 		double right = contour.centerX + contour.width / 2;
 		
 		double angle = Math.abs(calculateTargetAngleError(right) - calculateTargetAngleError(left));
-		return Math.tan(ange / 2) * BOILER_CYLINDER_DIAMETER / 2;
+		return Math.tan(angle / 2) * BOILER_CYLINDER_DIAMETER / 2;
 	}
 	
 	private double calculateTargetAngleError(double centerX) throws Exception {
