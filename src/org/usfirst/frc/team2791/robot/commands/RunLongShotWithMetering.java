@@ -7,7 +7,7 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 
 import edu.wpi.first.wpilibj.command.Command;
 /**
- * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for longShot. The hopper is set to meter its speed.
+ * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for closeShot. The hopper is set to meter its speed.
  * TODO: get rid of this unused command
  */
 public class RunLongShotWithMetering extends Command{

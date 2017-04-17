@@ -43,7 +43,7 @@ public class ShakerShooter extends Subsystem {
 
     private Solenoid shooterSolenoid;
 
-    protected boolean longShot = false;
+    protected boolean closeShot = false, visionShot = false;
     
     public ShooterLookupTable lookUpTable = new ShooterLookupTable();
         
@@ -73,6 +73,11 @@ public class ShakerShooter extends Subsystem {
 	        SmartDashboard.putNumber("Shooter Long D", CONSTANTS.SHOOTER_LONG_D);
 	        SmartDashboard.putNumber("Shooter Long FeedForward", CONSTANTS.SHOOTER_LONG_FEED_FORWARD);
 	        SmartDashboard.putNumber("Shooter Long Setpoint", CONSTANTS.SHOOTER_LONG_SET_POINT);
+	        
+	        primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter Vision P", CONSTANTS.SHOOTER_VISION_P));
+	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter Vision I", CONSTANTS.SHOOTER_VISION_I));
+	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter Vision D", CONSTANTS.SHOOTER_VISION_D));
+	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter Vision FeedForward", CONSTANTS.SHOOTER_VISION_FEED_FORWARD));
 	        
 	        SmartDashboard.putNumber("Shooter Auto Center Setpoint", CONSTANTS.SHOOTER_AUTO_CENTER_SET_POINT);
         }
@@ -118,7 +123,8 @@ public class ShakerShooter extends Subsystem {
      * Initiates a vision shot
      */
     public void prepVisionShot(double speed) {
-		longShot = false;
+		closeShot = false;
+		visionShot = true;
 		setShooterSpeedsPID(speed);
 	}
     
@@ -126,7 +132,8 @@ public class ShakerShooter extends Subsystem {
      * Initiates a wall shot
      */
     public void prepWallShot() {
-    	longShot = true;
+    	closeShot = true;
+    	visionShot = false;
         setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Setpoint", 0));
     }
     
@@ -134,12 +141,14 @@ public class ShakerShooter extends Subsystem {
      * Initiates a far hopper shot
      */
     public void prepFarHopperShot() {
-    	longShot = false;
+    	closeShot = false;
+    	visionShot = false;
     	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Long Setpoint", 0));
 	}
 
     public void prepAutoCenterShot() {
-    	longShot = false;
+    	closeShot = false;
+    	visionShot = false;
     	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Auto Center Setpoint", CONSTANTS.SHOOTER_AUTO_CENTER_SET_POINT));
 	}
     /**
@@ -159,18 +168,24 @@ public class ShakerShooter extends Subsystem {
         primaryShooterTalon.changeControlMode(TalonControlMode.Speed);
         
         //Update the PID and FeedForward values    
-        if(!longShot){
+        if(!closeShot){
         	primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter Long P", 0));
 	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter Long I", 0));
 	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter Long D", 0));
 	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter Long FeedForward", 0));
-        }else{
-	        primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter P", 1.5));
+        } else{
+	        primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter P", 0));
 	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter I", 0));
-	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter D", 30));
-	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter FeedForward", 2920));
+	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter D", 0));
+	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter FeedForward", 0));
         }
         
+        if(visionShot){
+        	primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter Vision P", 0));
+	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter Vision I", 0));
+	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter Vision D", 0));
+	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter Vision FeedForward", 0));
+        }
 //        // if far away give a lot of power
 //        if(primaryShooterTalon.getError() > 50) {
 //        	primaryShooterTalon.setP(10);
