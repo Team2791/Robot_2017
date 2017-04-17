@@ -186,10 +186,10 @@ public class ShakerShooter extends Subsystem {
 	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter Vision D", 0));
 	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter Vision FeedForward", 0));
         }
-//        // if far away give a lot of power
-//        if(primaryShooterTalon.getError() > 50) {
-//        	primaryShooterTalon.setP(10);
-//        }
+        // if far away give a lot of power
+        if(primaryShooterTalon.getError() < -50) {//try -30
+        	primaryShooterTalon.setP(10);
+        }
         
         primaryShooterTalon.set(targetSpeed);
         debug();
