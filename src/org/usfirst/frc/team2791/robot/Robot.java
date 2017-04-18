@@ -8,8 +8,9 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
-import org.usfirst.frc.team2791.robot.util.visionNetworkTable;
+import org.usfirst.frc.team2791.robot.util.VisionNetworkTable;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -52,7 +53,7 @@ public class Robot extends IterativeRobot {
 
 //	public ShakerVisionServer vision;
 	
-	public static visionNetworkTable visionTable; 
+	public static VisionNetworkTable visionTable; 
 	
 	private double lastAutonLoopTime;
 	
@@ -81,14 +82,14 @@ public class Robot extends IterativeRobot {
 		compressor.start();
 
 		//I Commented these out because the the prints are SOOO Annoying ya know?
-//		try{
-//			CameraServer.getInstance().startAutomaticCapture("Front Camera",0);
-//		}
-//		catch(Exception e){
-//			System.out.println("*****FRONT Camera Failed*****");
-//			e.printStackTrace();
-//		}
-//		
+		try{
+			CameraServer.getInstance().startAutomaticCapture("Front Camera",0);
+		}
+		catch(Exception e){
+			System.out.println("*****FRONT Camera Failed*****");
+			e.printStackTrace();
+		}
+		
 //		try{
 //			CameraServer.getInstance().startAutomaticCapture("Gear Camera",1);
 //		}
@@ -107,7 +108,7 @@ public class Robot extends IterativeRobot {
 
 		drivetrain.setAutoPID();
 		
-		visionTable = new visionNetworkTable();
+		visionTable = new VisionNetworkTable();
 		
 		
 		debug();

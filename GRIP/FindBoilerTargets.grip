@@ -73,7 +73,7 @@
     <grip:Step name="Filter Contours">
       <grip:Input step="2" socket="0"/>
       <grip:Input step="2" socket="1">
-        <value>30.0</value>
+        <value>75.0</value>
       </grip:Input>
       <grip:Input step="2" socket="2">
         <value>0.0</value>
@@ -103,7 +103,7 @@
         <value>0.0</value>
       </grip:Input>
       <grip:Input step="2" socket="10">
-        <value>2.0</value>
+        <value>1.0</value>
       </grip:Input>
       <grip:Input step="2" socket="11">
         <value>5.0</value>

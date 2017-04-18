@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
 
-public class visionNetworkTable implements ITableListener {
+public class VisionNetworkTable implements ITableListener {
 	
 	private NetworkTable visionTargetsTable;
 	private AnalyzedContour[] foundContours = {};
@@ -31,7 +31,7 @@ public class visionNetworkTable implements ITableListener {
 	
 	public DelayedBoolean robotStill = new DelayedBoolean(.2);
 	
-	public visionNetworkTable() {
+	public VisionNetworkTable() {
 		visionTargetsTable = NetworkTable.getTable("GRIP/myContoursReport");
 		visionTargetsTable.addTableListener(this);
 		

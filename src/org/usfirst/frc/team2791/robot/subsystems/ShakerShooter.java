@@ -74,7 +74,7 @@ public class ShakerShooter extends Subsystem {
 	        SmartDashboard.putNumber("Shooter Long FeedForward", CONSTANTS.SHOOTER_LONG_FEED_FORWARD);
 	        SmartDashboard.putNumber("Shooter Long Setpoint", CONSTANTS.SHOOTER_LONG_SET_POINT);
 	        
-	        SmartDashboard.putNumber("Shooter Auto Center Setpoint", CONSTANTS.SHOOTER_AUTO_CENTER_SET_POINT);
+	        SmartDashboard.putNumber("Shooter Auto Center Setpoint", CONSTANTS.SHOOTER_AUTO_SET_POINT);
         }
 
         primaryShooterTalon.setIZone(CONSTANTS.SHOOTER_I_ZONE);
@@ -97,13 +97,15 @@ public class ShakerShooter extends Subsystem {
         primaryShooterTalon.enable();
         followerShooterTalonA.enable();
         followerShooterTalonB.enable();
-
         
         primaryShooterTalon.configNominalOutputVoltage(0, 0);
         followerShooterTalonA.configNominalOutputVoltage(0, 0);
         followerShooterTalonB.configNominalOutputVoltage(0, 0);
+        
 
     }
+    
+   
     
     public void initDefaultCommand(){  }
     
@@ -140,7 +142,7 @@ public class ShakerShooter extends Subsystem {
 
     public void prepAutoCenterShot() {
     	longShot = false;
-    	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Auto Center Setpoint", CONSTANTS.SHOOTER_AUTO_CENTER_SET_POINT));
+    	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Auto Center Setpoint", CONSTANTS.SHOOTER_AUTO_SET_POINT));
 	}
     /**
      * @return true = shooter is within accepted error range of target speed / false = shooter speed outside error range
@@ -208,6 +210,7 @@ public class ShakerShooter extends Subsystem {
         stopMotors();
         primaryShooterTalon.reset();
         followerShooterTalonA.reset();
+        followerShooterTalonB.reset();
     }
 
     public void stopMotors() { //Set the motors to 0 to stop
@@ -246,6 +249,8 @@ public class ShakerShooter extends Subsystem {
 	 * shooter sfx debugging outputs
 	 */
 	public void debug() {
+		
+		SmartDashboard.putNumber("Primary Talon Encoder Distance", primaryShooterTalon.getPosition());
 		SmartDashboard.putNumber("Primary Talon Speed",primaryShooterTalon.getSpeed());
 		SmartDashboard.putNumber("Primary Talon Error (Setpoint)", primaryShooterTalon.getError());
 		SmartDashboard.putNumber("Primary Talon Closed Loop Error (Sensor value)", primaryShooterTalon.getClosedLoopError());
