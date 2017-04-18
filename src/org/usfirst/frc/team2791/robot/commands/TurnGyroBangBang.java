@@ -9,53 +9,64 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class TurnGyroBangBang extends Command {
-	
+
 	double turn, amountToTurn;
 	double stopAngle;
 	double timeToTurn = 2791;
-	
+
 	protected Timer timer = new Timer();
 
-    public TurnGyroBangBang(double turn, double angle, double timeOut) {
-    	this(turn, angle);
-    	timeToTurn = timeOut;
-    }
-    public TurnGyroBangBang(double turn, double angle) {
-    	requires(Robot.drivetrain);
-    	this.turn = turn;
-    	amountToTurn = angle;
-    }
+	/**
+	 * @param turn amount of power you want in the turn
+	 * @param angle degrees that you want to turn
+	 * @param timeOut seconds before you want to time out
+	 */
+	public TurnGyroBangBang(double turn, double angle, double timeOut) {
+		this(turn, angle);
+		timeToTurn = timeOut;
+	}
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	timer.start();
-    	System.out.println("Starting gyro bang bang turn");
-    	stopAngle = Robot.drivetrain.getGyroAngle() + amountToTurn;
-    }
+	/**
+	 * Time Out is defaulted to 2791 seconds
+	 * @param turn amount of power you want in the turn
+	 * @param angle degrees that you want to turn  
+	 */
+	public TurnGyroBangBang(double turn, double angle) {
+		requires(Robot.drivetrain);
+		this.turn = turn;
+		amountToTurn = angle;
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	Robot.drivetrain.setLeftRightMotorOutputs(turn, -turn);
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		timer.start();
+		System.out.println("Starting gyro bang bang turn");
+		stopAngle = Robot.drivetrain.getGyroAngle() + amountToTurn;
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-    	if(timer.get() > timeToTurn){
-    		return true;
-    	}
-    	
-    	if(turn > 0)
-    		return Robot.drivetrain.getGyroAngle() > stopAngle;
-    	else
-    		return Robot.drivetrain.getGyroAngle() < stopAngle;
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		Robot.drivetrain.setLeftRightMotorOutputs(turn, -turn);
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		if(timer.get() > timeToTurn){
+			return true;
+		}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+		if(turn > 0)
+			return Robot.drivetrain.getGyroAngle() > stopAngle;
+			else
+				return Robot.drivetrain.getGyroAngle() < stopAngle;
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }

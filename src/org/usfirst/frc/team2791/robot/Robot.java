@@ -159,9 +159,9 @@ public class Robot extends IterativeRobot {
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
 		
-		/*
-		 *  vvvv  AUTO SELECTION vvv
-		 */
+		/********************************************
+		******* vvv MATCH AUTO SELECTION vvv *******
+		*********************************************/
 		
 //		String teamColor = "RED"; 
 		String teamColor = "BLUE"; 
@@ -173,16 +173,21 @@ public class Robot extends IterativeRobot {
 //		autonomousCommand = new BoilerGearAuton(teamColor);
 //		autonomousCommand = new LoadingStationGearAuton(teamColor);
 		
+		autonomousCommand = new HopperAuton(teamColor);
+		
+		/******^^^ MATCH AUTO SELECTION ^^^ *******/
+		
+		/*************************************************
+		********  vvv DEBUGGING AUTO SELECTION vvv *******
+		*************************************************/
+
 //		autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6);
 //		autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1, 1.5);
 //		autonomousCommand = new StationaryVisionTurn(.5, 1.0);
 //		autonomousCommand = new TurnGyroBangBang(0.3, 45);
 		
-		autonomousCommand = new HopperAuton();
-		
-		/*
-		 *  ^^^ AUTO SELECTION ^^^
-		 */
+		/******^^^ DEBUGGING AUTO SELECTION ^^^ *******/
+
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -210,11 +215,12 @@ public class Robot extends IterativeRobot {
 
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-
+	
 		drivetrain.resetEncoders();
 		gamePeriod = GamePeriod.TELEOP;
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
+		shooter.stopMotors();
 	}
 
 	/**

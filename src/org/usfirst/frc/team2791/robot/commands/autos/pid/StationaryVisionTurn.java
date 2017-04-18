@@ -6,6 +6,7 @@ public class StationaryVisionTurn extends DrivetrainPIDTurn {
 
 	public StationaryVisionTurn(double maxOutput, double errorThreshold) {
 		super(maxOutput, errorThreshold);
+		setInterruptible(true);
 	}
 	
 	@Override

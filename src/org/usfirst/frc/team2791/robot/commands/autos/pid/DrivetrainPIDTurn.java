@@ -22,7 +22,6 @@ public abstract class DrivetrainPIDTurn extends Command {
 	 * @param maxOutput the maximum output you would like the motors to receive (up to 1.0)
 	 */
     public DrivetrainPIDTurn(double maxOutput, double errorThreshold) {
-        // Use requires() here to declare subsystem dependencies
         requires(Robot.drivetrain);
         
         this.errorThreshold = errorThreshold;
@@ -33,6 +32,8 @@ public abstract class DrivetrainPIDTurn extends Command {
 		stationaryAnglePID.setMinOutput(-maxOutput + MIN_POWER_TO_TURN);
 		
 		stationaryAnglePID.setInvertOutput(true);
+		
+		setInterruptible(true);
     }
     
     /**
@@ -40,7 +41,6 @@ public abstract class DrivetrainPIDTurn extends Command {
      */
     protected abstract double getProcessVaraible();
 
-    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	// Uncomment for debugging
     	updatePIDGains();
@@ -51,18 +51,14 @@ public abstract class DrivetrainPIDTurn extends Command {
     	debug();
     }
 
-    // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return Math.abs(stationaryAnglePID.getError()) < errorThreshold;
     }
 
-    // Called once after isFinished returns true
     protected void end() {
     	System.out.println("Ending drive train PID trun");
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
     protected void interrupted() {
     	System.out.println("drive train PID trun interrupted");
     }
