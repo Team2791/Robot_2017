@@ -11,6 +11,10 @@ import org.usfirst.frc.team2791.robot.util.DelayedBoolean;
 import org.usfirst.frc.team2791.robot.util.ShooterLookupTable;
 import org.usfirst.frc.team2791.robot.util.Util;
 
+import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -144,7 +148,7 @@ public class ShakerShooter extends Subsystem {
     public void prepAutoCenterShot() {
     	closeShot = false;
     	visionShot = false;
-    	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Auto Center Setpoint", CONSTANTS.SHOOTER_AUTO_CENTER_SET_POINT));
+    	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Auto Center Setpoint", CONSTANTS.SHOOTER_LONG_SET_POINT));
 	}
     /**
      * @return true = shooter is within accepted error range of target speed / false = shooter speed outside error range

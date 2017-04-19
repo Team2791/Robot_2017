@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2791.robot;
 
-
 import org.usfirst.frc.team2791.robot.commands.TurnGyroBangBang;
 import org.usfirst.frc.team2791.robot.commands.autos.pid.HopperAuton;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
@@ -19,7 +18,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 
 /**
  * <b><i>Robot.java for Stoker, the 2017 robot from FRC2791 Shaker Robotics</i></b>
