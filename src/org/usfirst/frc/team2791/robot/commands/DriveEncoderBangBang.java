@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Drives a set distance based on Encoders and power outputs without using PID
  */
 public class DriveEncoderBangBang extends Command {
 	

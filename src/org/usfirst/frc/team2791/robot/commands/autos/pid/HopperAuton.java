@@ -10,7 +10,7 @@ import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *Hangs the Center Gear
+ *Hopper Auto
  */
 public class HopperAuton extends CommandGroup {
 
