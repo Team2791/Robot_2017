@@ -30,13 +30,13 @@ public class HopperAuton extends CommandGroup {
 		
 		// This is sketch as heck because we're counting on the drift from the first drive
 		// to get us to the 2nd distance and just using the drive train to slow down and turn a bit.
-		addSequential(new DriveEncoderBangBang(-0.3, 0.0, -3.5, 2.5)); //-3.75
+		addSequential(new DriveEncoderBangBang(-0.3, 0.0, -3.75, 2.5)); //-3.75
 		addParallel (new RunIntake());
 		
 		//kick the hopper to ensure the hopper is triggered
-		addSequential(new TurnGyroBangBang(-0.7 * direction, -15 * direction, 1.0));
+		//addSequential(new TurnGyroBangBang(-0.7 * direction, -15 * direction, 1.0));
 		//point in the general direction of the boiler
-		addSequential(new TurnGyroBangBang(0.7 *direction , 20 * direction, 1.0));
+		addSequential(new TurnGyroBangBang(0.7 *direction , 15 * direction, 1.0));
 		
 		//drive forward to get moar ballz
 		addSequential(new DriveEncoderBangBang(0.5, 0.0, 1, 1.0)); //1

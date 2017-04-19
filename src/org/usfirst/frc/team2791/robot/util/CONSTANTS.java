@@ -25,16 +25,16 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	// Shooter PID
 	public static final double CAMERA_HORIZONTAL_OFFSET = 0;
 	
-	public static final double SHOOTER_SET_POINT = 2835; //2800
+	public static final double SHOOTER_SET_POINT = 2765; //2800
 	public static final double SHOOTER_LONG_SET_POINT = 3625.0; //3650
 	public static final double SHOOTER_AUTO_SET_POINT = 3035;//3255 //3355
 	
 	public static final int SHOOTER_I_ZONE = 40; //40
 	
-	public static final double SHOOTER_P = 3.5; //1.5
-	public static final double SHOOTER_I = 0.000;//0.000
-	public static final double SHOOTER_D = 50.0; //30
-	public static final double SHOOTER_FEED_FORWARD = 0.23; //0.24
+	public static final double SHOOTER_P = 1.6; //1.5
+	public static final double SHOOTER_I = 0.004;//0.000
+	public static final double SHOOTER_D = 40.0; //30
+	public static final double SHOOTER_FEED_FORWARD = 0.22; //0.24
 	
 	public static final double SHOOTER_LONG_P = 2.5;//3.5 //2.05
 	public static final double SHOOTER_LONG_I = 0.0000;//0.0000 //0.004

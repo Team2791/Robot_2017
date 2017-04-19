@@ -45,7 +45,7 @@ public class RunVisionShot extends Command{
 				Robot.hopper.stopHopper();
 			}
 		} else {
-			Robot.hopper.runHopperBackwards();
+//			Robot.hopper.runHopperBackwards();
 		}
 	}
 

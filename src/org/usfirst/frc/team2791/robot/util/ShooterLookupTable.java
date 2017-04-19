@@ -16,6 +16,7 @@ public class ShooterLookupTable {
 	public double getRPMfromDistance(double distanceInInches){
 		int highKey=1, lowKey=0;
 		
+		 
 		//finds which experimental points the measured point is between
 		for(int i=0; i<distanceFromBoilerTape.length; i++){
 			if(distanceInInches > distanceFromBoilerTape[i]){
@@ -24,6 +25,11 @@ public class ShooterLookupTable {
 				break;
 			}
 		}
+		
+		if(distanceInInches > distanceFromBoilerTape[distanceFromBoilerTape.length-1])
+			return shooterRPMforDistance[shooterRPMforDistance.length-1];
+		if(distanceInInches < distanceFromBoilerTape[0])
+			return shooterRPMforDistance[0];
 		
 		double deltaD = distanceFromBoilerTape[highKey]-distanceFromBoilerTape[lowKey];//the difference between the two experimental distances
 		double deltaRPM = shooterRPMforDistance[highKey]-shooterRPMforDistance[lowKey];//difference in RPMs for the two experimental distances
