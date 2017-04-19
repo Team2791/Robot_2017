@@ -11,10 +11,6 @@ import org.usfirst.frc.team2791.robot.util.DelayedBoolean;
 import org.usfirst.frc.team2791.robot.util.ShooterLookupTable;
 import org.usfirst.frc.team2791.robot.util.Util;
 
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.FeedbackDevice;
-import com.ctre.CANTalon.TalonControlMode;
-
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -40,10 +36,9 @@ public class ShakerShooter extends Subsystem {
     private CANTalon followerShooterTalonA = null;
     private CANTalon followerShooterTalonB = null;
 
-
     private Solenoid shooterSolenoid;
 
-    protected boolean longShot = false;
+    protected boolean closeShot = false, visionShot = false;
     
     public ShooterLookupTable lookUpTable = new ShooterLookupTable();
         
@@ -74,7 +69,10 @@ public class ShakerShooter extends Subsystem {
 	        SmartDashboard.putNumber("Shooter Long FeedForward", CONSTANTS.SHOOTER_LONG_FEED_FORWARD);
 	        SmartDashboard.putNumber("Shooter Long Setpoint", CONSTANTS.SHOOTER_LONG_SET_POINT);
 	        
-	        SmartDashboard.putNumber("Shooter Auto Center Setpoint", CONSTANTS.SHOOTER_AUTO_SET_POINT);
+	        primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter Vision P", CONSTANTS.SHOOTER_VISION_P));
+	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter Vision I", CONSTANTS.SHOOTER_VISION_I));
+	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter Vision D", CONSTANTS.SHOOTER_VISION_D));
+	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter Vision FeedForward", CONSTANTS.SHOOTER_VISION_FEED_FORWARD));
         }
 
         primaryShooterTalon.setIZone(CONSTANTS.SHOOTER_I_ZONE);
@@ -120,7 +118,8 @@ public class ShakerShooter extends Subsystem {
      * Initiates a vision shot
      */
     public void prepVisionShot(double speed) {
-		longShot = false;
+		closeShot = false;
+		visionShot = true;
 		setShooterSpeedsPID(speed);
 	}
     
@@ -128,7 +127,8 @@ public class ShakerShooter extends Subsystem {
      * Initiates a wall shot
      */
     public void prepWallShot() {
-    	longShot = true;
+    	closeShot = true;
+    	visionShot = false;
         setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Setpoint", 0));
     }
     
@@ -136,13 +136,15 @@ public class ShakerShooter extends Subsystem {
      * Initiates a far hopper shot
      */
     public void prepFarHopperShot() {
-    	longShot = false;
+    	closeShot = false;
+    	visionShot = false;
     	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Long Setpoint", 0));
 	}
 
     public void prepAutoCenterShot() {
-    	longShot = false;
-    	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Auto Center Setpoint", CONSTANTS.SHOOTER_AUTO_SET_POINT));
+    	closeShot = false;
+    	visionShot = false;
+    	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Auto Center Setpoint", CONSTANTS.SHOOTER_AUTO_CENTER_SET_POINT));
 	}
     /**
      * @return true = shooter is within accepted error range of target speed / false = shooter speed outside error range
@@ -161,22 +163,28 @@ public class ShakerShooter extends Subsystem {
         primaryShooterTalon.changeControlMode(TalonControlMode.Speed);
         
         //Update the PID and FeedForward values    
-        if(!longShot){
+        if(!closeShot){
         	primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter Long P", 0));
 	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter Long I", 0));
 	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter Long D", 0));
 	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter Long FeedForward", 0));
-        }else{
-	        primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter P", 1.5));
+        } else{
+	        primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter P", 0));
 	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter I", 0));
-	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter D", 30));
-	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter FeedForward", 2920));
+	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter D", 0));
+	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter FeedForward", 0));
         }
         
-//        // if far away give a lot of power
-//        if(primaryShooterTalon.getError() > 50) {
-//        	primaryShooterTalon.setP(10);
-//        }
+        if(visionShot){
+        	primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter Vision P", 0));
+	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter Vision I", 0));
+	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter Vision D", 0));
+	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter Vision FeedForward", 0));
+        }
+        // if far away give a lot of power
+        if(primaryShooterTalon.getError() < -50) {//try -30
+        	primaryShooterTalon.setP(10);
+        }
         
         primaryShooterTalon.set(targetSpeed);
         debug();
