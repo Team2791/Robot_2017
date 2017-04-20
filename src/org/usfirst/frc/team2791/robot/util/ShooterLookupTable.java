@@ -35,6 +35,12 @@ public class ShooterLookupTable {
 		double deltaRPM = shooterRPMforDistance[highKey]-shooterRPMforDistance[lowKey];//difference in RPMs for the two experimental distances
 		double diffKey = distanceInInches - distanceFromBoilerTape[lowKey];//difference between the experimental distance and measured distance
 		
-		return deltaRPM * diffKey / deltaD; //tested calculation which works
+		try{
+			return deltaRPM * diffKey / deltaD; //tested calculation which works
+		}
+		catch(ArrayIndexOutOfBoundsException e){
+			System.out.println("lookup table out of bounds");
+			return 3050;
+		}
 	}
 }
