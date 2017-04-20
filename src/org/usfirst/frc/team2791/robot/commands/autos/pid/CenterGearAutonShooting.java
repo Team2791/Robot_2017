@@ -23,7 +23,7 @@ public class CenterGearAutonShooting extends CommandGroup {
 		else
 			direction = 1.0;
 		
-//		addParallel(new SpinUpShooter(CONSTANTS.SHOOTER_AUTO_SET_POINT));
+		addParallel(new SpinUpShooter(CONSTANTS.SHOOTER_AUTO_CENTER_SET_POINT));
 		
     	addSequential(new DriveStraightEncoderGyro(-(110.5-36.0)/12, .7, 6)); //110.5 worked
     	addSequential(new AutonGearScore());

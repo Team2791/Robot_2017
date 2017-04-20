@@ -2,7 +2,7 @@ package org.usfirst.frc.team2791.robot;
 
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
-import org.usfirst.frc.team2791.robot.commands.AutoAimAndShoot;
+import org.usfirst.frc.team2791.robot.commands.AutoAim;
 import org.usfirst.frc.team2791.robot.commands.CalibrateGyro;
 import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team2791.robot.commands.EngageRope;
@@ -17,6 +17,7 @@ import org.usfirst.frc.team2791.robot.commands.RunLongShot;
 import org.usfirst.frc.team2791.robot.commands.RunVisionShot;
 import org.usfirst.frc.team2791.robot.commands.RunWallShot;
 import org.usfirst.frc.team2791.robot.commands.ScoreGearAutoReturn;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.DriveStraightVision;
 import org.usfirst.frc.team2791.robot.commands.autos.pid.StationaryVisionTurn;
 import org.usfirst.frc.team2791.robot.commands.safeties.ShooterHopperSafety;
 import org.usfirst.frc.team2791.robot.commands.safeties.StopClimberAndDisengage;
@@ -93,7 +94,7 @@ public class OI {
 		driverY.whileHeld(new RunClimber());
 		driverA.toggleWhenPressed(new RunIntake());
 		
-		driverB.whileHeld(new AutoAimAndShoot());// TODO Remove this command from driver and give to operator instead of long shot
+		driverB.whileHeld(new AutoAim());// TODO Remove this command from driver and give to operator instead of long shot
 
 		driverLB.whileHeld(new DriveWithJoystick());
 		driverRB.whileHeld(new DriveWithJoystick());

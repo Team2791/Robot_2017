@@ -25,7 +25,7 @@ public class HopperAuton extends CommandGroup {
 		else
 			direction = 1.0;
 		
-//		addParallel(new SpinUpShooter(CONSTANTS.SHOOTER_AUTO_SET_POINT));
+		addParallel(new SpinUpShooter(CONSTANTS.SHOOTER_AUTO_HOPPER_SET_POINT));
 		addSequential(new DriveEncoderBangBang(-.8, 0.0, -3.5));
 		
 		// This is sketch as heck because we're counting on the drift from the first drive

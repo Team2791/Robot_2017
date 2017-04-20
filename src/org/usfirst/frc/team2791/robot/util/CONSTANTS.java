@@ -27,7 +27,8 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	
 	public static final double SHOOTER_SET_POINT = 2765; //2800
 	public static final double SHOOTER_LONG_SET_POINT = 3625.0; //3650
-	public static final double SHOOTER_AUTO_SET_POINT = 3038;//3255 //3355 //3035
+	public static final double SHOOTER_AUTO_HOPPER_SET_POINT = 3038;//3255 //3355 //3035
+	public static final double SHOOTER_AUTO_CENTER_SET_POINT = 3350;
 	
 	public static final int SHOOTER_I_ZONE = 40; //40
 	

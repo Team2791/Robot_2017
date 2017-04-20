@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2791.robot;
 
+import org.usfirst.frc.team2791.robot.commands.RunLongShot;
 import org.usfirst.frc.team2791.robot.commands.TurnGyroBangBang;
 import org.usfirst.frc.team2791.robot.commands.autos.pid.CenterGearAutonShooting;
 import org.usfirst.frc.team2791.robot.commands.autos.pid.HopperAuton;
@@ -162,8 +163,8 @@ public class Robot extends IterativeRobot {
 		******* vvv MATCH AUTO SELECTION vvv *******
 		*********************************************/
 		
-		String teamColor = "RED"; 
-//		String teamColor = "BLUE"; 
+//		String teamColor = "RED"; 
+		String teamColor = "BLUE"; 
 		
 //		autonomousCommand = new WallShot_BoilerGear(teamColor);
 //		autonomousCommand = new CenterShot_CenterGear(teamColor);
@@ -242,6 +243,7 @@ public class Robot extends IterativeRobot {
 		debug();
 		LiveWindow.run();
 		run();
+		new RunLongShot();
 	}
 
 	public void debug() {
