@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ShakerShooter extends Subsystem {
 	
-	private final double ERROR_THRESHOLD = 100;//40
+	private final double ERROR_THRESHOLD = 40;//40
 	private final double SHOOTER_GOOD_TIME = 0.1;
 	private DelayedBoolean shooterGoodDelayedBoolean = new DelayedBoolean(SHOOTER_GOOD_TIME);
 
@@ -72,6 +72,8 @@ public class ShakerShooter extends Subsystem {
 	        SmartDashboard.putNumber("Shooter Long D", CONSTANTS.SHOOTER_LONG_D);
 	        SmartDashboard.putNumber("Shooter Long FeedForward", CONSTANTS.SHOOTER_LONG_FEED_FORWARD);
 	        SmartDashboard.putNumber("Shooter Long Setpoint", CONSTANTS.SHOOTER_LONG_SET_POINT);
+	        
+	        SmartDashboard.putNumber("Bang Bang Threshold", 1000);
 	        
 	        primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter Vision P", CONSTANTS.SHOOTER_VISION_P));
 	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter Vision I", CONSTANTS.SHOOTER_VISION_I));
@@ -186,11 +188,12 @@ public class ShakerShooter extends Subsystem {
 	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter Vision FeedForward", 0));
         }
         // if far away give a lot of power
-        if(primaryShooterTalon.getError() < -50) {//try -30
-        	primaryShooterTalon.setP(10);
-        }
-        
+//        if(Math.abs((targetSpeed - primaryShooterTalon.getSpeed())) > SmartDashboard.getNumber("Bang Bang Threshold", 0))
+//        	setShooterSpeedVBus(1.0);
+//        else
+//        	primaryShooterTalon.set(targetSpeed);
         primaryShooterTalon.set(targetSpeed);
+        
         debug();
     }
 	

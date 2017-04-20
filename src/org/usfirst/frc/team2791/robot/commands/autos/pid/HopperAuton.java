@@ -37,6 +37,7 @@ public class HopperAuton extends CommandGroup {
 		//addSequential(new TurnGyroBangBang(-0.7 * direction, -15 * direction, 1.0));
 		//point in the general direction of the boiler
 		addSequential(new TurnGyroBangBang(0.7 *direction , 15 * direction, 1.0));
+		addSequential(new TurnGyroBangBang(-0.7 *direction , 10 * direction, 1.0));
 		
 		//drive forward to get moar ballz
 		addSequential(new DriveEncoderBangBang(0.5, 0.0, 1, 1.0)); //1
