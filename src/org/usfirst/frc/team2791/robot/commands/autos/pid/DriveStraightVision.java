@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveStraightVision extends Command{
 	
 	private volatile double distanceToTravel;
-	private final double goodDistanceForShot = 114;
+	private final double goodDistanceForShot = 114; //83 real inches
+	private final double errorThreshold = 3.0;
 	/**
 	  * @param distanceToDrive the distance in feet that you would like to drive ***negative if reversing*** *
 	 * @param maxOutput the maximum output you would like the motors to receive (up to 1.0)
@@ -40,7 +41,7 @@ public class DriveStraightVision extends Command{
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Math.abs(Robot.visionTable.getRealtimeDistanceToBoiler() - goodDistanceForShot) < 3.0;
+		return Math.abs(Robot.visionTable.getRealtimeDistanceToBoiler() - goodDistanceForShot) < errorThreshold;
 	}
 
 	// Called once after isFinished returns true

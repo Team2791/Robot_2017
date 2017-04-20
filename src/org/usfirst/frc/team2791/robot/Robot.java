@@ -163,8 +163,8 @@ public class Robot extends IterativeRobot {
 		******* vvv MATCH AUTO SELECTION vvv *******
 		*********************************************/
 		
-//		String teamColor = "RED"; 
-		String teamColor = "BLUE"; 
+		String teamColor = "RED"; 
+//		String teamColor = "BLUE"; 
 		
 //		autonomousCommand = new WallShot_BoilerGear(teamColor);
 //		autonomousCommand = new CenterShot_CenterGear(teamColor);
