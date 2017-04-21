@@ -94,7 +94,7 @@ public class OI {
 		driverY.whileHeld(new RunClimber());
 		driverA.toggleWhenPressed(new RunIntake());
 		
-		driverB.whileHeld(new AutoAim());// TODO Remove this command from driver and give to operator instead of long shot
+		driverB.whenPressed(new AutoAim());// TODO Remove this command from driver and give to operator instead of long shot
 
 		driverLB.whileHeld(new DriveWithJoystick());
 		driverRB.whileHeld(new DriveWithJoystick());

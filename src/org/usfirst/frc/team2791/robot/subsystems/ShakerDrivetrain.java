@@ -174,6 +174,7 @@ public class ShakerDrivetrain extends Subsystem{
 		
 		SmartDashboard.putNumber("Drivetrain total current", getCurrentUsage());
 
+		SmartDashboard.putNumber("shooting drive P",CONSTANTS.shootingDriveP);
 
 		SmartDashboard.putString("LDist vs RDist vs AvgDist", getLeftDistance()+":"+getRightDistance()+":"+getAverageDist());
 		SmartDashboard.putString("LVel vs RVel vs AvgVel", getLeftVelocity()+":"+getRightVelocity()+":"+getAverageVelocity());

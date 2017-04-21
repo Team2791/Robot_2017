@@ -59,6 +59,8 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static double STATIONARY_ANGLE_I = 0.02; //0.1 was too little -TVR Q48
 	public static double STATIONARY_ANGLE_D = 0.003;
 	
+	public static double shootingDriveP = 0.025;
+	
 	// Path following constants
     public static double kPathFollowingLookahead = 24.0; // inches
     public static double kPathFollowingMaxVel = 120.0; // inches/sec
