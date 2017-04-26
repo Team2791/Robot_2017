@@ -6,7 +6,7 @@ public class ShooterErrorThread extends Thread{
 	public void run() {
 
 		if(shooter.getError() > 100){
-			shooter.setPrimaryP(10); //p is 10
+			shooter.primaryShooterTalon.setP(10.0); //p is 10
 			shooter.primaryHasP = true;
  		}else{
  			shooter.primaryHasP = false;
@@ -14,7 +14,7 @@ public class ShooterErrorThread extends Thread{
 			
 
 		try {
-			Thread.sleep(50);	
+			Thread.sleep(1000/200);	
 		}catch (InterruptedException e) {}
 	}
 }

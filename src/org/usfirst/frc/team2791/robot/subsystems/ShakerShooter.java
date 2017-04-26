@@ -36,7 +36,7 @@ public class ShakerShooter extends Subsystem {
 
     protected Encoder shooterEncoder = null;
 
-    private CANTalon primaryShooterTalon = null; //has encoder input
+    public CANTalon primaryShooterTalon = null; //has encoder input
     private CANTalon followerShooterTalonA = null;
     private CANTalon followerShooterTalonB = null;
 
@@ -192,11 +192,6 @@ public class ShakerShooter extends Subsystem {
         
         debug();
     }
-	
-	public void setPrimaryP(double m_p){
-        System.out.println("****BANGBANG**** Shooter P is:" + m_p);
-		primaryShooterTalon.setP(m_p);
-	}
 	
 	public void setPrimaryPID(double m_p ,double m_i, double m_d, double m_ff){
 		if(!primaryHasP)
