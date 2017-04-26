@@ -14,20 +14,14 @@ import org.usfirst.frc.team2791.robot.util.DelayedBoolean;
 public class DriveStraightVision extends Command{
 	
 	private double targetDistance, MAX_DRIVE_OUTPUT = 0.7;
-	private final double goodDistanceForShot = 114; //83 real inches
+	private final double goodDistanceForShot = 114; //83 real inches //must find experimentally
 	private final double errorThreshold = 0.2;
 	private final double MIN_POWER_TO_MOVE = 0.15;
 	
 	private DelayedBoolean goodToExit;
 	
 	private BasicPID drivePID;
-	
-	/**
-	  * @param distanceToDrive the distance in feet that you would like to drive ***negative if reversing*** *
-	 * @param maxOutput the maximum output you would like the motors to receive (up to 1.0)
-	 * @param timeOut the time in seconds before you would like to wait before the PID times out and the command ends
-	 * @param maxThreshold the maximum error for driving forward before the PID accepts it and finishes
-	 */
+
 	public DriveStraightVision(){
 		super("DriveStraightVision");
 		System.out.println("Starting vision drive");

@@ -17,7 +17,6 @@ import org.usfirst.frc.team2791.robot.commands.RunLongShot;
 import org.usfirst.frc.team2791.robot.commands.RunVisionShot;
 import org.usfirst.frc.team2791.robot.commands.RunWallShot;
 import org.usfirst.frc.team2791.robot.commands.ScoreGearAutoReturn;
-import org.usfirst.frc.team2791.robot.commands.autos.pid.DriveStraightVision;
 import org.usfirst.frc.team2791.robot.commands.autos.pid.StationaryVisionTurn;
 import org.usfirst.frc.team2791.robot.commands.safeties.ShooterHopperSafety;
 import org.usfirst.frc.team2791.robot.commands.safeties.StopClimberAndDisengage;

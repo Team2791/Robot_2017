@@ -43,6 +43,7 @@ public class ShakerShooter extends Subsystem {
     private Solenoid shooterSolenoid;
 
     protected boolean closeShot = false, visionShot = false;
+    public boolean primaryHasP = false;
     
     public ShooterLookupTable lookUpTable = new ShooterLookupTable();
         
@@ -169,33 +170,43 @@ public class ShakerShooter extends Subsystem {
         primaryShooterTalon.changeControlMode(TalonControlMode.Speed);
         
         //Update the PID and FeedForward values    
-        if(!closeShot){
-        	primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter Long P", 0));
-	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter Long I", 0));
-	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter Long D", 0));
-	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter Long FeedForward", 0));
+       
+        if(visionShot){
+        	setPrimaryPID((SmartDashboard.getNumber("Shooter Vision P", 0)),
+        			(SmartDashboard.getNumber("Shooter Vision I", 0)),
+        			(SmartDashboard.getNumber("Shooter Vision D", 0)),
+        			(SmartDashboard.getNumber("Shooter Vision FeedForward", 0)));
+        }else if(!closeShot){
+        	setPrimaryPID((SmartDashboard.getNumber("Shooter Long P", 0)),
+        			(SmartDashboard.getNumber("Shooter Long I", 0)),
+        			(SmartDashboard.getNumber("Shooter Long D", 0)),
+        			(SmartDashboard.getNumber("Shooter Long FeedForward", 0)));
         } else{
-	        primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter P", 0));
-	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter I", 0));
-	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter D", 0));
-	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter FeedForward", 0));
+        	setPrimaryPID((SmartDashboard.getNumber("Shooter P", 0)),
+        			(SmartDashboard.getNumber("Shooter I", 0)),
+        			(SmartDashboard.getNumber("Shooter D", 0)),
+        			(SmartDashboard.getNumber("Shooter FeedForward", 0)));
         }
         
-        if(visionShot){
-        	primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter Vision P", 0));
-	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter Vision I", 0));
-	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter Vision D", 0));
-	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter Vision FeedForward", 0));
-        }
-        // if far away give a lot of power
-//        if(Math.abs((targetSpeed - primaryShooterTalon.getSpeed())) > SmartDashboard.getNumber("Bang Bang Threshold", 0))
-//        	setShooterSpeedVBus(1.0);
-//        else
-//        	primaryShooterTalon.set(targetSpeed);
         primaryShooterTalon.set(targetSpeed);
         
         debug();
     }
+	
+	public void setPrimaryP(double m_p){
+        System.out.println("****BANGBANG**** Shooter P is:" + m_p);
+		primaryShooterTalon.setP(m_p);
+	}
+	
+	public void setPrimaryPID(double m_p ,double m_i, double m_d, double m_ff){
+		if(!primaryHasP)
+	        System.out.println("****PID**** Shooter P is:" + m_p);
+			primaryShooterTalon.setP(m_p);
+		
+		primaryShooterTalon.setI(m_i);
+		primaryShooterTalon.setD(m_d);
+		primaryShooterTalon.setF(m_ff);
+	}
 	
 	/**
 	 * Sets shooter output vbus for both 775pros; if unacceptable value entered, 
