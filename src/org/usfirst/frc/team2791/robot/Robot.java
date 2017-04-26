@@ -84,31 +84,30 @@ public class Robot extends IterativeRobot {
 		//I Commented these out because the the prints are SOOO Annoying ya know?
 		try{
 			CameraServer.getInstance().startAutomaticCapture("Front Camera",0);
-		}
-		catch(Exception e){
+		}catch(Exception e){
 			System.out.println("*****FRONT Camera Failed*****");
 			e.printStackTrace();
 		}
 		
-//		try{
-//			CameraServer.getInstance().startAutomaticCapture("Gear Camera",1);
-//		}
-//		catch(Exception e){
-//			System.out.println("*****BACK Camera Failed*****");
-//			e.printStackTrace();
-//		}
+		try{
+			CameraServer.getInstance().startAutomaticCapture("Gear Camera",1);
+		}catch(Exception e){
+			System.out.println("*****BACK Camera Failed*****");
+			e.printStackTrace();
+		}
 
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
 		hopper = new ShakerHopper();
 		shooter = new ShakerShooter();
-
+		
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 
 		drivetrain.setAutoPID();
+		shooter.pControlThread.start();
 		
-		visionTable = new VisionNetworkTable();
+//		visionTable = new VisionNetworkTable();
 		
 		
 		debug();

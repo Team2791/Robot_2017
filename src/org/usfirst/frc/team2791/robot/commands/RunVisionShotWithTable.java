@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
+ * !!!!sPLS DO NOT USE OR INSTANTIATE!!!!
  * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for visionShot. The hopper is set to meter its speed.
  */
 public class RunVisionShotWithTable extends Command{

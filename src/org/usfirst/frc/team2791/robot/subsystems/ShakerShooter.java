@@ -8,6 +8,7 @@ package org.usfirst.frc.team2791.robot.subsystems;
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.DelayedBoolean;
+import org.usfirst.frc.team2791.robot.util.ShooterErrorThread;
 import org.usfirst.frc.team2791.robot.util.ShooterLookupTable;
 import org.usfirst.frc.team2791.robot.util.Util;
 
@@ -46,8 +47,10 @@ public class ShakerShooter extends Subsystem {
     public boolean primaryHasP = false;
     
     public ShooterLookupTable lookUpTable = new ShooterLookupTable();
-        
+    public ShooterErrorThread pControlThread = new ShooterErrorThread();
+    
     public ShakerShooter() {
+    	    	
     	shooterSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.SHOOTER_CHANNEL);
     	
         primaryShooterTalon = new CANTalon(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
@@ -113,13 +116,7 @@ public class ShakerShooter extends Subsystem {
    
     
     public void initDefaultCommand(){  }
-    
-    /**
-     * @param up true = hood up / false = hood down
-     */
-    public void setShooterSolenoidState(boolean down){
-    	shooterSolenoid.set(down);
-    }
+ 
     
     /**
      * Initiates a vision shot
@@ -148,6 +145,9 @@ public class ShakerShooter extends Subsystem {
     	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Long Setpoint", 0));
 	}
 
+    /**
+     * Initiates an auto shot for the Center Gear than shoot auto
+     */
     public void prepAutoCenterShot() {
     	closeShot = false;
     	visionShot = false;
@@ -181,7 +181,7 @@ public class ShakerShooter extends Subsystem {
         			(SmartDashboard.getNumber("Shooter Long I", 0)),
         			(SmartDashboard.getNumber("Shooter Long D", 0)),
         			(SmartDashboard.getNumber("Shooter Long FeedForward", 0)));
-        } else{
+        }else{
         	setPrimaryPID((SmartDashboard.getNumber("Shooter P", 0)),
         			(SmartDashboard.getNumber("Shooter I", 0)),
         			(SmartDashboard.getNumber("Shooter D", 0)),
@@ -193,6 +193,13 @@ public class ShakerShooter extends Subsystem {
         debug();
     }
 	
+	/**
+	 * Set PID for the primary master talon
+	 * @param m_p desired p
+	 * @param m_i desired i
+	 * @param m_d desired d
+	 * @param m_ff desired feedforward
+	 */
 	public void setPrimaryPID(double m_p ,double m_i, double m_d, double m_ff){
 		if(!primaryHasP)
 	        System.out.println("****PID**** Shooter P is:" + m_p);
@@ -210,17 +217,22 @@ public class ShakerShooter extends Subsystem {
 	 */
 	public void setShooterSpeedVBus(double vbus) {
 		primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
-		
 		primaryShooterTalon.set(Util.limit(vbus, 1.0));
 	}
 
+	   
+    /**
+     * @param up true = hood up / false = hood down
+     */
+    public void setShooterSolenoidState(boolean down){
+    	shooterSolenoid.set(down);
+    }
+    
 	/**
-	 * @return far = hood up / close = hood down
+	 * @return true = hood up(far shot) / false = hood down(close shot)
 	 */
-    private String getShooterHeight() {
-		if(shooterSolenoid.get())
-			return "far";
-    	return "close";
+    private boolean getShooterHeight() {
+    	return shooterSolenoid.get();
 	}
 
     /**
