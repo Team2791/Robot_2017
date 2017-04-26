@@ -116,16 +116,17 @@ public class DriveStraightEncoderGyro extends Command {
 	}
 
 	public void setLeftRightMotorOutputsPIDDriving(double left, double right){
-		if(left < 0) {
-			left -= MIN_POWER_TO_MOVE;
-		} else {
-			left += MIN_POWER_TO_MOVE;
-		}
-		if(right < 0) {
-			right -= MIN_POWER_TO_MOVE;
-		} else {
-			right += MIN_POWER_TO_MOVE;
-		}
+//		if(left < 0) {
+//			left -= MIN_POWER_TO_MOVE;
+//		} else {
+//			left += MIN_POWER_TO_MOVE;
+//		}
+//		if(right < 0) {
+//			right -= MIN_POWER_TO_MOVE;
+//		} else {
+//			right += MIN_POWER_TO_MOVE;
+//		}
+		
 		Robot.drivetrain.setLeftRightMotorOutputs(left, right);
 	}
 

@@ -15,14 +15,12 @@ public class RobotMap {
 	public static final int JOYSTICK_OPERATOR_PORT = 1;
 
 	// DIO
-	public static final int LEFT_DRIVE_ENCODER_PORT_A = 9; //3 on Comp //9 on practice
-	public static final int LEFT_DRIVE_ENCODER_PORT_B = 8; //2 on Comp //8 on practice
+	public static final int LEFT_DRIVE_ENCODER_PORT_A = 3; //3 on Comp //9 on practice
+	public static final int LEFT_DRIVE_ENCODER_PORT_B = 2; //2 on Comp //8 on practice
 	
-	public static final int RIGHT_DRIVE_ENCODER_PORT_A = 7; //1 on Comp //7 on practice
-	public static final int RIGHT_DRIVE_ENCODER_PORT_B = 6; //0 on Comp //6 on practice
-	
-	public static final int GEAR_INTAKE_LIMIT_SWITCH_A = 4;//need to add on Comp
-	
+	public static final int RIGHT_DRIVE_ENCODER_PORT_A = 1; //1 on Comp //7 on practice
+	public static final int RIGHT_DRIVE_ENCODER_PORT_B = 0; //0 on Comp //6 on practice
+		
 	// PWM PORTS
 	public static final int DRIVE_SPARK_LEFT_PORT = 9;
 	public static final int DRIVE_SPARK_RIGHT_PORT = 8;
@@ -32,12 +30,13 @@ public class RobotMap {
 	public static final int GEAR_SPARK_PORT = 5; //Need to add on Comp
 	
 	// ANALOG
-	public static final int IR_SENSOR_1 = 0;
-	public static final int IR_SENSOR_2 = 1;
+	public static final int IR_SENSOR_1 = 2; //0 on practice
+	public static final int IR_SENSOR_2 = 3; //1 on practice
+	public static final int GEAR_INTAKE_IR_SENSOR = 0;
 	
 	// CAN
-	public static final int PDP = 0;
-	public static final int PCM_MODULE = 1;
+	public static final int PDP = 0; //0
+	public static final int PCM_MODULE = 1; //1
 	
 	public static final int PRIMARY_SHOOTER_TALON_PORT = 10;
 	public static final int FOLLOWER_SHOOTER_TALON_PORT_A = 11;

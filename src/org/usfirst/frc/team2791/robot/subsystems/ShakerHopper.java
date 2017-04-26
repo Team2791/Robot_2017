@@ -31,9 +31,9 @@ public class ShakerHopper extends Subsystem{
 	public ShakerHopper(){
 		hopperSpark = new Talon(RobotMap.HOPPER_SPARK_PORT);
 //		hopperSpark.setInverted(true);
-		
-		ballSensor1 = new AnalogInput(0);
-		ballSensor2 = new AnalogInput(1);
+//		
+//		ballSensor1 = new AnalogInput(0);
+//		ballSensor2 = new AnalogInput(1);
 		
 		servo = new PWM(2);
 	}
@@ -47,8 +47,9 @@ public class ShakerHopper extends Subsystem{
 	 * @return true = ball at top of elevator / false = no ball ready to shoot
 	 */
 	public boolean isBallAtTop() {
-		return (ballSensor1.getVoltage() < distanceSensorCutoffPoint ||
-				ballSensor2.getVoltage() < distanceSensorCutoffPoint);
+//		return (ballSensor1.getVoltage() < distanceSensorCutoffPoint ||
+//				ballSensor2.getVoltage() < distanceSensorCutoffPoint);
+		return false;
 	}
 	
 	/**

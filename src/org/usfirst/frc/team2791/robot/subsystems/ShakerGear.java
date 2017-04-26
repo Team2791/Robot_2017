@@ -3,6 +3,7 @@ package org.usfirst.frc.team2791.robot.subsystems;
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
@@ -23,22 +24,18 @@ public class ShakerGear extends Subsystem{
 	
 	private Talon gearSpark;
 	
+	private final static double GEAR_IR_DISTANCE = 4.0; //idk, need to find
 	/**
-	 * A limit switch at the bottom of the gear intake that is activated when a gear is in the intake 
+	 * A SHARP IR Sensor positioned to detect when a gear is in the intake
 	 */
-	private DigitalInput limitSwitch;
-	
-	/**
-	 * true = switch logic is active/ false = switches disabled
-	 */
-	private static boolean switchesEnabled = true;
+	private AnalogInput gearDetector;
 	
 	public ShakerGear(){
 		gearSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.GEAR_CHANNEL);
 		gearSpark = new Talon(RobotMap.GEAR_SPARK_PORT);
 		
-		limitSwitch = new DigitalInput(RobotMap.GEAR_INTAKE_LIMIT_SWITCH_A);
-		enableLimitSwitch();
+		gearDetector = new AnalogInput(RobotMap.GEAR_INTAKE_IR_SENSOR);
+		
 	}
 	
 	public void initDefaultCommand(){
@@ -74,38 +71,9 @@ public class ShakerGear extends Subsystem{
 	 * @return true = gear inside / false = no gear in intake
 	 */
 	public boolean hasGear(){
-		return limitSwitch.get();
+		return (gearDetector.getVoltage() > GEAR_IR_DISTANCE); 
+		//		return limitSwitch.get();
 		
-	}
-	
-	/**
-	 * Changes the enabled status to whatever it wasn't
-	 */
-	public void toggleSwitchEnabled(){
-		boolean currentEnable = this.isSwitchEnabled();
-		switchesEnabled = !currentEnable;
-	}
-	
-	/**
-	 * Disables the limit switches.
-	 */
-	public void disableLimitSwitch(){
-		switchesEnabled = false;
-	}
-	
-	/**
-	 * Enables the limit switches
-	 */
-	public void enableLimitSwitch(){
-		switchesEnabled = true;
-	}
-	
-	/**
-	 * true = enabled / false = disabled
-	 * @return if the limit switches are enabled
-	 */
-	public boolean isSwitchEnabled(){
-		return switchesEnabled;
 	}
 	
 	public double getCurrentUsage(){
@@ -114,19 +82,19 @@ public class ShakerGear extends Subsystem{
 	
 	public void debug(){
 		
-		SmartDashboard.putBoolean("Gear Intake Gear Status", limitSwitch.get()); //Green when a gear is in the intake
-		SmartDashboard.putBoolean("Gear Intake Switch Logic Status", isSwitchEnabled()); //Green when logic is enabled
+		SmartDashboard.putBoolean("Gear Intake Gear Status", hasGear()); //Green when a gear is in the intake
 		
 		SmartDashboard.putBoolean("Gear Intake Down or Up", gearSolenoid.get()); //Green when intake is down
 		
 		SmartDashboard.putNumber("Gear Motor Output", gearSpark.get());
 		SmartDashboard.putNumber("Gear intake Current Usage", getCurrentUsage());
+		
+		SmartDashboard.putNumber("IR Voltage", gearDetector.getVoltage());
 	}
 
 	public void changeGearSolenoidState(boolean state_) {
 		
 		gearSolenoid.set(state_);
-		// TODO Auto-generated method stub
 		
 	}
 }

@@ -7,8 +7,8 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Puts {@link ShakerGear} Mechanism down and stops the gear motors from running.</br>
- * This will work regardless of the status of the limit switches
+ * Puts {@link ShakerGear} Mechanism down and starts running gear motors.</br>
+ * This will work regardless of the status of the ir switch
  */
 public class GearMechDownRunMotors extends Command{
 	public GearMechDownRunMotors (){

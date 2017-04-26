@@ -1,8 +1,8 @@
 /** Shooter class for Shaker Robotics' 2017 robot 
-*
-* @author Lukas Velikov
-* @version pre
-*/
+ *
+ * @author Lukas Velikov
+ * @version pre
+ */
 package org.usfirst.frc.team2791.robot.subsystems;
 
 import org.usfirst.frc.team2791.robot.RobotMap;
@@ -22,279 +22,307 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * This class corresponds to the shooter system. There are two 775 pros controlled by two Talon SRX speed controllers.
- * A 128-count Greyhill encoder on the shooter axle is wired into one of the Talon SRXs. That one is set to be the master
- * and the other is set to be a follower. PID was found experimentally after starting from the velocity closed-loop
- * walkthrough in the CTRE software reference manual. The shooter has a piston-actuated hood which is down by default.
+ * This class corresponds to the shooter system. There are two 775 pros
+ * controlled by two Talon SRX speed controllers. A 128-count Greyhill encoder
+ * on the shooter axle is wired into one of the Talon SRXs. That one is set to
+ * be the master and the other is set to be a follower. PID was found
+ * experimentally after starting from the velocity closed-loop walkthrough in
+ * the CTRE software reference manual. The shooter has a piston-actuated hood
+ * which is down by default.
  * 
  * @author team2791: See Robot.java for contact info
  */
 public class ShakerShooter extends Subsystem {
-	
-	private final double ERROR_THRESHOLD = 30;//40
+
+	private final double ERROR_THRESHOLD = 30;// 40
 	private final double SHOOTER_GOOD_TIME = 0.1;
 	private DelayedBoolean shooterGoodDelayedBoolean = new DelayedBoolean(SHOOTER_GOOD_TIME);
 
-    protected Encoder shooterEncoder = null;
+	protected Encoder shooterEncoder = null;
 
-    public CANTalon primaryShooterTalon = null; //has encoder input
-    private CANTalon followerShooterTalonA = null;
-    private CANTalon followerShooterTalonB = null;
+	public CANTalon primaryShooterTalon = null; // has encoder input
+	private CANTalon followerShooterTalonA = null;
+	private CANTalon followerShooterTalonB = null;
 
-    private Solenoid shooterSolenoid;
+	private Solenoid shooterSolenoid;
 
-    protected boolean closeShot = false, visionShot = false;
-    public boolean primaryHasP = false;
-    
-    public ShooterLookupTable lookUpTable = new ShooterLookupTable();
-    public ShooterErrorThread pControlThread = new ShooterErrorThread();
-    
-    public ShakerShooter() {
-    	    	
-    	shooterSolenoid = new Solenoid(RobotMap.PCM_MODULE,RobotMap.SHOOTER_CHANNEL);
-    	
-        primaryShooterTalon = new CANTalon(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
-        primaryShooterTalon.setInverted(true);
-        
-        followerShooterTalonA = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT_A);
-        followerShooterTalonB = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT_B);
+	protected boolean closeShot = false, visionShot = false;
+	public boolean primaryHasP = false;
 
-        primaryShooterTalon.configPeakOutputVoltage(0, -12.0f);
-        followerShooterTalonA.configPeakOutputVoltage(0, -12.0f);
-        followerShooterTalonB.configPeakOutputVoltage(0, -12.0f);
+	public ShooterLookupTable lookUpTable = new ShooterLookupTable();
+	public Thread pControlThread;
+	public ShooterErrorThread errorThread = new ShooterErrorThread();
 
-        
-        if(SmartDashboard.getNumber("Shooter P", -2791) == -2791){
-	        SmartDashboard.putNumber("Shooter P", CONSTANTS.SHOOTER_P);
-	        SmartDashboard.putNumber("Shooter I", CONSTANTS.SHOOTER_I);
-	        SmartDashboard.putNumber("Shooter D", CONSTANTS.SHOOTER_D);
-	        SmartDashboard.putNumber("Shooter FeedForward", CONSTANTS.SHOOTER_FEED_FORWARD);
-	        SmartDashboard.putNumber("Shooter Setpoint", CONSTANTS.SHOOTER_SET_POINT);
-	        
-	        SmartDashboard.putNumber("Shooter Long P", CONSTANTS.SHOOTER_LONG_P);
-	        SmartDashboard.putNumber("Shooter Long I", CONSTANTS.SHOOTER_LONG_I);
-	        SmartDashboard.putNumber("Shooter Long D", CONSTANTS.SHOOTER_LONG_D);
-	        SmartDashboard.putNumber("Shooter Long FeedForward", CONSTANTS.SHOOTER_LONG_FEED_FORWARD);
-	        SmartDashboard.putNumber("Shooter Long Setpoint", CONSTANTS.SHOOTER_LONG_SET_POINT);
-	        
-	        SmartDashboard.putNumber("Bang Bang Threshold", 1000);
-	        
-	        primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter Vision P", CONSTANTS.SHOOTER_VISION_P));
-	        primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter Vision I", CONSTANTS.SHOOTER_VISION_I));
-	        primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter Vision D", CONSTANTS.SHOOTER_VISION_D));
-	        primaryShooterTalon.setF(SmartDashboard.getNumber("Shooter Vision FeedForward", CONSTANTS.SHOOTER_VISION_FEED_FORWARD));
-        }
+	public ShakerShooter() {
+		pControlThread = new Thread(errorThread);
 
-        primaryShooterTalon.setIZone(CONSTANTS.SHOOTER_I_ZONE);
-        
-        primaryShooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-        primaryShooterTalon.configEncoderCodesPerRev(CONSTANTS.SHOOTER_ENCODER_TICKS);
-        primaryShooterTalon.changeControlMode(TalonControlMode.Speed); //control the primary SRX by RPM
+		shooterSolenoid = new Solenoid(RobotMap.PCM_MODULE, RobotMap.SHOOTER_CHANNEL);
 
-        followerShooterTalonA.changeControlMode(TalonControlMode.Follower);
-        followerShooterTalonA.set(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
- 
-        followerShooterTalonB.changeControlMode(TalonControlMode.Follower);
-        followerShooterTalonB.set(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
-        
-        primaryShooterTalon.enableControl();
-        followerShooterTalonA.enableControl();
-        followerShooterTalonB.enableControl();
+		primaryShooterTalon = new CANTalon(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
+		primaryShooterTalon.setInverted(true);
 
-        
-        primaryShooterTalon.enable();
-        followerShooterTalonA.enable();
-        followerShooterTalonB.enable();
-        
-        primaryShooterTalon.configNominalOutputVoltage(0, 0);
-        followerShooterTalonA.configNominalOutputVoltage(0, 0);
-        followerShooterTalonB.configNominalOutputVoltage(0, 0);
-        
+		followerShooterTalonA = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT_A);
+		followerShooterTalonB = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT_B); // THIRD
+		// MOTOR
 
-    }
-    
-   
-    
-    public void initDefaultCommand(){  }
- 
-    
-    /**
-     * Initiates a vision shot
-     */
-    public void prepVisionShot(double speed) {
+		primaryShooterTalon.configPeakOutputVoltage(0, -12.0f);
+		followerShooterTalonA.configPeakOutputVoltage(0, -12.0f);
+		followerShooterTalonB.configPeakOutputVoltage(0, -12.0f); // THIRD MOTOR
+
+		if (SmartDashboard.getNumber("Shooter P", -2791) == -2791) {
+			SmartDashboard.putNumber("Shooter P", CONSTANTS.SHOOTER_P);
+			SmartDashboard.putNumber("Shooter I", CONSTANTS.SHOOTER_I);
+			SmartDashboard.putNumber("Shooter D", CONSTANTS.SHOOTER_D);
+			SmartDashboard.putNumber("Shooter FeedForward", CONSTANTS.SHOOTER_FEED_FORWARD);
+			SmartDashboard.putNumber("Shooter Setpoint", CONSTANTS.SHOOTER_SET_POINT);
+
+			SmartDashboard.putNumber("Shooter Long P", CONSTANTS.SHOOTER_LONG_P);
+			SmartDashboard.putNumber("Shooter Long I", CONSTANTS.SHOOTER_LONG_I);
+			SmartDashboard.putNumber("Shooter Long D", CONSTANTS.SHOOTER_LONG_D);
+			SmartDashboard.putNumber("Shooter Long FeedForward", CONSTANTS.SHOOTER_LONG_FEED_FORWARD);
+			SmartDashboard.putNumber("Shooter Long Setpoint", CONSTANTS.SHOOTER_LONG_SET_POINT);
+
+			SmartDashboard.putNumber("Bang Bang Threshold", 1000);
+
+			primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter Vision P", CONSTANTS.SHOOTER_VISION_P));
+			primaryShooterTalon.setI(SmartDashboard.getNumber("Shooter Vision I", CONSTANTS.SHOOTER_VISION_I));
+			primaryShooterTalon.setD(SmartDashboard.getNumber("Shooter Vision D", CONSTANTS.SHOOTER_VISION_D));
+			primaryShooterTalon.setF(
+					SmartDashboard.getNumber("Shooter Vision FeedForward", CONSTANTS.SHOOTER_VISION_FEED_FORWARD));
+		}
+
+		primaryShooterTalon.setIZone(CONSTANTS.SHOOTER_I_ZONE);
+
+		primaryShooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		primaryShooterTalon.configEncoderCodesPerRev(CONSTANTS.SHOOTER_ENCODER_TICKS);
+		primaryShooterTalon.changeControlMode(TalonControlMode.Speed); // control
+		// the
+		// primary
+		// SRX
+		// by
+		// RPM
+
+		followerShooterTalonA.changeControlMode(TalonControlMode.Follower);
+		followerShooterTalonA.set(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
+
+		followerShooterTalonB.changeControlMode(TalonControlMode.Follower); // THIRD
+		// MOTOR
+		followerShooterTalonB.set(RobotMap.PRIMARY_SHOOTER_TALON_PORT); // THIRD
+		// MOTOR
+
+		primaryShooterTalon.enableControl();
+		followerShooterTalonA.enableControl();
+		followerShooterTalonB.enableControl(); // THIRD MOTOR
+
+		primaryShooterTalon.enable();
+		followerShooterTalonA.enable();
+		followerShooterTalonB.enable(); // THIRD MOTOR
+
+		primaryShooterTalon.configNominalOutputVoltage(0, 0);
+		followerShooterTalonA.configNominalOutputVoltage(0, 0);
+		followerShooterTalonB.configNominalOutputVoltage(0, 0); // THIRD MOTOR
+
+	}
+
+	public void initDefaultCommand() {
+	}
+
+	/**
+	 * Initiates a vision shot
+	 */
+	public void prepVisionShot(double speed) {
 		closeShot = false;
 		visionShot = true;
 		setShooterSpeedsPID(speed);
 	}
-    
-    /**
-     * Initiates a wall shot
-     */
-    public void prepWallShot() {
-    	closeShot = true;
-    	visionShot = false;
-        setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Setpoint", 0));
-    }
-    
-    /**
-     * Initiates a far hopper shot
-     */
-    public void prepFarHopperShot() {
-    	closeShot = false;
-    	visionShot = false;
-    	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Long Setpoint", 0));
+
+	/**
+	 * Initiates a wall shot
+	 */
+	public void prepWallShot() {
+		closeShot = true;
+		visionShot = false;
+		setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Setpoint", 0));
 	}
 
-    /**
-     * Initiates an auto shot for the Center Gear than shoot auto
-     */
-    public void prepAutoCenterShot() {
-    	closeShot = false;
-    	visionShot = false;
-    	setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Auto Center Setpoint", CONSTANTS.SHOOTER_LONG_SET_POINT));
+	/**
+	 * Initiates a far hopper shot
+	 */
+	public void prepFarHopperShot() {
+		closeShot = false;
+		visionShot = false;
+		setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Long Setpoint", 0));
 	}
-    /**
-     * @return true = shooter is within accepted error range of target speed / false = shooter speed outside error range
-     */
-    public boolean atSpeed() {
-        return shooterGoodDelayedBoolean.update(
-        		Math.abs(primaryShooterTalon.getError()) < ERROR_THRESHOLD);
-    }
 
-    /**
-     * Uses PID to start shooter motors and keep shooter speed at target RPM
-     * @param targetSpeed target RPM of shooter wheels (positive number)
-     */
+	/**
+	 * Initiates an auto shot for the Center Gear than shoot auto
+	 */
+	public void prepAutoCenterShot() {
+		closeShot = false;
+		visionShot = false;
+		setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Auto Center Setpoint", CONSTANTS.SHOOTER_LONG_SET_POINT));
+	}
+
+	/**
+	 * @return true = shooter is within accepted error range of target speed /
+	 *         false = shooter speed outside error range
+	 */
+	public boolean atSpeed() {
+		return shooterGoodDelayedBoolean.update(Math.abs(primaryShooterTalon.getError()) < ERROR_THRESHOLD);
+	}
+
+	/**
+	 * Uses PID to start shooter motors and keep shooter speed at target RPM
+	 * 
+	 * @param targetSpeed
+	 *            target RPM of shooter wheels (positive number)
+	 */
 	public void setShooterSpeedsPID(double targetSpeed) {
-		
-        primaryShooterTalon.changeControlMode(TalonControlMode.Speed);
-        
-        //Update the PID and FeedForward values    
-       
-        if(visionShot){
-        	setPrimaryPID((SmartDashboard.getNumber("Shooter Vision P", 0)),
-        			(SmartDashboard.getNumber("Shooter Vision I", 0)),
-        			(SmartDashboard.getNumber("Shooter Vision D", 0)),
-        			(SmartDashboard.getNumber("Shooter Vision FeedForward", 0)));
-        }else if(!closeShot){
-        	setPrimaryPID((SmartDashboard.getNumber("Shooter Long P", 0)),
-        			(SmartDashboard.getNumber("Shooter Long I", 0)),
-        			(SmartDashboard.getNumber("Shooter Long D", 0)),
-        			(SmartDashboard.getNumber("Shooter Long FeedForward", 0)));
-        }else{
-        	setPrimaryPID((SmartDashboard.getNumber("Shooter P", 0)),
-        			(SmartDashboard.getNumber("Shooter I", 0)),
-        			(SmartDashboard.getNumber("Shooter D", 0)),
-        			(SmartDashboard.getNumber("Shooter FeedForward", 0)));
-        }
-        
-        primaryShooterTalon.set(targetSpeed);
-        
-        debug();
-    }
-	
+
+		primaryShooterTalon.changeControlMode(TalonControlMode.Speed);
+		primaryShooterTalon.set(targetSpeed);
+
+		debug();
+	}
+
+	public void updatePIDValues() {
+		if (getError() > 100) {
+			setPrimaryPID(10.0, (SmartDashboard.getNumber("Shooter I", 0)), (SmartDashboard.getNumber("Shooter D", 0)),
+					(SmartDashboard.getNumber("Shooter FeedForward", 0)));
+		} else {
+			if (visionShot) {
+				setPrimaryPID((SmartDashboard.getNumber("Shooter Vision P", 0)),
+						(SmartDashboard.getNumber("Shooter Vision I", 0)),
+						(SmartDashboard.getNumber("Shooter Vision D", 0)),
+						(SmartDashboard.getNumber("Shooter Vision FeedForward", 0)));
+			} else if (!closeShot) {
+				setPrimaryPID((SmartDashboard.getNumber("Shooter Long P", 0)),
+						(SmartDashboard.getNumber("Shooter Long I", 0)),
+						(SmartDashboard.getNumber("Shooter Long D", 0)),
+						(SmartDashboard.getNumber("Shooter Long FeedForward", 0)));
+			} else {
+				setPrimaryPID((SmartDashboard.getNumber("Shooter P", 0)), (SmartDashboard.getNumber("Shooter I", 0)),
+						(SmartDashboard.getNumber("Shooter D", 0)),
+						(SmartDashboard.getNumber("Shooter FeedForward", 0)));
+			}
+		}
+	}
+
 	/**
 	 * Set PID for the primary master talon
-	 * @param m_p desired p
-	 * @param m_i desired i
-	 * @param m_d desired d
-	 * @param m_ff desired feedforward
+	 * 
+	 * @param m_p
+	 *            desired p
+	 * @param m_i
+	 *            desired i
+	 * @param m_d
+	 *            desired d
+	 * @param m_ff
+	 *            desired feedforward
 	 */
-	public void setPrimaryPID(double m_p ,double m_i, double m_d, double m_ff){
-		if(!primaryHasP)
-	        System.out.println("****PID**** Shooter P is:" + m_p);
-			primaryShooterTalon.setP(m_p);
-		
+	public void setPrimaryPID(double m_p, double m_i, double m_d, double m_ff) {
+		if (!primaryHasP)
+			System.out.println("****PID**** Shooter P is:" + m_p);
+		primaryShooterTalon.setP(m_p);
+
 		primaryShooterTalon.setI(m_i);
 		primaryShooterTalon.setD(m_d);
 		primaryShooterTalon.setF(m_ff);
 	}
-	
+
 	/**
-	 * Sets shooter output vbus for both 775pros; if unacceptable value entered, 
+	 * Sets shooter output vbus for both 775pros; if unacceptable value entered,
 	 * then full speed in corresponding direction is given
-	 * @param vbus -1.0 to +1.0 accepted
+	 * 
+	 * @param vbus
+	 *            -1.0 to +1.0 accepted
 	 */
 	public void setShooterSpeedVBus(double vbus) {
 		primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
 		primaryShooterTalon.set(Util.limit(vbus, 1.0));
 	}
 
-	   
-    /**
-     * @param up true = hood up / false = hood down
-     */
-    public void setShooterSolenoidState(boolean down){
-    	shooterSolenoid.set(down);
-    }
-    
+	/**
+	 * @param up
+	 *            true = hood up / false = hood down
+	 */
+	public void setShooterSolenoidState(boolean down) {
+		shooterSolenoid.set(down);
+	}
+
 	/**
 	 * @return true = hood up(far shot) / false = hood down(close shot)
 	 */
-    private boolean getShooterHeight() {
-    	return shooterSolenoid.get();
+	private boolean getShooterHeight() {
+		return shooterSolenoid.get();
 	}
 
-    /**
-     * Resets the two Talon SRXs;
-     * stops the shooter motors
-     */
+	/**
+	 * Resets the two Talon SRXs; stops the shooter motors
+	 */
 	public void reset() {
-        stopMotors();
-        primaryShooterTalon.reset();
-        followerShooterTalonA.reset();
-        followerShooterTalonB.reset();
-    }
+		stopMotors();
+		primaryShooterTalon.reset();
+		followerShooterTalonA.reset();
+		followerShooterTalonB.reset();
+	}
 
-    public void stopMotors() { //Set the motors to 0 to stop
-    	primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
-    	primaryShooterTalon.set(0);
-    }
+	public void stopMotors() { // Set the motors to 0 to stop
+		primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
+		primaryShooterTalon.set(0);
+	}
 
-    /**
-     * @return total shooter current usage
-     */
-    public double getCurrentUsage(){
-    	return primaryShooterTalon.getOutputCurrent()+followerShooterTalonA.getOutputCurrent()+followerShooterTalonB.getOutputCurrent();
-    }
-    
-    /**
-     * Used for trigger-based manual shooting
-     * @param Vbus -1.0 to +1.0
-     */
+	/**
+	 * @return total shooter current usage
+	 */
+	public double getCurrentUsage() {
+		return primaryShooterTalon.getOutputCurrent() + followerShooterTalonA.getOutputCurrent()
+		+ followerShooterTalonB.getOutputCurrent();
+	}
+
+	/**
+	 * Used for trigger-based manual shooting
+	 * 
+	 * @param Vbus
+	 *            -1.0 to +1.0
+	 */
 	public void setVBusWithTrigger(double Vbus) {
 		primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
-		
-		SmartDashboard.putNumber("Shooter percent Vbus",Vbus);
-		
-        primaryShooterTalon.set(Vbus);
-       
+
+		SmartDashboard.putNumber("Shooter percent Vbus", Vbus);
+
+		primaryShooterTalon.set(Vbus);
+
 	}
-	
+
 	/**
 	 * @return primary shooter Talon SRX error from setpoint
 	 */
 	public double getError() {
 		return primaryShooterTalon.getError();
 	}
-	
+
 	/**
 	 * shooter sfx debugging outputs
 	 */
 	public void debug() {
-		
+
 		SmartDashboard.putNumber("Primary Talon Encoder Distance", primaryShooterTalon.getPosition());
-		SmartDashboard.putNumber("Primary Talon Speed",primaryShooterTalon.getSpeed());
+		SmartDashboard.putNumber("Primary Talon Speed", primaryShooterTalon.getSpeed());
 		SmartDashboard.putNumber("Primary Talon Error (Setpoint)", primaryShooterTalon.getError());
-		SmartDashboard.putNumber("Primary Talon Closed Loop Error (Sensor value)", primaryShooterTalon.getClosedLoopError());
-		
+		SmartDashboard.putNumber("Primary Talon Closed Loop Error (Sensor value)",
+				primaryShooterTalon.getClosedLoopError());
+
 		SmartDashboard.putNumber("Shooter primary output voltage", primaryShooterTalon.getOutputVoltage());
 		SmartDashboard.putNumber("Shooter follower output voltage", followerShooterTalonA.getOutputVoltage());
-		
-		SmartDashboard.putNumber("Shooter primary output %vbus", primaryShooterTalon.getOutputVoltage()/primaryShooterTalon.getBusVoltage());
-		
+
+		SmartDashboard.putNumber("Shooter primary output %vbus",
+				primaryShooterTalon.getOutputVoltage() / primaryShooterTalon.getBusVoltage());
+
 		SmartDashboard.putNumber("Shooter total current output", getCurrentUsage());
-		SmartDashboard.putString("Shooter primary output current vs follower output current", primaryShooterTalon.getOutputCurrent()+":"+followerShooterTalonA.getOutputCurrent());
-		SmartDashboard.putString("Shooter primary output vs follower output current", primaryShooterTalon.getOutputCurrent()+":"+followerShooterTalonA.getOutputCurrent());
-    }
+		SmartDashboard.putString("Shooter primary output current vs follower output current",
+				primaryShooterTalon.getOutputCurrent() + ":" + followerShooterTalonA.getOutputCurrent());
+		SmartDashboard.putString("Shooter primary output vs follower output current",
+				primaryShooterTalon.getOutputCurrent() + ":" + followerShooterTalonA.getOutputCurrent());
+	}
 }

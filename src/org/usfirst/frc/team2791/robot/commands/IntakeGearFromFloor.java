@@ -7,7 +7,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *Puts the {@link ShakerGear Gear Intake} down and runs the motors
+ *Puts the {@link ShakerGear Gear Intake} down and runs the motors </br>
+ *Automatically raises the gear intake if a gear is recieved
  */
 public class IntakeGearFromFloor extends Command {
 
@@ -32,19 +33,19 @@ public class IntakeGearFromFloor extends Command {
 
 		System.out.println("gear pickup timer = " + timer.get());
 		
-		if(Robot.gearMechanism.hasGear() && !gotGear){
+		if(Robot.gearMechanism.hasGear() && !gotGear){ //You got a brand new gear!!!
 			gotGear = true;
 			timer.start();
 		}
 		
 		if(timer.get() > 0.5) {
-			Robot.gearMechanism.setGearIntakeDown(false);
+			Robot.gearMechanism.setGearIntakeDown(false); //Move the gear intake up
 		}
 		
 		if(timer.get() > 1.5) {
 			Robot.gearMechanism.stopGearIntake();
 		} else {
-			Robot.gearMechanism.runGearIntake();
+			Robot.gearMechanism.runGearIntake(); //hold the gear in
 		}
 	}
 

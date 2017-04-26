@@ -103,7 +103,7 @@ public class Robot extends IterativeRobot {
 		shooter = new ShakerShooter();
 		
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
-
+		
 		drivetrain.setAutoPID();
 		shooter.pControlThread.start();
 		
@@ -253,15 +253,15 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Hopper current",hopper.getCurrentUsage());
 		SmartDashboard.putNumber("Shooter total current",shooter.getCurrentUsage());
 		
-		SmartDashboard.putNumber("Realtime vision error", visionTable.getRealtimeBoilerAngleError());
+//		SmartDashboard.putNumber("Realtime vision error", visionTable.getRealtimeBoilerAngleError());
 		
 		
 //		SmartDashboard.putNumber("Camera vision error", visionTable.targetError);
-		SmartDashboard.putNumber("Camera vision gyro offset", visionTable.gyroOffset);
-		SmartDashboard.putBoolean("Robot still", visionTable.robotStill.getOutputValue());
+//		SmartDashboard.putNumber("Camera vision gyro offset", visionTable.gyroOffset);
+//		SmartDashboard.putBoolean("Robot still", visionTable.robotStill.getOutputValue());
 //		smartDashBSFix *= -1;
 		
-		SmartDashboard.putNumber("Camera distance from target (reflective tape) in Inches", visionTable.getRealtimeDistanceToBoiler()); 
+//		SmartDashboard.putNumber("Camera distance from target (reflective tape) in Inches", visionTable.getRealtimeDistanceToBoiler()); 
 		
 //		System.out.println("Vision error = "+ visionTable.getRealtimeBoilerAngleError());
 
@@ -303,7 +303,7 @@ public class Robot extends IterativeRobot {
 	
 	// THROW BACK TO OLD CODE
 	public void run(){
-		visionTable.run();
+//		visionTable.run();
 	}
 	
 }
