@@ -15,7 +15,9 @@ public class LoadingStationGearAuton extends CommandGroup {
 	 */
     public LoadingStationGearAuton(String color) {
     	
+    	//dist = X/cos(PI/6) - 36
     	double dist;
+ 
     	if(color.equals("RED")){
         	addSequential(new DriveStraightEncoderGyro(-(128-36)/12.0, .7, 6));
         	addSequential(new StationaryGyroTurn(60.0, 1));

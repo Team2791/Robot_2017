@@ -107,7 +107,7 @@ public class Robot extends IterativeRobot {
 		drivetrain.setAutoPID();
 		shooter.pControlThread.start();
 		
-//		visionTable = new VisionNetworkTable();
+		visionTable = new VisionNetworkTable();
 		
 		
 		debug();

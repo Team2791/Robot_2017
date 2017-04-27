@@ -180,32 +180,36 @@ public class ShakerShooter extends Subsystem {
 	public void setShooterSpeedsPID(double targetSpeed) {
 
 		primaryShooterTalon.changeControlMode(TalonControlMode.Speed);
+
+		updatePIDValues();
+
 		primaryShooterTalon.set(targetSpeed);
 
 		debug();
 	}
 
 	public void updatePIDValues() {
-		if (getError() > 100) {
-			setPrimaryPID(10.0, (SmartDashboard.getNumber("Shooter I", 0)), (SmartDashboard.getNumber("Shooter D", 0)),
-					(SmartDashboard.getNumber("Shooter FeedForward", 0)));
-		} else {
-			if (visionShot) {
-				setPrimaryPID((SmartDashboard.getNumber("Shooter Vision P", 0)),
-						(SmartDashboard.getNumber("Shooter Vision I", 0)),
-						(SmartDashboard.getNumber("Shooter Vision D", 0)),
-						(SmartDashboard.getNumber("Shooter Vision FeedForward", 0)));
-			} else if (!closeShot) {
-				setPrimaryPID((SmartDashboard.getNumber("Shooter Long P", 0)),
-						(SmartDashboard.getNumber("Shooter Long I", 0)),
-						(SmartDashboard.getNumber("Shooter Long D", 0)),
-						(SmartDashboard.getNumber("Shooter Long FeedForward", 0)));
-			} else {
-				setPrimaryPID((SmartDashboard.getNumber("Shooter P", 0)), (SmartDashboard.getNumber("Shooter I", 0)),
-						(SmartDashboard.getNumber("Shooter D", 0)),
-						(SmartDashboard.getNumber("Shooter FeedForward", 0)));
-			}
-		}
+		//		if (getError() > 100) {
+		//			setPrimaryPID(10.0, (SmartDashboard.getNumber("Shooter I", 0)), (SmartDashboard.getNumber("Shooter D", 0)),
+		//					(SmartDashboard.getNumber("Shooter FeedForward", 0)));
+		//		} else {
+		//			if (visionShot) {
+		//				setPrimaryPID((SmartDashboard.getNumber("Shooter Vision P", 0)),
+		//						(SmartDashboard.getNumber("Shooter Vision I", 0)),
+		//						(SmartDashboard.getNumber("Shooter Vision D", 0)),
+		//						(SmartDashboard.getNumber("Shooter Vision FeedForward", 0)));
+		//			} else if (!closeShot) {
+		//				setPrimaryPID((SmartDashboard.getNumber("Shooter Long P", 0)),
+		//						(SmartDashboard.getNumber("Shooter Long I", 0)),
+		//						(SmartDashboard.getNumber("Shooter Long D", 0)),
+		//						(SmartDashboard.getNumber("Shooter Long FeedForward", 0)));
+		//			} else {
+
+		setPrimaryPID((SmartDashboard.getNumber("Shooter P", 0)), 
+				(SmartDashboard.getNumber("Shooter I", 0)),
+				(SmartDashboard.getNumber("Shooter D", 0)),
+				(SmartDashboard.getNumber("Shooter FeedForward", 0)));
+
 	}
 
 	/**

@@ -24,7 +24,7 @@ public class ShakerGear extends Subsystem{
 	
 	private Talon gearSpark;
 	
-	private final static double GEAR_IR_DISTANCE = 4.0; //idk, need to find
+	private final static double GEAR_IR_DISTANCE = 1200; //idk, need to find
 	/**
 	 * A SHARP IR Sensor positioned to detect when a gear is in the intake
 	 */
@@ -71,7 +71,7 @@ public class ShakerGear extends Subsystem{
 	 * @return true = gear inside / false = no gear in intake
 	 */
 	public boolean hasGear(){
-		return (gearDetector.getVoltage() > GEAR_IR_DISTANCE); 
+		return (gearDetector.getValue() > GEAR_IR_DISTANCE); 
 		//		return limitSwitch.get();
 		
 	}
@@ -89,7 +89,7 @@ public class ShakerGear extends Subsystem{
 		SmartDashboard.putNumber("Gear Motor Output", gearSpark.get());
 		SmartDashboard.putNumber("Gear intake Current Usage", getCurrentUsage());
 		
-		SmartDashboard.putNumber("IR Voltage", gearDetector.getVoltage());
+		SmartDashboard.putNumber("IR Voltage", gearDetector.getValue());
 	}
 
 	public void changeGearSolenoidState(boolean state_) {

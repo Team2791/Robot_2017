@@ -25,7 +25,7 @@ public class ShakerHopper extends Subsystem{
 	private PWM servo;
 	private Talon hopperSpark;
 
-	private static double hopperSetpoint = -0.66;
+	private static double hopperSetpoint = -1.0;
 	private final double distanceSensorCutoffPoint = 1.5;
 		
 	public ShakerHopper(){
@@ -57,7 +57,7 @@ public class ShakerHopper extends Subsystem{
 	 */
 	public void runHopper() {
 //		System.out.print("Hopper FOR C:" + this.getCurrentUsage());
-		hopperSpark.setSpeed(0.65);
+		hopperSpark.setSpeed(hopperSetpoint);
 		servo.setRaw(255);
 	}
 	
@@ -66,7 +66,7 @@ public class ShakerHopper extends Subsystem{
 	 */
 	public void slowHopper() {
 //		System.out.print("Running hopper half speed");
-		hopperSpark.setSpeed(0.5);
+		hopperSpark.setSpeed(hopperSetpoint/2.0);
 		servo.setRaw(255);
 	}
 	
@@ -75,7 +75,7 @@ public class ShakerHopper extends Subsystem{
 	 */
 	public void runHopperBackwards() {
 //		System.out.print("Hopper FOR C:" + this.getCurrentUsage());
-		hopperSpark.setSpeed(-0.75);
+		hopperSpark.setSpeed(hopperSetpoint);
 		servo.setRaw(255);
 	}
 	

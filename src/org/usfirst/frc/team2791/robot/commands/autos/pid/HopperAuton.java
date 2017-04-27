@@ -26,18 +26,18 @@ public class HopperAuton extends CommandGroup {
 			direction = 1.0;
 		
 		addParallel(new SpinUpShooter(CONSTANTS.SHOOTER_AUTO_HOPPER_SET_POINT));
-		addSequential(new DriveEncoderBangBang(-.8, 0.0, -3.5));
+		addSequential(new DriveEncoderBangBang(-.8, 0.0, -88/12.0)); //measured 118in, left 30 in for the precision drive
 		
 		/** This is sketch as heck because we're counting on the drift from the first drive
 		to get us to the 2nd distance and just using the drive train to slow down and turn a bit.**/
-		addSequential(new DriveEncoderBangBang(-0.3, 0.0, -3.75, 2.5)); //-3.75
+		addSequential(new DriveEncoderBangBang(-0.3, 0.0, -3.75, 2.5)); //30in
 		addParallel (new RunIntake());
 		
 		/**kick the hopper to ensure the hopper is triggered
 		addSequential(new TurnGyroBangBang(-0.7 * direction, -15 * direction, 1.0));
 		point in the general direction of the boiler**/
 		addSequential(new TurnGyroBangBang(0.7 *direction , 15 * direction, 1.0));
-		addSequential(new TurnGyroBangBang(-0.7 *direction , 10 * direction, 1.0));
+		addSequential(new TurnGyroBangBang(-0.7 *direction , 10 * direction, 1.0)); //? i think we should take out the kick maybe
 		
 		//drive forward to get moar ballz
 		addSequential(new DriveEncoderBangBang(0.5, 0.0, 1, 1.0)); //1

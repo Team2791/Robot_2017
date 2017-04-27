@@ -15,18 +15,21 @@ public class BoilerGearAuton extends CommandGroup {
 	 */
 	public BoilerGearAuton(String red) {
 
+		//dist = cos(PI/6)/X - 36
 		double dist = 0;
+		
 		if(red.equals("RED")){
 			addSequential(new DriveStraightEncoderGyro(-(128-33)/12.0, .7, 10));
 			addSequential(new StationaryGyroTurn((-60.0/12),.7));
-			dist = Math.cos(Math.PI/6)/84 - 33; //91.0 is the lateral distance
+			dist = Math.cos(Math.PI/6)/84 - 36; //84.0 is the lateral distance
 
 		}else{
 			addSequential(new DriveStraightEncoderGyro(-(128-33)/12.0, .7, 10));
 			addSequential(new StationaryGyroTurn((60.0/12),.7));
-			dist = Math.cos(Math.PI/6)/88 - 33; //89.5 is the lateral distance
+			dist = Math.cos(Math.PI/6)/88 - 36; //88 is the lateral distance
 
 		}
+		
 		addSequential(new DriveStraightEncoderGyro(-dist/12.0, .7, 10));
 		addSequential(new ScoreGearAutoReturn());
 		addSequential(new DriveStraightEncoderGyro(3.0, .7, 4));
