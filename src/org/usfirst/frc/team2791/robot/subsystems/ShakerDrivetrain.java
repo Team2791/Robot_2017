@@ -267,7 +267,6 @@ public class ShakerDrivetrain extends Subsystem{
 	/**@return average distance of both encoder velocities */
 	public double getAverageDist() {
 		return (getLeftDistance() + getRightDistance()) / 2;
-//		left side commented out due to potential wiring issues
 //		return getLeftDistance();
 	}
 	
@@ -279,7 +278,7 @@ public class ShakerDrivetrain extends Subsystem{
 		return rightDriveEncoder.getRate();
 	}
 
-	/**@return average velocity of both encoder velocities */
+	/**@return average velocity of both encoSder velocities */
 	public double getAverageVelocity() {
 		return (getLeftVelocity() + getRightVelocity()) / 2;
 	}

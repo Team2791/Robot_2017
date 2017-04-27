@@ -1,9 +1,6 @@
 package org.usfirst.frc.team2791.robot;
 
 import org.usfirst.frc.team2791.robot.commands.RunLongShot;
-import org.usfirst.frc.team2791.robot.commands.TurnGyroBangBang;
-import org.usfirst.frc.team2791.robot.commands.autos.pid.CenterGearAutonShooting;
-import org.usfirst.frc.team2791.robot.commands.autos.pid.HopperAuton;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -11,6 +8,8 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 import org.usfirst.frc.team2791.robot.util.VisionNetworkTable;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -20,6 +19,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.CenterGearAutonShooting;
 
 /**
  * <b><i>Robot.java for Stoker, the 2017 robot from FRC2791 Shaker Robotics</i></b>
@@ -83,19 +83,35 @@ public class Robot extends IterativeRobot {
 
 		//I Commented these out because the the prints are SOOO Annoying ya know?
 		try{
-			CameraServer.getInstance().startAutomaticCapture("Front Camera",0);
+			UsbCamera front_cam = CameraServer.getInstance().startAutomaticCapture("Gear Camera",0);
+			front_cam.setPixelFormat(PixelFormat.kMJPEG);
+			front_cam.setFPS(15);
+			front_cam.setResolution(320, 180); //try 240 x 180 next
+
 		}catch(Exception e){
 			System.out.println("*****FRONT Camera Failed*****");
 			e.printStackTrace();
 		}
 		
 		try{
-			CameraServer.getInstance().startAutomaticCapture("Gear Camera",1);
+			UsbCamera gear_cam = CameraServer.getInstance().startAutomaticCapture("Front Camera", 1);
+			gear_cam.setPixelFormat(PixelFormat.kMJPEG);
+			gear_cam.setFPS(10);
+			gear_cam.setResolution(120, 90); //240 x 180
+			
 		}catch(Exception e){
 			System.out.println("*****BACK Camera Failed*****");
 			e.printStackTrace();
 		}
 
+//		try{
+//			AxisCamera axis = CameraServer.getInstance().startAutomaticCapture("10.27.91.");
+//			axis.
+//		}catch(Exception e){
+//			System.out.println("*****FRONT Camera Failed*****");
+//			e.printStackTrace();
+//		}
+		
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
@@ -162,8 +178,8 @@ public class Robot extends IterativeRobot {
 		******* vvv MATCH AUTO SELECTION vvv *******
 		*********************************************/
 		
-		String teamColor = "RED"; 
-//		String teamColor = "BLUE"; 
+//		String teamColor = "RED"; 
+		String teamColor = "BLUE"; 
 		
 //		autonomousCommand = new WallShot_BoilerGear(teamColor);
 //		autonomousCommand = new CenterShot_CenterGear(teamColor);

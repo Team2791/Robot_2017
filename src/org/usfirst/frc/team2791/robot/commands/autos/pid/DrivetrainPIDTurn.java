@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public abstract class DrivetrainPIDTurn extends Command {
 	
-	private final double MIN_POWER_TO_TURN = 0.23;
+	private final double MIN_POWER_TO_TURN = 0.22;
 	protected double errorThreshold = 1;
 	protected static BasicPID stationaryAnglePID;
 	

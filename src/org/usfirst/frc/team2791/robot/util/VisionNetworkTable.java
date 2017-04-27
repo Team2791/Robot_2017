@@ -135,7 +135,7 @@ public class VisionNetworkTable implements ITableListener {
 		// THIS IS A HACK
 		// Ignore images unless we're not moving. This is to compensate for lag.
 		
-		if(!robotStill.update(Math.abs(Robot.drivetrain.gyro.getRate()) < 2)) {
+		if(!robotStill.update(Math.abs(Robot.drivetrain.gyro.getRate()) < 5)) {
 			return;
 		}
 		
@@ -149,7 +149,7 @@ public class VisionNetworkTable implements ITableListener {
 			if(e.getMessage().equals("No Targets")) {
 				System.out.println("Found no targets. Not changing gyro offet");
 			} else {
-				System.out.println("SOMETHING MESSED UP AND WE'RE NOT DEALING WITH IT");
+				System.out.println("SOME1THING MESSED UP AND WE'RE NOT DEALING WITH IT");
 			}
 		}
 

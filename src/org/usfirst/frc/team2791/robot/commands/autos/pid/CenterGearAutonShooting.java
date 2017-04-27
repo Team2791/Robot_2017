@@ -25,15 +25,15 @@ public class CenterGearAutonShooting extends CommandGroup {
 		
 		addParallel(new SpinUpShooter(CONSTANTS.SHOOTER_AUTO_CENTER_SET_POINT));
 		
-    	addSequential(new DriveStraightEncoderGyro(-(108-36.0)/12, .7, 6)); //110.5 worked
+    	addSequential(new DriveStraightEncoderGyro(-(110-36.0)/12, .7, 4.0)); //108 worked
     	addSequential(new AutonGearScore());
     	addSequential(new DriveStraightEncoderGyro(2.0, .7, 1.0));//distance was 3.0
     	
 		addSequential(new TurnGyroBangBang(0.4 * direction , 65 * direction));
-		addSequential(new DriveEncoderBangBang(0.5, 0.0, 5, 1.0)); //1
-		
+		addSequential(new DriveEncoderBangBang(0.5, 0.0, 1.5, 1.0)); //1
+				
 		addSequential(new DelayDrivetrain(0.75));
-		addSequential(new StationaryVisionTurn(0.5,1.5));//0.4,1.0
+//		addSequential(new StationaryVisionTurn(0.5,1.5));//0.4,1.0
 		addSequential(new RunHopper());
     }
 }

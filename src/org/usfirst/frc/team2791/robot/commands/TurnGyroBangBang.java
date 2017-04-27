@@ -23,6 +23,8 @@ public class TurnGyroBangBang extends Command {
 	 */
 	public TurnGyroBangBang(double turn, double angle, double timeOut) {
 		this(turn, angle);
+		System.out.println("IIIIIIII AMMMMMMMMMMMMMM TURNINGGGGGGGGGGGGGGGGGG");
+
 		timeToTurn = timeOut;
 	}
 
@@ -57,8 +59,8 @@ public class TurnGyroBangBang extends Command {
 
 		if(turn > 0)
 			return Robot.drivetrain.getGyroAngle() > stopAngle;
-			else
-				return Robot.drivetrain.getGyroAngle() < stopAngle;
+		else
+			return Robot.drivetrain.getGyroAngle() < stopAngle;
 	}
 
 	// Called once after isFinished returns true

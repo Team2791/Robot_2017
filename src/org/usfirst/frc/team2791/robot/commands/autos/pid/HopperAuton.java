@@ -21,16 +21,20 @@ public class HopperAuton extends CommandGroup {
 	public HopperAuton(String color) {
 		
 		if(color.equals("RED"))
-			direction = -1.0;
-		else
 			direction = 1.0;
+		else
+			direction = -1.0;
 		
 		addParallel(new SpinUpShooter(CONSTANTS.SHOOTER_AUTO_HOPPER_SET_POINT));
-		addSequential(new DriveEncoderBangBang(-.8, 0.0, -88/12.0)); //measured 118in, left 30 in for the precision drive
+		
+		
+		addSequential(new DriveEncoderBangBang(-.8, 0.0, -91/12.0 +59.0/12.0 -0.25 -1)); //measured 118in, left 30 in for the precision drive
+		// v from tech park 
+//		addSequential(new DriveEncoderBangBang(-.8, 0.0, -88/12.0)); //measured 118in, left 30 in for the precision drive
 		
 		/** This is sketch as heck because we're counting on the drift from the first drive
 		to get us to the 2nd distance and just using the drive train to slow down and turn a bit.**/
-		addSequential(new DriveEncoderBangBang(-0.3, 0.0, -3.75, 2.5)); //30in
+		addSequential(new DriveEncoderBangBang(-0.3, 0.0, -3.75 +1, 2.5)); //30in
 		addParallel (new RunIntake());
 		
 		/**kick the hopper to ensure the hopper is triggered
