@@ -50,19 +50,22 @@ public class ShakerShooter extends Subsystem {
 	public boolean primaryHasP = false;
 
 	public ShooterLookupTable lookUpTable = new ShooterLookupTable();
-	public Thread pControlThread;
-	public ShooterErrorThread errorThread = new ShooterErrorThread();
+//	public Thread pControlThread;
+//	public ShooterErrorThread errorThread = new ShooterErrorThread();
 
 	public ShakerShooter() {
-		pControlThread = new Thread(errorThread);
+//		pControlThread = new Thread(errorThread);
 
 		shooterSolenoid = new Solenoid(RobotMap.PCM_MODULE, RobotMap.SHOOTER_CHANNEL);
 
 		primaryShooterTalon = new CANTalon(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
 		primaryShooterTalon.setInverted(true);
+		primaryShooterTalon.setNominalClosedLoopVoltage(12.0);
 
 		followerShooterTalonA = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT_A);
+		followerShooterTalonA.setNominalClosedLoopVoltage(12.0);
 		followerShooterTalonB = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT_B); // THIRD
+		followerShooterTalonB.setNominalClosedLoopVoltage(12.0);
 		// MOTOR
 
 		primaryShooterTalon.configPeakOutputVoltage(0, -12.0f);
@@ -82,6 +85,8 @@ public class ShakerShooter extends Subsystem {
 			SmartDashboard.putNumber("Shooter Long FeedForward", CONSTANTS.SHOOTER_LONG_FEED_FORWARD);
 			SmartDashboard.putNumber("Shooter Long Setpoint", CONSTANTS.SHOOTER_LONG_SET_POINT);
 
+			SmartDashboard.putNumber("Shooter Sweeet Setpoint", CONSTANTS.SHOOTER_VISION_SWEET_SET_POINT);
+			
 			SmartDashboard.putNumber("Bang Bang Threshold", 1000);
 
 			primaryShooterTalon.setP(SmartDashboard.getNumber("Shooter Vision P", CONSTANTS.SHOOTER_VISION_P));
@@ -225,8 +230,8 @@ public class ShakerShooter extends Subsystem {
 	 *            desired feedforward
 	 */
 	public void setPrimaryPID(double m_p, double m_i, double m_d, double m_ff) {
-		if (!primaryHasP)
-			System.out.println("****PID**** Shooter P is:" + m_p);
+//		if (!primaryHasP)
+//			System.out.println("****PID**** Shooter P is:" + m_p);
 		primaryShooterTalon.setP(m_p);
 
 		primaryShooterTalon.setI(m_i);

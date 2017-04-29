@@ -92,7 +92,7 @@ public class DriveStraightEncoderGyro extends Command {
 	protected boolean isFinished() {
 		System.out.println("Stright drive stop conditions");
 		System.out.println(Math.abs(distancePID.getError()) < drivingErrorThreshold);
-		System.out.println(Math.abs(movingAnglePID.getError()) < 1.5);
+		System.out.println(Math.abs(movingAnglePID.getError()) < 3);
 		System.out.println(Math.abs(Robot.drivetrain.getLeftVelocity()) < 0.05);
 		System.out.println(Math.abs(Robot.drivetrain.getRightVelocity()) < 0.05);
 		

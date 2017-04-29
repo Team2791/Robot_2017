@@ -8,6 +8,7 @@ import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for closeShot. The hopper is set to meter its speed.
@@ -32,8 +33,10 @@ public class RunVisionShot extends Command{
 	@Override
 	protected void execute() {
 		Robot.shooter.setShooterSolenoidState(false); // down position is false
-		Robot.shooter.prepVisionShot(CONSTANTS.SHOOTER_VISION_SWEET_SET_POINT); // bringing shooter up to speed
+		Robot.shooter.prepVisionShot(SmartDashboard.getNumber("Shooter Sweeet Setpoint" , CONSTANTS.SHOOTER_VISION_SWEET_SET_POINT)); // bringing shooter up to speed
 
+		//prolly should not use sfx in a match up there ^^^
+		
 		// if we need more balls or the shooter is ready
 		if(Robot.shooter.atSpeed()){
 			shooterSpunUp = true;

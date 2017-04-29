@@ -2,6 +2,7 @@ package org.usfirst.frc.team2791.robot.commands.autos.pid;
 
 import org.usfirst.frc.team2791.robot.commands.DriveEncoderBangBang;
 import org.usfirst.frc.team2791.robot.commands.RunHopper;
+import org.usfirst.frc.team2791.robot.commands.RunIntake;
 import org.usfirst.frc.team2791.robot.commands.SpinUpShooter;
 import org.usfirst.frc.team2791.robot.commands.TurnGyroBangBang;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
@@ -25,15 +26,18 @@ public class CenterGearAutonShooting extends CommandGroup {
 		
 		addParallel(new SpinUpShooter(CONSTANTS.SHOOTER_AUTO_CENTER_SET_POINT));
 		
-    	addSequential(new DriveStraightEncoderGyro(-(110-36.0)/12, .7, 4.0)); //108 worked
+		// 110 was short
+    	addSequential(new DriveStraightEncoderGyro(-(112.5-36.0)/12, .7, 2.5, 3.0)); //108 worked
     	addSequential(new AutonGearScore());
-    	addSequential(new DriveStraightEncoderGyro(2.0, .7, 1.0));//distance was 3.0
+    	addParallel(new RunIntake());
     	
-		addSequential(new TurnGyroBangBang(0.4 * direction , 65 * direction));
-		addSequential(new DriveEncoderBangBang(0.5, 0.0, 1.5, 1.0)); //1
+    	addSequential(new DriveStraightEncoderGyro(2.0, .7, 1.0, 3.0));//distance was 3.0
+    	
+		addSequential(new TurnGyroBangBang(0.45 * direction , 62.0 * direction)); //65.0
+		addSequential(new DriveEncoderBangBang(0.7, 0.0, 1.5, 1.0)); //1.5, 1.0 was just a bit short
 				
 		addSequential(new DelayDrivetrain(0.75));
-//		addSequential(new StationaryVisionTurn(0.5,1.5));//0.4,1.0
+		addSequential(new StationaryVisionTurn(0.5,1.5));//0.4,1.0
 		addSequential(new RunHopper());
     }
 }

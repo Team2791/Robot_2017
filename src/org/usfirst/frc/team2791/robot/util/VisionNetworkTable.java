@@ -39,6 +39,10 @@ public class VisionNetworkTable implements ITableListener {
 		
 	}
 	
+	public void setVisionOffset(double offset){
+		this.gyroOffset = offset;
+	}
+	
 	public double getRealtimeBoilerAngleError() {
 		return Robot.drivetrain.getGyroAngle() + gyroOffset;
 	}
@@ -47,7 +51,7 @@ public class VisionNetworkTable implements ITableListener {
 		try{
 			return calculateTargetDistance();
 		} catch(Exception e){
-//			System.out.println("Can't find distance");
+			System.out.println("Can't find distance");
 		}
 		return 0;
 	}

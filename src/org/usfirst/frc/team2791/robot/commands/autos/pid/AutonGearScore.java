@@ -32,7 +32,7 @@ public class AutonGearScore extends Command{
 	}
 	
 	protected boolean isFinished(){
-		return t.get()>1.5; //here is where the delay is //1.5
+		return t.get()>0.75; //here is where the delay is //1.5
 	}
 	
 	protected void end(){

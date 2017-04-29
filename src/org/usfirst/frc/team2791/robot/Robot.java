@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2791.robot;
 
 import org.usfirst.frc.team2791.robot.commands.RunLongShot;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.LoadingStationGearAuton;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -19,7 +20,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team2791.robot.commands.autos.pid.CenterGearAutonShooting;
 
 /**
  * <b><i>Robot.java for Stoker, the 2017 robot from FRC2791 Shaker Robotics</i></b>
@@ -83,21 +83,21 @@ public class Robot extends IterativeRobot {
 
 		//I Commented these out because the the prints are SOOO Annoying ya know?
 		try{
-			UsbCamera front_cam = CameraServer.getInstance().startAutomaticCapture("Gear Camera",0);
-			front_cam.setPixelFormat(PixelFormat.kMJPEG);
-			front_cam.setFPS(15);
-			front_cam.setResolution(320, 180); //try 240 x 180 next
+			UsbCamera gear_cam = CameraServer.getInstance().startAutomaticCapture("Gear Camera",0);
+			gear_cam.setPixelFormat(PixelFormat.kMJPEG);
+			gear_cam.setFPS(10);
+			gear_cam.setResolution(240, 180); //try 240 x 180 next
 
 		}catch(Exception e){
 			System.out.println("*****FRONT Camera Failed*****");
 			e.printStackTrace();
 		}
-		
+		 //424 * 240 @ 10 
 		try{
-			UsbCamera gear_cam = CameraServer.getInstance().startAutomaticCapture("Front Camera", 1);
-			gear_cam.setPixelFormat(PixelFormat.kMJPEG);
-			gear_cam.setFPS(10);
-			gear_cam.setResolution(120, 90); //240 x 180
+			UsbCamera front_cam = CameraServer.getInstance().startAutomaticCapture("Front Camera", 1);
+			front_cam.setPixelFormat(PixelFormat.kMJPEG);
+			front_cam.setFPS(15);
+			front_cam.setResolution(320, 180); //240 x 180 //120 180
 			
 		}catch(Exception e){
 			System.out.println("*****BACK Camera Failed*****");
@@ -118,10 +118,12 @@ public class Robot extends IterativeRobot {
 		hopper = new ShakerHopper();
 		shooter = new ShakerShooter();
 		
+//		Button a = oi.driverA;
+		
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 		
 		drivetrain.setAutoPID();
-		shooter.pControlThread.start();
+//		shooter.pControlThread.start();
 		
 		visionTable = new VisionNetworkTable();
 		
@@ -174,22 +176,31 @@ public class Robot extends IterativeRobot {
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
 		
+		
 		/********************************************
 		******* vvv MATCH AUTO SELECTION vvv *******
 		*********************************************/
 		
-//		String teamColor = "RED"; 
-		String teamColor = "BLUE"; 
+		String teamColor = "RED"; 
+//		String teamColor = "BLUE"; 
+				
+
 		
 //		autonomousCommand = new WallShot_BoilerGear(teamColor);
 //		autonomousCommand = new CenterShot_CenterGear(teamColor);
 		
 //		autonomousCommand = new CenterGearAuton(teamColor);
 //		autonomousCommand = new BoilerGearAuton(teamColor);
-//		autonomousCommand = new LoadingStationGearAuton(teamColor);
+		autonomousCommand = new LoadingStationGearAuton(teamColor);
 		
 //		autonomousCommand = new HopperAuton(teamColor);
-		autonomousCommand = new CenterGearAutonShooting(teamColor);
+//		autonomousCommand = new CenterGearAutonShooting(teamColor);
+		// ONLY RUN BELOW FOR CENTER GEAR
+//		if(teamColor.equals("RED"))
+//			visionTable.setVisionOffset(-60.0);
+//		else
+//			visionTable.setVisionOffset(60.0);
+
 		
 		/******^^^ MATCH AUTO SELECTION ^^^ *******/
 		
@@ -269,15 +280,15 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Hopper current",hopper.getCurrentUsage());
 		SmartDashboard.putNumber("Shooter total current",shooter.getCurrentUsage());
 		
-//		SmartDashboard.putNumber("Realtime vision error", visionTable.getRealtimeBoilerAngleError());
+		SmartDashboard.putNumber("Realtime vision error", visionTable.getRealtimeBoilerAngleError());
 		
 		
-//		SmartDashboard.putNumber("Camera vision error", visionTable.targetError);
-//		SmartDashboard.putNumber("Camera vision gyro offset", visionTable.gyroOffset);
-//		SmartDashboard.putBoolean("Robot still", visionTable.robotStill.getOutputValue());
-//		smartDashBSFix *= -1;
+		SmartDashboard.putNumber("Camera vision error", visionTable.targetError);
+		SmartDashboard.putNumber("Camera vision gyro offset", visionTable.gyroOffset);
+		SmartDashboard.putBoolean("Robot still", visionTable.robotStill.getOutputValue());
+		smartDashBSFix *= -1;
 		
-//		SmartDashboard.putNumber("Camera distance from target (reflective tape) in Inches", visionTable.getRealtimeDistanceToBoiler()); 
+		SmartDashboard.putNumber("Camera distance from target (reflective tape) in Inches", visionTable.getRealtimeDistanceToBoiler()); 
 		
 //		System.out.println("Vision error = "+ visionTable.getRealtimeBoilerAngleError());
 

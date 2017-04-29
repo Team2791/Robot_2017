@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoAim extends CommandGroup {
 
 	public AutoAim() {
-		addSequential(new DelayDrivetrain(0.5));
+		addSequential(new DelayDrivetrain(0.75));
 		addSequential(new StationaryVisionTurn(0.5,1.5));
 		addSequential(new DriveStraightVision());
     }

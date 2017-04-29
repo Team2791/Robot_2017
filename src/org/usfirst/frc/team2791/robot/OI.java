@@ -75,7 +75,7 @@ public class OI {
 		operatorRB.whileHeld(new HopperOn());
 		operatorLB.whileHeld(new RunHopperBackwards());
 		
-		operatorDpadDown.whenPressed(new IntakeGearFromFloor()); 
+//		operatorDpadDown.whenPressed(new IntakeGearFromFloor()); 
 		operatorDpadUp.whenPressed(new GearMechUp());
 		operatorDpadLeft.whileHeld(new RunVisionShot());
 		operatorDpadRight.whenPressed(new StationaryVisionTurn(0.5,1.5));
