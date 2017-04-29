@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2791.robot;
 
 import org.usfirst.frc.team2791.robot.commands.RunLongShot;
-import org.usfirst.frc.team2791.robot.commands.autos.pid.LoadingStationGearAuton;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.CenterGearAutonShooting;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -59,6 +59,7 @@ public class Robot extends IterativeRobot {
 	
 	private double smartDashBSFix = 0.00001;
 
+
 	/**
 	 * setting autonomousCommand to a Command will cause that Command to run in autonomous init
 	 */
@@ -85,9 +86,13 @@ public class Robot extends IterativeRobot {
 		try{
 			UsbCamera gear_cam = CameraServer.getInstance().startAutomaticCapture("Gear Camera",0);
 			gear_cam.setPixelFormat(PixelFormat.kMJPEG);
-			gear_cam.setFPS(10);
-			gear_cam.setResolution(240, 180); //try 240 x 180 next
+			gear_cam.setFPS(10); //wont allow me to set above 10
+			if(!gear_cam.setResolution(240, 180)){
+				gear_cam.setResolution(240, 180); //try 240 x 180 next
+				System.out.println("******Desired resolution failed for GEAR Camer******");
 
+			}
+//			gear_cam.getProperty(name)
 		}catch(Exception e){
 			System.out.println("*****FRONT Camera Failed*****");
 			e.printStackTrace();
@@ -96,9 +101,12 @@ public class Robot extends IterativeRobot {
 		try{
 			UsbCamera front_cam = CameraServer.getInstance().startAutomaticCapture("Front Camera", 1);
 			front_cam.setPixelFormat(PixelFormat.kMJPEG);
-			front_cam.setFPS(15);
-			front_cam.setResolution(320, 180); //240 x 180 //120 180
+			front_cam.setFPS(15); //was 15
 			
+			if(!front_cam.setResolution(160, 90)){ //halfed, try other resultions mauybe
+				front_cam.setResolution(320, 180);//defualt value if the other resolution does not work
+				System.out.println("******Desired resolution failed for FRONT Camer******");
+			}
 		}catch(Exception e){
 			System.out.println("*****BACK Camera Failed*****");
 			e.printStackTrace();
@@ -184,22 +192,21 @@ public class Robot extends IterativeRobot {
 		String teamColor = "RED"; 
 //		String teamColor = "BLUE"; 
 				
-
 		
 //		autonomousCommand = new WallShot_BoilerGear(teamColor);
 //		autonomousCommand = new CenterShot_CenterGear(teamColor);
 		
 //		autonomousCommand = new CenterGearAuton(teamColor);
 //		autonomousCommand = new BoilerGearAuton(teamColor);
-		autonomousCommand = new LoadingStationGearAuton(teamColor);
+//		autonomousCommand = new LoadingStationGearAuton(teamColor);
 		
 //		autonomousCommand = new HopperAuton(teamColor);
-//		autonomousCommand = new CenterGearAutonShooting(teamColor);
-		// ONLY RUN BELOW FOR CENTER GEAR
-//		if(teamColor.equals("RED"))
-//			visionTable.setVisionOffset(-60.0);
-//		else
-//			visionTable.setVisionOffset(60.0);
+		autonomousCommand = new CenterGearAutonShooting(teamColor);
+//		 ONLY RUN BELOW FOR CENTER GEAR
+		if(teamColor.equals("RED"))
+			visionTable.setVisionOffset(-60.0);
+		else
+			visionTable.setVisionOffset(60.0);
 
 		
 		/******^^^ MATCH AUTO SELECTION ^^^ *******/

@@ -74,7 +74,7 @@ public class VisionNetworkTable implements ITableListener {
 		double bottomOfImageAngle = INCLINATION - FOVY/2.0;
 		double targetAngleInImage = (contour.centerY / (float) SIZEY) * FOVY;
 		double heightFromCamera = BOILER_TOP_TARGET_HEIGHT - CAMERA_HEIGHT;
-//		System.out.println("Target ccamera angle " + (bottomOfImageAngle + targetAngleInImage));
+		System.out.println("Target ccamera angle " + (bottomOfImageAngle + targetAngleInImage));
 		
 		return heightFromCamera / Math.tan(Math.toRadians(bottomOfImageAngle + targetAngleInImage));
 	}
@@ -126,7 +126,7 @@ public class VisionNetworkTable implements ITableListener {
 	@Override
 	public void valueChanged(ITable source, String key, Object value,
 			boolean isNew) {
-//		System.out.println("New value: "+key+" = "+value);
+		System.out.println("New value: "+key+" = "+value);
 		
 		synchronized (foundContours) {
 			try {

@@ -41,24 +41,24 @@
     </grip:Camera>
   </sources>
   <steps>
-    <grip:Step name="HSL Threshold">
+    <grip:Step name="HSV Threshold">
       <grip:Input step="0" socket="0"/>
       <grip:Input step="0" socket="1">
         <value>
-          <double>98.74100719424459</double>
-          <double>134.38644778852336</double>
+          <double>47.278790485348715</double>
+          <double>128.25790994838448</double>
         </value>
       </grip:Input>
       <grip:Input step="0" socket="2">
         <value>
-          <double>137.58992805755395</double>
+          <double>89.83795408133601</double>
           <double>255.0</double>
         </value>
       </grip:Input>
       <grip:Input step="0" socket="3">
         <value>
-          <double>32.10431654676259</double>
-          <double>173.0854777867271</double>
+          <double>71.85251506970083</double>
+          <double>179.5733843728544</double>
         </value>
       </grip:Input>
       <grip:Output step="0" socket="0" previewed="true"/>
@@ -79,7 +79,7 @@
         <value>0.0</value>
       </grip:Input>
       <grip:Input step="2" socket="3">
-        <value>0.0</value>
+        <value>37.0</value>
       </grip:Input>
       <grip:Input step="2" socket="4">
         <value>1000.0</value>
@@ -140,10 +140,10 @@
         <value>JPEG</value>
       </grip:Input>
       <grip:Input step="4" socket="2">
-        <value>90</value>
+        <value>72.97297297297297</value>
       </grip:Input>
       <grip:Input step="4" socket="3">
-        <value>0.1</value>
+        <value>0.5</value>
       </grip:Input>
       <grip:Input step="4" socket="4">
         <value>false</value>
@@ -153,20 +153,24 @@
   </steps>
   <connections>
     <grip:Connection>
+      <grip:Output step="1" socket="0" previewed="false"/>
+      <grip:Input step="2" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output source="1" socket="0" previewed="true"/>
+      <grip:Input step="4" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
       <grip:Output step="0" socket="0" previewed="true"/>
       <grip:Input step="1" socket="0"/>
     </grip:Connection>
     <grip:Connection>
-      <grip:Output source="1" socket="0" previewed="false"/>
+      <grip:Output source="1" socket="0" previewed="true"/>
       <grip:Input step="0" socket="0"/>
     </grip:Connection>
     <grip:Connection>
       <grip:Output step="2" socket="0" previewed="true"/>
       <grip:Input step="3" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
-      <grip:Output step="1" socket="0" previewed="false"/>
-      <grip:Input step="2" socket="0"/>
     </grip:Connection>
   </connections>
   <settings>
@@ -182,7 +186,7 @@
     <language>Python</language>
     <className>BoilerVision</className>
     <implementWpilibPipeline>false</implementWpilibPipeline>
-    <saveDir>C:\Users\team2791\GRIP</saveDir>
+    <saveDir>C:\Users\nynoa\GRIP</saveDir>
     <packageName>org.frc.team2719</packageName>
     <moduleName>grip</moduleName>
   </codeGenerationSettings>

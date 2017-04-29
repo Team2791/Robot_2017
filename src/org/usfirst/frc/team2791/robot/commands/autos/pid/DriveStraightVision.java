@@ -49,7 +49,7 @@ public class DriveStraightVision extends Command{
 		
 		double vision_error = Robot.visionTable.getRealtimeDistanceToBoiler() - goodDistanceForShot;
 		vision_error /= 12.0;
-		System.out.println("Vision error = "+vision_error);
+//		System.out.println("Vision error = "+vision_error);
 		targetDistance = vision_error + Robot.drivetrain.getAverageDist();
 		System.out.println("target distance = "+targetDistance);
 		
