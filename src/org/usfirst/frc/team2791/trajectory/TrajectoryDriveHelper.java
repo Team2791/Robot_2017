@@ -75,13 +75,13 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
 			disable();
 		} 
 		else  {
+// 			getOutputs() // test this
 			double[] outputs = getOutputs();
-			//double turn=0;
+			
 			double speedLeft = outputs[0];
 			double speedRight = outputs[1];
 			double turn = outputs[2];
-			Robot.drivetrain.setLeftRightMotorOutputs(speedLeft + turn, speedRight - turn);
-			//Robot.drivetrain.setLeftRightMotorOutputs(speedLeft + turn, speedRight - turn);
+			Robot.drivetrain.setLeftRightMotorOutputs(speedLeft + turn, speedRight - turn); //maybe use setLeftRightPID
 		}
 		debug();
 	}
@@ -115,10 +115,14 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
 			turn = 0;
 		}
 
+// 		Robot.drivetrain.setLeftRightMotorOutputs(speedLeft + turn, speedRight - turn); //test
+		
 		double[] outArr = new double[3];
 		outArr[0] = speedLeft;
 		outArr[1] = speedRight;
 		outArr[2] = turn;
+		
+		
 
 		return outArr;
 
@@ -136,7 +140,10 @@ public class TrajectoryDriveHelper{ //eventually implements Loopale
 	public void disable() {
 		enabled = false;
 	}
-
+	
+	/**
+	*@return enabled whether Trajectory is enabled or not
+	*/
 	public boolean enabled() {
 		return enabled;
 	}
