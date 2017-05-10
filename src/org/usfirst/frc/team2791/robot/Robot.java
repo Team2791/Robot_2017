@@ -23,7 +23,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * <b><i>Robot.java for Stoker, the 2017 robot from FRC2791 Shaker Robotics</i></b>
- * 
+ * </p>
+ * <b><i>Curie Quarterfinalists</i></b>
  * </p>
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -33,10 +34,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *</p> 
  * <i>Feel free to email the authors for info on this package or any other aspect of the source code.</i>
  * </p>
- * @author Unnas Hussain: 
- * <a href="uwh.547@gmail.com"> uwh.547@gmail.com </a>
+ * @author Max Llewellyn
  * @author Gaurab Banerjee: 
- * <a href="gbanerjee97@gmail.com"> gbanerjee97@gmail.com </a>
+ * <a href="gaurab.banerjee97@gmail.com"> gaurab.banerjee97@gmail.com </a>
+ * @author Unnas Hussain: (Email Unnas with any trajectory drive questions.)
+ * <a href="uwh.547@gmail.com"> uwh.547@gmail.com </a>
  */
 public class Robot extends IterativeRobot {
 
