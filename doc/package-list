@@ -1,0 +1,10 @@
+org.usfirst.frc.team2791.robot
+org.usfirst.frc.team2791.robot.ShakerJoystick
+org.usfirst.frc.team2791.robot.commands
+org.usfirst.frc.team2791.robot.commands.autos.pid
+org.usfirst.frc.team2791.robot.commands.autos.traj
+org.usfirst.frc.team2791.robot.commands.safeties
+org.usfirst.frc.team2791.robot.subsystems
+org.usfirst.frc.team2791.robot.util
+org.usfirst.frc.team2791.trajectory
+org.usfirst.frc.team2791.trajectory.io
