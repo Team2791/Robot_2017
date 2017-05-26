@@ -58,7 +58,7 @@ public class Robot extends IterativeRobot {
 	
 	private int autoMode = 0;
 	private String teamColor = "RED";
-	private int numOfAutos = 8;
+	private int numOfAutos = 9;
 		
 	
 	private double smartDashBSFix = 0.00001;
