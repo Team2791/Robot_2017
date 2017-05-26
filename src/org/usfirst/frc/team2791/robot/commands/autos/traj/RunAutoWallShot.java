@@ -48,8 +48,7 @@ public class RunAutoWallShot extends Command{
 
 	@Override
 	protected void interrupted() {
-		System.out.print("shooter interrupted");
-		end(); // we don't think it's called automatically
+		end();
 	}
 }
 

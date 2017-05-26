@@ -15,6 +15,7 @@ public class BoilerGearAuton extends CommandGroup {
 	 */
 	public BoilerGearAuton(String red) {
 
+		super("BoilerGearAuton");
 		//dist = cos(PI/6)/X - 36
 		double dist = 0;
 		

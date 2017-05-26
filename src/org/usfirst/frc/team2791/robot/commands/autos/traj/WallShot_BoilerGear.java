@@ -14,7 +14,7 @@ public class WallShot_BoilerGear extends CommandGroup{
 	public WallShot_BoilerGear(String color){
 		
 //		color = color.toUpperCase();
-
+		super("WallShot_BoilerGear");
 		addSequential(new RunAutoWallShot(5.0));
 		addSequential(new FollowPath(color+"_"+"BoilerWallToBoilerGear", color, "BACKWARDS"));
 		addSequential(new ScoreGearAutoReturn());

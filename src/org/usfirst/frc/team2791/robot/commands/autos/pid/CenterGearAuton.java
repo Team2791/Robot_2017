@@ -11,6 +11,7 @@ public class CenterGearAuton extends CommandGroup {
 	 * @param red  true if you are on the red side;  false if you are on the blue side
 	 */
 	public CenterGearAuton(String red) {
+		super("CenterGearAuton");
     	addSequential(new DriveStraightEncoderGyro(-(108-36.0)/12, .7, 6)); //110.5 worked
     	addSequential(new AutonGearScore());
     	addSequential(new DriveStraightEncoderGyro(3.0, .7, 2));

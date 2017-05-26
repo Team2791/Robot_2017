@@ -34,6 +34,7 @@ public class TurnGyroBangBang extends Command {
 	 * @param angle degrees that you want to turn  
 	 */
 	public TurnGyroBangBang(double turn, double angle) {
+		super("TurnGyro w/ BangBang");
 		requires(Robot.drivetrain);
 		this.turn = turn;
 		amountToTurn = angle;

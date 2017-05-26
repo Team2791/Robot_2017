@@ -20,6 +20,8 @@ public class HopperAuton extends CommandGroup {
 	 * @param red  true if you are on the red side;  false if you are on the blue side
 	 */
 	public HopperAuton(String color) {
+		
+		super("HopperAuton");
 		if(color.equals("RED")) {
 			System.out.println("Red hopper");
 			direction = 1.0;

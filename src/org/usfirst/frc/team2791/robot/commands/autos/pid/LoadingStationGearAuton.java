@@ -15,6 +15,7 @@ public class LoadingStationGearAuton extends CommandGroup {
 	 */
     public LoadingStationGearAuton(String color) {
     	
+    	super("LoadingStationGearAuton");
     	//dist = X/cos(PI/6) - 36
     	double dist;
  

@@ -15,9 +15,8 @@ public class CenterShot_CenterGear extends CommandGroup{
 	public CenterShot_CenterGear(String color){
 		
 //		color = color.toUpperCase();
-		
+		super("CenterShot_CenterGear");
 		addSequential(new RunCenterAutoLongShot(5.0));
-		System.out.println(color+"_"+"CenterShotToCenterGear");
 		addSequential(new FollowPath(color+"_"+"CenterShotToCenterGear", color, "BACKWARD"));
 		addSequential(new AutonGearScore());
 		addSequential(new DelayDrivetrain(1));

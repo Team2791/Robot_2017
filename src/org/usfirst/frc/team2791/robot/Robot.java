@@ -1,7 +1,8 @@
 package org.usfirst.frc.team2791.robot;
 
 import org.usfirst.frc.team2791.robot.commands.RunLongShot;
-import org.usfirst.frc.team2791.robot.commands.autos.pid.CenterGearAutonShooting;
+import org.usfirst.frc.team2791.robot.commands.TurnGyroBangBang;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.*;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -9,8 +10,6 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 import org.usfirst.frc.team2791.robot.util.VisionNetworkTable;
 
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -23,7 +22,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * <b><i>Robot.java for Stoker, the 2017 robot from FRC2791 Shaker Robotics</i></b>
- * </p>
  * <b><i>Curie Quarterfinalists</i></b>
  * </p>
  * The VM is configured to automatically run this class, and to call the
@@ -35,10 +33,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * <i>Feel free to email the authors for info on this package or any other aspect of the source code.</i>
  * </p>
  * @author Max Llewellyn
+ * @author Unnas Hussain: 
+ * <a href="uwh.547@gmail.com"> uwh.547@gmail.com </a>
  * @author Gaurab Banerjee: 
  * <a href="gaurab.banerjee97@gmail.com"> gaurab.banerjee97@gmail.com </a>
- * @author Unnas Hussain: (Email Unnas with any trajectory drive questions.)
- * <a href="uwh.547@gmail.com"> uwh.547@gmail.com </a>
+*
  */
 public class Robot extends IterativeRobot {
 
@@ -53,13 +52,18 @@ public class Robot extends IterativeRobot {
 	public static ShakerGear gearMechanism;
 	public static ShakerDrivetrain drivetrain;
 
-//	public ShakerVisionServer vision;
-	
 	public static VisionNetworkTable visionTable; 
-	
+
 	private double lastAutonLoopTime;
 	
+	private int autoMode = 0;
+	private String teamColor = "RED";
+	private int numOfAutos = 8;
+		
+	
 	private double smartDashBSFix = 0.00001;
+
+
 
 
 	/**
@@ -94,17 +98,17 @@ public class Robot extends IterativeRobot {
 				System.out.println("******Desired resolution failed for GEAR Camer******");
 
 			}
-//			gear_cam.getProperty(name)
+			//			gear_cam.getProperty(name)
 		}catch(Exception e){
 			System.out.println("*****FRONT Camera Failed*****");
 			e.printStackTrace();
 		}
-		 //424 * 240 @ 10 
+		//424 * 240 @ 10 
 		try{
 			UsbCamera front_cam = CameraServer.getInstance().startAutomaticCapture("Front Camera", 1);
 			front_cam.setPixelFormat(PixelFormat.kMJPEG);
 			front_cam.setFPS(15); //was 15
-			
+
 			if(!front_cam.setResolution(160, 90)){ //halfed, try other resultions mauybe
 				front_cam.setResolution(320, 180);//defualt value if the other resolution does not work
 				System.out.println("******Desired resolution failed for FRONT Camer******");
@@ -114,30 +118,28 @@ public class Robot extends IterativeRobot {
 			e.printStackTrace();
 		}
 
-//		try{
-//			AxisCamera axis = CameraServer.getInstance().startAutomaticCapture("10.27.91.");
-//			axis.
-//		}catch(Exception e){
-//			System.out.println("*****FRONT Camera Failed*****");
-//			e.printStackTrace();
-//		}
-		
+		//		try{
+		//			AxisCamera axis = CameraServer.getInstance().startAutomaticCapture("10.27.91.");
+		//			axis.
+		//		}catch(Exception e){
+		//			System.out.println("*****FRONT Camera Failed*****");
+		//			e.printStackTrace();
+		//		}
+
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
 		hopper = new ShakerHopper();
 		shooter = new ShakerShooter();
-		
-//		Button a = oi.driverA;
-		
+
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
-		
+
 		drivetrain.setAutoPID();
-//		shooter.pControlThread.start();
-		
+		//		shooter.pControlThread.start();
+
 		visionTable = new VisionNetworkTable();
-		
-		
+
+
 		debug();
 
 	}
@@ -161,10 +163,19 @@ public class Robot extends IterativeRobot {
 			drivetrain.reset();
 		}
 
-		debug(); //allows us to debug (e.g. encoders and gyro) while disabled
+		if(oi.operator.getButtonLB())
+			autoMode = (autoMode -1) % numOfAutos;
+		if(oi.operator.getButtonRB())
+			autoMode = (autoMode +1) % numOfAutos;	
+
+		if(oi.operator.getButtonB())
+			teamColor = "RED";
+		if(oi.operator.getButtonX())
+			teamColor = "BLUE";
+
+		debug(); 
 
 		Scheduler.getInstance().run();
-		run();
 	}
 
 	/**
@@ -185,49 +196,14 @@ public class Robot extends IterativeRobot {
 
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
-		
-		
-		/********************************************
-		******* vvv MATCH AUTO SELECTION vvv *******
-		*********************************************/
-		
-		String teamColor = "RED"; 
-//		String teamColor = "BLUE"; 
-				
-		
-//		autonomousCommand = new WallShot_BoilerGear(teamColor);
-//		autonomousCommand = new CenterShot_CenterGear(teamColor);
-		
-//		autonomousCommand = new CenterGearAuton(teamColor);
-//		autonomousCommand = new BoilerGearAuton(teamColor);
-//		autonomousCommand = new LoadingStationGearAuton(teamColor);
-		
-//		autonomousCommand = new HopperAuton(teamColor);
-		autonomousCommand = new CenterGearAutonShooting(teamColor);
-//		 ONLY RUN BELOW FOR CENTER GEAR
-		if(teamColor.equals("RED"))
-			visionTable.setVisionOffset(-60.0);
-		else
-			visionTable.setVisionOffset(60.0);
 
-		
-		/******^^^ MATCH AUTO SELECTION ^^^ *******/
-		
-		/*************************************************
-		********  vvv DEBUGGING AUTO SELECTION vvv *******
-		*************************************************/
+		autonomousCommand = selectAuto();
 
-//		autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6);
-//		autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1, 1.5);
-//		autonomousCommand = new StationaryVisionTurn(.5, 1.0);
-//		autonomousCommand = new TurnGyroBangBang(0.3, 45);
-		
-		/******^^^ DEBUGGING AUTO SELECTION ^^^ *******/
-
+		System.out.println("***Selected Autonomous: " + teamColor + " " + autonomousCommand.getName() + "***");
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();
-		
+
 	}
 
 	/**
@@ -236,7 +212,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		run();
 
 		debug();
 
@@ -251,7 +226,7 @@ public class Robot extends IterativeRobot {
 
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-	
+
 		drivetrain.resetEncoders();
 		gamePeriod = GamePeriod.TELEOP;
 		intake.disengageRatchetWing();
@@ -265,7 +240,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		run();
 		debug();
 	}
 
@@ -277,29 +251,32 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		debug();
 		LiveWindow.run();
-		run();
 		new RunLongShot();
 	}
 
 	public void debug() {
+		
+		SmartDashboard.putString("Selected Autonomous", selectAuto().getName());
+		SmartDashboard.putNumber("Selected Autonomous Key", autoMode);
+		SmartDashboard.putString("Selected Team Color", teamColor);
 
 		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
 		SmartDashboard.putNumber("Drivetrain total current", drivetrain.getCurrentUsage());
 		SmartDashboard.putNumber("Climber/Intake current",intake.getCurrentUsage());
 		SmartDashboard.putNumber("Hopper current",hopper.getCurrentUsage());
 		SmartDashboard.putNumber("Shooter total current",shooter.getCurrentUsage());
-		
+
 		SmartDashboard.putNumber("Realtime vision error", visionTable.getRealtimeBoilerAngleError());
-		
-		
+
+
 		SmartDashboard.putNumber("Camera vision error", visionTable.targetError);
 		SmartDashboard.putNumber("Camera vision gyro offset", visionTable.gyroOffset);
 		SmartDashboard.putBoolean("Robot still", visionTable.robotStill.getOutputValue());
 		smartDashBSFix *= -1;
-		
+
 		SmartDashboard.putNumber("Camera distance from target (reflective tape) in Inches", visionTable.getRealtimeDistanceToBoiler()); 
-		
-//		System.out.println("Vision error = "+ visionTable.getRealtimeBoilerAngleError());
+
+		//		System.out.println("Vision error = "+ visionTable.getRealtimeBoilerAngleError());
 
 		drivetrain.debug();
 		shooter.debug();
@@ -311,40 +288,32 @@ public class Robot extends IterativeRobot {
 	public enum GamePeriod {
 		AUTONOMOUS, TELEOP, DISABLED
 	}
-	
-	/**
-	 * Allows the trajectory auto to be automatically set a certain side (red or blue),
-	 * and for the path to be reversed 
-	 */
-	public enum AutoMode {
-		RED(1.0), BLUE(1.0), RED_REVERSED(-1.0), BLUE_REVERSED( -1.0);
+
+	public Command selectAuto(){
 		
-		
-		private double reversingConstant;
-		
-		AutoMode(double constant){
-			this.reversingConstant = constant;
-			
+		switch(autoMode){
+			case 0: return new CenterGearAuton(teamColor);
+			case 1: return new BoilerGearAuton(teamColor);
+			case 2: return new LoadingStationGearAuton(teamColor);
+
+			case 3: return new HopperAuton(teamColor);
+			case 4: 
+				if(teamColor.equals("RED"))
+					visionTable.setVisionOffset(-60.0);
+				else
+					visionTable.setVisionOffset(60.0);
+				return new CenterGearAutonShooting(teamColor);
+			case  5:  return new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6);
+			case  6:  return new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1, 1.5);
+			case  7:  return new StationaryVisionTurn(.5, 1.0);
+			case  8:  return new TurnGyroBangBang(0.3, 45);
+			default: return new DriveStraightEncoderGyro(1.0, 0.7, 6);
 		}
-		
-		/**
-		 * @return 1.0 = forward / -1.0 = reverse
-		 */
-		public double getConstant(){
-			return this.reversingConstant;
-			
-		}
-		
 	}
 	
-	// THROW BACK TO OLD CODE
-	public void run(){
-//		visionTable.run();
-	}
 	
+
+
 }
 
-//this was in autoInit but was confusing so i put it down here 
-//autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7);
-//autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1);
 

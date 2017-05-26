@@ -19,6 +19,7 @@ public class CenterGearAutonShooting extends CommandGroup {
 	 */
 	public CenterGearAutonShooting(String color) {
 				
+		super("CenterGear & Shoot Auton");
 		if(color.equals("RED"))
 			direction = -1.0;
 		else
