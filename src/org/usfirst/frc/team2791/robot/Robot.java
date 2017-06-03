@@ -302,26 +302,25 @@ public class Robot extends IterativeRobot {
 	}
 
 	public Command selectAuto(){
-//		
-//		switch(autoMode){
-//			case 0: return new CenterGearAuton(teamColor);
-//			case 1: return new BoilerGearAuton(teamColor);
-//			case 2: return new LoadingStationGearAuton(teamColor);
-//
-//			case 3: return new HopperAuton(teamColor);
-//			case 4: 
-//				if(teamColor.equals("RED"))
-//					visionTable.setVisionOffset(-60.0);
-//				else
-//					visionTable.setVisionOffset(60.0);
-//				return new CenterGearAutonShooting(teamColor);
-//			case  5:  return new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6);
-//			case  6:  return new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1, 1.5);
-//			case  7:  return new StationaryVisionTurn(.5, 1.0);
-//			case  8:  return new TurnGyroBangBang(0.3, 45);
-//			default: return new DriveStraightEncoderGyro(1.0, 0.7, 6);
-//		}
-		return new CenterGearAuton(teamColor);
+		
+		switch(autoMode){
+			case 0: return new CenterGearAuton(teamColor);
+			case 1: return new BoilerGearAuton(teamColor);
+			case 2: return new LoadingStationGearAuton(teamColor);
+
+			case 3: return new HopperAuton(teamColor);
+			case 4: 
+				if(teamColor.equals("RED"))
+					visionTable.setVisionOffset(-60.0);
+				else
+					visionTable.setVisionOffset(60.0);
+				return new CenterGearAutonShooting(teamColor);
+			case  5:  return new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6);
+			case  6:  return new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1, 1.5);
+			case  7:  return new StationaryVisionTurn(.5, 1.0);
+			case  8:  return new TurnGyroBangBang(0.3, 45);
+			default: return new DriveStraightEncoderGyro(1.0, 0.7, 6);
+		}
 	}
 	
 	
