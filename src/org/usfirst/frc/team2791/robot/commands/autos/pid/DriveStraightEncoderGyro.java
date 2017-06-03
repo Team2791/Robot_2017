@@ -84,7 +84,7 @@ public class DriveStraightEncoderGyro extends Command {
 	protected void execute() {
 
 		distancePID.debug("start of execute()");
-//		distancePID.setSetPoint(temp + distanceToDrive);
+		distancePID.setSetPoint(temp + distanceToDrive);
 		
 		// uncomment this line if we are debugging
 		updatePIDGains();

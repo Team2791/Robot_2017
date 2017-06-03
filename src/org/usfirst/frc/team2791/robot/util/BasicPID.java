@@ -25,7 +25,7 @@ public class BasicPID {
     protected double m_output = 0.0;
     protected double m_izone = 0;
     protected boolean invert = false;
-    public String name;
+    public String name = "";
     
     public void setName(String s) { this.name = s; }
     public String getName() { return name; }
