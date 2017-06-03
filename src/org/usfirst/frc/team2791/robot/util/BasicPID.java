@@ -14,7 +14,7 @@ public class BasicPID {
     protected double m_p;
     protected double m_i;
     protected double m_d;
-    protected double m_setPoint = 0.0;
+    private double m_setPoint = 0.0;
     protected double m_previousError = 0.0;
     protected double m_currentError = 0.0;
     protected double m_maxOutput = 1.0;
@@ -25,6 +25,18 @@ public class BasicPID {
     protected double m_output = 0.0;
     protected double m_izone = 0;
     protected boolean invert = false;
+    public String name;
+    
+    public void setName(String s) { this.name = s; }
+    public String getName() { return name; }
+    public void debug(String when) {
+    	if (getName().equals("distance")) {
+    		System.err.println("Debugging at " + when);
+        	System.err.println("\t\ttarget = " + this.m_setPoint);
+        	System.err.println("\t\tcurr   = " + this.m_output);
+        	System.err.println("\t\terror  = " + this.m_currentError);
+    	}
+    }
 
     public BasicPID(double p, double i, double d) {
         m_p = p;
@@ -53,6 +65,9 @@ public class BasicPID {
 
     public void setSetPoint(double setPoint) {
         m_setPoint = setPoint;
+        if(getName().equals("distance")) {
+            System.err.println("Set setpoint = " + setPoint);
+        }
     }
 
     public void setInvertOutput(boolean invertOutput) {

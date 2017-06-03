@@ -10,6 +10,8 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 import org.usfirst.frc.team2791.robot.util.VisionNetworkTable;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -86,7 +88,7 @@ public class Robot extends IterativeRobot {
 
 		compressor = new Compressor(RobotMap.PCM_MODULE);
 		compressor.setClosedLoopControl(true);
-		compressor.start();
+//		compressor.start();
 
 		//I Commented these out because the the prints are SOOO Annoying ya know?
 		try{
@@ -154,7 +156,8 @@ public class Robot extends IterativeRobot {
 
 		gamePeriod = GamePeriod.DISABLED;
 	}
-
+	
+	boolean flag = false;
 	@Override
 	public void disabledPeriodic() {
 
@@ -163,10 +166,19 @@ public class Robot extends IterativeRobot {
 			drivetrain.reset();
 		}
 
-		if(oi.operator.getButtonLB())
+		if(oi.operator.getButtonLB() && !flag){
 			autoMode = (autoMode -1) % numOfAutos;
-		if(oi.operator.getButtonRB())
-			autoMode = (autoMode +1) % numOfAutos;	
+			flag = true;
+		}
+		if(oi.operator.getButtonRB()&& !flag){
+			autoMode = (autoMode +1) % numOfAutos;
+			flag = true;
+		}
+		
+		if(!oi.operator.getButtonLB() && !oi.operator.getButtonRB()) {
+			flag = false;
+		}
+			
 
 		if(oi.operator.getButtonB())
 			teamColor = "RED";
@@ -290,25 +302,26 @@ public class Robot extends IterativeRobot {
 	}
 
 	public Command selectAuto(){
-		
-		switch(autoMode){
-			case 0: return new CenterGearAuton(teamColor);
-			case 1: return new BoilerGearAuton(teamColor);
-			case 2: return new LoadingStationGearAuton(teamColor);
-
-			case 3: return new HopperAuton(teamColor);
-			case 4: 
-				if(teamColor.equals("RED"))
-					visionTable.setVisionOffset(-60.0);
-				else
-					visionTable.setVisionOffset(60.0);
-				return new CenterGearAutonShooting(teamColor);
-			case  5:  return new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6);
-			case  6:  return new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1, 1.5);
-			case  7:  return new StationaryVisionTurn(.5, 1.0);
-			case  8:  return new TurnGyroBangBang(0.3, 45);
-			default: return new DriveStraightEncoderGyro(1.0, 0.7, 6);
-		}
+//		
+//		switch(autoMode){
+//			case 0: return new CenterGearAuton(teamColor);
+//			case 1: return new BoilerGearAuton(teamColor);
+//			case 2: return new LoadingStationGearAuton(teamColor);
+//
+//			case 3: return new HopperAuton(teamColor);
+//			case 4: 
+//				if(teamColor.equals("RED"))
+//					visionTable.setVisionOffset(-60.0);
+//				else
+//					visionTable.setVisionOffset(60.0);
+//				return new CenterGearAutonShooting(teamColor);
+//			case  5:  return new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6);
+//			case  6:  return new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1, 1.5);
+//			case  7:  return new StationaryVisionTurn(.5, 1.0);
+//			case  8:  return new TurnGyroBangBang(0.3, 45);
+//			default: return new DriveStraightEncoderGyro(1.0, 0.7, 6);
+//		}
+		return new CenterGearAuton(teamColor);
 	}
 	
 	

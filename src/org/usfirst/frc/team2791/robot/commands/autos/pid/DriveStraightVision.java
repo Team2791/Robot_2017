@@ -27,11 +27,12 @@ public class DriveStraightVision extends Command{
 	public DriveStraightVision(){
 		super("DriveStraightVision");
 		
+		requires(Robot.drivetrain);
+		setInterruptible(false);
+
 		SmartDashboard.putNumber("Sweetspot Goal:", goodDistanceForShot);
 		goodDistanceForShot = SmartDashboard.getNumber("Sweetspot Goal:", this.goodDistanceForShot);
 		System.out.println("Starting vision drive");
-		requires(Robot.drivetrain);
-		setInterruptible(true);
 		drivePID = new BasicPID(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);
 		
 		drivePID.setMaxOutput(MAX_DRIVE_OUTPUT);

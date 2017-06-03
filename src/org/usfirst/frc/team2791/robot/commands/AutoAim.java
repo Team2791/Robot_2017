@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoAim extends CommandGroup {
 
 	public AutoAim() {
+		super("AutoAim");
+//		setInterruptible(true);
 		addSequential(new DelayDrivetrain(0.75));
 		addSequential(new StationaryVisionTurn(0.5,1.5)); //was i supposed to increase this threshold?
 		addSequential(new DriveStraightVision()); //was i supposed to increase this threshold?

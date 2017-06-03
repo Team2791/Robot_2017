@@ -24,6 +24,8 @@ public class DriveStraightEncoderGyro extends Command {
 	private double timeForRelease;
 	private double drivingErrorThreshold = 1.5;
 	
+	private double temp = 0.0;
+	
 	/**
 	  * @param distanceToDrive the distance in feet that you would like to drive ***negative if reversing*** *
 	 * @param maxOutput the maximum output you would like the motors to receive (up to 1.0)
@@ -42,16 +44,20 @@ public class DriveStraightEncoderGyro extends Command {
 	 * @param timeOut the time in seconds before you would like to wait before the PID times out and the command ends
 	 */
 	public DriveStraightEncoderGyro(double distanceToDrive, double maxOutput, double timeOut) {
-		super("DriveStraight w/ Encoders");
+//		super("DriveStraight w/ Encoders");
 		timeForRelease = timeOut;
+		setInterruptible(false);
 		
-		requires(Robot.drivetrain);
+//		requires(Robot.drivetrain);
 		this.distanceToDrive = distanceToDrive;
 		this.maxOutput = maxOutput;
 
 		movingAnglePID = new BasicPID(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
 		distancePID = new BasicPID(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);
 
+		movingAnglePID.setName("angle");
+		distancePID.setName("distance");
+		
 		distancePID.setInvertOutput(true);
 		movingAnglePID.setInvertOutput(true);
 
@@ -69,12 +75,17 @@ public class DriveStraightEncoderGyro extends Command {
 	protected void initialize() {
 		timer.start();
 
+		temp = Robot.drivetrain.getAverageDist();
 		distancePID.setSetPoint(Robot.drivetrain.getAverageDist() + distanceToDrive);
 		movingAnglePID.setSetPoint(Robot.drivetrain.getGyroAngle());    
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+
+		distancePID.debug("start of execute()");
+//		distancePID.setSetPoint(temp + distanceToDrive);
+		
 		// uncomment this line if we are debugging
 		updatePIDGains();
 
@@ -86,11 +97,14 @@ public class DriveStraightEncoderGyro extends Command {
 		System.out.println("distError: " + distancePID.getError() + " output: " + drivePIDOutput);
 		System.out.println("angleError: " + movingAnglePID.getError() + " output: " + anglePIDOutput);
 
+		distancePID.debug("end of execute()");
 		debug();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
+//		System.err.println("\t\t\tdistToDrive = " + distanceToDrive);
+		distancePID.debug("start of isFinished()");
 		System.out.println("Stright drive stop conditions");
 		System.out.println(Math.abs(distancePID.getError()) < drivingErrorThreshold);
 		System.out.println(Math.abs(movingAnglePID.getError()) < 3);
@@ -98,12 +112,18 @@ public class DriveStraightEncoderGyro extends Command {
 		System.out.println(Math.abs(Robot.drivetrain.getRightVelocity()) < 0.05);
 		
 		boolean isPIDDone = (Math.abs(distancePID.getError()) < 0.05 &&
-				Math.abs(movingAnglePID.getError()) < 1.5 &&
+				Math.abs(movingAnglePID.getError()) < 3 &&
 				Math.abs(Robot.drivetrain.getLeftVelocity()) < 0.05 &&
 				Math.abs(Robot.drivetrain.getRightVelocity()) < 0.05);
 		
 		System.out.println(isPIDDone);
+		
+		if(isPIDDone) {
+//			System.err.println("\tisPIDDone = true");
+		}
 
+
+		distancePID.debug("end of isFinished()");
 		return (isPIDDone || timer.hasPeriodPassed(timeForRelease));
 	}
 
@@ -117,16 +137,16 @@ public class DriveStraightEncoderGyro extends Command {
 	}
 
 	public void setLeftRightMotorOutputsPIDDriving(double left, double right){
-//		if(left < 0) {
-//			left -= MIN_POWER_TO_MOVE;
-//		} else {
-//			left += MIN_POWER_TO_MOVE;
-//		}
-//		if(right < 0) {
-//			right -= MIN_POWER_TO_MOVE;
-//		} else {
-//			right += MIN_POWER_TO_MOVE;
-//		}
+		if(left < 0) {
+			left -= MIN_POWER_TO_MOVE;
+		} else {
+			left += MIN_POWER_TO_MOVE;
+		}
+		if(right < 0) {
+			right -= MIN_POWER_TO_MOVE;
+		} else {
+			right += MIN_POWER_TO_MOVE;
+		}
 		
 		Robot.drivetrain.setLeftRightMotorOutputs(left, right);
 	}
