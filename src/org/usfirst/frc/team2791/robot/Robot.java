@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2791.robot;
 
 import org.usfirst.frc.team2791.robot.commands.RunLongShot;
-import org.usfirst.frc.team2791.robot.commands.autos.pid.CenterGearAutonShooting;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.*;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -189,8 +189,8 @@ public class Robot extends IterativeRobot {
 		******* vvv MATCH AUTO SELECTION vvv *******
 		*********************************************/
 		
-		String teamColor = "RED"; 
-//		String teamColor = "BLUE"; 
+		String teamColor = "BLUE"; 
+//		String teamColor = "RED"; 
 				
 		
 //		autonomousCommand = new WallShot_BoilerGear(teamColor);
@@ -198,15 +198,15 @@ public class Robot extends IterativeRobot {
 		
 //		autonomousCommand = new CenterGearAuton(teamColor);
 //		autonomousCommand = new BoilerGearAuton(teamColor);
-//		autonomousCommand = new LoadingStationGearAuton(teamColor);
+		autonomousCommand = new LoadingStationGearAuton(teamColor);
 		
 //		autonomousCommand = new HopperAuton(teamColor);
-		autonomousCommand = new CenterGearAutonShooting(teamColor);
+//		autonomousCommand = new CenterGearAutonShooting(teamColor);
 //		 ONLY RUN BELOW FOR CENTER GEAR
-		if(teamColor.equals("RED"))
-			visionTable.setVisionOffset(-60.0);
-		else
-			visionTable.setVisionOffset(60.0);
+//		if(teamColor.equals("RED"))
+//			visionTable.setVisionOffset(-60.0);
+//		else
+//			visionTable.setVisionOffset(60.0);
 
 		
 		/******^^^ MATCH AUTO SELECTION ^^^ *******/

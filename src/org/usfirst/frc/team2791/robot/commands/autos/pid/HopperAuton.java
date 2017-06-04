@@ -29,10 +29,10 @@ public class HopperAuton extends CommandGroup {
 		}
 	
 		
-		addParallel(new SpinUpShooter(3015)); //3050 was 3035
+		addParallel(new SpinUpShooter(3020)); //3050 was 3035
 		addSequential(new DriveEncoderBangBang(-.8, 0.0, -3.5, 3));
 		// This is sketch as heck because we're counting on the drift from the first drive
-		// to get us to the 2nd distance and just using the drive train to slow down and turn a bit.
+		// to get us to the 2nd	 distance and just using the drive train to slow down and turn a bit.
 //		addSequential(new DriveEncoderBangBang(0.0, 0.075, -1));
 		addSequential(new DriveEncoderBangBang(-0.3, 0.0, -3.75, 2)); //-3.5
 		addParallel (new RunIntake());
