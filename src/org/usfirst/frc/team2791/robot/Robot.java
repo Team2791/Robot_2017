@@ -216,7 +216,7 @@ public class Robot extends IterativeRobot {
 		*************************************************/
 
 //		autonomousCommand = new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6);
-//		autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1, 1.5);
+//		autonomousCommand = new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1);
 //		autonomousCommand = new StationaryVisionTurn(.5, 1.0);
 //		autonomousCommand = new TurnGyroBangBang(0.3, 45);
 		

@@ -63,6 +63,6 @@ public class StationaryGyroTurn extends DrivetrainPIDTurn {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return Math.abs(stationaryAnglePID.getError()) < getThreshold() &&
-        	   Math.abs(Robot.drivetrain.getGyroRate()) < 1;
+        	   Math.abs(Robot.drivetrain.getGyroRate()) < 2; //1
     }
 }
