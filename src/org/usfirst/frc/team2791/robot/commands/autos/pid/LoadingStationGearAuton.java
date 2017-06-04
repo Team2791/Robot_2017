@@ -32,7 +32,7 @@ public class LoadingStationGearAuton extends CommandGroup {
     		dist = (72)/Math.cos(Math.PI/6) - 36;
     	}
 		
-		addSequential(new DriveStraightEncoderGyro(-dist/12.0, .7, 4.0));
+		addSequential(new DriveStraightEncoderGyro(-dist/12.0, .7, 2.35));
     	addSequential(new AutonGearScore());
     	addSequential(new DriveStraightEncoderGyro(1.0, .7, 4));
 

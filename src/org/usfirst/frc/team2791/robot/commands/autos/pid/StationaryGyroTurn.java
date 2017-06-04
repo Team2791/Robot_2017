@@ -19,10 +19,22 @@ public class StationaryGyroTurn extends DrivetrainPIDTurn {
 	 * @param angleToTurn the angle in degrees you would like to turn, ***negative if counterclockwise*** *
 	 * @param maxOutput the maximum output you would like the motors to receive (up to 1.0)
 	 * @param maxThreshold the maximum error that PID can accept before finishing the command
+	 * @param timeOut the time this command takes to time out
 	 */
-    public StationaryGyroTurn(double angleToTurn, double maxOutput, double maxThreshold) {
+    public StationaryGyroTurn(double angleToTurn, double maxOutput, double maxThreshold, double timeOut) {
     	super(maxOutput, maxThreshold);
     	this.angleToTurn = angleToTurn;
+    	this.setTimeout(timeOut);
+    }
+	
+	/**
+	 * @param angleToTurn the angle in degrees you would like to turn, ***negative if counterclockwise*** *
+	 * @param maxOutput the maximum output you would like the motors to receive (up to 1.0)
+	 * @param maxThreshold the maximum error that PID can accept before finishing the command
+	 */
+    public StationaryGyroTurn(double angleToTurn, double maxOutput, double maxThreshold) {
+    	//this(angle
+    	this(angleToTurn, maxOutput, maxThreshold, 10.0);
     }
     
     /**
@@ -31,8 +43,8 @@ public class StationaryGyroTurn extends DrivetrainPIDTurn {
 	 * @param maxOutput the maximum output you would like the motors to receive (up to 1.0)
 	 */
     public StationaryGyroTurn(double angleToTurn, double maxOutput) {
-    	super(maxOutput, 0.25);
-    	this.angleToTurn = angleToTurn;
+    	
+    	this(angleToTurn, maxOutput, 0.25, 10.0);
     }
     
     /**
