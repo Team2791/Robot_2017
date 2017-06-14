@@ -42,6 +42,7 @@ public class DriveStraightEncoderGyro extends Command {
 	 * @param timeOut the time in seconds before you would like to wait before the PID times out and the command ends
 	 */
 	public DriveStraightEncoderGyro(double distanceToDrive, double maxOutput, double timeOut) {
+		super("Encoder Driving Base Class");
 		timeForRelease = timeOut;
 		
 		requires(Robot.drivetrain);

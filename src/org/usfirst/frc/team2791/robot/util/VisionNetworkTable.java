@@ -51,7 +51,7 @@ public class VisionNetworkTable implements ITableListener {
 		try{
 			return calculateTargetDistance();
 		} catch(Exception e){
-			System.out.println("Can't find distance");
+//			System.out.println("Can't find distance");
 		}
 		return 0;
 	}

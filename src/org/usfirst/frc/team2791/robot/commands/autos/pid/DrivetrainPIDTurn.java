@@ -22,6 +22,8 @@ public abstract class DrivetrainPIDTurn extends Command {
 	 * @param maxOutput the maximum output you would like the motors to receive (up to 1.0)
 	 */
     public DrivetrainPIDTurn(double maxOutput, double errorThreshold) {
+    	super("Turning Base Class");
+
         requires(Robot.drivetrain);
         
         this.errorThreshold = errorThreshold;

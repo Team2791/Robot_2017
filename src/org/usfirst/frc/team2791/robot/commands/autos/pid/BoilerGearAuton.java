@@ -14,7 +14,8 @@ public class BoilerGearAuton extends CommandGroup {
 	 * @param red  true if you are on the red side;  false if you are on the blue side
 	 */
 	public BoilerGearAuton(String red) {
-
+		
+		super("Boiler Side Gear");
 		//dist = cos(PI/6)/X - 36
 		double dist = 0;
 		
