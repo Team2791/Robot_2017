@@ -1,6 +1,12 @@
 package org.usfirst.frc.team2791.robot;
 
-import org.usfirst.frc.team2791.robot.commands.autos.pid.*;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.BoilerGearAuton;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.CenterGearAuton;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.CenterGearAutonShooting;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.DriveStraightEncoderGyro;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.HopperAuton;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.LoadingStationGearAuton;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.StationaryGyroTurn;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
@@ -9,6 +15,9 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 import org.usfirst.frc.team2791.robot.util.CommandSelector;
 import org.usfirst.frc.team2791.robot.util.VisionNetworkTable;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -16,7 +25,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -90,33 +98,33 @@ public class Robot extends IterativeRobot {
 		compressor.setClosedLoopControl(true);
 		compressor.start();
 
-		//		try{
-		//			UsbCamera gear_cam = CameraServer.getInstance().startAutomaticCapture("Gear Camera",0);
-		//			gear_cam.setPixelFormat(PixelFormat.kMJPEG);
-		//			gear_cam.setFPS(10); //wont allow me to set above 10
-		//			if(!gear_cam.setResolution(240, 180)){
-		//				gear_cam.setResolution(240, 180); //try 240 x 180 next
-		//				System.out.println("******Desired resolution failed for GEAR Camer******");
-		//
-		//			}
-		////			gear_cam.getProperty(name)
-		//		}catch(Exception e){
-		//			System.out.println("*****FRONT Camera Failed*****");
-		//			e.printStackTrace();
-		//		}
-		//		try{
-		//			UsbCamera front_cam = CameraServer.getInstance().startAutomaticCapture("Front Camera", 1);
-		//			front_cam.setPixelFormat(PixelFormat.kMJPEG);
-		//			front_cam.setFPS(15); //was 15
-		//			
-		//			if(!front_cam.setResolution(160, 90)){ //halfed, try other resultions mauybe
-		//				front_cam.setResolution(320, 180);//defualt value if the other resolution does not work
-		//				System.out.println("******Desired resolution failed for FRONT Camer******");
-		//			}
-		//		}catch(Exception e){
-		//			System.out.println("*****BACK Camera Failed*****");
-		//			e.printStackTrace();
-		//		}
+				try{
+					UsbCamera gear_cam = CameraServer.getInstance().startAutomaticCapture("Gear Camera",0);
+					gear_cam.setPixelFormat(PixelFormat.kMJPEG);
+					gear_cam.setFPS(10); //wont allow me to set above 10
+					if(!gear_cam.setResolution(240, 180)){
+						gear_cam.setResolution(240, 180); //try 240 x 180 next
+						System.out.println("******Desired resolution failed for GEAR Camer******");
+		
+					}
+		//			gear_cam.getProperty(name)
+				}catch(Exception e){
+					System.out.println("*****FRONT Camera Failed*****");
+					e.printStackTrace();
+				}
+				try{
+					UsbCamera front_cam = CameraServer.getInstance().startAutomaticCapture("Front Camera", 1);
+					front_cam.setPixelFormat(PixelFormat.kMJPEG);
+					front_cam.setFPS(15); //was 15
+					
+					if(!front_cam.setResolution(160, 90)){ //halfed, try other resultions mauybe
+						front_cam.setResolution(320, 180);//defualt value if the other resolution does not work
+						System.out.println("******Desired resolution failed for FRONT Camer******");
+					}
+				}catch(Exception e){
+					System.out.println("*****BACK Camera Failed*****");
+					e.printStackTrace();
+				}
 
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
@@ -132,13 +140,6 @@ public class Robot extends IterativeRobot {
 		visionTable = new VisionNetworkTable();
 
 		autoSelector = new CommandSelector("Auto Mode");
-		autoSelector.addCommand(new CenterGearAuton(autoSelector.getColor()));
-		autoSelector.addCommand(new BoilerGearAuton(autoSelector.getColor()));
-		autoSelector.addCommand(new LoadingStationGearAuton(autoSelector.getColor()));
-		autoSelector.addCommand(new HopperAuton(autoSelector.getColor()));
-		autoSelector.addCommand(new CenterGearAutonShooting(autoSelector.getColor()));
-		autoSelector.addCommand(new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6));
-		autoSelector.addCommand(new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1));
 
 		debug();
 	}
@@ -204,16 +205,25 @@ public class Robot extends IterativeRobot {
 
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
+		
+		autoSelector.addCommand(new CenterGearAuton(autoSelector.getColor()));
+		autoSelector.addCommand(new BoilerGearAuton(autoSelector.getColor()));
+		autoSelector.addCommand(new LoadingStationGearAuton(autoSelector.getColor()));
+		autoSelector.addCommand(new HopperAuton(autoSelector.getColor()));
+		autoSelector.addCommand(new CenterGearAutonShooting(autoSelector.getColor()));
+		autoSelector.addCommand(new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6));
+		autoSelector.addCommand(new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1));
 
 		autonomousCommand = autoSelector.getSelected();
 		String teamColor = autoSelector.getColor();
 		
-		if(autonomousCommand.getName().equals("CenterGear & Shoot")){
+		if(autonomousCommand.getName().equals("Center Gear & Shoot")){
 			if(teamColor.equals("RED"))
 				visionTable.setVisionOffset(-60.0);
 			else
 				visionTable.setVisionOffset(60.0);
 		}
+		
 		System.out.println("***Starting "+autonomousCommand.getName()+" AutoMode***");
 
 		if (autonomousCommand != null)

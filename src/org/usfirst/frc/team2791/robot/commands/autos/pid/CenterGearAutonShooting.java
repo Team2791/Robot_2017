@@ -18,7 +18,7 @@ public class CenterGearAutonShooting extends CommandGroup {
 	 * @param color the team that you are on ("RED" or "BLUE")
 	 */
 	public CenterGearAutonShooting(String color) {
-		super("CenterGear & Shoot");
+		super("Center Gear & Shoot");
 				
 		if(color.equals("RED"))
 			direction = -1.0;

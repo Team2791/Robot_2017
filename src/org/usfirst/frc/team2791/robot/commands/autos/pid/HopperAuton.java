@@ -22,6 +22,7 @@ public class HopperAuton extends CommandGroup {
 	public HopperAuton(String color) {
 		
 		super("Hopper Auton");
+		
 		if(color.equals("RED")) {
 			System.out.println("Red hopper");
 			direction = 1.0;

@@ -14,7 +14,7 @@ public class LoadingStationGearAuton extends CommandGroup {
 	 * @param red  true if you are on the red side;  false if you are on the blue side
 	 */
     public LoadingStationGearAuton(String color) {
-    	super("LoadingStationGearAuton");
+    	super("LoadingStation Gear");
     	
     	//dist = X/cos(PI/6) - 36
     	double dist;

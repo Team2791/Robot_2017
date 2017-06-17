@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class CommandSelector {
 	
 	/**
-	 * The key for the Command that is curretnyl being selected
+	 * The key for the Command that is currently being selected
 	 * The key can be changed/incremented to change which 
 	 * command you would like to select
 	 */
@@ -31,14 +31,21 @@ public class CommandSelector {
 	 * An array list that has all of the commands 
 	 * that you would like to select from in a list
 	 */
-	private final ArrayList<Command> cList = new ArrayList<Command>();
+	private ArrayList<Command> cList = new ArrayList<Command>();
 	
-	/**
-	 * The name of what you are selecting.
+		/**
+	 * The name of the Command type you are selecting.
 	 */
 	private String name = "";
-
 	
+	private String cListNames[] = {"Center Gear",
+			"Boiler Side Gear",
+			"LoadingStation Gear",
+			"Hopper Auton",
+			"Center Gear & Shooting",
+			"PID Drive Tuning",
+			"PID Turn Tuning"};
+
 	/**
 	 * Allows user to list a group of Commands and then select from them based on a key </br>
 	 * Also has team color choosing capabilities</br>
@@ -49,9 +56,9 @@ public class CommandSelector {
 		this.name = name;
 	}
 	
-	
-	
 	/**
+	 * 	 * Adds a Command to the end of the list
+	 * <strong><i>Make sure the added Command's name is in cListNames[].</i></strong>
 	 * @param command a command to add to the end of the list
 	 */
 	public void addCommand(Command command) {
@@ -59,14 +66,17 @@ public class CommandSelector {
 	}
 
 	/**
+	 * Adds a Command to the list at a certain point and shifts all commands after down by one.
+	 * <strong><i>Make sure the added Command's name is in cListNames[].</i></strong>
 	 * @param command a command to add to the end of the list
 	 * @param index the desired index that the command should be added to
-	 * Adds a Command to the list at a certain point and shifts all commands after down by one
+	 * 
 	 */
 	public void addCommand(Command command, int index){
 		cList.add(index, command);
 	}
 
+	
 	//***Setters***
 	
 	/**
@@ -145,6 +155,21 @@ public class CommandSelector {
 	public Command getSelected() {
 		return cList.get(selectedKey);
 	}
+	
+	/**
+	 * @return the name of the Command that has been selected based on what the int key is currently set to.
+	 * </br><i>This uses an array because the ArrayList can only be filled once we know what color the team is.
+	 *  But SmartDashboard needs to know what the selected command is before that is finalized</i>
+	 */
+	public String getSelectedName(){
+		String name = "";
+		try{
+			name = cListNames[selectedKey];
+		}catch(ArrayIndexOutOfBoundsException e){
+			name = this.name +"Selector Name Array is not Up To Date"; 
+		}
+		return name;
+	}
 
 	/**
 	 * @return the ArrayList full of all added Commands
@@ -153,14 +178,14 @@ public class CommandSelector {
 		return this.cList;
 	}
 
-
+	
 	/**
 	 * Sends the Selected Command, Command Key, and Color to Smart Dashboard
 	 */
 	public void debug(){
 		String commandName = "";
 		try{
-			commandName = getSelected().getName();
+			commandName = getSelectedName();
 		}
 		catch(NullPointerException e){
 			commandName = "Selected Command Name Unavailable";
