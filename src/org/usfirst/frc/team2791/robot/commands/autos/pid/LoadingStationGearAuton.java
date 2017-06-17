@@ -1,20 +1,23 @@
 package org.usfirst.frc.team2791.robot.commands.autos.pid;
 
-import org.usfirst.frc.team2791.robot.commands.GearMechUp;
-import org.usfirst.frc.team2791.robot.commands.ScoreGearAutoReturn;
-
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  * Starts at LoadingStation/Wall corner and Hangs the loading station side gear with PID 
  */
 public class LoadingStationGearAuton extends CommandGroup {
+	
+
 
 	/**
 	 * @param red  true if you are on the red side;  false if you are on the blue side
 	 */
     public LoadingStationGearAuton(String color) {
     	super("LoadingStation Gear");
+    	
+    	Timer t = new Timer();
+    	t.start();
     	
     	//dist = X/cos(PI/6) - 36
     	double dist;
@@ -35,6 +38,14 @@ public class LoadingStationGearAuton extends CommandGroup {
 		addSequential(new DriveStraightEncoderGyro(-dist/12.0, .7, 2.5));
     	addSequential(new AutonGearScore());
     	addSequential(new DriveStraightEncoderGyro(3.0, .7, 4));
+    	
+    	if(color.equals("RED")){
+    		addSequential(new StationaryGyroTurn(120.0, 1.0, 10, 2.0));
+    	}else{
+    		addSequential(new StationaryGyroTurn(-120.0, 1.0, 10, 2.0));
+    	}
+    	
+    	addSequential(new DriveStraightEncoderGyro(10.0, .25, (15.0 - t.getFPGATimestamp())));
 
 
     }
