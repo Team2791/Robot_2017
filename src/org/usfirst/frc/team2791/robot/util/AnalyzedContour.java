@@ -13,5 +13,5 @@ public class AnalyzedContour {
         this.width = width;
         this.solidity = solidity;
     }
-
+   
 }

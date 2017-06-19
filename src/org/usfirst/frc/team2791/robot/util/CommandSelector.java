@@ -38,13 +38,9 @@ public class CommandSelector {
 	 */
 	private String name = "";
 	
-	private String cListNames[] = {"Center Gear",
-			"Boiler Side Gear",
-			"LoadingStation Gear",
-			"Hopper Auton",
-			"Center Gear & Shooting",
-			"PID Drive Tuning",
-			"PID Turn Tuning"};
+	private ArrayList<String> cListNames = new ArrayList<String>();
+	
+
 
 	/**
 	 * Allows user to list a group of Commands and then select from them based on a key </br>
@@ -58,7 +54,7 @@ public class CommandSelector {
 	
 	/**
 	 * 	 * Adds a Command to the end of the list
-	 * <strong><i>Make sure the added Command's name is in cListNames[].</i></strong>
+	 * <strong><i>Make sure the Command's name has been added.</i></strong>
 	 * @param command a command to add to the end of the list
 	 */
 	public void addCommand(Command command) {
@@ -67,7 +63,7 @@ public class CommandSelector {
 
 	/**
 	 * Adds a Command to the list at a certain point and shifts all commands after down by one.
-	 * <strong><i>Make sure the added Command's name is in cListNames[].</i></strong>
+	 * <strong><i>Make sure the added Command's name has been added.</i></strong>
 	 * @param command a command to add to the end of the list
 	 * @param index the desired index that the command should be added to
 	 * 
@@ -76,6 +72,13 @@ public class CommandSelector {
 		cList.add(index, command);
 	}
 
+	public void addName(String str){
+		cListNames.add(str);
+	}
+	
+	public void addName(String str, int index){
+		cListNames.add(index, str);
+	}
 	
 	//***Setters***
 	
@@ -84,7 +87,7 @@ public class CommandSelector {
 	 * or reset it to 0 to stay in the ArrayList bounds
 	 */
 	public void incrementKey(){
-		selectedKey = ((selectedKey + 1) % cList.size());
+		selectedKey = ((selectedKey + 1) % cListNames.size());
 	}
 
 	/**
@@ -92,7 +95,7 @@ public class CommandSelector {
 	 * or reset it to max value to stay in the ArrayList bounds
 	 */
 	public void decrementKey(){
-		selectedKey = ((selectedKey - 1) + cList.size()) % cList.size();
+		selectedKey = ((selectedKey - 1) + cListNames.size()) % cListNames.size();
 	}
 
 	/**
@@ -164,9 +167,9 @@ public class CommandSelector {
 	public String getSelectedName(){
 		String name = "";
 		try{
-			name = cListNames[selectedKey];
+			name = cListNames.get(selectedKey);
 		}catch(ArrayIndexOutOfBoundsException e){
-			name = this.name +"Selector Name Array is not Up To Date"; 
+			name = this.name +" Selector Name Array is not Up To Date"; 
 		}
 		return name;
 	}

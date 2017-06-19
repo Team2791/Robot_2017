@@ -19,9 +19,9 @@ public class VisionNetworkTable implements ITableListener {
 	public static final int SIZEY = 180;
 	
 	private final double FOCAL_LENGTH = 261.81; //in mm; from https://us.sourcesecurity.com/technical-details/cctv/image-capture/ip-cameras/axis-communications-axis-m1011.html
-	private final double BOILER_CYLINDER_DIAMETER = 12.0;//inches //17.5
+	public static final double BOILER_CYLINDER_DIAMETER = 10.5;//15.0;//inches //17.5
 	
-	private final double BOILER_TOP_TARGET_HEIGHT = 86.0;
+	private final double BOILER_TOP_TARGET_HEIGHT = 58.5; //86.0
 	private final double CAMERA_HEIGHT = 23.0;
 	
 	
@@ -57,27 +57,19 @@ public class VisionNetworkTable implements ITableListener {
 	}
 	
 	private double calculateTargetDistance() throws Exception {
-		/*//uses the relationship: distance = targetWidth * focal length / targetWidthInPixels
-		return (BOILER_CYLINDER_DIAMETER * FOCAL_LENGTH) / selectTarget().width;*/
-		
+
 		AnalyzedContour contour = selectTarget();
-//		double left = contour.centerX - contour.width / 2;
-//		double right = contour.centerX + contour.width / 2;
-//		
-//		double angle = Math.abs(calculateTargetAngleError(right) - calculateTargetAngleError(left));
-//		return Math.tan(Math.toRadians(angle / 2)) * BOILER_CYLINDER_DIAMETER / 2;
-//		return selectTarget().height;
+
+//		double bottomOfImageAngle = INCLINATION - FOVY/2.0;
+//		double targetAngleInImage = (contour.centerY / (float) SIZEY) * FOVY;
+//		double heightFromCamera = BOILER_TOP_TARGET_HEIGHT - CAMERA_HEIGHT;
+//		return heightFromCamera / Math.tan(Math.toRadians(bottomOfImageAngle + targetAngleInImage));
 		
-//		double FOVSize = (BOILER_CYLINDER_DIAMETER / contour.width) * SIZEX/2.0;
-//		return Math.cos(Math.toRadians(INCLINATION)) * (FOVSize / Math.tan(Math.toRadians(FOVX/2.0)));
-	
-		double bottomOfImageAngle = INCLINATION - FOVY/2.0;
-		double targetAngleInImage = (contour.centerY / (float) SIZEY) * FOVY;
-		double heightFromCamera = BOILER_TOP_TARGET_HEIGHT - CAMERA_HEIGHT;
-		System.out.println("Target ccamera angle " + (bottomOfImageAngle + targetAngleInImage));
-		
-		return heightFromCamera / Math.tan(Math.toRadians(bottomOfImageAngle + targetAngleInImage));
-	}
+		//Based on WPI Vision Processing Papers: http://po.st/visionpapers 
+		return (BOILER_CYLINDER_DIAMETER  * SIZEX) 
+				/  (2 *  contour.width * Math.tan(Math.toRadians(FOVX  / 2)));
+}
+
 	
 	private double calculateTargetAngleError(double centerX) throws Exception {
 		double targetX = centerX;
@@ -126,7 +118,7 @@ public class VisionNetworkTable implements ITableListener {
 	@Override
 	public void valueChanged(ITable source, String key, Object value,
 			boolean isNew) {
-		System.out.println("New value: "+key+" = "+value);
+//		System.out.println("New value: "+key+" = "+value);
 		
 		synchronized (foundContours) {
 			try {

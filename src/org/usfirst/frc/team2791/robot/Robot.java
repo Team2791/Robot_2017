@@ -140,7 +140,14 @@ public class Robot extends IterativeRobot {
 		visionTable = new VisionNetworkTable();
 
 		autoSelector = new CommandSelector("Auto Mode");
-
+		autoSelector.addName("Center Gear", 0);
+		autoSelector.addName("Boiler Side Gear", 1);
+		autoSelector.addName("LoadingStation Gear", 2);
+		autoSelector.addName("Hopper Auton", 3);
+		autoSelector.addName("Center Gear & Shoot", 4);
+		autoSelector.addName("PID Drive Tuning", 5);
+		autoSelector.addName("PID Turn Tuning", 6);
+		
 		debug();
 	}
 
@@ -206,16 +213,19 @@ public class Robot extends IterativeRobot {
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
 		
-		autoSelector.addCommand(new CenterGearAuton(autoSelector.getColor()));
-		autoSelector.addCommand(new BoilerGearAuton(autoSelector.getColor()));
-		autoSelector.addCommand(new LoadingStationGearAuton(autoSelector.getColor()));
-		autoSelector.addCommand(new HopperAuton(autoSelector.getColor()));
-		autoSelector.addCommand(new CenterGearAutonShooting(autoSelector.getColor()));
-		autoSelector.addCommand(new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6));
-		autoSelector.addCommand(new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1));
+		String teamColor = autoSelector.getColor();
+
+		autoSelector.addCommand(new CenterGearAuton(teamColor), 0);
+		autoSelector.addCommand(new BoilerGearAuton(teamColor), 1);
+		autoSelector.addCommand(new LoadingStationGearAuton(teamColor), 2);
+		autoSelector.addCommand(new HopperAuton(teamColor), 3);
+		autoSelector.addCommand(new CenterGearAutonShooting(teamColor), 4);
+		autoSelector.addCommand(new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6), 5);
+		autoSelector.addCommand(new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1), 6);
+		
+		//***When Adding a Command, Remember to add the Command's Name in robotInit***
 
 		autonomousCommand = autoSelector.getSelected();
-		String teamColor = autoSelector.getColor();
 		
 		if(autonomousCommand.getName().equals("Center Gear & Shoot")){
 			if(teamColor.equals("RED"))
