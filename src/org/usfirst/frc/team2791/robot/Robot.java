@@ -234,7 +234,7 @@ public class Robot extends IterativeRobot {
 				visionTable.setVisionOffset(60.0);
 		}
 		
-		System.out.println("***Starting "+autonomousCommand.getName()+" AutoMode***");
+		System.out.println("***Starting "+teamColor+" "+autonomousCommand.getName()+" AutoMode***");
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -249,8 +249,6 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		run();
-
-		System.out.println("***Running "+autonomousCommand.getName()+" AutoMode***");
 		debug();
 
 		double thisAutoLoopTime = Timer.getFPGATimestamp();
@@ -319,6 +317,7 @@ public class Robot extends IterativeRobot {
 		shooter.debug();
 		gearMechanism.debug();
 		hopper.debug();
+		visionTable.debug();
 
 	}
 

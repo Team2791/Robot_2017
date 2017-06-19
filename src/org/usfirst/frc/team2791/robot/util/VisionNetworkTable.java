@@ -64,8 +64,12 @@ public class VisionNetworkTable implements ITableListener {
 //		double targetAngleInImage = (contour.centerY / (float) SIZEY) * FOVY;
 //		double heightFromCamera = BOILER_TOP_TARGET_HEIGHT - CAMERA_HEIGHT;
 //		return heightFromCamera / Math.tan(Math.toRadians(bottomOfImageAngle + targetAngleInImage));
+
+		/*
+		 * Based on WPI Vision Processing Papers: http://po.st/visionpapers
+		 * Works better when it's closer to the target, and the width of the target isn't changing as much 
+		 */
 		
-		//Based on WPI Vision Processing Papers: http://po.st/visionpapers 
 		return (BOILER_CYLINDER_DIAMETER  * SIZEX) 
 				/  (2 *  contour.width * Math.tan(Math.toRadians(FOVX  / 2)));
 }
@@ -94,7 +98,7 @@ public class VisionNetworkTable implements ITableListener {
 			possibleTargets = foundContours;
 		}
 		
-		// If there are no targets return one right infront of the robot so it stops moving.
+		// If there are no targets return one right in front of the robot so it stops moving.
 		// TODO tell the robot not to shoot.
 		try {
 			// select the target with the largest centerY value. This target is at the top of image.
@@ -143,9 +147,9 @@ public class VisionNetworkTable implements ITableListener {
 			
 		} catch(Exception e) {
 			if(e.getMessage().equals("No Targets")) {
-				System.out.println("Found no targets. Not changing gyro offet");
+				System.out.println("Found no targets. Not changing gyro offset");
 			} else {
-				System.out.println("SOME1THING MESSED UP AND WE'RE NOT DEALING WITH IT");
+				System.out.println("SOMETHING MESSED UP AND WE'RE NOT DEALING WITH IT");
 			}
 		}
 
@@ -182,4 +186,19 @@ public class VisionNetworkTable implements ITableListener {
 	}
 	
 
+	public void debug(){
+		AnalyzedContour myContour;
+		try {
+			myContour = selectTarget();
+			SmartDashboard.putNumber("Vision/centerX", myContour.centerX);
+			SmartDashboard.putNumber("Vision/centerY", myContour.centerY);
+			SmartDashboard.putNumber("Vision/height", myContour.height);
+			SmartDashboard.putNumber("Vision/width", myContour.width);	
+			SmartDashboard.putNumber("Vision/solidity", myContour.solidity);
+			SmartDashboard.putNumber("Vision/area", myContour.area);
+		} catch (Exception e) {
+			System.err.println("Vision Debug Method failed");
+			e.printStackTrace();
+		}
+	}
 }
