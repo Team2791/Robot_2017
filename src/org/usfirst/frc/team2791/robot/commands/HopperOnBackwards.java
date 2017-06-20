@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Runs the {@link ShakerHopper} motors backwards, can be used to unjam the hopper
  */
-public class HopperOn extends Command{
-	public HopperOn(){
+public class HopperOnBackwards extends Command{
+	public HopperOnBackwards(){
 		super("RunHopperBackwards");
 		requires(Robot.hopper);
 	}
@@ -16,7 +16,7 @@ public class HopperOn extends Command{
 	protected void initialize(){}
 	
 	protected void execute(){
-		Robot.hopper.runHopper();
+		Robot.hopper.runHopperBackwards();
 	}
 	
 	protected boolean isFinished(){

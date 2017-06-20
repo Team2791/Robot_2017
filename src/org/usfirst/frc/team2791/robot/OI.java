@@ -2,25 +2,10 @@ package org.usfirst.frc.team2791.robot;
 
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
-import org.usfirst.frc.team2791.robot.commands.AutoAim;
-import org.usfirst.frc.team2791.robot.commands.CalibrateGyro;
-import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
-import org.usfirst.frc.team2791.robot.commands.EngageRope;
-import org.usfirst.frc.team2791.robot.commands.GearMechDownRunMotors;
-import org.usfirst.frc.team2791.robot.commands.GearMechUp;
-import org.usfirst.frc.team2791.robot.commands.HopperOn;
-import org.usfirst.frc.team2791.robot.commands.IntakeGearFromFloor;
-import org.usfirst.frc.team2791.robot.commands.RunClimber;
-import org.usfirst.frc.team2791.robot.commands.RunHopperBackwards;
-import org.usfirst.frc.team2791.robot.commands.RunIntake;
-import org.usfirst.frc.team2791.robot.commands.RunLongShot;
-import org.usfirst.frc.team2791.robot.commands.RunSweetSpotShot;
-import org.usfirst.frc.team2791.robot.commands.RunWallShot;
-import org.usfirst.frc.team2791.robot.commands.ScoreGearAutoReturn;
-import org.usfirst.frc.team2791.robot.commands.autos.pid.DriveStraightVision;
-import org.usfirst.frc.team2791.robot.commands.autos.pid.StationaryVisionTurn;
-import org.usfirst.frc.team2791.robot.commands.safeties.ShooterHopperSafety;
-import org.usfirst.frc.team2791.robot.commands.safeties.StopClimberAndDisengage;
+import org.usfirst.frc.team2791.robot.commands.*;
+import org.usfirst.frc.team2791.robot.commands.pid.DriveStraightVision;
+import org.usfirst.frc.team2791.robot.commands.pid.StationaryVisionTurn;
+import org.usfirst.frc.team2791.robot.commands.safeties.*;
 import org.usfirst.frc.team2791.robot.util.GTADrive;
 
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -70,11 +55,11 @@ public class OI {
 		operatorX.whileHeld(new RunWallShot()); 
 		operatorY.whileHeld(new RunLongShot());
 
-		operatorA.whileHeld(new RunIntake());
-		operatorB.whileHeld(new RunClimber());
+		operatorA.whileHeld(new IntakeOn());
+		operatorB.whileHeld(new ClimberOn());
 		
 		operatorRB.whileHeld(new HopperOn());
-		operatorLB.whileHeld(new RunHopperBackwards());
+		operatorLB.whileHeld(new HopperOnBackwards());
 		
 //		operatorDpadDown.whenPressed(new IntakeGearFromFloor()); 
 		operatorDpadUp.whenPressed(new GearMechUp());
@@ -82,20 +67,20 @@ public class OI {
 		operatorDpadRight.whenPressed(new StationaryVisionTurn(0.5,1.5));
 
 		operatorLS.whenPressed(new GearMechDownRunMotors());
-		operatorRS.whileHeld(new EngageRope());
+		operatorRS.whileHeld(new ClimberEngageRope());
 		
 		operatorBack.whenPressed(new StopClimberAndDisengage());//safety
 		operatorStart.whenPressed(new ShooterHopperSafety());//safety
 
 		/********************************** Driver Button Assignments ****************************************/
 
-		driverX.whileHeld(new ScoreGearAutoReturn()); 
+		driverX.whileHeld(new GearMechScore()); 
 
-		driverY.whileHeld(new RunClimber());
+		driverY.whileHeld(new ClimberOn());
 		
-		driverA.toggleWhenPressed(new RunIntake());
+		driverA.toggleWhenPressed(new IntakeOn());
 		
-		driverB.whenPressed(new AutoAim());// TODO Remove this command from driver and give to operator instead of long shot
+		driverB.whenPressed(new AimWithVision());// TODO Remove this command from driver and give to operator instead of long shot
 
 		driverLB.whileHeld(new DriveWithJoystick());
 		driverRB.whileHeld(new DriveWithJoystick());
