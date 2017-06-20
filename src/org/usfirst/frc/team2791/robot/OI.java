@@ -14,9 +14,10 @@ import org.usfirst.frc.team2791.robot.commands.RunClimber;
 import org.usfirst.frc.team2791.robot.commands.RunHopperBackwards;
 import org.usfirst.frc.team2791.robot.commands.RunIntake;
 import org.usfirst.frc.team2791.robot.commands.RunLongShot;
-import org.usfirst.frc.team2791.robot.commands.RunVisionShot;
+import org.usfirst.frc.team2791.robot.commands.RunSweetSpotShot;
 import org.usfirst.frc.team2791.robot.commands.RunWallShot;
 import org.usfirst.frc.team2791.robot.commands.ScoreGearAutoReturn;
+import org.usfirst.frc.team2791.robot.commands.autos.pid.DriveStraightVision;
 import org.usfirst.frc.team2791.robot.commands.autos.pid.StationaryVisionTurn;
 import org.usfirst.frc.team2791.robot.commands.safeties.ShooterHopperSafety;
 import org.usfirst.frc.team2791.robot.commands.safeties.StopClimberAndDisengage;
@@ -77,7 +78,7 @@ public class OI {
 		
 //		operatorDpadDown.whenPressed(new IntakeGearFromFloor()); 
 		operatorDpadUp.whenPressed(new GearMechUp());
-		operatorDpadLeft.whileHeld(new RunVisionShot());
+		operatorDpadLeft.whileHeld(new RunSweetSpotShot());
 		operatorDpadRight.whenPressed(new StationaryVisionTurn(0.5,1.5));
 
 		operatorLS.whenPressed(new GearMechDownRunMotors());
@@ -91,6 +92,7 @@ public class OI {
 		driverX.whileHeld(new ScoreGearAutoReturn()); 
 
 		driverY.whileHeld(new RunClimber());
+		
 		driverA.toggleWhenPressed(new RunIntake());
 		
 		driverB.whenPressed(new AutoAim());// TODO Remove this command from driver and give to operator instead of long shot
@@ -99,7 +101,8 @@ public class OI {
 		driverRB.whileHeld(new DriveWithJoystick());
 		
 		driverDpadLeft.whenPressed(new StationaryVisionTurn(0.5, 1.5));
-
+		driverDpadRight.whenPressed(new DriveStraightVision(120.0, .1));
+		
 		driverBack.whileHeld(new CalibrateGyro());
 	}
 

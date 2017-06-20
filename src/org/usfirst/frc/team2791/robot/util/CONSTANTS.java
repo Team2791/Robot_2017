@@ -30,7 +30,8 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static final double SHOOTER_AUTO_HOPPER_SET_POINT = 3025;//3255 //3355 //3035
 	public static final double SHOOTER_AUTO_CENTER_SET_POINT = 3375; //3385 was too much QF2
 	public static final double SHOOTER_VISION_SWEET_SET_POINT = 3025.0; //hopefully will be the same as the long point :^)
-	
+	public static final double DRIVE_VISION_SWEET_SPOT_FEET = 100.0 / 12.0 ;
+
 	public static final int SHOOTER_I_ZONE = 75; //40
 	
 	public static final double SHOOTER_P = 2.7; //1.5
@@ -61,6 +62,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static double STATIONARY_ANGLE_D = 0.004;
 	
 	public static double shootingDriveP = 0.025;
+	
 	
 	// Path following constants
     public static double kPathFollowingLookahead = 24.0; // inches

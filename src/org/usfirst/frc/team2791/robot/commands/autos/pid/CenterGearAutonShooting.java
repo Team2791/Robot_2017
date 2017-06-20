@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2791.robot.commands.autos.pid;
 
-import org.usfirst.frc.team2791.robot.commands.DriveEncoderBangBang;
 import org.usfirst.frc.team2791.robot.commands.RunHopper;
 import org.usfirst.frc.team2791.robot.commands.RunIntake;
 import org.usfirst.frc.team2791.robot.commands.SpinUpShooter;

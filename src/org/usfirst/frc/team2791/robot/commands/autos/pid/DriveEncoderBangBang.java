@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2791.robot.commands;
+package org.usfirst.frc.team2791.robot.commands.autos.pid;
 
 import org.usfirst.frc.team2791.robot.Robot;
 

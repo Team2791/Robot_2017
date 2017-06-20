@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2791.robot.util;
 
+import java.awt.image.LookupTable;
+
 import org.usfirst.frc.team2791.robot.Robot;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -8,73 +10,99 @@ import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
 
 public class VisionNetworkTable implements ITableListener {
-	
+
 	private NetworkTable visionTargetsTable;
 	private AnalyzedContour[] foundContours = {};
 
 	public static final double FOVX = 47;
 	public static final double FOVY = 36.2;
-	public static final double INCLINATION = 30;
 	public static final int SIZEX = 240;
 	public static final int SIZEY = 180;
-	
-	private final double FOCAL_LENGTH = 261.81; //in mm; from https://us.sourcesecurity.com/technical-details/cctv/image-capture/ip-cameras/axis-communications-axis-m1011.html
-	public static final double BOILER_CYLINDER_DIAMETER = 10.5;//15.0;//inches //17.5
-	
-	private final double BOILER_TOP_TARGET_HEIGHT = 58.5; //86.0
+
+	public static final double INCLINATION = 30;
 	private final double CAMERA_HEIGHT = 23.0;
-	
-	
+	private final double FOCAL_LENGTH = 261.81; //in mm; from https://us.sourcesecurity.com/technical-details/cctv/image-capture/ip-cameras/axis-communications-axis-m1011.html
+
+	private double BOILER_TARGET_REAL_WIDTH_INCHES = 15.0; //using boiler cylinder's diameter
+	private final double BOILER_TOP_TARGET_HEIGHT = 88.0; //86.0
+
+	private double cylinderTargetOffset; // because we are reflecting light off of a cylinder, the edges of the target are not always seen, this offset accounts for that
+
+	public final ShooterLookupTable lookupTable = new ShooterLookupTable();
+	public double distToBoiler = 0;
+	public double rpm = 0;
 	private boolean freshImage = false;
 	public double gyroOffset = 0;
 	public double targetError = 0;
-	
-	public DelayedBoolean robotStill = new DelayedBoolean(.2);
-	
+
+	public DelayedBoolean robotNotTurning = new DelayedBoolean(.2);
+	public DelayedBoolean robotNotDriving = new DelayedBoolean(.2);
+
 	public VisionNetworkTable() {
 		visionTargetsTable = NetworkTable.getTable("GRIP/myContoursReport");
 		visionTargetsTable.addTableListener(this);
-		
+
 		SmartDashboard.putNumber("Camera Horizontal Offset", CONSTANTS.CAMERA_HORIZONTAL_OFFSET);
-		
+		SmartDashboard.putNumber("Observed Target Width in Inches", BOILER_TARGET_REAL_WIDTH_INCHES - cylinderTargetOffset);
+
 	}
-	
+
 	public void setVisionOffset(double offset){
 		this.gyroOffset = offset;
 	}
-	
+
 	public double getRealtimeBoilerAngleError() {
 		return Robot.drivetrain.getGyroAngle() + gyroOffset;
 	}
-	
+
 	public double getRealtimeDistanceToBoiler(){
-		try{
+		try {
 			return calculateTargetDistance();
-		} catch(Exception e){
-//			System.out.println("Can't find distance");
+		} catch (Exception e) {
+			if(!e.getMessage().equals("No Targets"));
+			//				System.out.println("Can't Find Distance");
 		}
-		return 0;
+		return 0.0;
 	}
-	
+
+	public double getDistanceBasedRPM(){
+		return rpm;
+	}
+
 	private double calculateTargetDistance() throws Exception {
 
 		AnalyzedContour contour = selectTarget();
 
-//		double bottomOfImageAngle = INCLINATION - FOVY/2.0;
-//		double targetAngleInImage = (contour.centerY / (float) SIZEY) * FOVY;
-//		double heightFromCamera = BOILER_TOP_TARGET_HEIGHT - CAMERA_HEIGHT;
-//		return heightFromCamera / Math.tan(Math.toRadians(bottomOfImageAngle + targetAngleInImage));
+		//		double bottomOfImageAngle = INCLINATION - FOVY/2.0;
+		//		double targetAngleInImage = (contour.centerY / (float) SIZEY) * FOVY;
+		//		double heightFromCamera = BOILER_TOP_TARGET_HEIGHT - CAMERA_HEIGHT;
+		//		return heightFromCamera / Math.tan(Math.toRadians(bottomOfImageAngle + targetAngleInImage));
 
 		/*
 		 * Based on WPI Vision Processing Papers: http://po.st/visionpapers
-		 * Works better when it's closer to the target, and the width of the target isn't changing as much 
+		 * More accurate when it's closer to the target and the width of the contour is better defined
 		 */
-		
-		return (BOILER_CYLINDER_DIAMETER  * SIZEX) 
-				/  (2 *  contour.width * Math.tan(Math.toRadians(FOVX  / 2)));
-}
 
-	
+		double distNoOffset = (BOILER_TARGET_REAL_WIDTH_INCHES  * SIZEX) 
+				/  (2 *  contour.width * Math.tan(Math.toRadians(FOVX  / 2)));
+
+		//the closer you are, the less of the edge of the target you see, so the real width changes 
+		if(distNoOffset > 140)
+			cylinderTargetOffset = 0.0;
+		else if(distNoOffset > 115)
+			cylinderTargetOffset = 0.5;
+		else if(distNoOffset > 95)
+			cylinderTargetOffset = 1.1;
+		else if(distNoOffset < 95)
+			cylinderTargetOffset = 1.6;
+
+		double targetWidthInches = BOILER_TARGET_REAL_WIDTH_INCHES - cylinderTargetOffset;
+
+		return (targetWidthInches  * SIZEX) 
+				/  (2 *  contour.width * Math.tan(Math.toRadians(FOVX  / 2)));
+	}
+
+
 	private double calculateTargetAngleError(double centerX) throws Exception {
 		double targetX = centerX;
 		double ndcX = 2 * targetX / SIZEX - 1;
@@ -89,15 +117,15 @@ public class VisionNetworkTable implements ITableListener {
 	/**
 	 * This method will filter the contours and select the target we should aim at (either boiler ring). 
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception "No Targets" if there are no found targets
 	 */
 	private AnalyzedContour selectTarget() throws Exception {
 		AnalyzedContour[] possibleTargets;
-		
+
 		synchronized (foundContours) {
 			possibleTargets = foundContours;
 		}
-		
+
 		// If there are no targets return one right in front of the robot so it stops moving.
 		// TODO tell the robot not to shoot.
 		try {
@@ -111,19 +139,22 @@ public class VisionNetworkTable implements ITableListener {
 				}
 			}
 			return possibleTargets[selectedTargetIndex];
-			
+
 		} catch (IndexOutOfBoundsException e) {
-//			return new AnalyzedContour(0,0,0,0,0,0);
+			//			return new AnalyzedContour(0,0,0,0,0,0);
 			throw new Exception("No Targets");
 		}
-		
+
 	}
-	
+
 	@Override
+	/**
+	 * Where vision variables are updated
+	 */
 	public void valueChanged(ITable source, String key, Object value,
 			boolean isNew) {
-//		System.out.println("New value: "+key+" = "+value);
-		
+		//		System.out.println("New value: "+key+" = "+value);
+
 		synchronized (foundContours) {
 			try {
 				foundContours = getFoundContours();
@@ -131,34 +162,41 @@ public class VisionNetworkTable implements ITableListener {
 				System.out.println("Messed up reading network tables. Trying again?");
 			}
 		}
-		
+
 		// THIS IS A HACK
-		// Ignore images unless we're not moving. This is to compensate for lag.
-		
-		if(!robotStill.update(Math.abs(Robot.drivetrain.gyro.getRate()) < 5)) {
-			return;
-		}
-		
+		// Ignore images unless we're not turning. This is to compensate for lag.
+
+
+
 		try {
-			// update the gyro offset with the latest error information
-			targetError = calculateTargetAngleError(selectTarget().centerX);
-			gyroOffset = targetError - Robot.drivetrain.getGyroAngle();	
-			
-			
+
+			if(robotNotTurning.update(Math.abs(Robot.drivetrain.gyro.getRate()) < 5)) {
+				targetError = calculateTargetAngleError(selectTarget().centerX);
+				gyroOffset = targetError - Robot.drivetrain.getGyroAngle();	
+			}
+
+			if(robotNotDriving.update(Math.abs(Robot.drivetrain.gyro.getRate()) < 5)) {
+				distToBoiler = calculateTargetDistance();
+				rpm = lookupTable.getRPMfromDistance(distToBoiler);
+			}
+
+			//update the boiler distance and needed rpm with the latest information
+			//error information will be handled in the commands
+
 		} catch(Exception e) {
 			if(e.getMessage().equals("No Targets")) {
-				System.out.println("Found no targets. Not changing gyro offset");
+				System.out.println("Found no targets. Not changing variables");
 			} else {
-				System.out.println("SOMETHING MESSED UP AND WE'RE NOT DEALING WITH IT");
+				System.out.println("VISION MESSED UP AND WE'RE NOT DEALING WITH IT");
 			}
 		}
 
-		
+
 	}
-	
+
 	private AnalyzedContour[] getFoundContours() {
 		double[] defaultArray = {};
-		
+
 		// Get info from network tables
 		double[] areas = visionTargetsTable.getNumberArray("area", defaultArray);
 		double[] centerYs = visionTargetsTable.getNumberArray("centerY", defaultArray);
@@ -166,27 +204,30 @@ public class VisionNetworkTable implements ITableListener {
 		double[] heights = visionTargetsTable.getNumberArray("height", defaultArray);
 		double[] widths = visionTargetsTable.getNumberArray("width", defaultArray);
 		double[] soliditys = visionTargetsTable.getNumberArray("solidity", defaultArray);
-		
+
 		// set up an array to store our found targets
 		AnalyzedContour[] contourList = new AnalyzedContour[areas.length];
-		
+
 		for(int i=0; i < areas.length; ++i) {
 			contourList[i] = new AnalyzedContour(areas[i], centerYs[i], centerXs[i], heights[i],
 					widths[i], soliditys[i]);
 		}
-		
+
 		return contourList;
-		
+
 	}
-	
+
 	// CALL THIS EVERY LOOP
 	// THROW BACK TO NOT COMMAND BASED
 	public void run() {
-		robotStill.update(Math.abs(Robot.drivetrain.gyro.getRate()) < 2);
+		robotNotTurning.update(Math.abs(Robot.drivetrain.gyro.getRate()) < 2);
+		robotNotDriving.update(Math.abs(Robot.drivetrain.getAverageVelocity()) < 2);
 	}
-	
+
 
 	public void debug(){
+		SmartDashboard.putNumber("Observed Target Width in Inches", BOILER_TARGET_REAL_WIDTH_INCHES - cylinderTargetOffset);
+
 		AnalyzedContour myContour;
 		try {
 			myContour = selectTarget();
@@ -197,8 +238,8 @@ public class VisionNetworkTable implements ITableListener {
 			SmartDashboard.putNumber("Vision/solidity", myContour.solidity);
 			SmartDashboard.putNumber("Vision/area", myContour.area);
 		} catch (Exception e) {
-			System.err.println("Vision Debug Method failed");
-			e.printStackTrace();
+			if(!e.getMessage().equals("No Targets"))
+				System.err.println("Vision Debug Method failed");
 		}
 	}
 }

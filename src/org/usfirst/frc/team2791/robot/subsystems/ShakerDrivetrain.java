@@ -186,7 +186,6 @@ public class ShakerDrivetrain extends Subsystem{
 	
 	//************** Gyro and Encoder Helper Methods **************//
 
-	@Deprecated
 	public double getAngleEncoder() {
 		return (360 / 7.9) * (getLeftDistance() - getRightDistance()) / 2.0;
 	}
@@ -198,7 +197,6 @@ public class ShakerDrivetrain extends Subsystem{
 		return 0.0;
 	}
 	
-	@Deprecated
 	public double getEncoderAngleRate() {
 		return (360/7.9) * (leftDriveEncoder.getRate() - rightDriveEncoder.getRate()) / 2.0;
 	}

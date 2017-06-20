@@ -15,6 +15,7 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 import org.usfirst.frc.team2791.robot.util.CommandSelector;
 import org.usfirst.frc.team2791.robot.util.VisionNetworkTable;
 
+import edu.wpi.cscore.AxisCamera;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -99,32 +100,34 @@ public class Robot extends IterativeRobot {
 		compressor.start();
 
 				try{
-					UsbCamera gear_cam = CameraServer.getInstance().startAutomaticCapture("Gear Camera",0);
+					UsbCamera gear_cam = CameraServer.getInstance().startAutomaticCapture("Gear Camera",1);
 					gear_cam.setPixelFormat(PixelFormat.kMJPEG);
 					gear_cam.setFPS(10); //wont allow me to set above 10
 					if(!gear_cam.setResolution(240, 180)){
 						gear_cam.setResolution(240, 180); //try 240 x 180 next
-						System.out.println("******Desired resolution failed for GEAR Camer******");
+						System.out.println("******Desired resolution failed for GEAR Camera******");
 		
 					}
 		//			gear_cam.getProperty(name)
 				}catch(Exception e){
-					System.out.println("*****FRONT Camera Failed*****");
+					System.out.println("*****Gear Camera Failed*****");
 					e.printStackTrace();
 				}
+				
 				try{
-					UsbCamera front_cam = CameraServer.getInstance().startAutomaticCapture("Front Camera", 1);
+					UsbCamera front_cam = CameraServer.getInstance().startAutomaticCapture("Front Camera", 0);
 					front_cam.setPixelFormat(PixelFormat.kMJPEG);
 					front_cam.setFPS(15); //was 15
 					
 					if(!front_cam.setResolution(160, 90)){ //halfed, try other resultions mauybe
 						front_cam.setResolution(320, 180);//defualt value if the other resolution does not work
-						System.out.println("******Desired resolution failed for FRONT Camer******");
+						System.out.println("******Desired resolution failed for FRONT Camera******");
 					}
 				}catch(Exception e){
-					System.out.println("*****BACK Camera Failed*****");
+					System.out.println("*****FRONT Camera Failed*****");
 					e.printStackTrace();
 				}
+				
 
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
@@ -306,7 +309,7 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putNumber("Camera vision error", visionTable.targetError);
 		SmartDashboard.putNumber("Camera vision gyro offset", visionTable.gyroOffset);
-		SmartDashboard.putBoolean("Robot still", visionTable.robotStill.getOutputValue());
+		SmartDashboard.putBoolean("Robot still", visionTable.robotNotTurning.getOutputValue());
 		smartDashBSFix *= -1;
 
 		SmartDashboard.putNumber("Camera distance from target (reflective tape) in Inches", visionTable.getRealtimeDistanceToBoiler()); 
@@ -326,7 +329,7 @@ public class Robot extends IterativeRobot {
 	}
 	// THROW BACK TO OLD CODE
 	public void run(){
-		//		visionTable.run();
+				visionTable.run();
 	}
 
 }

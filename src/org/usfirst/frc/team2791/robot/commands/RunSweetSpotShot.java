@@ -4,19 +4,23 @@ package org.usfirst.frc.team2791.robot.commands;
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
+import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * !!!!sPLS DO NOT USE OR INSTANTIATE!!!!
- * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for visionShot. The hopper is set to meter its speed.
+ * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for closeShot. The hopper is set to meter its speed.
+ * </br> 
+ * Runs the shooter to an experimentally determined "SweetSpot", where the shots seem to be most accurate.
+ * 
  */
-public class RunVisionShotWithTable extends Command{
+public class RunSweetSpotShot extends Command{
 	Timer timer = new Timer();
 	private boolean shooterSpunUp = false;
-	public RunVisionShotWithTable() {
-		super("RunVisionShot");
+	public RunSweetSpotShot() {
+		super("RunSweetSpotShot");
 		requires(Robot.shooter);
 		requires(Robot.hopper);
 	}
@@ -25,16 +29,15 @@ public class RunVisionShotWithTable extends Command{
 	protected void initialize() {
 		timer.reset();
 		timer.start();
-		Robot.shooter.prepVisionShot(Robot.shooter.lookUpTable.getRPMfromDistance(Robot.visionTable.getRealtimeDistanceToBoiler()));
+		Robot.shooter.prepLongShot();
 		shooterSpunUp = false;
 	}
 
 	@Override
 	protected void execute() {
 		Robot.shooter.setShooterSolenoidState(false); // down position is false
-		Robot.shooter.prepVisionShot(Robot.shooter.lookUpTable.getRPMfromDistance(Robot.visionTable.getRealtimeDistanceToBoiler())); // bringing shooter up to speed
+		Robot.shooter.prepCustomShot(SmartDashboard.getNumber("Shooter Sweeet Setpoint" , CONSTANTS.SHOOTER_VISION_SWEET_SET_POINT)); // bringing shooter up to speed
 
-		// if we need more balls or the shooter is ready
 		if(Robot.shooter.atSpeed()){
 			shooterSpunUp = true;
 		}
@@ -46,7 +49,7 @@ public class RunVisionShotWithTable extends Command{
 				Robot.hopper.stopHopper();
 			}
 		} else {
-//			Robot.hopper.runHopperBackwards();
+			Robot.hopper.runHopperBackwards();
 		}
 	}
 

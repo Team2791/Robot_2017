@@ -21,27 +21,27 @@ public class LoadingStationGearAuton extends CommandGroup {
     	double dist;
  
     	if(color.equals("RED")){
-//        	addSequential(new DriveStraightEncoderGyro(-(110-36)/12.0, .7, 6)); //128 was 1/2 a robot width off, the robot is 36 inches wide
+        	addSequential(new DriveStraightEncoderGyro(-(110-36)/12.0, .7, 3.3)); //128 was 1/2 a robot width off, the robot is 36 inches wide
         	addSequential(new StationaryGyroTurn(60.0, 1));
     		dist = 80/Math.cos(Math.PI/6) - 36;
     	}else{
-//    		addSequential(new DriveStraightEncoderGyro(-(110-36)/12.0, .7, 3.3)); //128 was 1/2 a robot width off, the robot is 36 inches wide
+    		addSequential(new DriveStraightEncoderGyro(-(110-36)/12.0, .7, 3.3)); //128 was 1/2 a robot width off, the robot is 36 inches wide
         	addSequential(new StationaryGyroTurn(-60.0, 1));
     		dist = 80.5/Math.cos(Math.PI/6) - 36;
     	}
 		
-//		addSequential(new DriveStraightEncoderGyro(-dist/12.0, .7, 2.5));
+		addSequential(new DriveStraightEncoderGyro(-dist/12.0, .7, 2.5));
     	addSequential(new AutonGearScore());
-//    	addSequential(new DriveStraightEncoderGyro(3.0, .7, 4));
+    	addSequential(new DriveStraightEncoderGyro(3.0, .7, 2.0));
     	
     	if(color.equals("RED")){
-    		addSequential(new StationaryGyroTurn(120.0, 1.0, 10, 2.0));
+    		addSequential(new StationaryGyroTurn(-60.0, 1.0, 10, 2.0));
     	}else{
-    		addSequential(new StationaryGyroTurn(-120.0, 1.0, 10, 2.0));
+    		addSequential(new StationaryGyroTurn(60, 1.0, 10, 2.0));
     	}
     	
-//    	addSequential(new DriveStraightEncoderGyro(10.0, .25, (15.0 - t.getFPGATimestamp())));
-
-
+   
+    	addSequential(new DriveStraightEncoderGyro(-25.0, .1, 15.0));
+    	
     }
 }

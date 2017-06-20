@@ -17,6 +17,7 @@ public class StationaryVisionTurn extends DrivetrainPIDTurn {
     // Called just before this Command runs the first time
 	@Override
     protected void initialize() {
+		setInterruptible(true);
 		System.out.println("Starting vision turn");
     	stationaryAnglePID.setSetPoint(0);
     }
@@ -27,4 +28,8 @@ public class StationaryVisionTurn extends DrivetrainPIDTurn {
         	   Math.abs(Robot.drivetrain.getGyroRate()) < 1;
     }
 
+    protected void interuppted(){
+    	stationaryAnglePID.setSetPoint(getProcessVaraible());
+    	end();
+    }
 }
