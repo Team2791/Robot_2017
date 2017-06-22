@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class HopperOnBackwards extends Command{
 	public HopperOnBackwards(){
-		super("RunHopperBackwards");
+		super("HopperOnBackwards");
 		requires(Robot.hopper);
 	}
 	

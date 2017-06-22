@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Runs the {@link ShakerIntake Climber} at a slower speed to catch the rope.
  */
-public class ClimberEngageRope extends Command{
-	public ClimberEngageRope(){
-		super("EngageRope");
+public class ClimberOnSlow extends Command{
+	public ClimberOnSlow(){
+		super("ClimberOnSlow");
 		requires(Robot.intake);
 	}
 	

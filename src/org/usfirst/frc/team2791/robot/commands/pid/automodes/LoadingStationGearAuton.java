@@ -37,14 +37,14 @@ public class LoadingStationGearAuton extends CommandGroup {
     	addSequential(new AutonGearScore());
     	addSequential(new DriveStraightEncoderGyro(3.0, .7, 2.0));
     	
+    	//begin driving to other side of the field backwards
     	if(color.equals("RED")){
     		addSequential(new StationaryGyroTurn(-60.0, 1.0, 10, 2.0));
     	}else{
     		addSequential(new StationaryGyroTurn(60, 1.0, 10, 2.0));
     	}
     	
-   
-    	addSequential(new DriveStraightEncoderGyro(-25.0, .1, 15.0));
+    	addSequential(new DriveStraightEncoderGyro(-25.0, .05, 15.0));
     	
     }
 }

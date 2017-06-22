@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2791.trajectory.automodes;
 
-import org.usfirst.frc.team2791.robot.commands.DriveDelay;
+import org.usfirst.frc.team2791.robot.commands.DrivetrainDelay;
 import org.usfirst.frc.team2791.robot.commands.GearMechScore;
 import org.usfirst.frc.team2791.robot.commands.pid.automodes.AutonGearScore;
 import org.usfirst.frc.team2791.trajectory.automodes.FollowPath.Color;
@@ -20,7 +20,7 @@ public class CenterShot_CenterGear extends CommandGroup{
 		System.out.println(color+"_"+"CenterShotToCenterGear");
 		addSequential(new FollowPath(color+"_"+"CenterShotToCenterGear", color, "BACKWARD"));
 		addSequential(new AutonGearScore());
-		addSequential(new DriveDelay(1));
+		addSequential(new DrivetrainDelay(1));
 		addSequential(new DriveForward());
 
 	}

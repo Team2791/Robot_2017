@@ -10,6 +10,7 @@ import org.usfirst.frc.team2791.robot.util.GTADrive;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -48,6 +49,7 @@ public class OI {
 
 		initButtons();
 		initDpad();
+		
 		//note: the triggers are called in GTADrive and in the joystick objects themselves so we do not have to map them here, esp. since they are for default commands
 
 		/********************************** Operator Button Assignments ****************************************/
@@ -61,13 +63,13 @@ public class OI {
 		operatorRB.whileHeld(new HopperOn());
 		operatorLB.whileHeld(new HopperOnBackwards());
 		
-//		operatorDpadDown.whenPressed(new IntakeGearFromFloor()); 
+		operatorDpadDown.whenPressed(new GearMechActiveIntake()); //intake gear w/ ir sensor logic
 		operatorDpadUp.whenPressed(new GearMechUp());
 		operatorDpadLeft.whileHeld(new RunSweetSpotShot());
 		operatorDpadRight.whenPressed(new StationaryVisionTurn(0.5,1.5));
 
-		operatorLS.whenPressed(new GearMechDownRunMotors());
-		operatorRS.whileHeld(new ClimberEngageRope());
+		operatorLS.whenPressed(new GearMechDownRunMotors()); //intake gear w/o ir sensor logic
+		operatorRS.whileHeld(new ClimberOnSlow());
 		
 		operatorBack.whenPressed(new StopClimberAndDisengage());//safety
 		operatorStart.whenPressed(new ShooterHopperSafety());//safety
@@ -86,7 +88,7 @@ public class OI {
 		driverRB.whileHeld(new DriveWithJoystick());
 		
 		driverDpadLeft.whenPressed(new StationaryVisionTurn(0.5, 1.5));
-		driverDpadRight.whenPressed(new DriveStraightVision(120.0, .1));
+		driverDpadRight.whenPressed(new DriveStraightVision(110.0 / 12, .25));
 		
 		driverBack.whileHeld(new CalibrateGyro());
 	}
@@ -229,4 +231,5 @@ public class OI {
 			}
 		};
 	}
+	
 }

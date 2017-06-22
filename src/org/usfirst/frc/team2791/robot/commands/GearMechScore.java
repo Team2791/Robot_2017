@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class GearMechScore extends Command{
 	public GearMechScore (){
-		super("ScoreGear");
+		super("GearMechScore");
 		requires(Robot.gearMechanism);
 	}
 	

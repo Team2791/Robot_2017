@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *Stops the Drivetrain for a given amount of time
  */
-public class DriveDelay extends Command {
+public class DrivetrainDelay extends Command {
 	
 	private Timer timer = new Timer();
 	private double delayTime;
@@ -16,8 +16,8 @@ public class DriveDelay extends Command {
 	/**
 	 * @param delayTime_ the amount of time you would like to remain stationary
 	 */
-    public DriveDelay(double delayTime_) {
-    	super("DelayDrivertrain");
+    public DrivetrainDelay(double delayTime_) {
+    	super("DrivetrainDelay");
     	requires(Robot.drivetrain);
     	delayTime = delayTime_;
     }

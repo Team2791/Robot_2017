@@ -6,6 +6,7 @@ public class StationaryVisionTurn extends DrivetrainPIDTurn {
 
 	public StationaryVisionTurn(double maxOutput, double errorThreshold) {
 		super(maxOutput, errorThreshold);
+        requires(Robot.drivetrain);
 		setInterruptible(true);
 	}
 	
@@ -30,6 +31,7 @@ public class StationaryVisionTurn extends DrivetrainPIDTurn {
 
     protected void interuppted(){
     	stationaryAnglePID.setSetPoint(getProcessVaraible());
+    	setLeftRightMotorOutputsPIDTurning(0.0,0.0);
     	end();
     }
 }

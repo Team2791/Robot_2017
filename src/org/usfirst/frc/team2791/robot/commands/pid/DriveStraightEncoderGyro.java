@@ -43,16 +43,6 @@ public class DriveStraightEncoderGyro extends DrivetrainPIDStraightDrive {
 	}
 
 
-	protected boolean isFinished() {
-		
-		boolean isPIDDone = (Math.abs(distancePID.getError()) < 0.05 &&
-				Math.abs(movingAnglePID.getError()) < 1.5 &&
-				Math.abs(Robot.drivetrain.getLeftVelocity()) < 0.05 &&
-				Math.abs(Robot.drivetrain.getRightVelocity()) < 0.05);
-		
-		return (isPIDDone || timer.hasPeriodPassed(timeForRelease));
-	}
-
 	protected void end() {
 		System.out.println("PID Driving Finished");
 	}

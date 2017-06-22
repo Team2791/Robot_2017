@@ -2,16 +2,8 @@ package org.usfirst.frc.team2791.robot;
 
 import org.usfirst.frc.team2791.robot.commands.pid.DriveStraightEncoderGyro;
 import org.usfirst.frc.team2791.robot.commands.pid.StationaryGyroTurn;
-import org.usfirst.frc.team2791.robot.commands.pid.automodes.BoilerGearAuton;
-import org.usfirst.frc.team2791.robot.commands.pid.automodes.CenterGearAuton;
-import org.usfirst.frc.team2791.robot.commands.pid.automodes.CenterGearAutonShooting;
-import org.usfirst.frc.team2791.robot.commands.pid.automodes.HopperAuton;
-import org.usfirst.frc.team2791.robot.commands.pid.automodes.LoadingStationGearAuton;
-import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
-import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
-import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
-import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
-import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
+import org.usfirst.frc.team2791.robot.commands.pid.automodes.*;
+import org.usfirst.frc.team2791.robot.subsystems.*;
 import org.usfirst.frc.team2791.robot.util.CommandSelector;
 import org.usfirst.frc.team2791.robot.util.VisionNetworkTable;
 

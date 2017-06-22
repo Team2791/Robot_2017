@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2791.robot.commands.pid.automodes;
 
-import org.usfirst.frc.team2791.robot.commands.DriveDelay;
+import org.usfirst.frc.team2791.robot.commands.DrivetrainDelay;
 import org.usfirst.frc.team2791.robot.commands.HopperOn;
 import org.usfirst.frc.team2791.robot.commands.IntakeOn;
 import org.usfirst.frc.team2791.robot.commands.SpinUpShooter;
@@ -38,7 +38,7 @@ public class FarHopperAuton extends CommandGroup {
 		/**turn in general boiler direction**/
 		addSequential(new TurnGyroBangBang(-0.7 *direction , 10 * direction, 1.0)); //direction is a complete guess lel
 		
-		addSequential(new DriveDelay(0.75)); 
+		addSequential(new DrivetrainDelay(0.75)); 
 		
 		addSequential(new StationaryVisionTurn(.5, 1.0));
 		addSequential(new HopperOn());

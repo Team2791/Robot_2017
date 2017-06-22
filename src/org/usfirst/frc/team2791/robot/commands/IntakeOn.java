@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class IntakeOn extends Command{
 	public IntakeOn(){
-		super("RunIntake");
+		super("IntakeOn");
 		requires(Robot.intake);
 	}
 	protected void initialize(){

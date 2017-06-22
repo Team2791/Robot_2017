@@ -69,12 +69,16 @@ public abstract class DrivetrainPIDStraightDrive extends Command {
 		debug();
 	}
 
-	protected boolean isFinished() {
-//		printStopBooleans();
 
+	protected boolean isFinished() {
+		
+//		printStopBooleans();
+		
 		boolean isPIDDone = (Math.abs(distancePID.getError()) < drivingErrorThreshold &&
-				Math.abs(movingAnglePID.getError()) < 1.5);
-	
+				Math.abs(movingAnglePID.getError()) < 1.5 &&
+				Math.abs(Robot.drivetrain.getLeftVelocity()) < 0.05 &&
+				Math.abs(Robot.drivetrain.getRightVelocity()) < 0.05);
+		
 		return (isPIDDone || timer.hasPeriodPassed(timeForRelease));
 	}
 

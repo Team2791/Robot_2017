@@ -55,14 +55,13 @@ public class VisionNetworkTable implements ITableListener {
 		return Robot.drivetrain.getGyroAngle() + gyroOffset;
 	}
 
+
+	public double getRealtimeBoilerDistanceError(double target){
+		return distToBoiler - target;
+	}
+
 	public double getRealtimeDistanceToBoiler(){
-		try {
-			return calculateTargetDistance();
-		} catch (Exception e) {
-			if(!e.getMessage().equals("No Targets"));
-			//				System.out.println("Can't Find Distance");
-		}
-		return 0.0;
+		return distToBoiler;
 	}
 
 	public double getDistanceBasedRPM(){
@@ -165,31 +164,32 @@ public class VisionNetworkTable implements ITableListener {
 
 		// THIS IS A HACK
 		// Ignore images unless we're not turning. This is to compensate for lag.
+		if(robotNotTurning.update(Math.abs(Robot.drivetrain.gyro.getRate()) < 5)){
+			try {
+				targetError = calculateTargetAngleError(selectTarget().centerX);
+				gyroOffset = targetError - Robot.drivetrain.getGyroAngle();
 
-
+			} catch (Exception e) {
+				if(e.getMessage().equals("No Targets")) {
+					System.out.println("Found no targets. Not changing variables");
+				} else {
+					System.out.println("vision angle calculation messed up");
+				}	
+			}
+		}
 
 		try {
+			distToBoiler = calculateTargetDistance();
+			rpm = lookupTable.getRPMfromDistance(distToBoiler);
 
-			if(robotNotTurning.update(Math.abs(Robot.drivetrain.gyro.getRate()) < 5)) {
-				targetError = calculateTargetAngleError(selectTarget().centerX);
-				gyroOffset = targetError - Robot.drivetrain.getGyroAngle();	
-			}
-
-			if(robotNotDriving.update(Math.abs(Robot.drivetrain.gyro.getRate()) < 5)) {
-				distToBoiler = calculateTargetDistance();
-				rpm = lookupTable.getRPMfromDistance(distToBoiler);
-			}
-
-			//update the boiler distance and needed rpm with the latest information
-			//error information will be handled in the commands
-
-		} catch(Exception e) {
+		} catch (Exception e) {
 			if(e.getMessage().equals("No Targets")) {
 				System.out.println("Found no targets. Not changing variables");
 			} else {
-				System.out.println("VISION MESSED UP AND WE'RE NOT DEALING WITH IT");
+				System.out.println("vision distance calculation messed up");
 			}
 		}
+
 
 
 	}

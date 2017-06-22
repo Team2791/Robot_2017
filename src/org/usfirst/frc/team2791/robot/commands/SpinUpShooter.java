@@ -12,6 +12,7 @@ public class SpinUpShooter extends Command {
 	private double speed;
 	
     public SpinUpShooter(double speed) {
+    	super("SpinUpShooter");
         requires(Robot.shooter);
         this.speed = speed;
     }

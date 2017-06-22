@@ -16,7 +16,7 @@ public class RunWallShot extends Command{
 	Timer hopperBackwardsTimer = new Timer();
 	
 	public RunWallShot() {
-		super("RunWallShotFullHopper");
+		super("RunWallShot");
 		requires(Robot.shooter);
 		requires(Robot.hopper);
 		System.out.print("shooter construct");

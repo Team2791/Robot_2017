@@ -58,7 +58,8 @@ public abstract class DrivetrainPIDTurn extends Command {
     }
 
     protected void end() {
-    	System.out.println("Ending drive train PID trun");
+    	setLeftRightMotorOutputsPIDTurning(0.0, 0.0);
+    	System.out.println("Ending drive train PID turn");
     }
 
     protected void interrupted() {

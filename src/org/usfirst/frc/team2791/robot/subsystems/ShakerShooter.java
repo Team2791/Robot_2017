@@ -9,7 +9,6 @@ import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.DelayedBoolean;
-import org.usfirst.frc.team2791.robot.util.ShooterErrorThread;
 import org.usfirst.frc.team2791.robot.util.ShooterLookupTable;
 import org.usfirst.frc.team2791.robot.util.Util;
 

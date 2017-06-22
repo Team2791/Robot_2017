@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2791.trajectory.automodes;
 
-import org.usfirst.frc.team2791.robot.commands.DriveDelay;
+import org.usfirst.frc.team2791.robot.commands.DrivetrainDelay;
 import org.usfirst.frc.team2791.robot.commands.GearMechDown;
 import org.usfirst.frc.team2791.trajectory.automodes.FollowPath.Color;
 import org.usfirst.frc.team2791.trajectory.automodes.FollowPath.Direction;
@@ -16,7 +16,7 @@ public class TrajTesting extends CommandGroup{
 		addSequential(new RunCenterAutoLongShot(5.0));
 		addSequential(new FollowPath("TestingOneTwo", "RED", "BACKWARDS"));
 //		addSequential(new GearMechDown());
-		addSequential(new DriveDelay(1));
+		addSequential(new DrivetrainDelay(1));
 		addSequential(new DriveForward());
 //		addSequential(new StationaryGyroTurn((-90),.7));
 //		addSequential(new RunAutoLongShot(10));
