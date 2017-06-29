@@ -82,11 +82,18 @@ public abstract class DrivetrainPIDStraightDrive extends Command {
 		return (isPIDDone || timer.hasPeriodPassed(timeForRelease));
 	}
 
+	@Override
 	protected void end() {
+		setLeftRightMotorOutputsPIDDriving(0.0, 0.0);
 		System.out.println("PID Driving Finished");
 	}
 
-	protected void interrupted() {}
+	@Override
+	protected void interrupted() {
+		setLeftRightMotorOutputsPIDDriving(0.0, 0.0);
+		System.out.println("PID DRIVING INTERUPPTED");
+		end();
+	}
 
 	public void setLeftRightMotorOutputsPIDDriving(double left, double right){
 		if(left < 0) {

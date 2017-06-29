@@ -6,6 +6,7 @@ import org.usfirst.frc.team2791.robot.commands.*;
 import org.usfirst.frc.team2791.robot.commands.pid.DriveStraightVision;
 import org.usfirst.frc.team2791.robot.commands.pid.StationaryVisionTurn;
 import org.usfirst.frc.team2791.robot.commands.safeties.*;
+import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.GTADrive;
 
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -43,7 +44,6 @@ public class OI {
 	 * Logitech Gamepad F310 controllers </a>
 	 */
 	public OI(){
-		System.out.println("OI initialized");
 		driver = new ShakerDriver();
 		operator = new ShakerOperator();
 
@@ -88,9 +88,12 @@ public class OI {
 		driverRB.whileHeld(new DriveWithJoystick());
 		
 		driverDpadLeft.whenPressed(new StationaryVisionTurn(0.5, 1.5));
-		driverDpadRight.whenPressed(new DriveStraightVision(110.0 / 12, .25));
+		driverDpadRight.whenPressed(new DriveStraightVision(CONSTANTS.DRIVE_VISION_SWEET_SPOT_FEET, .25));
 		
 		driverBack.whileHeld(new CalibrateGyro());
+		
+		System.out.println("OI initialized");
+
 	}
 
 	/**

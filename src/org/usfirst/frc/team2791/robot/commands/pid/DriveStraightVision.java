@@ -16,15 +16,18 @@ public class DriveStraightVision extends DrivetrainPIDStraightDrive {
 	 * @param distanceFromBoiler the desired distance from the boiler in inches
 	 */
 	public DriveStraightVision(double distanceFromBoiler, double maxOutput) {
-		super(distanceFromBoiler, maxOutput, 20.0, 1.5);
+		super(distanceFromBoiler, maxOutput, 20.0, 0.3); //kind of high threshold rn b/c i'm trash at image filtering
+ 		setInterruptible(true);
 		distancePID.setInvertOutput(false);
 	}
 	
+	@Override
 	protected void execute(){
 		super.execute();
-		System.out.println("VISION PID SETPOINT:" + distancePID.getSetPoint());
 		debug();
 	}
+	
+	@Override
 	protected void initialize() {
 		distancePID.setSetPoint(0);
 		movingAnglePID.setSetPoint(Robot.drivetrain.getGyroAngle());    
@@ -32,12 +35,11 @@ public class DriveStraightVision extends DrivetrainPIDStraightDrive {
 	
 	@Override
 	protected double getProcessVariable() {
-		return (Robot.visionTable.getRealtimeBoilerDistanceError(distanceToDrive)) /12;
+		return (Robot.visionTable.getRealtimeBoilerDistanceError(distanceToDrive * 12)) /12;
 	}
 	
 	public void debug(){
-		SmartDashboard.putNumber("Vision Distance Error", getProcessVariable());
-		SmartDashboard.putNumber("Vision Distance Target", distanceToDrive * 12);
+		super.debug();
 	}
 
 }

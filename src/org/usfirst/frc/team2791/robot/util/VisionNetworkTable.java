@@ -1,7 +1,5 @@
 package org.usfirst.frc.team2791.robot.util;
 
-import java.awt.image.LookupTable;
-
 import org.usfirst.frc.team2791.robot.Robot;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -24,19 +22,20 @@ public class VisionNetworkTable implements ITableListener {
 	private final double FOCAL_LENGTH = 261.81; //in mm; from https://us.sourcesecurity.com/technical-details/cctv/image-capture/ip-cameras/axis-communications-axis-m1011.html
 
 	private double BOILER_TARGET_REAL_WIDTH_INCHES = 15.0; //using boiler cylinder's diameter
-	private final double BOILER_TOP_TARGET_HEIGHT = 88.0; //86.0
+	private final double BOILER_TOP_TARGET_HEIGHT = 87.5; //86.0
 
 	private double cylinderTargetOffset; // because we are reflecting light off of a cylinder, the edges of the target are not always seen, this offset accounts for that
 
 	public final ShooterLookupTable lookupTable = new ShooterLookupTable();
 	public double distToBoiler = 0;
 	public double rpm = 0;
-	private boolean freshImage = false;
+
+	public double MIN_SPEED_TO_CALC_DISTANCE = .5; //might not need this w/ center based targeting
+
 	public double gyroOffset = 0;
-	public double targetError = 0;
+	public double targetAngleError = 0;
 
 	public DelayedBoolean robotNotTurning = new DelayedBoolean(.2);
-	public DelayedBoolean robotNotDriving = new DelayedBoolean(.2);
 
 	public VisionNetworkTable() {
 		visionTargetsTable = NetworkTable.getTable("GRIP/myContoursReport");
@@ -44,6 +43,8 @@ public class VisionNetworkTable implements ITableListener {
 
 		SmartDashboard.putNumber("Camera Horizontal Offset", CONSTANTS.CAMERA_HORIZONTAL_OFFSET);
 		SmartDashboard.putNumber("Observed Target Width in Inches", BOILER_TARGET_REAL_WIDTH_INCHES - cylinderTargetOffset);
+		SmartDashboard.putNumber("Min Speed to Calc Distance", MIN_SPEED_TO_CALC_DISTANCE);
+		SmartDashboard.putNumber("Cylinder Offset", cylinderTargetOffset);
 
 	}
 
@@ -68,37 +69,40 @@ public class VisionNetworkTable implements ITableListener {
 		return rpm;
 	}
 
-	private double calculateTargetDistance() throws Exception {
-
+	/**
+	 * Based on WPI Vision Processing Papers: http://po.st/visionpapers
+	 * More accurate when it's closer to the target and the width of the contour is better defined.
+	 * To be honest, there is a very large chance that inconsistent lighting will mess this up
+	 */
+	private double calculateTargetDistanceWithWidth() throws Exception{
 		AnalyzedContour contour = selectTarget();
-
-		//		double bottomOfImageAngle = INCLINATION - FOVY/2.0;
-		//		double targetAngleInImage = (contour.centerY / (float) SIZEY) * FOVY;
-		//		double heightFromCamera = BOILER_TOP_TARGET_HEIGHT - CAMERA_HEIGHT;
-		//		return heightFromCamera / Math.tan(Math.toRadians(bottomOfImageAngle + targetAngleInImage));
-
-		/*
-		 * Based on WPI Vision Processing Papers: http://po.st/visionpapers
-		 * More accurate when it's closer to the target and the width of the contour is better defined
-		 */
-
-		double distNoOffset = (BOILER_TARGET_REAL_WIDTH_INCHES  * SIZEX) 
-				/  (2 *  contour.width * Math.tan(Math.toRadians(FOVX  / 2)));
-
-		//the closer you are, the less of the edge of the target you see, so the real width changes 
-		if(distNoOffset > 140)
-			cylinderTargetOffset = 0.0;
-		else if(distNoOffset > 115)
-			cylinderTargetOffset = 0.5;
-		else if(distNoOffset > 95)
-			cylinderTargetOffset = 1.1;
-		else if(distNoOffset < 95)
-			cylinderTargetOffset = 1.6;
-
 		double targetWidthInches = BOILER_TARGET_REAL_WIDTH_INCHES - cylinderTargetOffset;
-
-		return (targetWidthInches  * SIZEX) 
+		double hyp = (targetWidthInches  * SIZEX) 
 				/  (2 *  contour.width * Math.tan(Math.toRadians(FOVX  / 2)));
+		return Math.sqrt(Math.pow(hyp,2) - (4096));
+	}
+
+	private double calculateTargetDistance(double targetY) throws Exception {
+
+		double bottomOfImageAngle = INCLINATION - FOVY/2.0;
+		double heightFromCamera = BOILER_TOP_TARGET_HEIGHT - CAMERA_HEIGHT;
+
+		//*****Trig Formula (didn't work, gave unique distances*****//
+		// double targetAngleInImage = (targetY / (float) SIZEY) * FOVY;
+		// double theta = targetAngleInImage + bottomOfImageAngle;
+		
+		//*****Trig Formula Modified (needs testing)*****//
+		double ndcY =  (2 * targetY) / (SIZEY - 1); 
+		double targetToCenterAngle = Math.toDegrees(Math.atan(Math.tan(Math.toRadians(FOVY / 2)) * ndcY));
+		double targetAngleInImage = targetToCenterAngle + (FOVY /2);
+		double theta = bottomOfImageAngle + targetAngleInImage;
+
+		//******Daisy's Formula (I don't think this will work for us, due to the different negations*****//
+		//double ndcY =  -((2 * targetY ) / SIZEY  - 1);
+		//double theta = ndcY * FOVY / 2 + INCLINATION;
+
+		return heightFromCamera / Math.tan(theta * Math.PI / 180);
+
 	}
 
 
@@ -112,6 +116,7 @@ public class VisionNetworkTable implements ITableListener {
 		z *= Math.cos(Math.toRadians(INCLINATION));
 		return -Math.toDegrees(Math.atan(x/z)) - SmartDashboard.getNumber("Camera Horizontal Offset", CONSTANTS.CAMERA_HORIZONTAL_OFFSET);
 	}
+
 
 	/**
 	 * This method will filter the contours and select the target we should aim at (either boiler ring). 
@@ -162,12 +167,13 @@ public class VisionNetworkTable implements ITableListener {
 			}
 		}
 
+
 		// THIS IS A HACK
 		// Ignore images unless we're not turning. This is to compensate for lag.
 		if(robotNotTurning.update(Math.abs(Robot.drivetrain.gyro.getRate()) < 5)){
 			try {
-				targetError = calculateTargetAngleError(selectTarget().centerX);
-				gyroOffset = targetError - Robot.drivetrain.getGyroAngle();
+				targetAngleError = calculateTargetAngleError(selectTarget().centerX);
+				gyroOffset = targetAngleError - Robot.drivetrain.getGyroAngle();
 
 			} catch (Exception e) {
 				if(e.getMessage().equals("No Targets")) {
@@ -178,16 +184,22 @@ public class VisionNetworkTable implements ITableListener {
 			}
 		}
 
-		try {
-			distToBoiler = calculateTargetDistance();
-			rpm = lookupTable.getRPMfromDistance(distToBoiler);
+		// THIS IS A HACK
+		// Ignore images unless moving fast enough. This is to compensate for lag
+		MIN_SPEED_TO_CALC_DISTANCE = SmartDashboard.getNumber("Min Speed to Calc Distance", MIN_SPEED_TO_CALC_DISTANCE);
 
-		} catch (Exception e) {
-			if(e.getMessage().equals("No Targets")) {
-				System.out.println("Found no targets. Not changing variables");
-			} else {
-				System.out.println("vision distance calculation messed up");
+		if( Math.abs(Robot.drivetrain.getAverageVelocity()) > MIN_SPEED_TO_CALC_DISTANCE){
+			try {
+				distToBoiler = calculateTargetDistance(selectTarget().centerY);
+				rpm = lookupTable.getRPMfromDistance(distToBoiler);
+			} catch (Exception e) {
+				if(e.getMessage().equals("No Targets")) {
+					System.out.println("Found no targets. Not changing variables");
+				} else {
+					System.out.println("vision distance calculation messed up");
+				}
 			}
+
 		}
 
 
@@ -221,11 +233,11 @@ public class VisionNetworkTable implements ITableListener {
 	// THROW BACK TO NOT COMMAND BASED
 	public void run() {
 		robotNotTurning.update(Math.abs(Robot.drivetrain.gyro.getRate()) < 2);
-		robotNotDriving.update(Math.abs(Robot.drivetrain.getAverageVelocity()) < 2);
 	}
 
 
 	public void debug(){
+		cylinderTargetOffset = SmartDashboard.getNumber("Cylinder Offset", cylinderTargetOffset);
 		SmartDashboard.putNumber("Observed Target Width in Inches", BOILER_TARGET_REAL_WIDTH_INCHES - cylinderTargetOffset);
 
 		AnalyzedContour myContour;

@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AimWithVision extends CommandGroup {
 
 	public AimWithVision() {
-		super("AimeWithVision");
+		super("AimWithVision");
 		setInterruptible(true);
 		addSequential(new DrivetrainDelay(0.75));
 		addSequential(new StationaryVisionTurn(0.5,1.5)); 

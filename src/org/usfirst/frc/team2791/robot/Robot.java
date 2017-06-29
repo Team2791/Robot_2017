@@ -4,6 +4,7 @@ import org.usfirst.frc.team2791.robot.commands.pid.DriveStraightEncoderGyro;
 import org.usfirst.frc.team2791.robot.commands.pid.StationaryGyroTurn;
 import org.usfirst.frc.team2791.robot.commands.pid.automodes.*;
 import org.usfirst.frc.team2791.robot.subsystems.*;
+import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.CommandSelector;
 import org.usfirst.frc.team2791.robot.util.VisionNetworkTable;
 
@@ -90,35 +91,36 @@ public class Robot extends IterativeRobot {
 		compressor = new Compressor(RobotMap.PCM_MODULE);
 		compressor.setClosedLoopControl(true);
 		compressor.start();
-
-				try{
-					UsbCamera gear_cam = CameraServer.getInstance().startAutomaticCapture("Gear Camera",1);
-					gear_cam.setPixelFormat(PixelFormat.kMJPEG);
-					gear_cam.setFPS(10); //wont allow me to set above 10
-					if(!gear_cam.setResolution(240, 180)){
-						gear_cam.setResolution(240, 180); //try 240 x 180 next
-						System.out.println("******Desired resolution failed for GEAR Camera******");
-		
-					}
-		//			gear_cam.getProperty(name)
-				}catch(Exception e){
-					System.out.println("*****Gear Camera Failed*****");
-					e.printStackTrace();
-				}
-				
-				try{
-					UsbCamera front_cam = CameraServer.getInstance().startAutomaticCapture("Front Camera", 0);
-					front_cam.setPixelFormat(PixelFormat.kMJPEG);
-					front_cam.setFPS(15); //was 15
-					
-					if(!front_cam.setResolution(160, 90)){ //halfed, try other resultions mauybe
-						front_cam.setResolution(320, 180);//defualt value if the other resolution does not work
-						System.out.println("******Desired resolution failed for FRONT Camera******");
-					}
-				}catch(Exception e){
-					System.out.println("*****FRONT Camera Failed*****");
-					e.printStackTrace();
-				}
+//
+//				try{
+//					UsbCamera gear_cam = CameraServer.getInstance().startAutomaticCapture("Gear Camera",1);
+//					gear_cam.setPixelFormat(PixelFormat.kMJPEG);
+//					gear_cam.setFPS(10); //wont allow me to set above 10
+//					if(!gear_cam.setResolution(240, 180)){
+//						gear_cam.setResolution(240, 180); //try 240 x 180 next
+//						System.out.println("******Desired resolution failed for GEAR Camera******");
+//
+//					}
+//				
+//		//			gear_cam.getProperty(name)
+//				}catch(Exception e){
+//					System.out.println("*****Gear Camera Failed*****");
+//					e.printStackTrace();
+//				}
+//				
+//				try{
+//					UsbCamera front_cam = CameraServer.getInstance().startAutomaticCapture("Front Camera", 0);
+//					front_cam.setPixelFormat(PixelFormat.kMJPEG);
+//					front_cam.setFPS(15); //was 15
+//					
+//					if(!front_cam.setResolution(160, 90)){ //halfed, try other resultions mauybe
+//						front_cam.setResolution(320, 180);//defualt value if the other resolution does not work
+//						System.out.println("******Desired resolution failed for FRONT Camera******");
+//					}
+//				}catch(Exception e){
+//					System.out.println("*****FRONT Camera Failed*****");
+//					e.printStackTrace();
+//				}
 				
 
 		drivetrain = new ShakerDrivetrain();
@@ -135,6 +137,12 @@ public class Robot extends IterativeRobot {
 		visionTable = new VisionNetworkTable();
 
 		autoSelector = new CommandSelector("Auto Mode");
+		
+		/*
+		 *  the reason that names are added separately is b/c the auto commands need the teamColor
+		 *  as a parameter (so they can't be initialized until we know what the color should be). So:
+		 *  TODO: change the auto modes so they don't use parameters
+		 */
 		autoSelector.addName("Center Gear", 0);
 		autoSelector.addName("Boiler Side Gear", 1);
 		autoSelector.addName("LoadingStation Gear", 2);
@@ -296,15 +304,13 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Hopper current",hopper.getCurrentUsage());
 		SmartDashboard.putNumber("Shooter total current",shooter.getCurrentUsage());
 
-		SmartDashboard.putNumber("Realtime vision error", visionTable.getRealtimeBoilerAngleError());
+		SmartDashboard.putNumber("Realtime vision angle error", visionTable.getRealtimeBoilerAngleError());
+		SmartDashboard.putNumber("Realtime vision distance", visionTable.getRealtimeDistanceToBoiler());
 
-
-		SmartDashboard.putNumber("Camera vision error", visionTable.targetError);
+		SmartDashboard.putNumber("Camera vision angle error", visionTable.targetAngleError);
 		SmartDashboard.putNumber("Camera vision gyro offset", visionTable.gyroOffset);
 		SmartDashboard.putBoolean("Robot still", visionTable.robotNotTurning.getOutputValue());
 		smartDashBSFix *= -1;
-
-		SmartDashboard.putNumber("Camera distance from target (reflective tape) in Inches", visionTable.getRealtimeDistanceToBoiler()); 
 
 		//System.out.println("Vision error = "+ visionTable.getRealtimeBoilerAngleError());
 
