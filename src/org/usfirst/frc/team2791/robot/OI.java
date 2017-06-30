@@ -82,7 +82,7 @@ public class OI {
 		
 		driverA.toggleWhenPressed(new IntakeOn());
 		
-		driverB.whenPressed(new AimWithVision());// TODO Remove this command from driver and give to operator instead of long shot
+		driverB.whenPressed(new DriveWithVision());// TODO Remove this command from driver and give to operator instead of long shot
 
 		driverLB.whileHeld(new DriveWithJoystick());
 		driverRB.whileHeld(new DriveWithJoystick());

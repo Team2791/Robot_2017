@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *Vision based straightening and shooting for sweetspot shooting
  */
-public class AimWithVision extends CommandGroup {
+public class DriveWithVision extends CommandGroup {
 
-	public AimWithVision() {
+	public DriveWithVision() {
 		super("AimWithVision");
 		setInterruptible(true);
 		addSequential(new DrivetrainDelay(0.75));

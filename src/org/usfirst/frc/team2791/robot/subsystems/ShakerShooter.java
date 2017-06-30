@@ -9,8 +9,8 @@ import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.DelayedBoolean;
-import org.usfirst.frc.team2791.robot.util.ShooterLookupTable;
 import org.usfirst.frc.team2791.robot.util.Util;
+import org.usfirst.frc.team2791.robot.util.vision.ShooterLookupTable;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -34,7 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ShakerShooter extends Subsystem {
 
-	private final double ERROR_THRESHOLD = 70;// 40
+	private final double ERROR_THRESHOLD = 40;// 40
 	private final double SHOOTER_GOOD_TIME = 0.1;
 	private DelayedBoolean shooterGoodDelayedBoolean = new DelayedBoolean(SHOOTER_GOOD_TIME);
 
@@ -180,6 +180,15 @@ public class ShakerShooter extends Subsystem {
 		return shooterGoodDelayedBoolean.update(Math.abs(primaryShooterTalon.getError()) < ERROR_THRESHOLD);
 	}
 
+	/**
+	 * @param errorThreshold the max error that is acceptable
+	 * @return true = shooter is within accepted error range of target speed /
+	 *         false = shooter speed outside error range
+	 */
+	public boolean atSpeed(double errorThreshold) {
+		return shooterGoodDelayedBoolean.update(Math.abs(primaryShooterTalon.getError()) < errorThreshold);
+	}
+	
 	/**
 	 * Uses PID to start shooter motors and keep shooter speed at target RPM
 	 * 

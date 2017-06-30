@@ -25,7 +25,7 @@ public class CommandSelector {
 	 * depending on which side of the field you are playing on
 	 * (i.e., side gear autos)
 	 */
-	private String teamColor = "RED";
+	private String teamColor = "BLUE";
 	
 	/**
 	 * An array list that has all of the commands 

@@ -4,7 +4,7 @@ package org.usfirst.frc.team2791.robot;
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring and makes checking
  * the wiring easier.
- * </br><b> There is a Google Sheet with all wiring and pneumatic related information.</b>
+ * </br><b> For team members: There is a Google Sheet with all wiring and pneumatic related information.</b>
  * 
  * @author team2791: See Robot.java for contact info
  */
@@ -20,6 +20,10 @@ public class RobotMap {
 	
 	public static final int RIGHT_DRIVE_ENCODER_PORT_A = 1; //1 on Comp //7 on practice
 	public static final int RIGHT_DRIVE_ENCODER_PORT_B = 0; //0 on Comp //6 on practice
+	
+	public static final int LIGHTS_RED_PIN = 4;
+	public static final int LIGHTS_GREEN_PIN = 5;
+	public static final int LIGHTS_BLUE_PIN = 6;
 		
 	// PWM PORTS
 	public static final int DRIVE_SPARK_LEFT_PORT = 9;

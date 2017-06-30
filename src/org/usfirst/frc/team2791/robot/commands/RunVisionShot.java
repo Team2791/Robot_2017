@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RunVisionShot extends Command{
 	Timer timer = new Timer();
 	private boolean shooterSpunUp = false;
-	private boolean visionWorked = false;
 	
 	public RunVisionShot() {
 		super("RunVisionShot");
@@ -39,7 +38,7 @@ public class RunVisionShot extends Command{
 		Robot.shooter.prepVisionShot();
 
 		// if the shooter worked and vision worked
-		if(Robot.shooter.atSpeed() && visionWorked){
+		if(Robot.shooter.atSpeed(70.0)){
 			shooterSpunUp = true;
 		}
 		
