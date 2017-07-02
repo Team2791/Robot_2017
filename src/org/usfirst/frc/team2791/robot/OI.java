@@ -65,7 +65,8 @@ public class OI {
 		
 		operatorDpadDown.whenPressed(new GearMechActiveIntake()); //intake gear w/ ir sensor logic
 		operatorDpadUp.whenPressed(new GearMechUp());
-		operatorDpadLeft.whileHeld(new RunSweetSpotShot());
+		
+		operatorDpadLeft.whileHeld(new AimAndShoot());
 		operatorDpadRight.whenPressed(new StationaryVisionTurn(0.5,1.5));
 
 		operatorLS.whenPressed(new GearMechDownRunMotors()); //intake gear w/o ir sensor logic
