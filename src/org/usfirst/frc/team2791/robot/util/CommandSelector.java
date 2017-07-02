@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Allows user to list a group of Commands and then select from them based on a key </br>
- * Also has team color choosing capabilities</br>
  * It's basically just an ArrayList for Commands, and some methods to help access them
  */
 public class CommandSelector {
@@ -18,14 +17,6 @@ public class CommandSelector {
 	 * command you would like to select
 	 */
 	private int selectedKey = 0;
-	
-	/**
-	 * This Command Selector also has a team color.
-	 * This is especially helpful for commands that changed 
-	 * depending on which side of the field you are playing on
-	 * (i.e., side gear autos)
-	 */
-	private String teamColor = "BLUE";
 	
 	/**
 	 * An array list that has all of the commands 
@@ -106,38 +97,13 @@ public class CommandSelector {
 	public void setKey(int key){
 		this.selectedKey = key;
 	}
-
-	/**
-	 * Sets the team color to Red
-	 */
-	public void setColorToRed(){
-		this.teamColor = "RED";
-	}
-
-	/**
-	 * Sets the team color to Blue
-	 */
-	public void setColorToBlue(){
-		this.teamColor = "BLUE";
-	}
-
-	/**
-	 * Use the specific color setters  [ setColorToRed() or setColorToBlue() ] if possible 
-	 * @param color the desired team color for the command to operate on, should be "RED" or "BLUE"
-	 */
-	public void setColor(String color){
-		this.teamColor = color;
+	
+	public void changeCommand(Command command, int index){
+		cList.set(index, command);
 	}
 
 	//***Getters***
 	
-	/**
-	 * @return the selected team color
-	 */
-	public String getColor(){
-		return this.teamColor;
-	}
-
 	/**
 	 * @return the int key that corresponds to the position of the desired Command in the ArrayList
 	 */
@@ -195,7 +161,6 @@ public class CommandSelector {
 		}
 		
 		SmartDashboard.putString("Selected " + name + " Command", commandName);
-		SmartDashboard.putString("Selected Team Color", getColor());
 		SmartDashboard.putNumber("Selected " + name + " KEY", getKey());
 
 	}

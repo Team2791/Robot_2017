@@ -60,6 +60,8 @@ public class Robot extends IterativeRobot {
 	public Command autonomousCommand;
 	private boolean lookForAction = false;
 	private CommandSelector autoSelector;	
+	
+	public String teamColor = "BLUE";
 
 
 	/**
@@ -93,12 +95,9 @@ public class Robot extends IterativeRobot {
 
 		drivetrain.setAutoPID();
 
-		
-
 		/*
 		 *  the reason that names are added separately is b/c the auto commands need the teamColor
-		 *  as a parameter (so they can't be initialized until we know what the color should be). So:
-		 *  TODO: change the auto modes so they don't use parameters
+		 *  as a parameter (so they can't be initialized until we know what the color should be)
 		 */
 		autoSelector.addName("Center Gear", 0);
 		autoSelector.addName("Boiler Side Gear", 1);
@@ -107,6 +106,7 @@ public class Robot extends IterativeRobot {
 		autoSelector.addName("Center Gear & Shoot", 4);
 		autoSelector.addName("PID Drive Tuning", 5);
 		autoSelector.addName("PID Turn Tuning", 6);
+		//***When Adding a Command, Remember to add the Command in autonomousInit***
 
 		debug();
 	}
@@ -143,10 +143,10 @@ public class Robot extends IterativeRobot {
 		}
 
 		if(OI.operator.getButtonX()){
-			autoSelector.setColorToBlue();
+			teamColor = "BLUE";
 		}
 		if(OI.operator.getButtonB()){
-			autoSelector.setColorToRed();
+			teamColor = "RED";
 		}
 
 		debug(); //allows us to debug (e.g. encoders and gyro) while disabled
@@ -165,8 +165,6 @@ public class Robot extends IterativeRobot {
 
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
-
-		String teamColor = autoSelector.getColor();
 
 		autoSelector.addCommand(new CenterGearAuton(teamColor), 0);
 		autoSelector.addCommand(new BoilerGearAuton(teamColor), 1);
@@ -293,7 +291,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void debug() {
 
-		autoSelector.debug();
+		SmartDashboard.putString("Selected Team Color", teamColor);
 
 		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
 		SmartDashboard.putNumber("Drivetrain total current", drivetrain.getCurrentUsage());
@@ -311,11 +309,14 @@ public class Robot extends IterativeRobot {
 		smartDashBSFix *= -1;
 
 		//System.out.println("Vision error = "+ visionTable.getRealtimeBoilerAngleError());
+		
+		autoSelector.debug();
 
 		drivetrain.debug();
 		shooter.debug();
 		gearMechanism.debug();
 		hopper.debug();
+		
 		visionTable.debug();
 
 	}

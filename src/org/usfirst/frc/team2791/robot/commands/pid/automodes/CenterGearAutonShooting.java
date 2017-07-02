@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2791.robot.commands.pid.automodes;
 
+import org.usfirst.frc.team2791.robot.commands.AutonGearScore;
 import org.usfirst.frc.team2791.robot.commands.DrivetrainDelay;
 import org.usfirst.frc.team2791.robot.commands.HopperOn;
 import org.usfirst.frc.team2791.robot.commands.IntakeOn;
