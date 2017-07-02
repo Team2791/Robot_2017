@@ -78,20 +78,22 @@ public class Robot extends IterativeRobot {
 		compressor.setClosedLoopControl(true);
 		compressor.start();
 
-		runUSBCameras();
+//		runUSBCameras();
 
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
 		gearMechanism = new ShakerGear();
 		hopper = new ShakerHopper();
 		shooter = new ShakerShooter();
+		
+		visionTable = new VisionNetworkTable();
+		autoSelector = new CommandSelector("Auto Mode");
+		
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 
 		drivetrain.setAutoPID();
 
-		visionTable = new VisionNetworkTable();
-
-		autoSelector = new CommandSelector("Auto Mode");
+		
 
 		/*
 		 *  the reason that names are added separately is b/c the auto commands need the teamColor
@@ -107,10 +109,6 @@ public class Robot extends IterativeRobot {
 		autoSelector.addName("PID Turn Tuning", 6);
 
 		debug();
-	}
-	/**Runs in all GamePeriods*/
-	public void run(){
-		visionTable.run();
 	}
 
 	//************************************************************
@@ -243,6 +241,12 @@ public class Robot extends IterativeRobot {
 		LiveWindow.run();
 		run();
 	}
+	
+
+	/**Runs in all GamePeriods*/
+	public void run(){
+		visionTable.run();
+	}
 
 
 	//*******************************************************************
@@ -299,7 +303,8 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putNumber("Realtime vision angle error", visionTable.getRealtimeBoilerAngleError());
 		SmartDashboard.putNumber("Realtime vision distance", visionTable.getRealtimeDistanceToBoiler());
-
+		SmartDashboard.putNumber("Realtime vision RPM", visionTable.getDistanceBasedRPM());
+		
 		SmartDashboard.putNumber("Camera vision angle error", visionTable.targetAngleError);
 		SmartDashboard.putNumber("Camera vision gyro offset", visionTable.gyroOffset);
 		SmartDashboard.putBoolean("Robot still", visionTable.robotNotTurning.getOutputValue());

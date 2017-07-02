@@ -75,7 +75,9 @@ public class ShakerShooter extends Subsystem {
 			SmartDashboard.putNumber("Shooter D", CONSTANTS.SHOOTER_D);
 			SmartDashboard.putNumber("Shooter FeedForward", CONSTANTS.SHOOTER_FEED_FORWARD);
 			SmartDashboard.putNumber("Shooter Setpoint", CONSTANTS.SHOOTER_SET_POINT);
-
+			SmartDashboard.putNumber("Shooter I Zone", CONSTANTS.SHOOTER_I_ZONE);
+			
+			//not using these
 			SmartDashboard.putNumber("Shooter Long P", CONSTANTS.SHOOTER_LONG_P);
 			SmartDashboard.putNumber("Shooter Long I", CONSTANTS.SHOOTER_LONG_I);
 			SmartDashboard.putNumber("Shooter Long D", CONSTANTS.SHOOTER_LONG_D);

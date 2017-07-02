@@ -91,6 +91,7 @@ public class OI {
 		driverDpadRight.whenPressed(new DriveStraightVision(CONSTANTS.DRIVE_VISION_SWEET_SPOT_FEET, .25));
 		
 		driverBack.whileHeld(new CalibrateGyro());
+		driverDpadUp.whileHeld(new RunVisionShot());
 		
 		System.out.println("OI initialized");
 
