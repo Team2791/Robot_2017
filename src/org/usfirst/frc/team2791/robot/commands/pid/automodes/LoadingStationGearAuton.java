@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2791.robot.commands.pid.automodes;
 
+import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.commands.AutonGearScore;
 import org.usfirst.frc.team2791.robot.commands.pid.DriveStraightEncoderGyro;
 import org.usfirst.frc.team2791.robot.commands.pid.StationaryGyroTurn;
@@ -12,11 +13,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class LoadingStationGearAuton extends CommandGroup {
 
-	/**
-	 * @param red  true if you are on the red side;  false if you are on the blue side
-	 */
-    public LoadingStationGearAuton(String color) {
+    public LoadingStationGearAuton() {
     	super("LoadingStation Gear");
+    	
+    	String color = Robot.teamColor.toString();
     	
     	Timer t = new Timer();
     	t.start();

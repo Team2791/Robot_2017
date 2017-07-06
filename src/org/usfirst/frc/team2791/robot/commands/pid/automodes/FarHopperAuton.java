@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2791.robot.commands.pid.automodes;
 
+import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.commands.DrivetrainDelay;
 import org.usfirst.frc.team2791.robot.commands.HopperOn;
 import org.usfirst.frc.team2791.robot.commands.IntakeOn;
@@ -17,10 +18,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class FarHopperAuton extends CommandGroup {
 
 	double direction = 1.0;
-	/**
-	 * @param red  true if you are on the red side;  false if you are on the blue side
-	 */
-	public FarHopperAuton(String color) {
+
+	public FarHopperAuton() {
+		
+		String color = Robot.teamColor.toString();
 		
 		if(color.equals("RED"))
 			direction = -1.0;

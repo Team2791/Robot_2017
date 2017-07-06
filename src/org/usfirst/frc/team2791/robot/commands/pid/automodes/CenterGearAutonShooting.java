@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2791.robot.commands.pid.automodes;
 
+import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.commands.AutonGearScore;
 import org.usfirst.frc.team2791.robot.commands.DrivetrainDelay;
 import org.usfirst.frc.team2791.robot.commands.HopperOn;
@@ -18,12 +19,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class CenterGearAutonShooting extends CommandGroup {
 	double direction = 1.0;
-	/**
-	 * @param color the team that you are on ("RED" or "BLUE")
-	 */
-	public CenterGearAutonShooting(String color) {
+
+	public CenterGearAutonShooting() {
 		super("Center Gear & Shoot");
 				
+		String color = Robot.teamColor.toString();
+		
 		if(color.equals("RED"))
 			direction = -1.0;
 		else

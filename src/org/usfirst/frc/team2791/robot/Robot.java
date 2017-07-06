@@ -4,11 +4,9 @@ import org.usfirst.frc.team2791.robot.commands.pid.DriveStraightEncoderGyro;
 import org.usfirst.frc.team2791.robot.commands.pid.StationaryGyroTurn;
 import org.usfirst.frc.team2791.robot.commands.pid.automodes.*;
 import org.usfirst.frc.team2791.robot.subsystems.*;
-import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.CommandSelector;
 import org.usfirst.frc.team2791.robot.util.vision.VisionNetworkTable;
 
-import edu.wpi.cscore.AxisCamera;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -61,7 +59,7 @@ public class Robot extends IterativeRobot {
 	private boolean lookForAction = false;
 	private CommandSelector autoSelector;	
 	
-	public String teamColor = "BLUE";
+	public static TeamColor teamColor = TeamColor.BLUE;
 
 
 	/**
@@ -80,7 +78,7 @@ public class Robot extends IterativeRobot {
 		compressor.setClosedLoopControl(true);
 		compressor.start();
 
-//		runUSBCameras();
+		runUSBCameras();
 
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
@@ -143,10 +141,10 @@ public class Robot extends IterativeRobot {
 		}
 
 		if(OI.operator.getButtonX()){
-			teamColor = "BLUE";
+			teamColor = TeamColor.BLUE;
 		}
 		if(OI.operator.getButtonB()){
-			teamColor = "RED";
+			teamColor = TeamColor.RED;
 		}
 
 		debug(); //allows us to debug (e.g. encoders and gyro) while disabled
@@ -166,11 +164,13 @@ public class Robot extends IterativeRobot {
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
 
-		autoSelector.addCommand(new CenterGearAuton(teamColor), 0);
-		autoSelector.addCommand(new BoilerGearAuton(teamColor), 1);
-		autoSelector.addCommand(new LoadingStationGearAuton(teamColor), 2);
-		autoSelector.addCommand(new HopperAuton(teamColor), 3);
-		autoSelector.addCommand(new CenterGearAutonShooting(teamColor), 4);
+		String color = teamColor.toString();
+		
+		autoSelector.addCommand(new CenterGearAuton(), 0);
+		autoSelector.addCommand(new BoilerGearAuton(), 1);
+		autoSelector.addCommand(new LoadingStationGearAuton(), 2);
+		autoSelector.addCommand(new HopperAuton(), 3);
+		autoSelector.addCommand(new CenterGearAutonShooting(), 4);
 		autoSelector.addCommand(new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6), 5);
 		autoSelector.addCommand(new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1), 6);
 
@@ -179,10 +179,7 @@ public class Robot extends IterativeRobot {
 		autonomousCommand = autoSelector.getSelected();
 
 		if(autonomousCommand.getName().equals("Center Gear & Shoot")){
-			if(teamColor.equals("RED"))
-				visionTable.setVisionOffset(-60.0);
-			else
-				visionTable.setVisionOffset(60.0);
+			visionTable.setVisionOffset(teamColor.getVisionOffset());
 		}
 
 		System.out.println("***Starting "+teamColor+" "+autonomousCommand.getName()+" AutoMode***");
@@ -291,7 +288,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void debug() {
 
-		SmartDashboard.putString("Selected Team Color", teamColor);
+		SmartDashboard.putString("Selected Team Color", teamColor.toString());
 
 		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
 		SmartDashboard.putNumber("Drivetrain total current", drivetrain.getCurrentUsage());
@@ -325,5 +322,26 @@ public class Robot extends IterativeRobot {
 		AUTONOMOUS, TELEOP, DISABLED
 	}
 
+	public enum TeamColor{
+		BLUE("BLUE", 60.0), RED("RED", -60.0);
+		
+		private String color;
+		private double visionOffset;
+		
+		TeamColor(String color, double vOffset){
+			this.color = color;
+			this.visionOffset = vOffset;
+		}
+		
+		public double getVisionOffset(){
+			return this.visionOffset;
+		}
+		
+		@Override
+		public String toString(){
+			return color;
+		}
+	
+	}
 }
 

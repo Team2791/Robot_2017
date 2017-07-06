@@ -2,9 +2,6 @@ package org.usfirst.frc.team2791.trajectory.automodes;
 
 import org.usfirst.frc.team2791.robot.commands.AutonGearScore;
 import org.usfirst.frc.team2791.robot.commands.DrivetrainDelay;
-import org.usfirst.frc.team2791.robot.commands.GearMechScore;
-import org.usfirst.frc.team2791.trajectory.automodes.FollowPath.Color;
-import org.usfirst.frc.team2791.trajectory.automodes.FollowPath.Direction;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
