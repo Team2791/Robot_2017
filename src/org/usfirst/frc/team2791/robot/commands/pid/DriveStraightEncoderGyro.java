@@ -2,11 +2,6 @@ package org.usfirst.frc.team2791.robot.commands.pid;
 
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.util.BasicPID;
-import org.usfirst.frc.team2791.robot.util.CONSTANTS;
-
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *Uses BasicPID util class to create a PID for auto-driving. PID makes sure that the distance is correct and the robot drives straight

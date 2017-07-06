@@ -85,9 +85,9 @@ public abstract class DrivetrainPIDTurn extends Command {
     }
     public void updatePIDGains() {
     	// get new values from smart dash
-    	CONSTANTS.STATIONARY_ANGLE_P = SmartDashboard.getNumber("Stat Angle P");
-		CONSTANTS.STATIONARY_ANGLE_I = SmartDashboard.getNumber("Stat Angle I");
-		CONSTANTS.STATIONARY_ANGLE_D = SmartDashboard.getNumber("Stat Angle D");
+    	CONSTANTS.STATIONARY_ANGLE_P = SmartDashboard.getNumber("Stat Angle P", CONSTANTS.STATIONARY_ANGLE_P );
+		CONSTANTS.STATIONARY_ANGLE_I = SmartDashboard.getNumber("Stat Angle I", CONSTANTS.STATIONARY_ANGLE_I );
+		CONSTANTS.STATIONARY_ANGLE_D = SmartDashboard.getNumber("Stat Angle D", CONSTANTS.STATIONARY_ANGLE_D );
 		
 		stationaryAnglePID.changeGains(CONSTANTS.STATIONARY_ANGLE_P, CONSTANTS.STATIONARY_ANGLE_I,
 				CONSTANTS.STATIONARY_ANGLE_D);

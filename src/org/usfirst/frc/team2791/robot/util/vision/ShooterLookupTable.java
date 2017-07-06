@@ -1,8 +1,13 @@
 package org.usfirst.frc.team2791.robot.util.vision;
 
+import org.usfirst.frc.team2791.robot.util.Util;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterLookupTable {
 
+	private static double rpmOffset = -15.0;
+	
 	/**
 	 *{double dist(inches), double rpm}
 	 */
@@ -31,8 +36,10 @@ public class ShooterLookupTable {
 
 
 	public ShooterLookupTable(){
-		sortByFirstElement(normalYByRPM);
-		sortByFirstElement(distanceByRPM);
+		normalYByRPM = Util.sortByFirstElement(normalYByRPM);
+		normalYByRPM = Util.sortByFirstElement(distanceByRPM);
+		
+		SmartDashboard.putNumber("RPM Offset", rpmOffset);
 	}
 
 
@@ -57,9 +64,9 @@ public class ShooterLookupTable {
 			return normalYByRPM[0][1]; 
 		}
 
-		double deltaY = normalYByRPM[highKey][0]-normalYByRPM[lowKey][0];// diff b/w: two experimental distances
-		double deltaRPM =  normalYByRPM[highKey][1]-normalYByRPM[lowKey][1];//diff b/w: RPMs for the two experimental distances
-		double diffKey = ndcY - normalYByRPM[lowKey][0];//diff b/w: experimental ndcY and measured ndcY	
+		double deltaY = normalYByRPM[highKey][0]-normalYByRPM[lowKey][0];  // diff b/w: two experimental distances
+		double deltaRPM =  normalYByRPM[highKey][1]-normalYByRPM[lowKey][1];  //diff b/w: RPMs for the two experimental distances
+		double diffKey = ndcY - normalYByRPM[lowKey][0];  //diff b/w: experimental ndcY and measured ndcY	
 
 		try {
 			return diffKey * (deltaRPM / deltaY) + normalYByRPM[lowKey][1] ; 
@@ -91,16 +98,16 @@ public class ShooterLookupTable {
 			return distanceByRPM[0][1]; 
 		}
 
-		double deltaY = distanceByRPM[highKey][0]-distanceByRPM[lowKey][0];//the difference between the two experimental distances
-		double deltaRPM =  distanceByRPM[highKey][1]-distanceByRPM[lowKey][1];//difference in RPMs for the two experimental distances
-		double diffKey = distInches - distanceByRPM[lowKey][0];//difference between the experimental distInches and measured distInches
+		double deltaY = distanceByRPM[highKey][0]-distanceByRPM[lowKey][0];  //the difference between the two experimental distances
+		double deltaRPM =  distanceByRPM[highKey][1]-distanceByRPM[lowKey][1];  //difference in RPMs for the two experimental distances
+		double diffKey = distInches - distanceByRPM[lowKey][0];  //difference between the experimental distInches and measured distInches
 
 		System.out.println("Delta Distance: " + deltaY);
 		System.out.println("Delta RPM: " + deltaRPM);
 		System.out.println("Delta Key: " + diffKey);
 
 		try {
-			return diffKey * (deltaRPM / deltaY) + distanceByRPM[lowKey][1] ;
+			return (diffKey * (deltaRPM / deltaY) + distanceByRPM[lowKey][1]) + SmartDashboard.getNumber("RPM Offset", rpmOffset); 
 		}
 		catch(ArrayIndexOutOfBoundsException e){
 			System.out.println("lookup table out of bounds");
@@ -108,27 +115,5 @@ public class ShooterLookupTable {
 		}
 	}
 
-	//FIRST puns ftw
-	private static void sortByFirstElement(double[][] arr) { 
-		int n = arr.length;  
-		double tempY = 0;  
-		double tempRPM = 0;
-		for(int i=0; i < n; i++){  
-			for(int j=1; j < (n-i); j++){  
-				if(arr[j-1][0] > arr[j][0]){  //swap elements  
-					
-					tempY = arr[j-1][0];
-					tempRPM = arr[j-1][1];
 
-					arr[j-1][0] = arr[j][0];  
-					arr[j][0] = tempY;  
-
-					arr[j-1][1] = arr[j][1];
-					arr[j][1] = tempRPM;
-				}  
-
-			}  
-		}  
-
-	}  
 }

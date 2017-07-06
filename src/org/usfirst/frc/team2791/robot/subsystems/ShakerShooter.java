@@ -121,8 +121,7 @@ public class ShakerShooter extends Subsystem {
 
 	}
 
-	public void initDefaultCommand() {
-	}
+	public void initDefaultCommand() {}
 
 	/**
 	 * Initiates a shot with a speed based on the distance from the boiler and the Look Up Table. Also puts the hood up. </br>

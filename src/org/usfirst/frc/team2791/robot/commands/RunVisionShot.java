@@ -38,7 +38,7 @@ public class RunVisionShot extends Command{
 		Robot.shooter.prepVisionShot();
 
 		// if the shooter worked and vision worked
-		if(Robot.shooter.atSpeed(70.0)){
+		if(Robot.shooter.atSpeed()){
 			shooterSpunUp = true;
 		}
 		
