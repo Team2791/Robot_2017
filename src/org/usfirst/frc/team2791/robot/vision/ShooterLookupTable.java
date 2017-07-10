@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2791.robot.util.vision;
+package org.usfirst.frc.team2791.robot.vision;
 
 import org.usfirst.frc.team2791.robot.util.Util;
 
@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterLookupTable {
 
-	private static double rpmOffset = -15.0;
+	private static double rpmOffset = -30; //-15.0
 	
 	/**
 	 *{double dist(inches), double rpm}
@@ -26,18 +26,28 @@ public class ShooterLookupTable {
 	 *{double ndcY, double rpm}
 	 */
 	private static double normalYByRPM[][] = {
-			{-0.74, 3700.0},
-			{-0.54, 3500.0},
-			{-0.18, 3175.0},
-			{ 0.14, 3025.0},
-			{ 0.61, 2890.0},
-			{ 0.84, 2835.0}
+			{-0.800, 3800.0},
+			{-0.755, 3600.0},
+			{-0.622, 3440.0},
+			{ -0.444, 3350.0},
+			{ -0.155, 3100.0},
+			{0.111, 3070.0},
+			{0.433, 2925.0},
+			{0.744, 2830.0},
+			{0.833, 2810.0}
 	};
+	
+//	{-0.74, 3700.0},
+//	{-0.54, 3500.0},
+//	{-0.18, 3175.0},
+//	{ 0.14, 3025.0},
+//	{ 0.61, 2890.0},
+//	{ 0.84, 2835.0}
 
 
 	public ShooterLookupTable(){
+		distanceByRPM = Util.sortByFirstElement(distanceByRPM);
 		normalYByRPM = Util.sortByFirstElement(normalYByRPM);
-		normalYByRPM = Util.sortByFirstElement(distanceByRPM);
 		
 		SmartDashboard.putNumber("RPM Offset", rpmOffset);
 	}
@@ -69,11 +79,11 @@ public class ShooterLookupTable {
 		double diffKey = ndcY - normalYByRPM[lowKey][0];  //diff b/w: experimental ndcY and measured ndcY	
 
 		try {
-			return diffKey * (deltaRPM / deltaY) + normalYByRPM[lowKey][1] ; 
+			return (diffKey * (deltaRPM / deltaY) + normalYByRPM[lowKey][1]) + SmartDashboard.getNumber("RPM Offset", rpmOffset) ; 
 		}
 		catch(ArrayIndexOutOfBoundsException e){
 			System.out.println("lookup table out of bounds");
-			return 3700;
+			return 3800;
 		}
 	}
 
@@ -107,7 +117,7 @@ public class ShooterLookupTable {
 		System.out.println("Delta Key: " + diffKey);
 
 		try {
-			return (diffKey * (deltaRPM / deltaY) + distanceByRPM[lowKey][1]) + SmartDashboard.getNumber("RPM Offset", rpmOffset); 
+			return (diffKey * (deltaRPM / deltaY) + distanceByRPM[lowKey][1]) + SmartDashboard.getNumber("RPM Offset",rpmOffset); 
 		}
 		catch(ArrayIndexOutOfBoundsException e){
 			System.out.println("lookup table out of bounds");

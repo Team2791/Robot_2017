@@ -5,7 +5,7 @@ import org.usfirst.frc.team2791.robot.commands.pid.StationaryGyroTurn;
 import org.usfirst.frc.team2791.robot.commands.pid.automodes.*;
 import org.usfirst.frc.team2791.robot.subsystems.*;
 import org.usfirst.frc.team2791.robot.util.CommandSelector;
-import org.usfirst.frc.team2791.robot.util.vision.VisionNetworkTable;
+import org.usfirst.frc.team2791.robot.vision.VisionNetworkTable;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode.PixelFormat;
@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -69,6 +70,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 
+		
 		System.out.println("Starting to init my systems.");
 		gamePeriod = GamePeriod.DISABLED;
 
@@ -78,7 +80,6 @@ public class Robot extends IterativeRobot {
 		compressor.setClosedLoopControl(true);
 		compressor.start();
 
-		runUSBCameras();
 
 		drivetrain = new ShakerDrivetrain();
 		intake = new ShakerIntake();
@@ -89,13 +90,13 @@ public class Robot extends IterativeRobot {
 		visionTable = new VisionNetworkTable();
 		autoSelector = new CommandSelector("Auto Mode");
 		
-		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 
 		drivetrain.setAutoPID();
 
 		/*
-		 *  the reason that names are added separately is b/c the auto commands need the teamColor
-		 *  as a parameter (so they can't be initialized until we know what the color should be)
+		 *  the reason that names are added separately is b/c the auto commands need to know
+		 *  what color we are on (which happens after disabled), but we need to know what the
+		 *  selector is currently selecting for the Driver Station to know
 		 */
 		autoSelector.addName("Center Gear", 0);
 		autoSelector.addName("Boiler Side Gear", 1);
@@ -105,6 +106,9 @@ public class Robot extends IterativeRobot {
 		autoSelector.addName("PID Drive Tuning", 5);
 		autoSelector.addName("PID Turn Tuning", 6);
 		//***When Adding a Command, Remember to add the Command in autonomousInit***
+
+		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
+//		runUSBCameras();
 
 		debug();
 	}
@@ -163,8 +167,6 @@ public class Robot extends IterativeRobot {
 
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
-
-		String color = teamColor.toString();
 		
 		autoSelector.addCommand(new CenterGearAuton(), 0);
 		autoSelector.addCommand(new BoilerGearAuton(), 1);
@@ -179,7 +181,7 @@ public class Robot extends IterativeRobot {
 		autonomousCommand = autoSelector.getSelected();
 
 		if(autonomousCommand.getName().equals("Center Gear & Shoot")){
-			visionTable.setVisionOffset(teamColor.getVisionOffset());
+			visionTable.setVisionOffset(teamColor.visionOffset);
 		}
 
 		System.out.println("***Starting "+teamColor+" "+autonomousCommand.getName()+" AutoMode***");
@@ -298,7 +300,7 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putNumber("Realtime vision angle error", visionTable.getRealtimeBoilerAngleError());
 		SmartDashboard.putNumber("Realtime vision distance", visionTable.getRealtimeDistanceToBoiler());
-		SmartDashboard.putNumber("Realtime vision RPM", visionTable.getDistanceBasedRPM());
+		SmartDashboard.putNumber("Realtime vision RPM", visionTable.getVisionBasedRPM());
 		
 		SmartDashboard.putNumber("Camera vision angle error", visionTable.targetAngleError);
 		SmartDashboard.putNumber("Camera vision gyro offset", visionTable.gyroOffset);
@@ -326,15 +328,11 @@ public class Robot extends IterativeRobot {
 		BLUE("BLUE", 60.0), RED("RED", -60.0);
 		
 		private String color;
-		private double visionOffset;
+		public double visionOffset;
 		
 		TeamColor(String color, double vOffset){
 			this.color = color;
 			this.visionOffset = vOffset;
-		}
-		
-		public double getVisionOffset(){
-			return this.visionOffset;
 		}
 		
 		@Override

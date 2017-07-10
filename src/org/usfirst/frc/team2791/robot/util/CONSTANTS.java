@@ -23,7 +23,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	/*******************************PID VALUES****************************************/
 	
 	// Shooter PID
-	public static final double CAMERA_HORIZONTAL_OFFSET = 3.1;
+	public static final double CAMERA_HORIZONTAL_OFFSET = 0.0;  //3.1
 	
 	public static final double SHOOTER_SET_POINT = 2850; //2765 was a bit too low
 	public static final double SHOOTER_LONG_SET_POINT = 3025.0; //3650
@@ -59,7 +59,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static double DRIVE_DISTANCE_D = 0.03;
 	
 	public static double STATIONARY_ANGLE_P = 0.04;
-	public static double STATIONARY_ANGLE_I = 0.02; //0.1 was too little -TVR Q48
+	public static double STATIONARY_ANGLE_I = 0.02; //
 	public static double STATIONARY_ANGLE_D = 0.004;
 	
 	public static double shootingDriveP = 0.025;

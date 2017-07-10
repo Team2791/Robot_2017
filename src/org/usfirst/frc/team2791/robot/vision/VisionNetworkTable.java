@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2791.robot.util.vision;
+package org.usfirst.frc.team2791.robot.vision;
 
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.util.DelayedBoolean;
@@ -29,8 +29,6 @@ public class VisionNetworkTable implements ITableListener {
 	public VisionNetworkTable() {
 		visionTargetsTable = NetworkTable.getTable("GRIP/myContoursReport");
 		visionTargetsTable.addTableListener(this);
-
-		SmartDashboard.putNumber("Min Speed to Calc Distance", MIN_SPEED_TO_CALC_DISTANCE);
 	}
 
 	public void setVisionOffset(double offset){
@@ -50,7 +48,7 @@ public class VisionNetworkTable implements ITableListener {
 		return distToBoiler;
 	}
 
-	public double getDistanceBasedRPM(){
+	public double getVisionBasedRPM(){
 		return rpm;
 	}
 
@@ -99,7 +97,7 @@ public class VisionNetworkTable implements ITableListener {
 			try {
 				foundContours = getFoundContours();
 			} catch (IndexOutOfBoundsException e){
-				System.out.println("Messed up reading network tables. Trying again?");
+//				System.out.println("Messed up reading network tables. Trying again?");
 			}
 		}
 
@@ -113,7 +111,7 @@ public class VisionNetworkTable implements ITableListener {
 
 			} catch (Exception e) {
 				if(e.getMessage().equals("No Targets")) {
-					System.out.println("Found no targets. Not changing variables");
+//					System.out.println("Found no targets. Not changing variables");
 				} else {
 					System.out.println("vision angle calculation messed up");
 				}	
@@ -130,7 +128,7 @@ public class VisionNetworkTable implements ITableListener {
 				rpm = lookupTable.getRPMFromNDCY(visionMath.getNormalizedY(selectTarget().centerY));
 			} catch (Exception e) {
 				if(e.getMessage().equals("No Targets")) {
-					System.out.println("Found no targets. Not changing variables");
+//					System.out.println("Found no targets. Not changing variables");
 				} else {
 					System.out.println("vision distance calculation messed up");
 				}

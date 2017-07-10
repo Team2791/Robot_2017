@@ -43,10 +43,10 @@ public class RunLongShot extends Command{
 				Robot.hopper.runHopper();
 			} else {
 				Robot.hopper.stopHopper();
-			}
-		} else {
-			Robot.hopper.runHopperBackwards();
 		}
+	} else {
+		Robot.hopper.runHopperBackwards();
+	}
 	}
 
 	@Override

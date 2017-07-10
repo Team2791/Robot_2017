@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2791.robot.util.vision;
+package org.usfirst.frc.team2791.robot.vision;
 
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 

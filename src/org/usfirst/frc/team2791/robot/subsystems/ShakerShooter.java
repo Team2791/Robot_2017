@@ -10,15 +10,17 @@ import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.DelayedBoolean;
 import org.usfirst.frc.team2791.robot.util.Util;
-import org.usfirst.frc.team2791.robot.util.vision.ShooterLookupTable;
+import org.usfirst.frc.team2791.robot.vision.ShooterLookupTable;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.CANTalon.VelocityMeasurementPeriod;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -52,13 +54,17 @@ public class ShakerShooter extends Subsystem {
 	public ShooterLookupTable lookUpTable = new ShooterLookupTable();
 
 	public ShakerShooter() {
+		
+//		NetworkTable.setUpdateRate(.01);
 
 		shooterSolenoid = new Solenoid(RobotMap.PCM_MODULE, RobotMap.SHOOTER_CHANNEL);
 
 		primaryShooterTalon = new CANTalon(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
 		primaryShooterTalon.setInverted(true);
 //		primaryShooterTalon.setNominalClosedLoopVoltage(12.0);
-
+//		primaryShooterTalon.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_25Ms);
+		
+		
 		followerShooterTalonA = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT_A);
 //		followerShooterTalonA.setNominalClosedLoopVoltage(12.0);
 		followerShooterTalonB = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT_B); 
@@ -132,7 +138,7 @@ public class ShakerShooter extends Subsystem {
 		closeShot = false;
 		visionShot = true;
 		
-		setShooterSpeedsPID(Robot.visionTable.getDistanceBasedRPM());
+		setShooterSpeedsPID(Robot.visionTable.getVisionBasedRPM());
 	}
 	
 	
