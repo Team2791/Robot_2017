@@ -23,6 +23,11 @@ public class RunVisionShot extends Command{
 		requires(Robot.hopper);
 	}
 
+	/*
+	 *TODO: It might be best to find one rpm at the beginning of the command 
+	 *and use it in a shooter.customShot(). Because if the image filtering is off, the 
+	 *contours might flucuate and mess with the rpm 
+	 */
 	@Override
 	protected void initialize() {
 		timer.reset();
@@ -37,7 +42,6 @@ public class RunVisionShot extends Command{
 		Robot.shooter.setShooterSolenoidState(false); // down position is false
 		Robot.shooter.prepVisionShot();
 
-		// if the shooter worked and vision worked
 		if(Robot.shooter.atSpeed()){
 			shooterSpunUp = true;
 		}

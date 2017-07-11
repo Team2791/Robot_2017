@@ -5,6 +5,7 @@ import org.usfirst.frc.team2791.robot.commands.AutonGearScore;
 import org.usfirst.frc.team2791.robot.commands.DrivetrainDelay;
 import org.usfirst.frc.team2791.robot.commands.HopperOn;
 import org.usfirst.frc.team2791.robot.commands.IntakeOn;
+import org.usfirst.frc.team2791.robot.commands.RunVisionShot;
 import org.usfirst.frc.team2791.robot.commands.SpinUpShooter;
 import org.usfirst.frc.team2791.robot.commands.pid.DriveEncoderBangBang;
 import org.usfirst.frc.team2791.robot.commands.pid.DriveStraightEncoderGyro;
@@ -42,8 +43,11 @@ public class CenterGearAutonShooting extends CommandGroup {
 		addSequential(new TurnGyroBangBang(0.45 * direction , 62.0 * direction)); //65.0
 		addSequential(new DriveEncoderBangBang(0.7, 0.0, 1.5, 1.0)); //1.5, 1.0 was just a bit short
 				
-		addSequential(new DrivetrainDelay(1.25));
+		addSequential(new DrivetrainDelay(0.75));
 		addSequential(new StationaryVisionTurn(0.5,1.5));//0.4,1.0
 		addSequential(new HopperOn());
+		
+//		addSequential(new RunVisionShot());
+
     }
 }
