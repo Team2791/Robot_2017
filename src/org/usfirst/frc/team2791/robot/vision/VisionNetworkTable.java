@@ -113,7 +113,7 @@ public class VisionNetworkTable implements ITableListener {
 				if(e.getMessage().equals("No Targets")) {
 //					System.out.println("Found no targets. Not changing variables");
 				} else {
-					System.out.println("vision angle calculation messed up");
+//					System.out.println("vision angle calculation messed up");
 				}	
 			}
 		}
@@ -130,7 +130,7 @@ public class VisionNetworkTable implements ITableListener {
 				if(e.getMessage().equals("No Targets")) {
 //					System.out.println("Found no targets. Not changing variables");
 				} else {
-					System.out.println("vision distance calculation messed up");
+//					System.out.println("vision distance calculation messed up");
 				}
 			}
 //		}
@@ -168,6 +168,14 @@ public class VisionNetworkTable implements ITableListener {
 
 	public void debug(){
 		visionMath.debug();
+		
+		SmartDashboard.putNumber("Realtime vision angle error", getRealtimeBoilerAngleError());
+		SmartDashboard.putNumber("Realtime vision distance", getRealtimeDistanceToBoiler());
+		SmartDashboard.putNumber("Realtime vision RPM", getVisionBasedRPM());
+		
+		SmartDashboard.putNumber("Camera vision angle error", targetAngleError);
+		SmartDashboard.putNumber("Camera vision gyro offset", gyroOffset);
+		SmartDashboard.putBoolean("Robot still", robotNotTurning.getOutputValue());
 		
 		AnalyzedContour myContour;
 		try {

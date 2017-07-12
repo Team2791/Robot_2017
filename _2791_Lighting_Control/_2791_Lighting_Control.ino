@@ -1,5 +1,8 @@
 #include <Adafruit_NeoPixel.h>
-//Written by Noah Page for use for 2 Adafruit NeoPixels for Team 2791's RGB light strips
+/*
+ *@author Noah Page 
+ *Operate 2 Adafruit NeoPixels for Team 2791's RGB light strips
+ */
 int PixelNum = 59;
 int pin = 11;
 int pin2 = 6;

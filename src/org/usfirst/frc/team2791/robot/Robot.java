@@ -5,6 +5,7 @@ import org.usfirst.frc.team2791.robot.commands.pid.StationaryGyroTurn;
 import org.usfirst.frc.team2791.robot.commands.pid.automodes.*;
 import org.usfirst.frc.team2791.robot.subsystems.*;
 import org.usfirst.frc.team2791.robot.util.CommandSelector;
+import org.usfirst.frc.team2791.robot.util.LightController;
 import org.usfirst.frc.team2791.robot.vision.VisionNetworkTable;
 
 import edu.wpi.cscore.UsbCamera;
@@ -51,7 +52,7 @@ public class Robot extends IterativeRobot {
 	public static ShakerDrivetrain drivetrain;
 
 	public static VisionNetworkTable visionTable; 
-
+	
 	private double lastAutonLoopTime;
 
 	private double smartDashBSFix = 0.00001;
@@ -61,6 +62,8 @@ public class Robot extends IterativeRobot {
 	private CommandSelector autoSelector;	
 	
 	public static TeamColor teamColor = TeamColor.BLUE;
+	
+	public static LightController lights = new LightController();
 
 
 	/**
@@ -98,11 +101,11 @@ public class Robot extends IterativeRobot {
 		 *  what color we are on (which happens after disabled), but we need to know what the
 		 *  selector is currently selecting for the Driver Station to know
 		 */
-		autoSelector.addName("Center Gear", 0);
+		autoSelector.addName("Center Gear & Shoot", 0);
 		autoSelector.addName("Boiler Side Gear", 1);
 		autoSelector.addName("LoadingStation Gear", 2);
 		autoSelector.addName("Hopper Auton", 3);
-		autoSelector.addName("Center Gear & Shoot", 4);
+		autoSelector.addName("Center Gear", 4);
 		autoSelector.addName("PID Drive Tuning", 5);
 		autoSelector.addName("PID Turn Tuning", 6);
 		//***When Adding a Command, Remember to add the Command in autonomousInit***
@@ -168,11 +171,11 @@ public class Robot extends IterativeRobot {
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
 		
-		autoSelector.addCommand(new CenterGearAuton(), 0);
+		autoSelector.addCommand(new CenterGearAutonShooting(), 0);
 		autoSelector.addCommand(new BoilerGearAuton(), 1);
 		autoSelector.addCommand(new LoadingStationGearAuton(), 2);
 		autoSelector.addCommand(new HopperAuton(), 3);
-		autoSelector.addCommand(new CenterGearAutonShooting(), 4);
+		autoSelector.addCommand(new CenterGearAuton(), 4);
 		autoSelector.addCommand(new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6), 5);
 		autoSelector.addCommand(new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1), 6);
 
@@ -243,6 +246,7 @@ public class Robot extends IterativeRobot {
 	/**Runs in all GamePeriods*/
 	public void run(){
 		visionTable.run();
+		lights.run();
 	}
 
 
@@ -257,28 +261,28 @@ public class Robot extends IterativeRobot {
 			gear_cam.setPixelFormat(PixelFormat.kMJPEG);
 			gear_cam.setFPS(10); //wont allow me to set above 10
 			if(!gear_cam.setResolution(240, 180)){
-				gear_cam.setResolution(240, 180); //try 240 x 180 next
-				System.out.println("******Desired resolution failed for GEAR Camera******");
+				gear_cam.setResolution(240, 180); 
+				System.out.println("******Desired resolution FAILED for GEAR Camera******");
 
 			}
 
 			//			gear_cam.getProperty(name)
 		}catch(Exception e){
-			System.out.println("*****Gear Camera Failed*****");
+			System.out.println("*****Gear Camera FAILED*****");
 			e.printStackTrace();
 		}
 
 		try{
 			UsbCamera front_cam = CameraServer.getInstance().startAutomaticCapture("Front Camera", 0);
 			front_cam.setPixelFormat(PixelFormat.kMJPEG);
-			front_cam.setFPS(15); //was 15
+			front_cam.setFPS(15); 
 
-			if(!front_cam.setResolution(160, 90)){ //halfed, try other resultions mauybe
+			if(!front_cam.setResolution(160, 90)){ //halfed
 				front_cam.setResolution(320, 180);//default value if the other resolution does not work
-				System.out.println("******Desired resolution failed for FRONT Camera******");
+				System.out.println("******Desired resolution FAILED for FRONT Camera******");
 			}
 		}catch(Exception e){
-			System.out.println("*****FRONT Camera Failed*****");
+			System.out.println("*****FRONT Camera FAILED*****");
 			e.printStackTrace();
 		}
 
@@ -298,16 +302,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Hopper current",hopper.getCurrentUsage());
 		SmartDashboard.putNumber("Shooter total current",shooter.getCurrentUsage());
 
-		SmartDashboard.putNumber("Realtime vision angle error", visionTable.getRealtimeBoilerAngleError());
-		SmartDashboard.putNumber("Realtime vision distance", visionTable.getRealtimeDistanceToBoiler());
-		SmartDashboard.putNumber("Realtime vision RPM", visionTable.getVisionBasedRPM());
-		
-		SmartDashboard.putNumber("Camera vision angle error", visionTable.targetAngleError);
-		SmartDashboard.putNumber("Camera vision gyro offset", visionTable.gyroOffset);
-		SmartDashboard.putBoolean("Robot still", visionTable.robotNotTurning.getOutputValue());
 		smartDashBSFix *= -1;
-
-		//System.out.println("Vision error = "+ visionTable.getRealtimeBoilerAngleError());
 		
 		autoSelector.debug();
 
