@@ -1,14 +1,14 @@
 package org.usfirst.frc.team2791.robot.commands.pid.automodes;
 
+import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.commands.DrivetrainDelay;
-import org.usfirst.frc.team2791.robot.commands.HopperOn;
+import org.usfirst.frc.team2791.robot.commands.HopperOnOnceAtSpeed;
 import org.usfirst.frc.team2791.robot.commands.IntakeOn;
 import org.usfirst.frc.team2791.robot.commands.RunVisionShot;
 import org.usfirst.frc.team2791.robot.commands.SpinUpShooter;
 import org.usfirst.frc.team2791.robot.commands.pid.DriveEncoderBangBang;
 import org.usfirst.frc.team2791.robot.commands.pid.StationaryVisionTurn;
 import org.usfirst.frc.team2791.robot.commands.pid.TurnGyroBangBang;
-import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -19,12 +19,11 @@ public class HopperAuton extends CommandGroup {
 
 	double direction = 1.0;
 	
-	/**
-	 * @param red  true if you are on the red side;  false if you are on the blue side
-	 */
-	public HopperAuton(String color) {
+	public HopperAuton() {
 		
 		super("Hopper Auton");
+		
+		String color = Robot.teamColor.toString();
 		
 		if(color.equals("RED")) {
 			System.out.println("Red hopper");
@@ -52,9 +51,11 @@ public class HopperAuton extends CommandGroup {
 		addSequential(new DrivetrainDelay(0.75));
 		
 		addSequential(new StationaryVisionTurn(.5, 1.0));
+
+//		addParallel(new SpinUpShooter(Robot.visionTable.getDistanceBasedRPM()));
+//		addSequential(new HopperOnOnceAtSpeed());
+
 		addSequential(new RunVisionShot());
-//		addSequential(new HopperOn());
-		
     }
 	
 	

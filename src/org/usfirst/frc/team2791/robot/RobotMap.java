@@ -21,9 +21,9 @@ public class RobotMap {
 	public static final int RIGHT_DRIVE_ENCODER_PORT_A = 1; //1 on Comp //7 on practice
 	public static final int RIGHT_DRIVE_ENCODER_PORT_B = 0; //0 on Comp //6 on practice
 	
-	public static final int LIGHTS_RED_PIN = 4;
-	public static final int LIGHTS_GREEN_PIN = 5;
-	public static final int LIGHTS_BLUE_PIN = 6;
+	public static final int LIGHTS_PIN_A = 4;
+	public static final int LIGHTS_PIN_B = 5;
+	public static final int LIGHTS_PIN_C = 6;
 		
 	// PWM PORTS
 	public static final int DRIVE_SPARK_LEFT_PORT = 9;
@@ -41,6 +41,7 @@ public class RobotMap {
 	// CAN
 	public static final int PDP = 0; //0
 	public static final int PCM_MODULE = 1; //1
+	
 	
 	public static final int PRIMARY_SHOOTER_TALON_PORT = 10;
 	public static final int FOLLOWER_SHOOTER_TALON_PORT_A = 11;

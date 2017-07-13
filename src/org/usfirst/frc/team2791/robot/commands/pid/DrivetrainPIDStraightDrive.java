@@ -31,9 +31,9 @@ public abstract class DrivetrainPIDStraightDrive extends Command {
 
 	public DrivetrainPIDStraightDrive(double distanceToDrive, double maxOutput, double timeOut) {
 		super("Encoder Driving Base Class");
+		requires(Robot.drivetrain);
 		timeForRelease = timeOut;
 		
-		requires(Robot.drivetrain);
 		this.distanceToDrive = distanceToDrive;
 		this.maxOutput = maxOutput;
 
@@ -112,17 +112,17 @@ public abstract class DrivetrainPIDStraightDrive extends Command {
 	
 	public void updatePIDGains() {
 		// get new values from smart dash
-		CONSTANTS.STATIONARY_ANGLE_P = SmartDashboard.getNumber("Stat Angle P");
-		CONSTANTS.STATIONARY_ANGLE_I = SmartDashboard.getNumber("Stat Angle I");
-		CONSTANTS.STATIONARY_ANGLE_D = SmartDashboard.getNumber("Stat Angle D");
+		CONSTANTS.STATIONARY_ANGLE_P = SmartDashboard.getNumber("Stat Angle P", CONSTANTS.STATIONARY_ANGLE_P);
+		CONSTANTS.STATIONARY_ANGLE_I = SmartDashboard.getNumber("Stat Angle I", CONSTANTS.STATIONARY_ANGLE_I);
+		CONSTANTS.STATIONARY_ANGLE_D = SmartDashboard.getNumber("Stat Angle D",CONSTANTS.STATIONARY_ANGLE_D);
 
-		CONSTANTS.DRIVE_ANGLE_P = SmartDashboard.getNumber("Moving Angle P");
-		CONSTANTS.DRIVE_ANGLE_I = SmartDashboard.getNumber("Moving Angle I");
-		CONSTANTS.DRIVE_ANGLE_D = SmartDashboard.getNumber("Moving Angle D");
+		CONSTANTS.DRIVE_ANGLE_P = SmartDashboard.getNumber("Moving Angle P", CONSTANTS.DRIVE_ANGLE_P);
+		CONSTANTS.DRIVE_ANGLE_I = SmartDashboard.getNumber("Moving Angle I", CONSTANTS.DRIVE_ANGLE_I);
+		CONSTANTS.DRIVE_ANGLE_D = SmartDashboard.getNumber("Moving Angle D", CONSTANTS.DRIVE_ANGLE_D);
 
-		CONSTANTS.DRIVE_DISTANCE_P = SmartDashboard.getNumber("Distance P");
-		CONSTANTS.DRIVE_DISTANCE_I = SmartDashboard.getNumber("Distance I");
-		CONSTANTS.DRIVE_DISTANCE_D = SmartDashboard.getNumber("Distance D");
+		CONSTANTS.DRIVE_DISTANCE_P = SmartDashboard.getNumber("Distance P", CONSTANTS.DRIVE_DISTANCE_P);
+		CONSTANTS.DRIVE_DISTANCE_I = SmartDashboard.getNumber("Distance I", CONSTANTS.DRIVE_DISTANCE_I);
+		CONSTANTS.DRIVE_DISTANCE_D = SmartDashboard.getNumber("Distance D", CONSTANTS.DRIVE_DISTANCE_D);
 
 		movingAnglePID.changeGains(CONSTANTS.DRIVE_ANGLE_P, CONSTANTS.DRIVE_ANGLE_I, CONSTANTS.DRIVE_ANGLE_D);
 		distancePID.changeGains(CONSTANTS.DRIVE_DISTANCE_P, CONSTANTS.DRIVE_DISTANCE_I, CONSTANTS.DRIVE_DISTANCE_D);

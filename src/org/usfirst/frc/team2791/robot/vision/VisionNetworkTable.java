@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2791.robot.util.vision;
+package org.usfirst.frc.team2791.robot.vision;
 
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.util.DelayedBoolean;
@@ -29,8 +29,6 @@ public class VisionNetworkTable implements ITableListener {
 	public VisionNetworkTable() {
 		visionTargetsTable = NetworkTable.getTable("GRIP/myContoursReport");
 		visionTargetsTable.addTableListener(this);
-
-		SmartDashboard.putNumber("Min Speed to Calc Distance", MIN_SPEED_TO_CALC_DISTANCE);
 	}
 
 	public void setVisionOffset(double offset){
@@ -50,7 +48,7 @@ public class VisionNetworkTable implements ITableListener {
 		return distToBoiler;
 	}
 
-	public double getDistanceBasedRPM(){
+	public double getVisionBasedRPM(){
 		return rpm;
 	}
 
@@ -113,9 +111,9 @@ public class VisionNetworkTable implements ITableListener {
 
 			} catch (Exception e) {
 				if(e.getMessage().equals("No Targets")) {
-					System.out.println("Found no targets. Not changing variables");
+//					System.out.println("Found no targets. Not changing variables");
 				} else {
-					System.out.println("vision angle calculation messed up");
+//					System.out.println("vision angle calculation messed up");
 				}	
 			}
 		}
@@ -123,7 +121,7 @@ public class VisionNetworkTable implements ITableListener {
 		// THIS IS A HACK pt. 2
 		// Ignore images unless moving fast enough. This is to compensate for lag
 //		MIN_SPEED_TO_CALC_DISTANCE = SmartDashboard.getNumber("Min Speed to Calc Distance", MIN_SPEED_TO_CALC_DISTANCE);
-//
+
 //		if( Math.abs(Robot.drivetrain.getAverageVelocity()) > MIN_SPEED_TO_CALC_DISTANCE){
 			try {
 				distToBoiler = visionMath.calculateTargetDistance(selectTarget().centerY);
@@ -135,7 +133,6 @@ public class VisionNetworkTable implements ITableListener {
 //					System.out.println("vision distance calculation messed up");
 				}
 			}
-
 //		}
 	}
 
@@ -171,6 +168,14 @@ public class VisionNetworkTable implements ITableListener {
 
 	public void debug(){
 		visionMath.debug();
+		
+		SmartDashboard.putNumber("Realtime vision angle error", getRealtimeBoilerAngleError());
+		SmartDashboard.putNumber("Realtime vision distance", getRealtimeDistanceToBoiler());
+		SmartDashboard.putNumber("Realtime vision RPM", getVisionBasedRPM());
+		
+		SmartDashboard.putNumber("Camera vision angle error", targetAngleError);
+		SmartDashboard.putNumber("Camera vision gyro offset", gyroOffset);
+		SmartDashboard.putBoolean("Robot still", robotNotTurning.getOutputValue());
 		
 		AnalyzedContour myContour;
 		try {

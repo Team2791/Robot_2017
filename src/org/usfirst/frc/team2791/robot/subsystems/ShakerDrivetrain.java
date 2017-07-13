@@ -57,12 +57,12 @@ public class ShakerDrivetrain extends Subsystem{
 	protected double rightCurrentRate = 0;
 	protected double rightCurrentTime = 0;
 	protected double rightFilteredAccel = 0;
-
+	
 	//Determines the amount of distance traveled for every pulse read on the encoders
 	private double distancePerPulse = Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER_IN_FEET);
 
 	public ShakerDrivetrain(){
-		
+				
 		leftSpark = new Talon(RobotMap.DRIVE_SPARK_LEFT_PORT);
 		rightSpark = new Talon(RobotMap.DRIVE_SPARK_RIGHT_PORT);
 

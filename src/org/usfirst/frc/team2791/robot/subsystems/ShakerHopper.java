@@ -56,7 +56,8 @@ public class ShakerHopper extends Subsystem{
 	 * Runs hopper at full-speed
 	 */
 	public void runHopper() {
-//		System.out.print("****************************Hopper FOR C:" + this.getCurrentUsage());
+
+//		System.out.print("************Hopper FOR C:" + this.getCurrentUsage());
 		hopperSpark.setSpeed(hopperSetpoint);
 		servo.setRaw(255);
 	}
