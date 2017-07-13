@@ -99,7 +99,7 @@ public class VisionNetworkTable implements ITableListener {
 			try {
 				foundContours = getFoundContours();
 			} catch (IndexOutOfBoundsException e){
-				System.out.println("Messed up reading network tables. Trying again?");
+//				System.out.println("Messed up reading network tables. Trying again?");
 			}
 		}
 
@@ -122,21 +122,21 @@ public class VisionNetworkTable implements ITableListener {
 
 		// THIS IS A HACK pt. 2
 		// Ignore images unless moving fast enough. This is to compensate for lag
-		MIN_SPEED_TO_CALC_DISTANCE = SmartDashboard.getNumber("Min Speed to Calc Distance", MIN_SPEED_TO_CALC_DISTANCE);
-
-		if( Math.abs(Robot.drivetrain.getAverageVelocity()) > MIN_SPEED_TO_CALC_DISTANCE){
+//		MIN_SPEED_TO_CALC_DISTANCE = SmartDashboard.getNumber("Min Speed to Calc Distance", MIN_SPEED_TO_CALC_DISTANCE);
+//
+//		if( Math.abs(Robot.drivetrain.getAverageVelocity()) > MIN_SPEED_TO_CALC_DISTANCE){
 			try {
 				distToBoiler = visionMath.calculateTargetDistance(selectTarget().centerY);
 				rpm = lookupTable.getRPMFromNDCY(visionMath.getNormalizedY(selectTarget().centerY));
 			} catch (Exception e) {
 				if(e.getMessage().equals("No Targets")) {
-					System.out.println("Found no targets. Not changing variables");
+//					System.out.println("Found no targets. Not changing variables");
 				} else {
-					System.out.println("vision distance calculation messed up");
+//					System.out.println("vision distance calculation messed up");
 				}
 			}
 
-		}
+//		}
 	}
 
 	private AnalyzedContour[] getFoundContours() {

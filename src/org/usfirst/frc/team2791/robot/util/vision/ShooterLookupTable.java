@@ -3,6 +3,7 @@ package org.usfirst.frc.team2791.robot.util.vision;
 
 public class ShooterLookupTable {
 
+	private static double rpmOffset = -15;
 	/**
 	 *{double dist(inches), double rpm}
 	 */
@@ -100,7 +101,7 @@ public class ShooterLookupTable {
 		System.out.println("Delta Key: " + diffKey);
 
 		try {
-			return diffKey * (deltaRPM / deltaY) + distanceByRPM[lowKey][1] ;
+			return (diffKey * (deltaRPM / deltaY) + distanceByRPM[lowKey][1]) + rpmOffset ;
 		}
 		catch(ArrayIndexOutOfBoundsException e){
 			System.out.println("lookup table out of bounds");

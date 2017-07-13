@@ -29,11 +29,13 @@ public class RunVisionShot extends Command{
 		timer.start();
 		
 		Robot.shooter.prepVisionShot();
+		System.out.println("Vision Shot at: " + Robot.visionTable.rpm + " RPM");
 		shooterSpunUp = false;
 	}
 
 	@Override
 	protected void execute() {
+		System.out.println("Vision Shot at: " + Robot.visionTable.rpm + " RPM");
 		Robot.shooter.setShooterSolenoidState(false); // down position is false
 		Robot.shooter.prepVisionShot();
 
@@ -62,6 +64,7 @@ public class RunVisionShot extends Command{
 	protected void end() {
 		Robot.shooter.stopMotors();
 		Robot.hopper.stopHopper();
+		System.out.println("Ending Vision Shot");
 	}
 
 	@Override

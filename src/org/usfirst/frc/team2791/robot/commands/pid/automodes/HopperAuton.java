@@ -3,6 +3,7 @@ package org.usfirst.frc.team2791.robot.commands.pid.automodes;
 import org.usfirst.frc.team2791.robot.commands.DrivetrainDelay;
 import org.usfirst.frc.team2791.robot.commands.HopperOn;
 import org.usfirst.frc.team2791.robot.commands.IntakeOn;
+import org.usfirst.frc.team2791.robot.commands.RunVisionShot;
 import org.usfirst.frc.team2791.robot.commands.SpinUpShooter;
 import org.usfirst.frc.team2791.robot.commands.pid.DriveEncoderBangBang;
 import org.usfirst.frc.team2791.robot.commands.pid.StationaryVisionTurn;
@@ -51,7 +52,8 @@ public class HopperAuton extends CommandGroup {
 		addSequential(new DrivetrainDelay(0.75));
 		
 		addSequential(new StationaryVisionTurn(.5, 1.0));
-		addSequential(new HopperOn());
+		addSequential(new RunVisionShot());
+//		addSequential(new HopperOn());
 		
     }
 	

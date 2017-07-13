@@ -25,6 +25,8 @@ public class DriveWithJoystick extends Command {
 	protected void execute() {
 		Robot.drivetrain.setLeftRightMotorOutputs(speedMultiplier*GTADrive.getLeftValue(Robot.oi.driver),
 				speedMultiplier*GTADrive.getRightValue(Robot.oi.driver));
+		System.out.print("DT LEFT: " + speedMultiplier*GTADrive.getLeftValue(Robot.oi.driver));
+		System.out.println(" DT RIGHT: " + speedMultiplier*GTADrive.getRightValue(Robot.oi.driver));
 	}
 
 	@Override
@@ -39,7 +41,6 @@ public class DriveWithJoystick extends Command {
 
 	protected void interrupted() {
 		new DriveWithJoystick();
-		System.out.println("Drive with joystik interrupted.");
 	}
 
 }
