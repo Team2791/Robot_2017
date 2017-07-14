@@ -45,7 +45,7 @@ void loop() {
     stripA.show();
     stripB.show();
   }
-  else if (digitalRead(4) == HIGH && digitalRead(13) == HIGH && digitalRead(8) == LOW) { //Gear Intake Down
+  else if (digitalRead(4) == LOW && digitalRead(13) == HIGH && digitalRead(8) == HIGH) { //Gear Intake Down SWITCHED WITH AUTO RED SIDE
     if(GearBool==true){
     for (int x = 0; x <= PixelNum; x++) {
       stripA.setPixelColor(x, 255, 50, 0);
@@ -53,7 +53,7 @@ void loop() {
     }
     stripA.show();
     stripB.show();
-    delay(20);
+    delay(200);
     GearBool=false;
   }
   else if(GearBool==false){
@@ -63,7 +63,7 @@ void loop() {
     }
     stripA.show();
     stripB.show();
-    delay(20);
+    delay(200);
     GearBool=true;
   }
   }
@@ -156,7 +156,7 @@ void loop() {
       delay(200);
     }
   }
-else if (digitalRead(4) == LOW && digitalRead(8) == HIGH && digitalRead(13) == HIGH) { //Auto red side WHITE AND RED ALTERNATING STROBE
+else if (digitalRead(4) == HIGH && digitalRead(8) == LOW && digitalRead(13) == HIGH) { //Auto red side WHITE AND RED ALTERNATING STROBE SWITCHED WITH GEAR
     if (TeleBool == false) {
       for (int x = 0; x <= PixelNum; x++) {
         if (x % 2 == 0) {
