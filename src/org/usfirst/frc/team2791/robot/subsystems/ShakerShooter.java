@@ -62,7 +62,7 @@ public class ShakerShooter extends Subsystem {
 
 		primaryShooterTalon = new CANTalon(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
 		primaryShooterTalon.setInverted(true);
-//		primaryShooterTalon.setNominalClosedLoopVoltage(12.0);
+		primaryShooterTalon.setNominalClosedLoopVoltage(12.0);
 		primaryShooterTalon.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_25Ms);
 		
 		
