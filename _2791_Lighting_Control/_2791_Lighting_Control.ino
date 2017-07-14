@@ -1,8 +1,5 @@
 #include <Adafruit_NeoPixel.h>
-/*
- *@author Noah Page 
- *Operate 2 Adafruit NeoPixels for Team 2791's RGB light strips
- */
+//Written by Noah Page for use for 2 Adafruit NeoPixels for Team 2791's RGB light strips
 int PixelNum = 59;
 int pin = 11;
 int pin2 = 6;
@@ -45,7 +42,7 @@ void loop() {
     stripA.show();
     stripB.show();
   }
-  else if (digitalRead(4) == LOW && digitalRead(13) == HIGH && digitalRead(8) == HIGH) { //Gear Intake Down SWITCHED WITH AUTO RED SIDE
+  else if (digitalRead(4) == HIGH && digitalRead(13) == HIGH && digitalRead(8) == LOW) { //Gear Intake Down
     if(GearBool==true){
     for (int x = 0; x <= PixelNum; x++) {
       stripA.setPixelColor(x, 255, 50, 0);
@@ -156,7 +153,7 @@ void loop() {
       delay(200);
     }
   }
-else if (digitalRead(4) == HIGH && digitalRead(8) == LOW && digitalRead(13) == HIGH) { //Auto red side WHITE AND RED ALTERNATING STROBE SWITCHED WITH GEAR
+else if (digitalRead(4) == LOW && digitalRead(8) == HIGH && digitalRead(13) == HIGH) { //Auto red side WHITE AND RED ALTERNATING STROBE
     if (TeleBool == false) {
       for (int x = 0; x <= PixelNum; x++) {
         if (x % 2 == 0) {
