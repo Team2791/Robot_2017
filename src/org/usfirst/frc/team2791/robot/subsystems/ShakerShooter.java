@@ -1,7 +1,7 @@
 /** Shooter class for Shaker Robotics' 2017 robot 
  *
  * @author Lukas Velikov
- * @version pre
+ * @author Unnas Hussain
  */
 package org.usfirst.frc.team2791.robot.subsystems;
 
