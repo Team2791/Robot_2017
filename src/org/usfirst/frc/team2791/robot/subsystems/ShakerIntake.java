@@ -25,6 +25,7 @@ public class ShakerIntake extends Subsystem {
 
 	public Talon intakeSpark;
 	
+	public boolean isClimbing = false;
 	private Solenoid intakeSolenoid;
 	
 	/**
@@ -33,6 +34,8 @@ public class ShakerIntake extends Subsystem {
 	public Solenoid ratchetWingSolenoid;
 	
 	public ShakerIntake(){
+		
+	
 		
 		intakeSpark = new Talon(RobotMap.INTAKE_SPARK_PORT);
 

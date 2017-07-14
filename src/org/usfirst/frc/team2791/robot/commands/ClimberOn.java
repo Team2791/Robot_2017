@@ -15,10 +15,12 @@ public class ClimberOn extends Command{
 	}
 	
 	protected void initialize(){
-		
+		Robot.intake.isClimbing = true;
 	}
 	
 	protected void execute(){
+		Robot.intake.isClimbing = true;
+
 		Robot.intake.engageRatchetWing();//TODO: put this in initialize and see if that fixes double climb bug
 		Robot.intake.debug();
 //		if(Robot.intake.getCurrentUsage()<56.0){
@@ -33,6 +35,8 @@ public class ClimberOn extends Command{
 	}
 	
 	protected void end(){
+		Robot.intake.isClimbing = false;
+
 		Robot.intake.motorOffIntake();
 	}
 	protected void interrupted(){

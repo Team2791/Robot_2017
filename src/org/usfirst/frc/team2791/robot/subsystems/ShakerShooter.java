@@ -36,6 +36,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ShakerShooter extends Subsystem {
 
+	
 	private final double ERROR_THRESHOLD = 40;// 40
 	private final double SHOOTER_GOOD_TIME = 0.1;
 	private DelayedBoolean shooterGoodDelayedBoolean = new DelayedBoolean(SHOOTER_GOOD_TIME);
@@ -137,6 +138,7 @@ public class ShakerShooter extends Subsystem {
 		closeShot = false;
 		visionShot = true;
 		
+		
 		setShooterSpeedsPID(Robot.visionTable.getVisionBasedRPM());
 	}
 	
@@ -148,6 +150,7 @@ public class ShakerShooter extends Subsystem {
 	public void prepCustomShot(double speed) {
 		closeShot = false;
 		visionShot = false;
+				
 		setShooterSpeedsPID(speed);
 	}
 
@@ -157,6 +160,7 @@ public class ShakerShooter extends Subsystem {
 	public void prepWallShot() {
 		closeShot = true;
 		visionShot = false;
+
 		setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Setpoint", 0));
 	}
 
@@ -166,6 +170,7 @@ public class ShakerShooter extends Subsystem {
 	public void prepLongShot() {
 		closeShot = false;
 		visionShot = false;
+
 		setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Long Setpoint", 0));
 	}
 
@@ -293,11 +298,13 @@ public class ShakerShooter extends Subsystem {
 		primaryShooterTalon.reset();
 		followerShooterTalonA.reset();
 		followerShooterTalonB.reset();
+
 	}
 
 	public void stopMotors() { // Set the motors to 0 to stop
 		primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
 		primaryShooterTalon.set(0);
+
 	}
 
 	/**

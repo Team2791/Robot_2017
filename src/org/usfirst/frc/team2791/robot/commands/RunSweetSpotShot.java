@@ -35,6 +35,7 @@ public class RunSweetSpotShot extends Command{
 
 	@Override
 	protected void execute() {
+		
 		Robot.shooter.setShooterSolenoidState(false); // down position is false
 		Robot.shooter.prepCustomShot(SmartDashboard.getNumber("Shooter Sweeet Setpoint" , CONSTANTS.SHOOTER_VISION_SWEET_SET_POINT)); // bringing shooter up to speed
 
