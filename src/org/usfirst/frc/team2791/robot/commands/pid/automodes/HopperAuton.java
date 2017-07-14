@@ -51,7 +51,6 @@ public class HopperAuton extends CommandGroup {
 		addSequential(new DrivetrainDelay(0.75));
 		
 		addSequential(new StationaryVisionTurn(.5, 1.0));
-
 //		addParallel(new SpinUpShooter(Robot.visionTable.getDistanceBasedRPM()));
 //		addSequential(new HopperOnOnceAtSpeed());
 

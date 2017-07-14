@@ -1,7 +1,7 @@
 /** Shooter class for Shaker Robotics' 2017 robot 
  *
  * @author Lukas Velikov
- * @version pre
+ * @author Unnas Hussain
  */
 package org.usfirst.frc.team2791.robot.subsystems;
 
@@ -15,7 +15,7 @@ import org.usfirst.frc.team2791.robot.vision.ShooterLookupTable;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
-import com.ctre.VelocityMeasurementPeriod;
+import com.ctre.CANTalon.VelocityMeasurementPeriod;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -62,8 +62,9 @@ public class ShakerShooter extends Subsystem {
 
 		primaryShooterTalon = new CANTalon(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
 		primaryShooterTalon.setInverted(true);
-//		primaryShooterTalon.setNominalClosedLoopVoltage(12.0);
+		primaryShooterTalon.setNominalClosedLoopVoltage(12.0);
 		primaryShooterTalon.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_25Ms);
+		
 		
 		followerShooterTalonA = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT_A);
 //		followerShooterTalonA.setNominalClosedLoopVoltage(12.0);

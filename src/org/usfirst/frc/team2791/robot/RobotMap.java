@@ -21,7 +21,7 @@ public class RobotMap {
 	public static final int RIGHT_DRIVE_ENCODER_PORT_A = 1; //1 on Comp //7 on practice
 	public static final int RIGHT_DRIVE_ENCODER_PORT_B = 0; //0 on Comp //6 on practice
 	
-	public static final int LIGHTS_PIN_A = 4;
+	public static final int LIGHTS_PIN_A = 7;
 	public static final int LIGHTS_PIN_B = 5;
 	public static final int LIGHTS_PIN_C = 6;
 		

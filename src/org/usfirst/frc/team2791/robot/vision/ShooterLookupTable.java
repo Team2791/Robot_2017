@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterLookupTable {
 
-
 	private static double rpmOffset = -30; //-15.0
 	
 	/**

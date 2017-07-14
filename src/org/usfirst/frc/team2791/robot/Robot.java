@@ -12,6 +12,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
@@ -51,7 +52,7 @@ public class Robot extends IterativeRobot {
 	public static ShakerGear gearMechanism;
 	public static ShakerDrivetrain drivetrain;
 
-	public static VisionNetworkTable visionTable = new VisionNetworkTable(); 
+	public static VisionNetworkTable visionTable; 
 	
 	private double lastAutonLoopTime;
 
@@ -64,8 +65,6 @@ public class Robot extends IterativeRobot {
 	public static TeamColor teamColor = TeamColor.BLUE;
 	
 	public static LightController lights = new LightController();
-
-
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -74,9 +73,10 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 
 		
+		
 		System.out.println("Starting to init my systems.");
 		gamePeriod = GamePeriod.DISABLED;
-
+		 
 		pdp = new PowerDistributionPanel(RobotMap.PDP); //CAN id has to be 0
 
 		compressor = new Compressor(RobotMap.PCM_MODULE);
@@ -90,6 +90,7 @@ public class Robot extends IterativeRobot {
 		hopper = new ShakerHopper();
 		shooter = new ShakerShooter();
 		
+		visionTable = new VisionNetworkTable();
 		autoSelector = new CommandSelector("Auto Mode");
 		
 
@@ -165,6 +166,9 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {		
+		
+		gamePeriod = GamePeriod.AUTONOMOUS;
+
 		drivetrain.reset();
 
 		intake.disengageRatchetWing();
@@ -214,6 +218,7 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 
+
 		drivetrain.resetEncoders();
 		gamePeriod = GamePeriod.TELEOP;
 		intake.disengageRatchetWing();
@@ -224,6 +229,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		
 		run();
 		debug();
 	}
