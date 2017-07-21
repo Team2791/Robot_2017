@@ -39,13 +39,13 @@ public class HopperAuton extends CommandGroup {
 		// This is sketch as heck because we're counting on the drift from the first drive
 		// to get us to the 2nd	 distance and just using the drive train to slow down and turn a bit.
 //		addSequential(new DriveEncoderBangBang(0.0, 0.075, -1));
-		addSequential(new DriveEncoderBangBang(-0.3, 0.0, -3.75, 2)); //-3.5
+		addSequential(new DriveEncoderBangBang(-0.3, 0.0, -3.75+0.5, 2)); //-3.5
 		addParallel (new IntakeOn());
 		
-		addSequential(new TurnGyroBangBang(0.82*direction, 20*direction)); //15 
+		addSequential(new TurnGyroBangBang(0.82*direction, (20+10)*direction)); //15 //adding 10 for IRI to make the kick more reliable
 
-		addSequential(new TurnGyroBangBang(-0.82 *direction, -33*direction)); //20 - 28
-		addSequential(new DriveEncoderBangBang(0.5, 0.0, 1, 2)); //1
+		addSequential(new TurnGyroBangBang(-0.82 *direction, -(33+10)*direction)); //20 - 28 //also 10 for IRI
+		addSequential(new DriveEncoderBangBang(0.5, 0.0, 1.0, 2)); //1.5 was too much
 
 		// wait to take a good image before using vision to turn
 		addSequential(new DrivetrainDelay(0.75));

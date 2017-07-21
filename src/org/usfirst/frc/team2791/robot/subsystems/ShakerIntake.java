@@ -57,20 +57,26 @@ public class ShakerIntake extends Subsystem {
 	}
 
 	public void motorOnIntake(){//negative is proper direction
+		isClimbing = false;
 		disengageRatchetWing();
 		intakeSpark.setSpeed(SmartDashboard.getNumber("Intake Speed (positive ONLY for climb)",BALLS_IN_POWER));
 	}
 
 	public void motorOffIntake(){
+		isClimbing = false;
+
 		intakeSpark.setSpeed(0.0);
 	}
 
 	public void motorOnClimber(){//should be positive
+		isClimbing = true;
 		engageRatchetWing();
 		intakeSpark.setSpeed(CLIMBING_VBUS);
 	}
 	
 	public void motorOnClimberSlow(){//should be positive
+		isClimbing = true;
+
 		engageRatchetWing();
 		intakeSpark.setSpeed(CLIMBING_VBUS_SLOW);
 

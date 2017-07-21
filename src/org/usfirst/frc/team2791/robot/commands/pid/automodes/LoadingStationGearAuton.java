@@ -23,21 +23,20 @@ public class LoadingStationGearAuton extends CommandGroup {
     	
     	//dist = X/cos(PI/6) - 36
     	double dist;
+    	double errorThreshold = 2.25/12.0;
  
     	if(color.equals("RED")){
-//        	addSequential(new DriveStraightEncoderGyro(-(110-36)/12.0, .7, 3.3)); 
-    		addSequential(new DriveStraightEncoderGyro(-6.0 ,.7, 3.3));
-        	addSequential(new StationaryGyroTurn(60.0, 1));
-    		dist = 80/Math.cos(Math.PI/6) - 36;
+        	addSequential(new DriveStraightEncoderGyro(-(109.5-36)/12.0, .7, 3.5, errorThreshold)); 
+//    		addSequential(new DriveStraightEncoderGyro(-6.0 ,.7, 3.3));
+        	addSequential(new StationaryGyroTurn(60.0, 1, 2));
+    		dist = 90/Math.cos(Math.PI/6) - 36;
     	}else{
-    		addSequential(new DriveStraightEncoderGyro(-(110-36)/12.0, .7, 3.3)); 
-        	addSequential(new StationaryGyroTurn(-60.0, 1));
-    		dist = 80.5/Math.cos(Math.PI/6) - 36;
+    		addSequential(new DriveStraightEncoderGyro(-(109.5-36)/12.0, .7, 3.5, errorThreshold)); 
+        	addSequential(new StationaryGyroTurn(-60.0, 1, 2));
+    		dist = 90/Math.cos(Math.PI/6) - 36;
     	}
     	
-		dist = 72.0/Math.cos(Math.PI/6) - 36;
-
-		addSequential(new DriveStraightEncoderGyro(-dist/12.0, .7, 2.5));
+		addSequential(new DriveStraightEncoderGyro(-dist/12.0, .7, 2.5, errorThreshold));
     	addSequential(new AutonGearScore());
     	addSequential(new DriveStraightEncoderGyro(3.0, .7, 2.0));
     	
@@ -48,7 +47,7 @@ public class LoadingStationGearAuton extends CommandGroup {
     		addSequential(new StationaryGyroTurn(60, 1.0, 10, 2.0));
     	}
     	
-    	addSequential(new DriveStraightEncoderGyro(-20.0, .0005, 15.0));
+    	addSequential(new DriveStraightEncoderGyro(-17.0, .0005, 15.0));
     	
     }
 }

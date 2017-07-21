@@ -2,6 +2,7 @@ package org.usfirst.frc.team2791.robot;
 
 import org.usfirst.frc.team2791.robot.commands.pid.DriveStraightEncoderGyro;
 import org.usfirst.frc.team2791.robot.commands.pid.StationaryGyroTurn;
+import org.usfirst.frc.team2791.robot.commands.pid.TurnGyroBangBang;
 import org.usfirst.frc.team2791.robot.commands.pid.automodes.*;
 import org.usfirst.frc.team2791.robot.subsystems.*;
 import org.usfirst.frc.team2791.robot.util.CommandSelector;
@@ -111,7 +112,7 @@ public class Robot extends IterativeRobot {
 		//***When Adding a Command, Remember to add the Command in autonomousInit***
 
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
-//		runUSBCameras();
+		runUSBCameras();
 
 		debug();
 	}
@@ -124,6 +125,8 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 
 		gamePeriod = GamePeriod.DISABLED;
+		
+		debug();
 	}
 	
 	@Override
@@ -154,8 +157,6 @@ public class Robot extends IterativeRobot {
 			teamColor = TeamColor.RED;
 		}
 
-		debug(); //allows us to debug (e.g. encoders and gyro) while disabled
-
 		Scheduler.getInstance().run();
 		run();
 	}
@@ -168,6 +169,8 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {		
 		
 		gamePeriod = GamePeriod.AUTONOMOUS;
+		
+		debug();
 
 		drivetrain.reset();
 
@@ -189,6 +192,8 @@ public class Robot extends IterativeRobot {
 		if(autonomousCommand.getName().equals("Center Gear & Shoot")){
 			visionTable.setVisionOffset(teamColor.visionOffset);
 		}
+		
+//		autonomousCommand = new TurnGyroBangBang(0.65 , 90.0);
 
 		System.out.println("***Starting "+teamColor+" "+autonomousCommand.getName()+" AutoMode***");
 
@@ -200,7 +205,6 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		run();
-		debug();
 
 		double thisAutoLoopTime = Timer.getFPGATimestamp();
 		double timeDiff = thisAutoLoopTime - lastAutonLoopTime;
@@ -215,6 +219,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 
+		debug();
+		
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 
@@ -231,7 +237,6 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		
 		run();
-		debug();
 	}
 
 	//***********************************************************
@@ -242,7 +247,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		Scheduler.getInstance().run();
-		debug();
 		LiveWindow.run();
 		run();
 	}
@@ -252,6 +256,7 @@ public class Robot extends IterativeRobot {
 	public void run(){
 		visionTable.run();
 		lights.run();
+		debug();
 	}
 
 

@@ -34,7 +34,6 @@ public class IntakeOn extends Command{
 		Robot.intake.setIntakePosition(false);
 	}
 	protected void interrupted(){
-		Robot.intake.motorOffIntake();
-		Robot.intake.setIntakePosition(false);
+		end();
 	}
 }

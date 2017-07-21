@@ -48,6 +48,10 @@ public class ShakerGear extends Subsystem{
 		gearSpark.setSpeed(0.0);
 	}
 	
+	public void runGearOutake(){
+		gearSpark.setSpeed(-1.0);
+	}
+	
 	/**
 	 * 
 	 * @param state_ true = down / false = up

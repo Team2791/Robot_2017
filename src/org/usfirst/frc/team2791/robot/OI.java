@@ -80,7 +80,7 @@ public class OI {
 
 		driverY.whileHeld(new ClimberOn());
 		
-		driverA.toggleWhenPressed(new IntakeOn());
+		driverA.whileHeld(new GearPoop());
 		
 		driverB.whenPressed(new DriveWithVision());// TODO Remove this command from driver and give to operator instead of long shot
 

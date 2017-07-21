@@ -72,7 +72,7 @@ public abstract class DrivetrainPIDStraightDrive extends Command {
 
 	protected boolean isFinished() {
 		
-//		printStopBooleans();
+		printStopBooleans();
 		
 		boolean isPIDDone = (Math.abs(distancePID.getError()) < drivingErrorThreshold &&
 				Math.abs(movingAnglePID.getError()) < 1.5 &&
