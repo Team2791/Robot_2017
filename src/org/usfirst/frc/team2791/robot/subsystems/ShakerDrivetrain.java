@@ -57,12 +57,12 @@ public class ShakerDrivetrain extends Subsystem{
 	protected double rightCurrentRate = 0;
 	protected double rightCurrentTime = 0;
 	protected double rightFilteredAccel = 0;
-
+	
 	//Determines the amount of distance traveled for every pulse read on the encoders
 	private double distancePerPulse = Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER_IN_FEET);
 
 	public ShakerDrivetrain(){
-		
+				
 		leftSpark = new Talon(RobotMap.DRIVE_SPARK_LEFT_PORT);
 		rightSpark = new Talon(RobotMap.DRIVE_SPARK_RIGHT_PORT);
 
@@ -186,7 +186,6 @@ public class ShakerDrivetrain extends Subsystem{
 	
 	//************** Gyro and Encoder Helper Methods **************//
 
-	@Deprecated
 	public double getAngleEncoder() {
 		return (360 / 7.9) * (getLeftDistance() - getRightDistance()) / 2.0;
 	}
@@ -198,7 +197,6 @@ public class ShakerDrivetrain extends Subsystem{
 		return 0.0;
 	}
 	
-	@Deprecated
 	public double getEncoderAngleRate() {
 		return (360/7.9) * (leftDriveEncoder.getRate() - rightDriveEncoder.getRate()) / 2.0;
 	}

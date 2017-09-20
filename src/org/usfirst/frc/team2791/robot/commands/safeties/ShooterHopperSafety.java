@@ -38,7 +38,6 @@ public class ShooterHopperSafety extends Command{
 
 	@Override
 	protected void interrupted() {
-		new ShooterHopperSafety();
 	}
 }
 

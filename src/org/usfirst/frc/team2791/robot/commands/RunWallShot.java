@@ -16,15 +16,13 @@ public class RunWallShot extends Command{
 	Timer hopperBackwardsTimer = new Timer();
 	
 	public RunWallShot() {
-		super("RunWallShotFullHopper");
+		super("RunWallShot");
 		requires(Robot.shooter);
 		requires(Robot.hopper);
-		System.out.print("shooter construct");
 	}
 
 	@Override
 	protected void initialize() {
-		System.out.println("run wall shot init");
 		hopperBackwardsTimer.reset();
 		hopperBackwardsTimer.start();
 		Robot.hopper.runHopperBackwards();
@@ -34,7 +32,6 @@ public class RunWallShot extends Command{
 
 	@Override
 	protected void execute() {
-		System.out.println("run wall shot execute");
 		Robot.shooter.setShooterSolenoidState(true); //down position
 		Robot.shooter.prepWallShot(); //bringing shooter up to speed
 		
@@ -61,15 +58,13 @@ public class RunWallShot extends Command{
 
 	@Override
 	protected void end() {
-		System.out.println("shooter end");
 		Robot.hopper.stopHopper();
 		Robot.shooter.stopMotors();
 	}
 
 	@Override
 	protected void interrupted() {
-		System.out.print("shooter interrupted");
-		end(); // we don't think it's called automatically
+		end(); 
 	}
 }
 

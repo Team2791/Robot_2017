@@ -93,6 +93,35 @@ public class Util {
 		}
 	}
     
+  //FIRST puns ftw
+    /**Sorts 2D arrays by the first elements*/
+	public static double[][] sortByFirstElement(double[][] arr) { 
+		double[][] result = arr;
+		
+		int n = result.length;  
+		double tempY = 0;  
+		double tempRPM = 0;
+		for(int i=0; i < n; i++){  
+			for(int j=1; j < (n-i); j++){  
+				if(result[j-1][0] > result[j][0]){  //swap elements  
+					
+					tempY = result[j-1][0];
+					tempRPM = result[j-1][1];
+
+					result[j-1][0] = result[j][0];  
+					result[j][0] = tempY;  
+
+					result[j-1][1] = result[j][1];
+					result[j][1] = tempRPM;
+				}  
+
+			}  
+		}
+		
+		return result;
+
+	}
+    
     public enum UnitLength {
         FEET(1.0 / 12.0, "ft"), INCHES(1.0, "in");
         private double unitsPerInch;
@@ -112,6 +141,8 @@ public class Util {
             return abbreviation;
         }
     }
+    
+	
     
     
 }

@@ -19,6 +19,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShakerHopper extends Subsystem{
 	
 	//Polulo IR sensors from Adafruit; they have a high and a low voltage and are triggered around 4 cm from the sensor.
+	
+	public boolean isShooting = false;
+	
 	private AnalogInput ballSensor1;
 	private AnalogInput ballSensor2;
 	
@@ -56,9 +59,11 @@ public class ShakerHopper extends Subsystem{
 	 * Runs hopper at full-speed
 	 */
 	public void runHopper() {
-		System.out.print("****************************Hopper FOR C:" + this.getCurrentUsage());
+
+//		System.out.print("************Hopper FOR C:" + this.getCurrentUsage());
 		hopperSpark.setSpeed(hopperSetpoint);
 		servo.setRaw(255);
+		 isShooting = true;
 	}
 	
 	/**
@@ -68,6 +73,8 @@ public class ShakerHopper extends Subsystem{
 //		System.out.print("Running hopper half speed");
 		hopperSpark.setSpeed(hopperSetpoint/2.0);
 		servo.setRaw(255);
+		 isShooting = true;
+
 	}
 	
 	/**
@@ -77,6 +84,8 @@ public class ShakerHopper extends Subsystem{
 //		System.out.print("Hopper FOR C:" + this.getCurrentUsage());
 		hopperSpark.setSpeed(-hopperSetpoint);
 		servo.setRaw(255);
+		 isShooting = true;
+
 	}
 	
 	/**
@@ -87,12 +96,18 @@ public class ShakerHopper extends Subsystem{
 	public void setHopperSpeed(double speed){
 //		System.out.print("Running Hopper at " +speed);
 		hopperSpark.setSpeed(speed);
+		if(speed == 0.0)
+			isShooting = false;
+		else
+			isShooting = true;
 	} 
 	
 	public void stopHopper(){
 //		System.out.print("Stopping Hopper");
 		hopperSpark.setSpeed(0.0);
 		servo.setRaw(0);
+		 isShooting = false;
+
 	}
 
 	/**

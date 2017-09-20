@@ -1,0 +1,111 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="Selected Team Color" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1039" y="10"/>
+		<width>238</width>
+		<height>78</height>
+	</widget>
+	<widget field="Selected Auto Mode Command" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="666" y="9"/>
+		<width>357</width>
+		<height>56</height>
+	</widget>
+	<widget field="Selected Auto Mode KEY" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="693" y="70"/>
+		<width>333</width>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="708" y="153"/>
+		<width>565</width>
+		<height>384</height>
+		<property name="Camera Choice" value="Front Camera"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="31" y="52"/>
+		<width>629</width>
+		<height>488</height>
+		<property name="Camera Choice" value=""/>
+	</static-widget>
+</dashboard>
+<live-window>
+</live-window>
+	<hidden field="LEncoderDistance"/>
+	<hidden field="Shooter Long Setpoint"/>
+	<hidden field="Moving Angle PID Output"/>
+	<hidden field="Climber"/>
+	<hidden field="Moving Angle P"/>
+	<hidden field="Moving Angle I"/>
+	<hidden field="Shooter primary output vs follower output current"/>
+	<hidden field="Camera Horizontal Offset"/>
+	<hidden field="Hopper current"/>
+	<hidden field="Shooter primary output %vbus"/>
+	<hidden field="Gear Motor Output"/>
+	<hidden field="Shooter total current"/>
+	<hidden field="Moving Angle D"/>
+	<hidden field="Auto Mode Selector Team Color"/>
+	<hidden field="Primary Talon Closed Loop Error (Sensor value)"/>
+	<hidden field="TUNE PID Stat Angle"/>
+	<hidden field="Right Drive Encoders Rate"/>
+	<hidden field="Shooter Long P"/>
+	<hidden field="Distance PID output"/>
+	<hidden field="Left Drive Encoders Rate"/>
+	<hidden field="Distance D"/>
+	<hidden field="IR Voltage"/>
+	<hidden field="Primary Talon Error (Setpoint)"/>
+	<hidden field="LAcc vs RAcc vs AvgAcc"/>
+	<hidden field="Distance I"/>
+	<hidden field="Shooter primary output voltage"/>
+	<hidden field="Compressor current"/>
+	<hidden field="Moving Angle PID Error"/>
+	<hidden field="Hopper Current Usage"/>
+	<hidden field="Gyro angle"/>
+	<hidden field="Gear intake Current Usage"/>
+	<hidden field="Robot still"/>
+	<hidden field="Camera distance from target (reflective tape) in Inches"/>
+	<hidden field="Bang Bang Threshold"/>
+	<hidden field="Gear Intake Gear Status"/>
+	<hidden field="Distance PID error"/>
+	<hidden field="Gyro rate"/>
+	<hidden field="Shooter Sweeet Setpoint"/>
+	<hidden field="LVel vs RVel vs AvgVel"/>
+	<hidden field="Shooter FeedForward"/>
+	<hidden field="Drivetrain total current"/>
+	<hidden field="Camera vision error"/>
+	<hidden field="Shooter Setpoint"/>
+	<hidden field="Gear Intake Down or Up"/>
+	<hidden field="Stat Angle P"/>
+	<hidden field="Shooter total current output"/>
+	<hidden field="Auto Mode Selector Command"/>
+	<hidden field="Shooter primary output current vs follower output current"/>
+	<hidden field="Stat Angle I"/>
+	<hidden field="REncoderDistance"/>
+	<hidden field="Shooter Long D"/>
+	<hidden field="Primary Talon Speed"/>
+	<hidden field="Distance P"/>
+	<hidden field="LDist vs RDist vs AvgDist"/>
+	<hidden field="ka"/>
+	<hidden field="Stat Angle D"/>
+	<hidden field="TUNE PID Distance"/>
+	<hidden field="Selected Auto Mode"/>
+	<hidden field="Sweetspot Goal:"/>
+	<hidden field="kd"/>
+	<hidden field="Shooter Long I"/>
+	<hidden field="ki"/>
+	<hidden field="shooting drive P"/>
+	<hidden field="AvgEncoderDistance"/>
+	<hidden field="Shooter Long FeedForward"/>
+	<hidden field="kp"/>
+	<hidden field="Encoder Angle"/>
+	<hidden field="Shooter P"/>
+	<hidden field="Shooter D"/>
+	<hidden field="kv"/>
+	<hidden field="Avg Acceleration"/>
+	<hidden field="Shooter I"/>
+	<hidden field="Camera vision gyro offset"/>
+	<hidden field="Primary Talon Encoder Distance"/>
+	<hidden field="LeftOutput vs RightOutput"/>
+	<hidden field="Shooter follower output voltage"/>
+	<hidden field="Auto Mode Selector KEY"/>
+	<hidden field="Realtime vision error"/>
+	<hidden field="Hopper Output"/>
+</xml>
