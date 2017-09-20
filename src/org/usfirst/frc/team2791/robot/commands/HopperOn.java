@@ -5,18 +5,18 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Runs the {@link ShakerHopper Hopper} to feed balls into the shooter
+ * Runs the {@link ShakerHopper} motors backwards, can be used to unjam the hopper
  */
-public class HopperOn extends Command {
-	public HopperOn (){
+public class HopperOn extends Command{
+	public HopperOn(){
 		super("HopperOn");
 		requires(Robot.hopper);
 	}
-	protected void initialize(){
-	}
+	
+	protected void initialize(){}
 	
 	protected void execute(){
-			Robot.hopper.runHopper();
+		Robot.hopper.runHopper();
 	}
 	
 	protected boolean isFinished(){
@@ -24,7 +24,7 @@ public class HopperOn extends Command {
 	}
 	
 	protected void end(){
-		Robot.hopper.stopHopper();;
+		Robot.hopper.stopHopper();
 	}
 	
 	protected void interrupted(){

@@ -4,40 +4,44 @@ package org.usfirst.frc.team2791.robot.commands;
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
-import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for closeShot. The hopper is set to meter its speed.
+ * Shoots w/ a wheel speed based on the distance away from the Boiler. Uses {@link VisionNetworkTable} and {@link ShooterLookupTable}.
+ * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for visionShot. 
+ * The hopper is set to meter its speed.
  */
 public class RunVisionShot extends Command{
 	Timer timer = new Timer();
 	private boolean shooterSpunUp = false;
+	
 	public RunVisionShot() {
-		super("RunLongShot");
+		super("RunVisionShot");
 		requires(Robot.shooter);
 		requires(Robot.hopper);
 	}
 
+	/*
+	 *TODO: It might be best to find one rpm at the beginning of the command 
+	 *and use it in a shooter.customShot(). Because if the image filtering is off, the 
+	 *contours might flucuate and mess with the rpm 
+	 */
 	@Override
 	protected void initialize() {
 		timer.reset();
 		timer.start();
-		Robot.shooter.prepFarHopperShot();
+		
+		Robot.shooter.prepVisionShot();
 		shooterSpunUp = false;
 	}
 
 	@Override
 	protected void execute() {
 		Robot.shooter.setShooterSolenoidState(false); // down position is false
-		Robot.shooter.prepVisionShot(SmartDashboard.getNumber("Shooter Sweeet Setpoint" , CONSTANTS.SHOOTER_VISION_SWEET_SET_POINT)); // bringing shooter up to speed
+		Robot.shooter.prepVisionShot();
 
-		//prolly should not use sfx in a match up there ^^^
-		
-		// if we need more balls or the shooter is ready
 		if(Robot.shooter.atSpeed()){
 			shooterSpunUp = true;
 		}

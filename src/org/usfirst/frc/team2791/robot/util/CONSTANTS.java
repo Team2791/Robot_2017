@@ -23,14 +23,16 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	/*******************************PID VALUES****************************************/
 	
 	// Shooter PID
-	public static final double CAMERA_HORIZONTAL_OFFSET = 3.1;
+	public static final double CAMERA_HORIZONTAL_OFFSET = 2.0;  //3.1
 	
 	public static final double SHOOTER_SET_POINT = 2850; //2765 was a bit too low
 	public static final double SHOOTER_LONG_SET_POINT = 3025.0; //3650
 	public static final double SHOOTER_AUTO_HOPPER_SET_POINT = 3025;//3255 //3355 //3035
-	public static final double SHOOTER_AUTO_CENTER_SET_POINT = 3375; //3385 was too much QF2
+	public static final double SHOOTER_AUTO_CENTER_SET_POINT = 3375 + 10.0; //3385 was too much QF2
 	public static final double SHOOTER_VISION_SWEET_SET_POINT = 3025.0; //hopefully will be the same as the long point :^)
 	
+	public static final double DRIVE_VISION_SWEET_SPOT_FEET = 110.0 / 12.0 ;
+
 	public static final int SHOOTER_I_ZONE = 75; //40
 	
 	public static final double SHOOTER_P = 2.7; //1.5
@@ -56,11 +58,12 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static double DRIVE_DISTANCE_I = 0.2;
 	public static double DRIVE_DISTANCE_D = 0.03;
 	
-	public static double STATIONARY_ANGLE_P = 0.025;
-	public static double STATIONARY_ANGLE_I = 0.02; //0.1 was too little -TVR Q48
-	public static double STATIONARY_ANGLE_D = 0.003;
+	public static double STATIONARY_ANGLE_P = 0.04;
+	public static double STATIONARY_ANGLE_I = 0.02; //
+	public static double STATIONARY_ANGLE_D = 0.004;
 	
 	public static double shootingDriveP = 0.025;
+	
 	
 	// Path following constants
     public static double kPathFollowingLookahead = 24.0; // inches

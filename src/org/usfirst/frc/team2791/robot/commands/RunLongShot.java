@@ -24,14 +24,14 @@ public class RunLongShot extends Command{
 	protected void initialize() {
 		timer.reset();
 		timer.start();
-		Robot.shooter.prepFarHopperShot();
+		Robot.shooter.prepLongShot();
 		shooterSpunUp = false;
 	}
 
 	@Override
 	protected void execute() {
 		Robot.shooter.setShooterSolenoidState(false); // down position is false
-		Robot.shooter.prepFarHopperShot(); // bringing shooter up to speed
+		Robot.shooter.prepLongShot(); // bringing shooter up to speed
 
 		// if we need more balls or the shooter is ready
 		if(Robot.shooter.atSpeed()){
@@ -43,10 +43,10 @@ public class RunLongShot extends Command{
 				Robot.hopper.runHopper();
 			} else {
 				Robot.hopper.stopHopper();
-			}
-		} else {
-			Robot.hopper.runHopperBackwards();
 		}
+	} else {
+		Robot.hopper.runHopperBackwards();
+	}
 	}
 
 	@Override

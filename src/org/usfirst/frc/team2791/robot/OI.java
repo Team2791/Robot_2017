@@ -2,24 +2,11 @@ package org.usfirst.frc.team2791.robot;
 
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
 import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
-import org.usfirst.frc.team2791.robot.commands.AutoAim;
-import org.usfirst.frc.team2791.robot.commands.CalibrateGyro;
-import org.usfirst.frc.team2791.robot.commands.DriveWithJoystick;
-import org.usfirst.frc.team2791.robot.commands.EngageRope;
-import org.usfirst.frc.team2791.robot.commands.GearMechDownRunMotors;
-import org.usfirst.frc.team2791.robot.commands.GearMechUp;
-import org.usfirst.frc.team2791.robot.commands.HopperOn;
-import org.usfirst.frc.team2791.robot.commands.IntakeGearFromFloor;
-import org.usfirst.frc.team2791.robot.commands.RunClimber;
-import org.usfirst.frc.team2791.robot.commands.RunHopperBackwards;
-import org.usfirst.frc.team2791.robot.commands.RunIntake;
-import org.usfirst.frc.team2791.robot.commands.RunLongShot;
-import org.usfirst.frc.team2791.robot.commands.RunVisionShot;
-import org.usfirst.frc.team2791.robot.commands.RunWallShot;
-import org.usfirst.frc.team2791.robot.commands.ScoreGearAutoReturn;
-import org.usfirst.frc.team2791.robot.commands.autos.pid.StationaryVisionTurn;
-import org.usfirst.frc.team2791.robot.commands.safeties.ShooterHopperSafety;
-import org.usfirst.frc.team2791.robot.commands.safeties.StopClimberAndDisengage;
+import org.usfirst.frc.team2791.robot.commands.*;
+import org.usfirst.frc.team2791.robot.commands.pid.DriveStraightVision;
+import org.usfirst.frc.team2791.robot.commands.pid.StationaryVisionTurn;
+import org.usfirst.frc.team2791.robot.commands.safeties.*;
+import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.GTADrive;
 
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -56,12 +43,12 @@ public class OI {
 	 * Logitech Gamepad F310 controllers </a>
 	 */
 	public OI(){
-		System.out.println("OI initialized");
 		driver = new ShakerDriver();
 		operator = new ShakerOperator();
 
 		initButtons();
 		initDpad();
+		
 		//note: the triggers are called in GTADrive and in the joystick objects themselves so we do not have to map them here, esp. since they are for default commands
 
 		/********************************** Operator Button Assignments ****************************************/
@@ -69,38 +56,45 @@ public class OI {
 		operatorX.whileHeld(new RunWallShot()); 
 		operatorY.whileHeld(new RunLongShot());
 
-		operatorA.whileHeld(new RunIntake());
-		operatorB.whileHeld(new RunClimber());
+		operatorA.whileHeld(new IntakeOn());
+		operatorB.whileHeld(new ClimberOn());
 		
 		operatorRB.whileHeld(new HopperOn());
-		operatorLB.whileHeld(new RunHopperBackwards());
+		operatorLB.whileHeld(new HopperOnBackwards());
 		
-//		operatorDpadDown.whenPressed(new IntakeGearFromFloor()); 
+		operatorDpadDown.whenPressed(new GearMechActiveIntake()); //intake gear w/ ir sensor logic
 		operatorDpadUp.whenPressed(new GearMechUp());
-		operatorDpadLeft.whileHeld(new RunVisionShot());
+		
+		operatorDpadLeft.whileHeld(new AimAndShoot());
 		operatorDpadRight.whenPressed(new StationaryVisionTurn(0.5,1.5));
 
-		operatorLS.whenPressed(new GearMechDownRunMotors());
-		operatorRS.whileHeld(new EngageRope());
+		operatorLS.whenPressed(new GearMechDownRunMotors()); //intake gear w/o ir sensor logic
+		operatorRS.whileHeld(new ClimberOnSlow());
 		
 		operatorBack.whenPressed(new StopClimberAndDisengage());//safety
 		operatorStart.whenPressed(new ShooterHopperSafety());//safety
 
 		/********************************** Driver Button Assignments ****************************************/
 
-		driverX.whileHeld(new ScoreGearAutoReturn()); 
+		driverX.whileHeld(new GearMechScore()); 
 
-		driverY.whileHeld(new RunClimber());
-		driverA.toggleWhenPressed(new RunIntake());
+		driverY.whileHeld(new ClimberOn());
 		
-		driverB.whenPressed(new AutoAim());// TODO Remove this command from driver and give to operator instead of long shot
+		driverA.whileHeld(new GearPoop());
+		
+		driverB.whenPressed(new DriveWithVision());// TODO Remove this command from driver and give to operator instead of long shot
 
 		driverLB.whileHeld(new DriveWithJoystick());
 		driverRB.whileHeld(new DriveWithJoystick());
 		
 		driverDpadLeft.whenPressed(new StationaryVisionTurn(0.5, 1.5));
-
+		driverDpadRight.whenPressed(new DriveStraightVision(CONSTANTS.DRIVE_VISION_SWEET_SPOT_FEET, .25));
+		
 		driverBack.whileHeld(new CalibrateGyro());
+		driverDpadUp.whileHeld(new RunVisionShot());
+		
+		System.out.println("OI initialized");
+
 	}
 
 	/**
@@ -241,4 +235,5 @@ public class OI {
 			}
 		};
 	}
+	
 }

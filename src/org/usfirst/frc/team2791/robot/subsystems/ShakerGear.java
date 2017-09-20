@@ -4,7 +4,6 @@ import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -47,6 +46,10 @@ public class ShakerGear extends Subsystem{
 	
 	public void stopGearIntake(){
 		gearSpark.setSpeed(0.0);
+	}
+	
+	public void runGearOutake(){
+		gearSpark.setSpeed(-1.0);
 	}
 	
 	/**

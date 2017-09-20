@@ -1,24 +1,26 @@
 /** Shooter class for Shaker Robotics' 2017 robot 
  *
  * @author Lukas Velikov
- * @version pre
+ * @author Unnas Hussain
  */
 package org.usfirst.frc.team2791.robot.subsystems;
 
+import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.DelayedBoolean;
-import org.usfirst.frc.team2791.robot.util.ShooterErrorThread;
-import org.usfirst.frc.team2791.robot.util.ShooterLookupTable;
 import org.usfirst.frc.team2791.robot.util.Util;
+import org.usfirst.frc.team2791.robot.vision.ShooterLookupTable;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.CANTalon.VelocityMeasurementPeriod;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -34,7 +36,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ShakerShooter extends Subsystem {
 
-	private final double ERROR_THRESHOLD = 70;// 40
+	
+	private final double ERROR_THRESHOLD = 40;// 40
 	private final double SHOOTER_GOOD_TIME = 0.1;
 	private DelayedBoolean shooterGoodDelayedBoolean = new DelayedBoolean(SHOOTER_GOOD_TIME);
 
@@ -50,27 +53,28 @@ public class ShakerShooter extends Subsystem {
 	public boolean primaryHasP = false;
 
 	public ShooterLookupTable lookUpTable = new ShooterLookupTable();
-//	public Thread pControlThread;
-//	public ShooterErrorThread errorThread = new ShooterErrorThread();
 
 	public ShakerShooter() {
-//		pControlThread = new Thread(errorThread);
+		
+//		NetworkTable.setUpdateRate(.01);
 
 		shooterSolenoid = new Solenoid(RobotMap.PCM_MODULE, RobotMap.SHOOTER_CHANNEL);
 
 		primaryShooterTalon = new CANTalon(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
 		primaryShooterTalon.setInverted(true);
 		primaryShooterTalon.setNominalClosedLoopVoltage(12.0);
-
+		primaryShooterTalon.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_25Ms);
+		
+		
 		followerShooterTalonA = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT_A);
-		followerShooterTalonA.setNominalClosedLoopVoltage(12.0);
-		followerShooterTalonB = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT_B); // THIRD
-		followerShooterTalonB.setNominalClosedLoopVoltage(12.0);
-		// MOTOR
+//		followerShooterTalonA.setNominalClosedLoopVoltage(12.0);
+		followerShooterTalonB = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT_B); 
+//		followerShooterTalonB.setNominalClosedLoopVoltage(12.0);
+
 
 		primaryShooterTalon.configPeakOutputVoltage(0, -12.0f);
 		followerShooterTalonA.configPeakOutputVoltage(0, -12.0f);
-		followerShooterTalonB.configPeakOutputVoltage(0, -12.0f); // THIRD MOTOR
+		followerShooterTalonB.configPeakOutputVoltage(0, -12.0f); 
 
 		if (SmartDashboard.getNumber("Shooter P", -2791) == -2791) {
 			SmartDashboard.putNumber("Shooter P", CONSTANTS.SHOOTER_P);
@@ -78,7 +82,9 @@ public class ShakerShooter extends Subsystem {
 			SmartDashboard.putNumber("Shooter D", CONSTANTS.SHOOTER_D);
 			SmartDashboard.putNumber("Shooter FeedForward", CONSTANTS.SHOOTER_FEED_FORWARD);
 			SmartDashboard.putNumber("Shooter Setpoint", CONSTANTS.SHOOTER_SET_POINT);
-
+			SmartDashboard.putNumber("Shooter I Zone", CONSTANTS.SHOOTER_I_ZONE);
+			
+			//not using these
 			SmartDashboard.putNumber("Shooter Long P", CONSTANTS.SHOOTER_LONG_P);
 			SmartDashboard.putNumber("Shooter Long I", CONSTANTS.SHOOTER_LONG_I);
 			SmartDashboard.putNumber("Shooter Long D", CONSTANTS.SHOOTER_LONG_D);
@@ -100,44 +106,52 @@ public class ShakerShooter extends Subsystem {
 
 		primaryShooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		primaryShooterTalon.configEncoderCodesPerRev(CONSTANTS.SHOOTER_ENCODER_TICKS);
-		primaryShooterTalon.changeControlMode(TalonControlMode.Speed); // control
-		// the
-		// primary
-		// SRX
-		// by
-		// RPM
+		primaryShooterTalon.changeControlMode(TalonControlMode.Speed); 
 
 		followerShooterTalonA.changeControlMode(TalonControlMode.Follower);
 		followerShooterTalonA.set(RobotMap.PRIMARY_SHOOTER_TALON_PORT);
 
-		followerShooterTalonB.changeControlMode(TalonControlMode.Follower); // THIRD
-		// MOTOR
-		followerShooterTalonB.set(RobotMap.PRIMARY_SHOOTER_TALON_PORT); // THIRD
-		// MOTOR
+		followerShooterTalonB.changeControlMode(TalonControlMode.Follower); 
+		followerShooterTalonB.set(RobotMap.PRIMARY_SHOOTER_TALON_PORT); 
 
 		primaryShooterTalon.enableControl();
 		followerShooterTalonA.enableControl();
-		followerShooterTalonB.enableControl(); // THIRD MOTOR
+		followerShooterTalonB.enableControl(); 
 
 		primaryShooterTalon.enable();
 		followerShooterTalonA.enable();
-		followerShooterTalonB.enable(); // THIRD MOTOR
+		followerShooterTalonB.enable(); 
 
 		primaryShooterTalon.configNominalOutputVoltage(0, 0);
 		followerShooterTalonA.configNominalOutputVoltage(0, 0);
-		followerShooterTalonB.configNominalOutputVoltage(0, 0); // THIRD MOTOR
+		followerShooterTalonB.configNominalOutputVoltage(0, 0);
 
 	}
 
-	public void initDefaultCommand() {
-	}
+	public void initDefaultCommand() {}
 
 	/**
-	 * Initiates a vision shot
+	 * Initiates a shot with a speed based on the distance from the boiler and the Look Up Table. Also puts the hood up. </br>
+	 * If vision throws an error, the shooter speed will not be set
+	 * @return if vision has successfully set the Shooter Speeds
 	 */
-	public void prepVisionShot(double speed) {
+	public void prepVisionShot(){
 		closeShot = false;
 		visionShot = true;
+		
+		
+		setShooterSpeedsPID(Robot.visionTable.getVisionBasedRPM());
+	}
+	
+	
+	/**
+	 * Initiates a shot with a customized speed and puts the hood up
+	 * @param speed the desired speed in RPM
+	 */
+	public void prepCustomShot(double speed) {
+		closeShot = false;
+		visionShot = false;
+				
 		setShooterSpeedsPID(speed);
 	}
 
@@ -147,15 +161,17 @@ public class ShakerShooter extends Subsystem {
 	public void prepWallShot() {
 		closeShot = true;
 		visionShot = false;
+
 		setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Setpoint", 0));
 	}
 
 	/**
-	 * Initiates a far hopper shot
+	 * Initiates a long shot
 	 */
-	public void prepFarHopperShot() {
+	public void prepLongShot() {
 		closeShot = false;
 		visionShot = false;
+
 		setShooterSpeedsPID(SmartDashboard.getNumber("Shooter Long Setpoint", 0));
 	}
 
@@ -176,6 +192,15 @@ public class ShakerShooter extends Subsystem {
 		return shooterGoodDelayedBoolean.update(Math.abs(primaryShooterTalon.getError()) < ERROR_THRESHOLD);
 	}
 
+	/**
+	 * @param errorThreshold the max error that is acceptable
+	 * @return true = shooter is within accepted error range of target speed /
+	 *         false = shooter speed outside error range
+	 */
+	public boolean atSpeed(double errorThreshold) {
+		return shooterGoodDelayedBoolean.update(Math.abs(primaryShooterTalon.getError()) < errorThreshold);
+	}
+	
 	/**
 	 * Uses PID to start shooter motors and keep shooter speed at target RPM
 	 * 
@@ -252,7 +277,7 @@ public class ShakerShooter extends Subsystem {
 	}
 
 	/**
-	 * @param up
+	 * @param down
 	 *            true = hood up / false = hood down
 	 */
 	public void setShooterSolenoidState(boolean down) {
@@ -274,11 +299,13 @@ public class ShakerShooter extends Subsystem {
 		primaryShooterTalon.reset();
 		followerShooterTalonA.reset();
 		followerShooterTalonB.reset();
+
 	}
 
 	public void stopMotors() { // Set the motors to 0 to stop
 		primaryShooterTalon.changeControlMode(TalonControlMode.PercentVbus);
 		primaryShooterTalon.set(0);
+
 	}
 
 	/**

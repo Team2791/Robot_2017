@@ -12,6 +12,7 @@ public class SpinUpShooter extends Command {
 	private double speed;
 	
     public SpinUpShooter(double speed) {
+    	super("SpinUpShooter");
         requires(Robot.shooter);
         this.speed = speed;
     }
@@ -22,12 +23,12 @@ public class SpinUpShooter extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.prepVisionShot(speed);
+    	Robot.shooter.prepCustomShot(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.shooter.atSpeed();
     }
 
     // Called once after isFinished returns true
