@@ -20,7 +20,6 @@ import com.ctre.CANTalon.VelocityMeasurementPeriod;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -67,9 +66,9 @@ public class ShakerShooter extends Subsystem {
 		
 		
 		followerShooterTalonA = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT_A);
-//		followerShooterTalonA.setNominalClosedLoopVoltage(12.0);
+		followerShooterTalonA.setNominalClosedLoopVoltage(12.0);
 		followerShooterTalonB = new CANTalon(RobotMap.FOLLOWER_SHOOTER_TALON_PORT_B); 
-//		followerShooterTalonB.setNominalClosedLoopVoltage(12.0);
+		followerShooterTalonB.setNominalClosedLoopVoltage(12.0);
 
 
 		primaryShooterTalon.configPeakOutputVoltage(0, -12.0f);
@@ -287,7 +286,7 @@ public class ShakerShooter extends Subsystem {
 	/**
 	 * @return true = hood up(far shot) / false = hood down(close shot)
 	 */
-	private boolean getShooterHeight() {
+	public boolean getShooterHeight() {
 		return shooterSolenoid.get();
 	}
 

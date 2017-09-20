@@ -1,11 +1,7 @@
 package org.usfirst.frc.team2791.robot.commands.pid.automodes;
 
 import org.usfirst.frc.team2791.robot.Robot;
-import org.usfirst.frc.team2791.robot.commands.DrivetrainDelay;
-import org.usfirst.frc.team2791.robot.commands.HopperOnOnceAtSpeed;
-import org.usfirst.frc.team2791.robot.commands.IntakeOn;
-import org.usfirst.frc.team2791.robot.commands.RunVisionShot;
-import org.usfirst.frc.team2791.robot.commands.SpinUpShooter;
+import org.usfirst.frc.team2791.robot.commands.*;
 import org.usfirst.frc.team2791.robot.commands.pid.DriveEncoderBangBang;
 import org.usfirst.frc.team2791.robot.commands.pid.StationaryVisionTurn;
 import org.usfirst.frc.team2791.robot.commands.pid.TurnGyroBangBang;

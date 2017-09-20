@@ -1,17 +1,9 @@
 package org.usfirst.frc.team2791.robot.commands.pid.automodes;
 
 import org.usfirst.frc.team2791.robot.Robot;
-import org.usfirst.frc.team2791.robot.commands.AimAndShoot;
-import org.usfirst.frc.team2791.robot.commands.AutonGearScore;
-import org.usfirst.frc.team2791.robot.commands.DrivetrainDelay;
-import org.usfirst.frc.team2791.robot.commands.HopperOn;
-import org.usfirst.frc.team2791.robot.commands.IntakeOn;
-import org.usfirst.frc.team2791.robot.commands.RunVisionShot;
+import org.usfirst.frc.team2791.robot.commands.*;
 import org.usfirst.frc.team2791.robot.commands.SpinUpShooter;
-import org.usfirst.frc.team2791.robot.commands.pid.DriveEncoderBangBang;
-import org.usfirst.frc.team2791.robot.commands.pid.DriveStraightEncoderGyro;
-import org.usfirst.frc.team2791.robot.commands.pid.StationaryVisionTurn;
-import org.usfirst.frc.team2791.robot.commands.pid.TurnGyroBangBang;
+import org.usfirst.frc.team2791.robot.commands.pid.*;
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;

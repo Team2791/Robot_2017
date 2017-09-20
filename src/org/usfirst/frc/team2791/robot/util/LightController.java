@@ -15,24 +15,19 @@ public class LightController{
 	public LightController(){
 		pin1 = new DigitalOutput(RobotMap.LIGHTS_PIN_A);
 		pin2 = new DigitalOutput(RobotMap.LIGHTS_PIN_B);
-		pin3 = new DigitalOutput(RobotMap.LIGHTS_PIN_C);	
-	
+		pin3 = new DigitalOutput(RobotMap.LIGHTS_PIN_C);
+
+
 	}
 
 	/**
 	 *is constantly called in a periodic method
 	 */
 	public void run(){
-		
+
 		if(Robot.gamePeriod == Robot.GamePeriod.DISABLED){
 			demoSequence();
 		}else if(Robot.gamePeriod == Robot.GamePeriod.TELEOP){
-			
-//			if(Robot.gearMechanism.isDown())
-//				gearIntakeSequence();
-//			else
-//				teleop();
-			
 			if(Robot.gearMechanism.isDown())
 				gearIntakeSequence();
 			else if(Robot.intake.isClimbing)
@@ -43,29 +38,24 @@ public class LightController{
 				teleopSequenceBlue();
 			else if (Robot.teamColor == Robot.TeamColor.RED)
 				teleopSequenceRed();
-			
-//			System.out.print("Pin 4: " + active1);
-//			System.out.print("   Pin 5: " + active2);
-//			System.out.println("   Pin 6:" + active3);
-			
+
 		}else if(Robot.gamePeriod == Robot.GamePeriod.AUTONOMOUS){
 			if (Robot.teamColor == Robot.TeamColor.BLUE)
 				autoSequenceBlue();
 			else if(Robot.teamColor == Robot.TeamColor.RED)
 				autoSequenceRed();	
-			
-//			auto();
-//			System.out.print("Pin 4: " + active1);
-//			System.out.print("   Pin 5: " + active2);
-//			System.out.println("   Pin 6:" + active3);
+
 		}
-		
 
 
-//		pin1.set(true);
 		pin1.set(active1);
 		pin2.set(active2);
 		pin3.set(active3);
+		
+		SmartDashboard.putBoolean("Light Pin 1", active1);
+		SmartDashboard.putBoolean("Light Pin 2", active2);
+		SmartDashboard.putBoolean("Light Pin 3", active3);
+
 	}
 
 	public void autoSequenceBlue(){
@@ -114,16 +104,16 @@ public class LightController{
 		active1 = false;
 		active2 = true;
 		active3 = true;
-//		
-//		active2 = true;
-//		active3 = true;
+		//		
+		//		active2 = true;
+		//		active3 = true;
 	}
-	
+
 	public void teleop(){
 		active2 = true;
 		active3 = false;
 	}
-	
+
 	public void auto(){
 		active2 = false;
 		active3 = true;

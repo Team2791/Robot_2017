@@ -1,9 +1,7 @@
 package org.usfirst.frc.team2791.robot;
 
 
-import org.usfirst.frc.team2791.robot.commands.pid.DriveStraightEncoderGyro;
-import org.usfirst.frc.team2791.robot.commands.pid.StationaryGyroTurn;
-import org.usfirst.frc.team2791.robot.commands.pid.TurnGyroBangBang;
+import org.usfirst.frc.team2791.robot.commands.pid.*;
 import org.usfirst.frc.team2791.robot.commands.pid.automodes.*;
 import org.usfirst.frc.team2791.robot.subsystems.*;
 import org.usfirst.frc.team2791.robot.util.CommandSelector;
@@ -14,14 +12,12 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -41,7 +37,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * <a href="uwh.547@gmail.com"> uwh.547@gmail.com </a>
  * @author Gaurab Banerjee: 
  * <a href="gaurab.banerjee97@gmail.com"> gaurab.banerjee97@gmail.com </a>
-*
+ *
  */
 public class Robot extends IterativeRobot {
 
@@ -58,17 +54,16 @@ public class Robot extends IterativeRobot {
 
 	public static VisionNetworkTable visionTable; 
 
+	private boolean displayAutoTimes = false;
 	private double lastAutonLoopTime;
 
-
-	private double smartDashBSFix = 0.00001;
 
 	public Command autonomousCommand;
 	private boolean lookForAction = false;
 	private CommandSelector autoSelector;	
-	
+
 	public static TeamColor teamColor = TeamColor.BLUE;
-	
+
 	public static LightController lights = new LightController();
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -77,11 +72,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 
-		
-		
+
+
 		System.out.println("Starting to init my systems.");
 		gamePeriod = GamePeriod.DISABLED;
-		 
+
 		pdp = new PowerDistributionPanel(RobotMap.PDP); //CAN id has to be 0
 
 		compressor = new Compressor(RobotMap.PCM_MODULE);
@@ -94,10 +89,10 @@ public class Robot extends IterativeRobot {
 		hopper = new ShakerHopper();
 		shooter = new ShakerShooter();
 
-		
+
 		visionTable = new VisionNetworkTable();
 		autoSelector = new CommandSelector("Auto Mode");
-		
+
 		drivetrain.setAutoPID();
 
 		/*
@@ -128,10 +123,10 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 
 		gamePeriod = GamePeriod.DISABLED;
-		
+
 		debug();
 	}
-	
+
 	@Override
 	public void disabledPeriodic() {
 
@@ -170,9 +165,9 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {		
-		
+
 		gamePeriod = GamePeriod.AUTONOMOUS;
-		
+
 		debug();
 
 		drivetrain.reset();
@@ -180,7 +175,7 @@ public class Robot extends IterativeRobot {
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
 
-		
+
 		autoSelector.addCommand(new CenterGearAutonShooting(), 0);
 		autoSelector.addCommand(new BoilerGearAuton(), 1);
 		autoSelector.addCommand(new LoadingStationGearAuton(), 2);
@@ -196,8 +191,8 @@ public class Robot extends IterativeRobot {
 		if(autonomousCommand.getName().equals("Center Gear & Shoot")){
 			visionTable.setVisionOffset(teamColor.visionOffset);
 		}
-		
-//		autonomousCommand = new TurnGyroBangBang(0.65 , 90.0);
+
+		//		autonomousCommand = new TurnGyroBangBang(0.65 , 90.0);
 
 		System.out.println("***Starting "+teamColor+" "+autonomousCommand.getName()+" AutoMode***");
 
@@ -211,8 +206,8 @@ public class Robot extends IterativeRobot {
 
 		double thisAutoLoopTime = Timer.getFPGATimestamp();
 		double timeDiff = thisAutoLoopTime - lastAutonLoopTime;
-		//		System.out.println("Auton time diff = "+timeDiff+"s rate = "+(1.0/timeDiff)+"hz");
-		//		lastAutonLoopTime = thisAutoLoopTime;
+		System.out.print(displayAutoTimes ? "Auton time diff = "+timeDiff+"s rate = "+(1.0/timeDiff)+"hz\n" : "");
+		lastAutonLoopTime = thisAutoLoopTime;
 	}
 
 	//************************************************************
@@ -223,7 +218,7 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 
 		debug();
-		
+
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 
@@ -244,7 +239,7 @@ public class Robot extends IterativeRobot {
 	//***********************************************************
 	//**********************Test Runners**********************
 	//***********************************************************
-	
+
 
 	@Override
 	public void testPeriodic() {
@@ -253,7 +248,7 @@ public class Robot extends IterativeRobot {
 
 		run();
 	}
-	
+
 
 	/**Runs in all GamePeriods*/
 	public void run(){
@@ -306,7 +301,7 @@ public class Robot extends IterativeRobot {
 	 * That debug method should be called here.
 	 */
 	public void debug() {
-		
+
 		SmartDashboard.putString("Selected Team Color", teamColor.toString());
 
 		SmartDashboard.putNumber("Compressor current", compressor.getCompressorCurrent());
@@ -315,15 +310,13 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Hopper current",hopper.getCurrentUsage());
 		SmartDashboard.putNumber("Shooter total current",shooter.getCurrentUsage());
 
-		smartDashBSFix *= -1;
-		
 		autoSelector.debug();
 
 		drivetrain.debug();
 		shooter.debug();
 		gearMechanism.debug();
 		hopper.debug();
-		
+
 		visionTable.debug();
 
 	}
@@ -334,20 +327,20 @@ public class Robot extends IterativeRobot {
 
 	public enum TeamColor{
 		BLUE("BLUE", 60.0), RED("RED", -60.0);
-		
+
 		private String color;
 		public double visionOffset;
-		
+
 		TeamColor(String color, double vOffset){
 			this.color = color;
 			this.visionOffset = vOffset;
 		}
-		
+
 		@Override
 		public String toString(){
 			return color;
 		}
-	
+
 	}
 }
 

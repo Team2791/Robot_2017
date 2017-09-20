@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2791.robot.commands.pid.automodes;
 
-import org.usfirst.frc.team2791.robot.commands.GearMechUp;
 import org.usfirst.frc.team2791.robot.commands.pid.DriveStraightEncoderGyro;
 import org.usfirst.frc.team2791.robot.commands.pid.StationaryGyroTurn;
 import org.usfirst.frc.team2791.robot.Robot;

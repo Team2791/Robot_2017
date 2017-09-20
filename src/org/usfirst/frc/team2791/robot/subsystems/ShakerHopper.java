@@ -4,7 +4,6 @@ import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.commands.safeties.StopHopper;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -22,21 +21,15 @@ public class ShakerHopper extends Subsystem{
 	
 	public boolean isShooting = false;
 	
-	private AnalogInput ballSensor1;
-	private AnalogInput ballSensor2;
-	
 	private PWM servo;
 	private Talon hopperSpark;
 
 	private static double hopperSetpoint = 0.65;
-	private final double distanceSensorCutoffPoint = 1.5;
 		
 	public ShakerHopper(){
 		hopperSpark = new Talon(RobotMap.HOPPER_SPARK_PORT);
 //		hopperSpark.setInverted(true);
-//		
-//		ballSensor1 = new AnalogInput(0);
-//		ballSensor2 = new AnalogInput(1);
+
 		
 		servo = new PWM(2);
 	}

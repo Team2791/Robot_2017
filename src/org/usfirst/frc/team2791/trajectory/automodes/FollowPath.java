@@ -64,10 +64,10 @@ public class FollowPath extends Command {
 		}
 
 		switch(direction_){
-			case FORWARD: reversed = true;
+			case FORWARD: setReversed(true);
 				this.direction = 1.0;
 				break;
-			case REVERSE: reversed = false;
+			case REVERSE: setReversed(false);
 				this.direction = -1.0;
 				break;
 		}
@@ -113,6 +113,14 @@ public class FollowPath extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+	}
+
+	public boolean isReversed() {
+		return reversed;
+	}
+
+	public void setReversed(boolean reversed) {
+		this.reversed = reversed;
 	}
 
 	//Enums

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2791.robot.commands;
 
+import org.usfirst.frc.team2791.robot.OI;
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.subsystems.ShakerDrivetrain;
 import org.usfirst.frc.team2791.robot.util.GTADrive;
@@ -25,8 +26,8 @@ public class DriveWithJoystick extends Command {
 	
 	@Override
 	protected void execute() {
-		double left = speedMultiplier*GTADrive.getLeftValue(Robot.oi.driver);
-		double right = speedMultiplier*GTADrive.getRightValue(Robot.oi.driver);
+		double left = speedMultiplier*GTADrive.getLeftValue(OI.driver);
+		double right = speedMultiplier*GTADrive.getRightValue(OI.driver);
 		Robot.drivetrain.setLeftRightMotorOutputs(left, right);
 		
 		SmartDashboard.putNumber("Left Joystick Output", left);

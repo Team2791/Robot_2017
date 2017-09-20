@@ -42,7 +42,8 @@ public class AutoPaths {
 			"RED_BoilerWallToBoilerGear",
 			"TestingOneTwo"
 	};
-	static Hashtable paths_ = new Hashtable();
+	
+	static Hashtable<String, Path> paths_ = new Hashtable<String, Path>();
 
 	/*
 	 * @param: String pathname_ is a path that you want to make sure exists
