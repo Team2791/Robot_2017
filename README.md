@@ -52,5 +52,5 @@ Our driving command (<i>DriveWithJoystick.java</i>) didn't use buttons (it used 
 
  
  
- .... and Unnas eventually wrote the rest of this
+ .... and someone eventually wrote the rest of this
 

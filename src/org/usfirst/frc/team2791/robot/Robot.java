@@ -57,7 +57,12 @@ public class Robot extends IterativeRobot {
 	private boolean displayAutoTimes = false;
 	private double lastAutonLoopTime;
 
-
+	/**
+	 * true --> Using the competition Robot (Stoker)</br>
+	 * false --> Using the practice Robot (Stoker Jr.)
+	 */
+	public static boolean isCompBot = true;
+	
 	public Command autonomousCommand;
 	private boolean lookForAction = false;
 	private CommandSelector autoSelector;	
@@ -252,6 +257,7 @@ public class Robot extends IterativeRobot {
 
 	/**Runs in all GamePeriods*/
 	public void run(){
+		isCompBot = SmartDashboard.getBoolean("botIsCompetition", isCompBot);
 		visionTable.run();
 		lights.run();
 		debug();
@@ -301,6 +307,8 @@ public class Robot extends IterativeRobot {
 	 * That debug method should be called here.
 	 */
 	public void debug() {
+		
+		SmartDashboard.putBoolean("Competition Bot?", isCompBot);
 
 		SmartDashboard.putString("Selected Team Color", teamColor.toString());
 
