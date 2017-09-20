@@ -2,12 +2,14 @@
 # Robot_2017
 Robot code and SmartDashboard Layouts for FRC 2791 Shaker Robotics, and their 2017 robot: <b><i>Stoker</b></i> </br></br>
 
+
 Shaker Robotics competed in the 2017 FIRST Robotics Competition, STEAMWorks at the New York Tech Valley Regional, New York City Regional, and the St. Louis FRC Championship (Curie Division). </br></br>
 
 <h2>Season Results: </h2>
 Tech Valley - Winner and Industrial Design </br>
 NYC - Semifinalists and Industrial Design </br>
 Curie - Quarterfinalists</br>
+IRI Invitees</br>
 
 <h2> Table of Contents: </h2>
 <ol>
