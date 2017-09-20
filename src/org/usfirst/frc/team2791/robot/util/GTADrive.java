@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2791.robot.util;
 
 
-import org.usfirst.frc.team2791.robot.ShakerJoystick.OverriddenJoystick;
+import org.usfirst.frc.team2791.robot.ShakerGamepad.OverriddenGamepad;
 
 /**
  * This allows you to easily adapt Gamepad/Xbox controllers to our specialized tank drive
@@ -12,7 +12,7 @@ public class GTADrive {
 	 * @param joystick the controller that is controlling the drivetrain (typically Driver)
 	 * @return the output value for the left motors, based the amount the trigger is pressed or if the bumpers are pressed
 	 */
-	public static double getLeftValue(OverriddenJoystick joystick){
+	public static double getLeftValue(OverriddenGamepad joystick){
 		double combinedLeft = 0;
 		
 		if(joystick.getButtonRB()){ //if the Right Bumpers are calling GTA
@@ -32,7 +32,7 @@ public class GTADrive {
 	 * @param joystick the controller that is controlling the drivetrain (typically Driver)
 	 * @return the output value for the right motors, based the amount the trigger is pressed or if the bumpers are pressed
 	 */
-	public static double getRightValue(OverriddenJoystick joystick){
+	public static double getRightValue(OverriddenGamepad joystick){
 		double combinedRight = 0;
 		
 		if(joystick.getButtonRB()){//if the Right Bumpers are calling GTA

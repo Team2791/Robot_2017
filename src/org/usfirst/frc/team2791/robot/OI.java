@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2791.robot;
 
-import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerDriver;
-import org.usfirst.frc.team2791.robot.ShakerJoystick.ShakerOperator;
+import org.usfirst.frc.team2791.robot.ShakerGamepad.ShakerDriver;
+import org.usfirst.frc.team2791.robot.ShakerGamepad.ShakerOperator;
 import org.usfirst.frc.team2791.robot.commands.*;
 import org.usfirst.frc.team2791.robot.commands.pid.DriveStraightVision;
 import org.usfirst.frc.team2791.robot.commands.pid.StationaryVisionTurn;
@@ -80,7 +80,7 @@ public class OI {
 
 		driverY.whileHeld(new ClimberOn());
 		
-		driverA.whileHeld(new GearPoop());
+		driverA.whileHeld(new GearMechEject());
 		
 		driverB.whenPressed(new DriveWithVision());// TODO Remove this command from driver and give to operator instead of long shot
 

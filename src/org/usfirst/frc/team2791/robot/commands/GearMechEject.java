@@ -8,12 +8,14 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *Puts the {@link ShakerGear Gear Intake} up and runs the motors for .5 secs
+ *
+ *This class was originally named GearPoop and that fact must be known
  */
-public class GearPoop extends Command {
+public class GearMechEject extends Command {
 
 	private Timer t = new Timer();
 	
-    public GearPoop() {
+    public GearMechEject() {
     	super("GearMechUp");
     	requires(Robot.gearMechanism);
     	t.start();

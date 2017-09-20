@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2791.robot.ShakerJoystick;
+package org.usfirst.frc.team2791.robot.ShakerGamepad;
 
 import org.usfirst.frc.team2791.robot.RobotMap;
 
@@ -6,7 +6,7 @@ import org.usfirst.frc.team2791.robot.RobotMap;
  * Robot operator object
  * @author team2791: See Robot.java for contact info
  */
-public class ShakerOperator extends OverriddenJoystick {
+public class ShakerOperator extends OverriddenGamepad {
     private static ShakerOperator operatorJoystickInstance;
     
     public ShakerOperator() {

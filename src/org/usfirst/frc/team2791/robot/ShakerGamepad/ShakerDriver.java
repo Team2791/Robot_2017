@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2791.robot.ShakerJoystick;
+package org.usfirst.frc.team2791.robot.ShakerGamepad;
 
 import org.usfirst.frc.team2791.robot.RobotMap;
 
@@ -6,7 +6,7 @@ import org.usfirst.frc.team2791.robot.RobotMap;
  * Robot driver object
  * @author team2791: See Robot.java for contact info
  */
-public class ShakerDriver extends OverriddenJoystick {
+public class ShakerDriver extends OverriddenGamepad {
 	private static ShakerDriver driverJoystickInstance;
 	// this is to account for any slack in the drive train
 

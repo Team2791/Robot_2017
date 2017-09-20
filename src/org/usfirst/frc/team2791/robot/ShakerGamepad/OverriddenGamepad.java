@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2791.robot.ShakerJoystick;
+package org.usfirst.frc.team2791.robot.ShakerGamepad;
 
 import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.Util;
@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj.Joystick;
  * 
  * @author team2791: See Robot.java for contact info
  */
-public class OverriddenJoystick extends Joystick {
+public class OverriddenGamepad extends Joystick {
 	public static double offset = 0;//to account for any slack in the system
 	
-    public OverriddenJoystick(int port) {
+    public OverriddenGamepad(int port) {
         super(port);
     }
 
