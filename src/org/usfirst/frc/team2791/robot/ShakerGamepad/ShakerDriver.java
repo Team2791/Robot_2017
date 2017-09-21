@@ -3,7 +3,8 @@ package org.usfirst.frc.team2791.robot.ShakerGamepad;
 import org.usfirst.frc.team2791.robot.RobotMap;
 
 /**
- * Robot driver object
+ * The Driver Gamepad object (automatically assignes the driver port to the driver controller) </br>
+ * Superclass : {@link OverriddenGamepad}
  * @author team2791: See Robot.java for contact info
  */
 public class ShakerDriver extends OverriddenGamepad {

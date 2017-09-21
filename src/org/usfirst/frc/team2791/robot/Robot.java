@@ -21,9 +21,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * <b><i>Robot.java for Stoker, the 2017 robot from FRC2791 Shaker Robotics</i></b>
- * <b><i>Curie Quarterfinalists</i></b>
- * </p>
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
  * documentation. If you change the name of this class or the package after
@@ -43,7 +40,7 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static GamePeriod gamePeriod;
-	public static PowerDistributionPanel pdp; //CAN ID has to be 0 for current sensing
+	public static PowerDistributionPanel pdp; //CAN ID has to be 0 for PDP's current sensing
 	public static Compressor compressor;
 
 	public static ShakerHopper hopper;
@@ -64,19 +61,22 @@ public class Robot extends IterativeRobot {
 	public static boolean isCompBot = true;
 	
 	public Command autonomousCommand;
-	private boolean lookForAction = false;
+	private boolean lookForAction = false; // this flag helps differentiate a button press from an accidental button hold
 	private CommandSelector autoSelector;	
 
 	public static TeamColor teamColor = TeamColor.BLUE;
 
 	public static LightController lights = new LightController();
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
+	 * </br>
+	 * OI.java should be initalized last. When OI's init print statement is shown,
+	 * that means all subsystems have successfully been initalized
 	 */
 	@Override
 	public void robotInit() {
-
 
 
 		System.out.println("Starting to init my systems.");
@@ -101,9 +101,11 @@ public class Robot extends IterativeRobot {
 		drivetrain.setAutoPID();
 
 		/*
-		 *  the reason that names are added separately is b/c the auto commands need to know
-		 *  what color we are on (which happens after disabled), but we need to know what the
-		 *  selector is currently selecting for the Driver Station to know
+		 *  The reason that names are added separately is b/c the auto commands need to know
+		 *  what color team we are on. For ease of use, the color variable is set at the beginning of the autonomous
+		 *  (this allows the operator to switch back and forth between the diff colors as many times as the need to)
+		 *  But the Dashboard also needs to display what command is currently selected BEFORE the autonomous starts.
+		 *  So we need to know the names at the start of disabled, but can't know the colors until the start of autoInit.
 		 */
 		autoSelector.addName("Center Gear & Shoot", 0);
 		autoSelector.addName("Boiler Side Gear", 1);
@@ -120,16 +122,13 @@ public class Robot extends IterativeRobot {
 		debug();
 	}
 
-	//************************************************************
-	//********************Disabled Runners********************
-	//************************************************************
-
 	@Override
 	public void disabledInit() {
 
 		gamePeriod = GamePeriod.DISABLED;
 
 		debug();
+		run();
 	}
 
 	@Override
@@ -162,18 +161,16 @@ public class Robot extends IterativeRobot {
 		}
 
 		Scheduler.getInstance().run();
-	}
+		
+		run();
+	}//************end of disabled
 
-	//*************************************************************
-	//******************Autonomous Runners******************
-	//*************************************************************
 
 	@Override
 	public void autonomousInit() {		
 
 		gamePeriod = GamePeriod.AUTONOMOUS;
 
-		debug();
 
 		drivetrain.reset();
 
@@ -194,15 +191,15 @@ public class Robot extends IterativeRobot {
 		autonomousCommand = autoSelector.getSelected();
 
 		if(autonomousCommand.getName().equals("Center Gear & Shoot")){
-			visionTable.setVisionOffset(teamColor.visionOffset);
+			visionTable.setVisionOffset(teamColor.visionOffset); 
 		}
-
-		//		autonomousCommand = new TurnGyroBangBang(0.65 , 90.0);
 
 		System.out.println("***Starting "+teamColor+" "+autonomousCommand.getName()+" AutoMode***");
 
 		if (autonomousCommand != null)
 			autonomousCommand.start();
+		
+		run();
 	}
 
 	@Override
@@ -213,16 +210,12 @@ public class Robot extends IterativeRobot {
 		double timeDiff = thisAutoLoopTime - lastAutonLoopTime;
 		System.out.print(displayAutoTimes ? "Auton time diff = "+timeDiff+"s rate = "+(1.0/timeDiff)+"hz\n" : "");
 		lastAutonLoopTime = thisAutoLoopTime;
-	}
-
-	//************************************************************
-	//*********************Teleop Runners*********************
-	//************************************************************
+		
+		run();
+	}//*************end of autonomous
 
 	@Override
 	public void teleopInit() {
-
-		debug();
 
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
@@ -232,6 +225,8 @@ public class Robot extends IterativeRobot {
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
 		shooter.stopMotors();
+		
+		run();
 	}
 
 	@Override
@@ -239,11 +234,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 
 		run();
-	}
-
-	//***********************************************************
-	//**********************Test Runners**********************
-	//***********************************************************
+	}//*************end of teleop
 
 
 	@Override
@@ -265,7 +256,7 @@ public class Robot extends IterativeRobot {
 
 
 	//*******************************************************************
-	//************************Helper Methods************************
+	//**************************Helper Methods**************************
 	//*******************************************************************
 
 	private void runUSBCameras() {
@@ -333,7 +324,12 @@ public class Robot extends IterativeRobot {
 		AUTONOMOUS, TELEOP, DISABLED
 	}
 
-	public enum TeamColor{
+	/**
+	 * This is an easy way to set variables that change depending on what team you are on.
+	 * This also provides a more intuative variable for checking what color you on, compared to a boolean for example
+	 *
+	 */
+	public enum TeamColor{ 
 		BLUE("BLUE", 60.0), RED("RED", -60.0);
 
 		private String color;

@@ -6,6 +6,12 @@ import org.usfirst.frc.team2791.robot.util.Util;
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
+ *
+ * This class makes it easier to get values from non-boolean buttons (Joysticks, Dpads, Triggers)</br>
+ * It also provides more intuitive methods for accessing the buttons. </br>
+ * It also does a bit math to combine Joystick, trigger, and bumper values to allow for GTA drive </br>
+ * Finally, the non-boolean buttons have deadzones in the middle where the value read doesn't change or innaccurately changes,
+ * so this class's methods accounts for such deadzones.
  * We use Gamepad controllers. See Driver Station for button mapping.
  * 
  * @author team2791: See Robot.java for contact info
@@ -17,6 +23,7 @@ public class OverriddenGamepad extends Joystick {
         super(port);
     }
 
+    //
     public double getXVal() {
         return Util.deadzone(CONSTANTS.DEADZONE, super.getX(), 1.0);
     }

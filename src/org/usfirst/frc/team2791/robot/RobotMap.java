@@ -3,7 +3,7 @@ package org.usfirst.frc.team2791.robot;
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring and makes checking
- * the wiring easier.
+ * the wiring easier. This class also handles port differences between the competition and practice robot
  * </br><b> For team members: There is a Google Sheet with all wiring and pneumatic related information.</b>
  * 
  * @author team2791: See Robot.java for contact info

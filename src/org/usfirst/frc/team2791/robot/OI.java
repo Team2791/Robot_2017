@@ -15,8 +15,12 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
- * This class does not handle the joysticks driving , which is handled in GTADrive.
- * </br> We are currently using 
+ * This class does not handle the joysticks driving , which is handled in GTADrive.</br>
+ * 
+ * Many of our commands are designed to work with the whileHeld() method.
+ * This means that they don't have automatic endings, and only end when the user requests an end (in other words, the user no longer "holds").
+ * This is noted in each Command's class description.
+ * </br></br> We are currently using 
  * <a href="http://support.logitech.com/en_us/product/gamepad-f310"> 
  * Logitech Gamepad F310 controllers </a>
  * @see GTADrive

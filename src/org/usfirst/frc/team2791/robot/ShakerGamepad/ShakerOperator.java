@@ -3,7 +3,8 @@ package org.usfirst.frc.team2791.robot.ShakerGamepad;
 import org.usfirst.frc.team2791.robot.RobotMap;
 
 /**
- * Robot operator object
+ * The Operator Gamepad object (automatically assignes the Operator port to the Operator controller) </br>
+ * Superclass : {@link OverriddenGamepad}
  * @author team2791: See Robot.java for contact info
  */
 public class ShakerOperator extends OverriddenGamepad {
