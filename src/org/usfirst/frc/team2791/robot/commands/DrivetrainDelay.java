@@ -6,7 +6,9 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *Stops the Drivetrain for a given amount of time
+ * Stops the Drivetrain for a given amount of time. </br>
+ * Use when taking an image with the Axis to let the image settle and the lag to stop 
+ *
  */
 public class DrivetrainDelay extends Command {
 	
@@ -23,7 +25,7 @@ public class DrivetrainDelay extends Command {
     }
 
     protected void initialize() {
-    	System.out.println("drive train starting to wait.");
+    	System.out.println("Drive train Delay has Started.");
     	timer.start();
     }
 

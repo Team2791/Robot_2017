@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Puts {@link ShakerGear} Mechanism down and stops the gear motors from running.</br>
- * This will work regardless of the status of the limit switches
+ * This will work regardless of the status of the ir sensors
+ * </br>This Command has an immediate ending (there are only non-continous actions)
  */
 public class GearMechDown extends Command{
 	public GearMechDown (){

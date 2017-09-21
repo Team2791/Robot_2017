@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Shoots w/ a wheel speed based on the distance away from the Boiler. Uses {@link VisionNetworkTable} and {@link ShooterLookupTable}.
  * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for visionShot. 
- * The hopper is set to meter its speed.
+ * The hopper is set to only fed balls to the shooter when the shooter is at the desired rpm.
+ * The hopper breifly runs backwards at the beginning to ensure no balls are touching the shooter when it spins up.
+ * </br>This Command has no automatic ending (The ending is user requested)
  */
 public class RunVisionShot extends Command{
 	Timer timer = new Timer();

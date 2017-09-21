@@ -5,12 +5,17 @@ import org.usfirst.frc.team2791.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Spin up the shooter the a desired rpm and leave the shooter spinning at that speed. Does NOT activate the hopper or start shooting.
+ * </br>This Command will end when the shooter reaches the desired speed (but the shooter does not stop running afterwards).
+
  */
 public class SpinUpShooter extends Command {
 
 	private double speed;
-	
+	/**
+	 * 
+	 * @param speed the desired speed in RPM.
+	 */
     public SpinUpShooter(double speed) {
     	super("SpinUpShooter");
         requires(Robot.shooter);

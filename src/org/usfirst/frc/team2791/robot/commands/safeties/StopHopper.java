@@ -6,7 +6,7 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Stops the {@link ShakerHopper} motors safely
+ * Stops the {@link ShakerHopper} motors safely.
  */
 public class StopHopper extends Command{
 	public StopHopper(){

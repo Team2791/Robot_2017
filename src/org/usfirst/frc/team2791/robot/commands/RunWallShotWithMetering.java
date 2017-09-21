@@ -8,8 +8,9 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for wallShot. The hopper is set to meter its speed.
- * TODO: get rid of this unused command
+ * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for wallShot. 
+ * The hopper is set to meter its speed so it feeds balls to the shooter faster when the shooter is closer to the desired rpm.
+ * </br>This Command has no automatic ending (The ending is user requested)
  */
 public class RunWallShotWithMetering extends Command{
 	public RunWallShotWithMetering() {

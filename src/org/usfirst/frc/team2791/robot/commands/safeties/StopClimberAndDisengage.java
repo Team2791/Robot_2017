@@ -7,7 +7,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Stops the {@link ShakerIntake Climber} motor and disengages the {@link ShakerIntake#ratchetWingSolenoid ratchet}.
- *  This is if we need to safely come off the rope for any reason.
+ *  This is if we need to let go of the rope while climbing.
+ *  THE ROBOT WILL FALL IF YOU USE THIS SO USE IT UNDER EXTERME EMERGENCIES ONLY
  */
 public class StopClimberAndDisengage extends Command{
 	

@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *Uses BasicPID util class to create a PID for auto-turning. PID makes sure that the angle is correct
+ *Uses BasicPID util class to create a PID for auto-turning. PID makes sure that the angle is correct.
+ *Base class for PID turning (sub classes allow for differing systems for determing the setpoint [vision, encoders, etc.])
  *@see BasicPID
  */
 public abstract class DrivetrainPIDTurn extends Command {

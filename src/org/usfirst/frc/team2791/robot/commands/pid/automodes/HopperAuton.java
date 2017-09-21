@@ -9,7 +9,9 @@ import org.usfirst.frc.team2791.robot.commands.pid.TurnGyroBangBang;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *Hopper Auto
+ *Uses BangBang to drive to the far hopper and "wiggles" to kick the hopper trigger.
+ *Afterwards it sits below the hopper and centers to the boiler based on vision
+ *The robot then runs the shooter at a vision-determined rpm.
  */
 public class HopperAuton extends CommandGroup {
 
@@ -33,6 +35,7 @@ public class HopperAuton extends CommandGroup {
 		
 		addParallel(new SpinUpShooter(3020)); //3050 was 3035
 		addSequential(new DriveEncoderBangBang(-.8, 0.0, -3.5, 3));
+		
 		// This is sketch as heck because we're counting on the drift from the first drive
 		// to get us to the 2nd	 distance and just using the drive train to slow down and turn a bit.
 //		addSequential(new DriveEncoderBangBang(0.0, 0.075, -1));
@@ -48,8 +51,6 @@ public class HopperAuton extends CommandGroup {
 		addSequential(new DrivetrainDelay(0.75));
 		
 		addSequential(new StationaryVisionTurn(.5, 1.0));
-//		addParallel(new SpinUpShooter(Robot.visionTable.getDistanceBasedRPM()));
-//		addSequential(new HopperOnOnceAtSpeed());
 
 		addSequential(new RunVisionShot());
     }

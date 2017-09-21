@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *Puts the {@link ShakerGear Gear Intake} up and runs the motors for .5 secs
+ *</br>This Command has a timed ending (1.2 seconds after it starts) </br></br></br></br>
  *
  *This class was originally named GearPoop and that fact must be known
  */

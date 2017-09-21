@@ -21,12 +21,12 @@ public class BoilerGearAuton extends CommandGroup {
 		double dist = 0;
 		
 		if(color.equals("RED")){
-			addSequential(new DriveStraightEncoderGyro(-(128-33)/12.0, .7, 10));//based on what we saw with the loading station side, this will be 18 in too high
+			addSequential(new DriveStraightEncoderGyro(-(128-33)/12.0, .7, 10));
 			addSequential(new StationaryGyroTurn((-60.0/12),.7));
 			dist = Math.cos(Math.PI/6)/84 - 36; //84.0 is the lateral distance
 
 		}else{
-			addSequential(new DriveStraightEncoderGyro(-(128-33)/12.0, .7, 10));//based on what we saw with the loading station side, this will be 18 in too high
+			addSequential(new DriveStraightEncoderGyro(-(128-33)/12.0, .7, 10));
 			addSequential(new StationaryGyroTurn((60.0/12),.7));
 			dist = Math.cos(Math.PI/6)/88 - 36; //88 is the lateral distance
 

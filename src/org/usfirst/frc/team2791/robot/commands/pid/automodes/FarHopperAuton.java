@@ -13,7 +13,9 @@ import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *Hopper Auto
+ *Uses BangBang to drive to the far hopper and "wiggles" to kick the hopper trigger.
+ *Afterwards it sits below the hopper and centers to the boiler based on vision
+ *The robot then runs the shooter at a vision-determined rpm.
  */
 public class FarHopperAuton extends CommandGroup {
 

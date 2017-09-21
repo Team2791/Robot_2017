@@ -5,7 +5,8 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerHopper;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Runs the {@link ShakerHopper} motors backwards, can be used to unjam the hopper
+ * Runs the {@link ShakerHopper} motors to index balls to the shooter
+ * </br>This Command has no automatic ending (The ending is user requested)
  */
 public class HopperOn extends Command{
 	public HopperOn(){

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Uses the {@link GTADrive} I/O Logic to control the {@link ShakerDrivetrain Drivetrain}.
  * @see GTADrive
+ * **This Command is a Default Command and can only be ended by an interuption
  */
 public class DriveWithJoystick extends Command {
 
@@ -46,8 +47,8 @@ public class DriveWithJoystick extends Command {
 	}
 
 	protected void interrupted() {
-		new DriveWithJoystick();
-		System.out.println("Drive with joystik interrupted.");
+		System.out.println("Drive with Joystik interrupted.");
+		end();
 	}
 
 }

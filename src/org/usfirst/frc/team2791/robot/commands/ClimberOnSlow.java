@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Runs the {@link ShakerIntake Climber} at a slower speed to catch the rope.
+ * </br>This Command has no automatic ending (The ending is user requested)
  */
 public class ClimberOnSlow extends Command{
 	public ClimberOnSlow(){
@@ -27,6 +28,6 @@ public class ClimberOnSlow extends Command{
 		Robot.intake.motorOffIntake();
 	}
 	protected void interrupted(){
-		Robot.intake.motorOffIntake();
+		end();
 	}
 }

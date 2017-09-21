@@ -7,8 +7,9 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Puts {@link ShakerGear} Mechanism down and starts running gear motors to intake.</br>
+ * Holds {@link ShakerGear} Mechanism down and starts running gear motors to intake.</br>
  * This will work regardless of the status of the ir sensor
+ * </br>This Command has no automatic ending (The ending is user requested)
  */
 public class GearMechDownRunMotors extends Command{
 	public GearMechDownRunMotors (){

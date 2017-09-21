@@ -7,7 +7,8 @@ import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *Vision based straightening and shooting for sweetspot shooting
+ * Centers the robot to the boiler,
+ * then Drives to a pre-determined distance away from the boiler automatically
  */
 public class DriveWithVision extends CommandGroup {
 

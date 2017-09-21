@@ -6,7 +6,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Drives a set distance based on Encoders and power outputs without using PID
+ * Drives a set distance based on Encoders and power outputs without using PID.
+ * Faster, but less accurate than PID
  */
 public class DriveEncoderBangBang extends Command {
 	
@@ -15,6 +16,13 @@ public class DriveEncoderBangBang extends Command {
 	
 	protected Timer timer = new Timer();
 	
+	/**
+	 * 
+	 * @param power the maximum amount of power the drivetrain should be given (effects overall speed)
+	 * @param turn the "amount of turn" you want (0.0 --> straight, 1.0 --> only left side drives, -1.0 --> only right side drives)
+	 * @param distance the total distance you want to go (not displacement) in feet
+	 * @param timeOut the time before the command times out in seconds
+	 */
     public DriveEncoderBangBang(double power, double turn, double distance, double timeOut) {
     	this(power, turn, distance);
     	timeToDrive = timeOut;
@@ -22,9 +30,9 @@ public class DriveEncoderBangBang extends Command {
 
     /**
      * Defaults the time out to 5.0 seconds
-     * @param power
-     * @param turn
-     * @param distance
+     * @param power the maximum amount of power the drivetrain should be given (effects overall speed)
+	 * @param turn the "amount of turn" you want (0.0 --> straight, 1.0 --> only left side drives, -1.0 --> only right side drives)
+	 * @param distance the total distance you want to go (not displacement) in feet
      */
     public DriveEncoderBangBang(double power, double turn, double distance) {
     	requires(Robot.drivetrain);

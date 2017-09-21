@@ -6,7 +6,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Turns a set angle based on Encoders, Gyro, and power outputs without using PID.
+ * Faster, but less accurate than PID
  */
 public class TurnGyroBangBang extends Command {
 
@@ -23,7 +24,7 @@ public class TurnGyroBangBang extends Command {
 	 */
 	public TurnGyroBangBang(double turn, double angle, double timeOut) {
 		this(turn, angle);
-		System.out.println("IIIIIIII AMMMMMMMMMMMMMM TURNINGGGGGGGGGGGGGGGGGG");
+//		System.out.println("IIIIIIII AMMMMMMMMMMMMMM TURNINGGGGGGGGGGGGGGGGGG");
 
 		timeToTurn = timeOut;
 	}
@@ -40,19 +41,16 @@ public class TurnGyroBangBang extends Command {
 		amountToTurn = angle;
 	}
 
-	// Called just before this Command runs the first time
 	protected void initialize() {
 		timer.start();
 		System.out.println("Starting gyro bang bang turn");
 		stopAngle = Robot.drivetrain.getGyroAngle() + amountToTurn;
 	}
 
-	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		Robot.drivetrain.setLeftRightMotorOutputs(turn, -turn);
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		if(timer.get() > timeToTurn){
 			return true;
@@ -64,12 +62,9 @@ public class TurnGyroBangBang extends Command {
 			return Robot.drivetrain.getGyroAngle() < stopAngle;
 	}
 
-	// Called once after isFinished returns true
 	protected void end() {
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
 	protected void interrupted() {
 	}
 }

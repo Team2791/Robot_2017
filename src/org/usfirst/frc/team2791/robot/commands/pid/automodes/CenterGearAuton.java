@@ -13,7 +13,7 @@ public class CenterGearAuton extends CommandGroup {
 	public CenterGearAuton() {
 		super("Center Gear");
 		
-    	addSequential(new DriveStraightEncoderGyro(-(108-36.0)/12, .7, 6)); //110.5 worked
+    	addSequential(new DriveStraightEncoderGyro(-(108-36.0)/12, .7, 6)); 
     	addSequential(new AutonGearScore());
     	addSequential(new DriveStraightEncoderGyro(3.0, .7, 2));
     }

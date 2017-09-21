@@ -7,8 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 
 /**
- * Stops the {@link ShakerIntake} motors and brings the intake in, does not effect the ratchet
- * TODO: get rid of this redundant command (due to the fact that we can use toggleWhenPressed in OI)
+ * Stops the {@link ShakerIntake} motors and brings the intake in, does not effect the ratchet.
  */
 public class TurnIntakeOff extends Command{
 	public TurnIntakeOff(){

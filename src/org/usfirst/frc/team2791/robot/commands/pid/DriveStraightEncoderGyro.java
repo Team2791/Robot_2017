@@ -4,8 +4,12 @@ import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.util.BasicPID;
 
 /**
- *Uses BasicPID util class to create a PID for auto-driving. PID makes sure that the distance is correct and the robot drives straight
+ *Uses BasicPID util class to create a PID for auto-driving. PID makes sure that the distance is correct and the robot drives straight.
+ *Uses Encoders & Gyro to determine, error-check, and update the setpoint. </br></br>
+ *Superclass: {@link  DrivetrainPIDStraightDrive}
+ *
  *@see BasicPID
+ *
  */
 public class DriveStraightEncoderGyro extends DrivetrainPIDStraightDrive {
 	

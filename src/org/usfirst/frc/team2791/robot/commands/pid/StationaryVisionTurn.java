@@ -1,9 +1,25 @@
 package org.usfirst.frc.team2791.robot.commands.pid;
 
 import org.usfirst.frc.team2791.robot.Robot;
+import org.usfirst.frc.team2791.robot.util.BasicPID;
+import org.usfirst.frc.team2791.robot.vision.VisionNetworkTable;
 
+
+/**
+ *Uses BasicPID util class to create a PID for auto-turning. PID makes sure that the angle is correct.
+ *Uses Vision to determine, error-check, and update the setpoint. </br></br>
+ *Superclass: {@link  DrivetrainPIDTurn}
+ *
+ *@see BasicPID
+ *@see VisionNetworkTable
+ */
 public class StationaryVisionTurn extends DrivetrainPIDTurn {
 
+	/**
+	 * 
+	 * @param maxOutput the maximum output desired for the motors (up to 1.0)
+	 * @param errorThreshold the maximum error allowed for the Vision
+	 */
 	public StationaryVisionTurn(double maxOutput, double errorThreshold) {
 		super(maxOutput, errorThreshold);
         requires(Robot.drivetrain);
@@ -15,7 +31,6 @@ public class StationaryVisionTurn extends DrivetrainPIDTurn {
 		return Robot.visionTable.getRealtimeBoilerAngleError();
 	}
 	
-    // Called just before this Command runs the first time
 	@Override
     protected void initialize() {
 		setInterruptible(true);

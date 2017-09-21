@@ -5,7 +5,8 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerGear;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *Puts the {@link ShakerGear Gear Intake} up and runs the motors for .5 secs
+ *Puts the {@link ShakerGear Gear Intake} up and runs the motors for .5 secs to keep the gear secure
+ *</br>This Command has a timed ending (0.5 seconds after it starts)
  */
 public class GearMechUp extends Command {
 

@@ -11,10 +11,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for closeShot. The hopper is set to meter its speed.
+ * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for closeShot.
+ * The hopper is set to only fed balls to the shooter when the shooter is at the desired rpm.
  * </br> 
  * Runs the shooter to an experimentally determined "SweetSpot", where the shots seem to be most accurate.
- * 
+ * </br>This Command has no automatic ending (The ending is user requested)
  */
 public class RunSweetSpotShot extends Command{
 	Timer timer = new Timer();

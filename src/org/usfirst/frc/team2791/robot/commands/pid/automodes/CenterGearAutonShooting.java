@@ -9,7 +9,7 @@ import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *Hangs the Center Gear
+ *Hangs the Center Gear, turns to the boiler based on vision, and shoots at an rpm based on vision
  */
 public class CenterGearAutonShooting extends CommandGroup {
 	double direction = 1.0;

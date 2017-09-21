@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * 
  * Runs the {@link ShakerIntake} motors and actuates the intake to the outward position
+ * </br>This Command has no automatic ending (The ending is user requested)
  */
 public class IntakeOn extends Command{
 	public IntakeOn(){
@@ -16,10 +17,11 @@ public class IntakeOn extends Command{
 	protected void initialize(){
 		Robot.intake.disengageRatchetWing();
 		Robot.intake.motorOnClimber();
+		Robot.intake.setIntakePosition(true);
 	}
 	
 	protected void execute(){
-		Robot.intake.disengageRatchetWing();//TODO: get rid of this here to fix double climb bug
+		Robot.intake.disengageRatchetWing();
 		
 		if(Robot.intake.isRatchetWingDisengaged()){
 			Robot.intake.setIntakePosition(true);

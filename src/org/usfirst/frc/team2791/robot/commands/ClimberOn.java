@@ -7,8 +7,13 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerIntake;
 
 /**
  * Runs the {@link ShakerIntake Climber} and Engages the {@link ShakerIntake#ratchetWingSolenoid ratchet} to prevent the robot from falling down the rope
+ * </br>This Command has no automatic ending (The ending is user requested)
  */
 public class ClimberOn extends Command{
+	// if you need the climber to stop after it hits the top in order to prevent brownouts, then set this to true;
+	// we have it set to false because we didn't see signficant brownouts when climbing
+	private boolean useCurrentSensing = false;
+	
 	public ClimberOn(){
 		super("RunClimber");
 		requires(Robot.intake);
@@ -21,13 +26,19 @@ public class ClimberOn extends Command{
 	protected void execute(){
 		Robot.intake.isClimbing = true;
 
-		Robot.intake.engageRatchetWing();//TODO: put this in initialize and see if that fixes double climb bug
+		Robot.intake.engageRatchetWing();
 		Robot.intake.debug();
-//		if(Robot.intake.getCurrentUsage()<56.0){
+		
+		if(Robot.intake.getCurrentUsage()<56.0 && useCurrentSensing) {
 			Robot.intake.motorOnClimber();
-//		}
-//		else
-//			Robot.intake.motorOffIntake();
+		
+		}else if(useCurrentSensing) {
+			Robot.intake.motorOffIntake();
+		
+		}else {
+			Robot.intake.motorOnClimber();
+		}
+
 	}
 	
 	protected boolean isFinished(){
@@ -40,6 +51,6 @@ public class ClimberOn extends Command{
 		Robot.intake.motorOffIntake();
 	}
 	protected void interrupted(){
-		Robot.intake.motorOffIntake();
+		end();
 	}
 }

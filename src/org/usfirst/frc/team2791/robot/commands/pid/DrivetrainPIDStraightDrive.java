@@ -9,7 +9,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *Uses BasicPID util class to create a PID for auto-driving. PID makes sure that the distance is correct and the robot drives straight
+ *Uses BasicPID util class to create a PID for auto-driving. PID makes sure that the distance is correct and the robot drives straight.
+ *Base class for PID driving (sub classes allow for differing systems for determing the setpoint [vision, encoders, etc.])
  *@see BasicPID
  */
 public abstract class DrivetrainPIDStraightDrive extends Command {
@@ -24,12 +25,22 @@ public abstract class DrivetrainPIDStraightDrive extends Command {
 	protected double timeForRelease;
 	protected double drivingErrorThreshold = 1.5;
 	
+	/**
+	  * @param distanceToDrive the distance in feet that you would like to drive ***negative if reversing*** *
+	 * @param maxOutput the maximum output you would like the motors to receive (up to 1.0)
+	 * @param timeOut the time in seconds before you would like to wait before the PID times out and the command ends
+	 * @param maxThreshold the maximum error for driving forward before the PID accepts it and finishes
+	 */
 	public DrivetrainPIDStraightDrive(double distanceToDrive, double maxOutput, double timeOut, double maxThreshold){
 		this(distanceToDrive, maxOutput, timeOut);
 		this.drivingErrorThreshold = maxThreshold;		
 	}
 
-
+	/**
+	  * @param distanceToDrive the distance in feet that you would like to drive ***negative if reversing*** *
+	 * @param maxOutput the maximum output you would like the motors to receive (up to 1.0)
+	 * @param timeOut the time in seconds before you would like to wait before the PID times out and the command ends
+	 */
 	public DrivetrainPIDStraightDrive(double distanceToDrive, double maxOutput, double timeOut) {
 		super("Encoder Driving Base Class");
 		requires(Robot.drivetrain);

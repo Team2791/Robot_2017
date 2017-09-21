@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Runs the {@link ShakerHopper} motors backwards, can be used to unjam the hopper
+ * </br>This Command has no automatic ending (The ending is user requested)
  */
 public class HopperOnBackwards extends Command{
 	public HopperOnBackwards(){

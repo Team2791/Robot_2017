@@ -7,7 +7,7 @@ import org.usfirst.frc.team2791.robot.subsystems.ShakerShooter;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Safely turns {@link ShakerShooter} and {@link ShakerHopper} motors off, Shooter Talons should be set to Coast.
+ * Safely turns {@link ShakerShooter} and {@link ShakerHopper} motors off, Shooter TalonSRX's should be set to Coast.
  */
 public class ShooterHopperSafety extends Command{
 	public ShooterHopperSafety() {

@@ -9,7 +9,10 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for closeShot. The hopper is set to meter its speed.
+ * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for closeShot.
+ * The hopper is set to only fed balls to the shooter when the shooter is at the desired RPM.
+ * The hopper runs backwards breifly at the beginning of the Command to ensure no balls are touching the shooter when it spins up
+ * </br>This Command has no automatic ending (The ending is user requested)
  */
 public class RunLongShot extends Command{
 	Timer timer = new Timer();

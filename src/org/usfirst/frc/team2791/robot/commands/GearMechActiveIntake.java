@@ -7,8 +7,11 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *Puts the {@link ShakerGear Gear Intake} down and intakes until the limit switch is activated motors as long as the gear mechanism is down and the switches aren't activated
- */
+ *Puts the {@link ShakerGear Gear Intake} down and intakes until the breakbeam sensors are activated.</br>
+ *When the sensors ARE activated, the intakes continues to run for a few seconds to keep the gear secure 
+ *</br>This Command has a timed ending (1.51 seconds after the gear is recieved and the sensors are activated)
+ **/
+
 public class GearMechActiveIntake extends Command {
 
 	private Timer timer = new Timer();

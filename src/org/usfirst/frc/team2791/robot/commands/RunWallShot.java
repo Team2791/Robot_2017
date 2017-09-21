@@ -9,7 +9,9 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for wallShot. The hopper is set to meter its speed.
+ * Simultanesouly runs the {@link ShakerShooter} and {@link ShakerHopper}. Sets shooter speed and hood for wallShot. 
+ * The hopper is set to only fed balls to the shooter when the shooter is at the desired rpm.
+ * </br>This Command has no automatic ending (The ending is user requested)
  */
 public class RunWallShot extends Command{
 	boolean shooterSpunUp = false;

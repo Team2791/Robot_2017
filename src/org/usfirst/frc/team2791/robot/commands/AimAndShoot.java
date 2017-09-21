@@ -6,7 +6,7 @@ import org.usfirst.frc.team2791.robot.commands.pid.StationaryVisionTurn;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- * Centers to the target and shoots w/ a vision determined RPM
+ * Centers the shooter to the target and shoots w/ a vision-determined RPM
  */
 public class AimAndShoot extends CommandGroup {
 
