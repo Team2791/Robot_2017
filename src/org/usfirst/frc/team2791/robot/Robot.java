@@ -269,9 +269,9 @@ public class Robot extends IterativeRobot {
 		try{
 			UsbCamera gear_cam = CameraServer.getInstance().startAutomaticCapture("Gear Camera",1);
 			gear_cam.setPixelFormat(PixelFormat.kMJPEG);
-			gear_cam.setFPS(10); //wont allow me to set above 10
-			if(!gear_cam.setResolution(240, 180)){
-				gear_cam.setResolution(240, 180); 
+			gear_cam.setFPS(10); //wont allow me to set above 10 //Set to 30 for game with high bandwidth, and demos
+			if(!gear_cam.setResolution(240, 180)){ //Set to 640 x 480 when at demos
+				gear_cam.setResolution(240, 180); //Set to 640 x 480 when at demos
 				System.out.println("******Desired resolution FAILED for GEAR Camera******");
 
 			}

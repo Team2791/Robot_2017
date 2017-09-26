@@ -4,8 +4,8 @@ import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.RobotMap;
 import org.usfirst.frc.team2791.robot.commands.safeties.StopHopper;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.PWM;
+// import edu.wpi.first.wpilibj.AnalogInput; Noah commented this out, we are not using this
+// import edu.wpi.first.wpilibj.PWM; Noah commented this out, we are not using this
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,14 +22,14 @@ public class ShakerHopper extends Subsystem{
 	
 	public boolean isShooting = false;
 	
-	private AnalogInput ballSensor1;
-	private AnalogInput ballSensor2;
+	//private AnalogInput ballSensor1; Noah commented this out, we are not using these sensors
+	//private AnalogInput ballSensor2; Noah commented this out, we are not using these sensors
 	
-	private PWM servo;
+//	private PWM servo; Noah commented this out, we are not using agitators
 	private Talon hopperSpark;
 
-	private static double hopperSetpoint = 0.65;
-	private final double distanceSensorCutoffPoint = 1.5;
+	private static double hopperSetpoint = 0.95; //Was 0.65 Noah bumped this up to 0.95
+//	private final double distanceSensorCutoffPoint = 1.5; Noah commented this out, we are not using these sensors
 		
 	public ShakerHopper(){
 		hopperSpark = new Talon(RobotMap.HOPPER_SPARK_PORT);
@@ -38,7 +38,7 @@ public class ShakerHopper extends Subsystem{
 //		ballSensor1 = new AnalogInput(0);
 //		ballSensor2 = new AnalogInput(1);
 		
-		servo = new PWM(2);
+//		servo = new PWM(2); Noah commented this out, we are not using the agitators
 	}
 	
 	public void initDefaultCommand(){
@@ -61,7 +61,7 @@ public class ShakerHopper extends Subsystem{
 	public void runHopper() {
 //		System.out.print("************Hopper FOR C:" + this.getCurrentUsage());
 		hopperSpark.setSpeed(hopperSetpoint);
-		servo.setRaw(255);
+//		servo.setRaw(255); Noah commented this out, we are not using agitators
 		 isShooting = true;
 	}
 	
@@ -71,7 +71,7 @@ public class ShakerHopper extends Subsystem{
 	public void slowHopper() {
 //		System.out.print("Running hopper half speed");
 		hopperSpark.setSpeed(hopperSetpoint/2.0);
-		servo.setRaw(255);
+//		servo.setRaw(255); Noah commented this out, we are not using agitators
 		 isShooting = true;
 
 	}
@@ -82,7 +82,7 @@ public class ShakerHopper extends Subsystem{
 	public void runHopperBackwards() {
 //		System.out.print("Hopper FOR C:" + this.getCurrentUsage());
 		hopperSpark.setSpeed(-hopperSetpoint);
-		servo.setRaw(255);
+//		servo.setRaw(255); Noah commented this out, we are not using agitators
 		 isShooting = true;
 
 	}
@@ -104,7 +104,7 @@ public class ShakerHopper extends Subsystem{
 	public void stopHopper(){
 //		System.out.print("Stopping Hopper");
 		hopperSpark.setSpeed(0.0);
-		servo.setRaw(0);
+//		servo.setRaw(0); Noah commented this out, we are not using agitators
 		 isShooting = false;
 
 	}
