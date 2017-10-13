@@ -140,7 +140,7 @@ public class ShakerShooter extends Subsystem {
 		visionShot = true;
 		
 		
-		setShooterSpeedsPID(Robot.visionTable.getVisionBasedRPM());
+		setShooterSpeedsPID((Robot.visionTable.getVisionBasedRPM()));
 	}
 	
 	

@@ -55,14 +55,14 @@ public class OI {
 
 		operatorX.whileHeld(new RunWallShot()); 
 		operatorY.whileHeld(new RunLongShot());
-
+		
 		operatorA.whileHeld(new IntakeOn());
 		operatorB.whileHeld(new ClimberOn());
 		
 		operatorRB.whileHeld(new HopperOn());
 		operatorLB.whileHeld(new HopperOnBackwards());
 		
-		operatorDpadDown.whenPressed(new GearMechActiveIntake()); //intake gear w/ ir sensor logic
+		operatorDpadDown.whenPressed(new GearMechWithCurrentSensor()); //Noah, gear with current sensing
 		operatorDpadUp.whenPressed(new GearMechUp());
 		
 		operatorDpadLeft.whileHeld(new AimAndShoot());

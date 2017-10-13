@@ -21,7 +21,20 @@ public class GearMechDownRunMotors extends Command{
 	}
 	
 	protected void execute(){
-		Robot.gearMechanism.runGearIntake(); 
+		Robot.gearMechanism.runGearIntake();
+		//if(Robot.gearMechanism.getCurrentUsage()>=17){ //This is a mistake
+			//Robot.gearMechanism.stopGearIntake(); //End me
+			//Robot.gearMechanism.stopGearIntake();
+			//Robot.gearMechanism.setGearIntakeDown(false);
+			//new GearMechUp();
+		//	Robot.gearMechanism.stopGearIntake();
+		//	Robot.gearMechanism.setGearIntakeDown(false);
+		//	Robot.gearMechanism.stopGearIntake();
+			
+		//	isFinished();
+		//	end();
+			
+		//}
 }
 	
 	protected boolean isFinished(){

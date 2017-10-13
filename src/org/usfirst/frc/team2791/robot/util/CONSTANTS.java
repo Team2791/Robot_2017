@@ -49,6 +49,8 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static final double SHOOTER_VISION_I = 0.0;//0.0000
 	public static final double SHOOTER_VISION_D = 17.0;//50.0
 	public static final double SHOOTER_VISION_FEED_FORWARD = 0.22;//0.25 then 0.231 then 0.228
+
+	public static final double GEAR_CURRENT = 10;
 	
 	//Drive PID
 	public static double DRIVE_ANGLE_P = 0.025;

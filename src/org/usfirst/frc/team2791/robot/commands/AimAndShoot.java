@@ -13,7 +13,7 @@ public class AimAndShoot extends CommandGroup {
     public AimAndShoot() {
     	setInterruptible(true);
 		addSequential(new DrivetrainDelay(0.75));
-		addSequential(new StationaryVisionTurn(0.5,1.5)); 
+		addSequential(new StationaryVisionTurn(0.5,1.2)); //Was 1.5
 		addSequential(new RunVisionShot());
     }
 }
