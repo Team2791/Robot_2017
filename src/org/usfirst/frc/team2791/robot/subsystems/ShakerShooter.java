@@ -40,7 +40,6 @@ public class ShakerShooter extends Subsystem {
 	private final double ERROR_THRESHOLD = 40;// 40
 	private final double SHOOTER_GOOD_TIME = 0.1;
 	private DelayedBoolean shooterGoodDelayedBoolean = new DelayedBoolean(SHOOTER_GOOD_TIME);
-
 	protected Encoder shooterEncoder = null;
 
 	public CANTalon primaryShooterTalon = null; // has encoder input
@@ -138,7 +137,6 @@ public class ShakerShooter extends Subsystem {
 	public void prepVisionShot(){
 		closeShot = false;
 		visionShot = true;
-		
 		
 		setShooterSpeedsPID((Robot.visionTable.getVisionBasedRPM()));
 	}
@@ -278,9 +276,10 @@ public class ShakerShooter extends Subsystem {
 
 	/**
 	 * @param down
-	 *            true = hood up / false = hood down
+	 *            false = hood up / true = hood down
 	 */
 	public void setShooterSolenoidState(boolean down) {
+		System.out.println("Shooter set down = "+down);
 		shooterSolenoid.set(down);
 	}
 

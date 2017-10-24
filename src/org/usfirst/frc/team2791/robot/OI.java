@@ -55,6 +55,8 @@ public class OI {
 
 		operatorX.whileHeld(new RunWallShot()); 
 		operatorY.whileHeld(new RunLongShot());
+//		operatorX.whileHeld(new SetShooterHoodAndHopperPusher(true));  //put the hopper trigger out
+//		operatorY.whileHeld(new SetShooterHoodAndHopperPusher(false));
 		
 		operatorA.whileHeld(new IntakeOn());
 		operatorB.whileHeld(new ClimberOn());

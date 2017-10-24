@@ -8,6 +8,11 @@ package org.usfirst.frc.team2791.robot.util;
  * @see Robot
  */
 public class CONSTANTS { //for constants ONLY; ports are in RobotMap
+	
+	public static final int GEAR_CAM_EXPOSURE = 5;
+	public static final int GEAR_CAM_BRIGHTNESS = 5;
+	
+	public static final double INTAKE_FLAP_PERIOD = 1.5;
 
 	// JOYSTICK CONSTANTS
 	public static final double DEADZONE = 0.08;
@@ -23,7 +28,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	/*******************************PID VALUES****************************************/
 	
 	// Shooter PID
-	public static final double CAMERA_HORIZONTAL_OFFSET = 2.0;  //3.1
+	public static final double CAMERA_HORIZONTAL_OFFSET = -1.4;  //3.1
 	
 	public static final double SHOOTER_SET_POINT = 2850; //2765 was a bit too low
 	public static final double SHOOTER_LONG_SET_POINT = 3025.0; //3650
@@ -61,7 +66,7 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static double DRIVE_DISTANCE_D = 0.03;
 	
 	public static double STATIONARY_ANGLE_P = 0.04;
-	public static double STATIONARY_ANGLE_I = 0.02; //
+	public static double STATIONARY_ANGLE_I = 0.035; //
 	public static double STATIONARY_ANGLE_D = 0.004;
 	
 	public static double shootingDriveP = 0.025;

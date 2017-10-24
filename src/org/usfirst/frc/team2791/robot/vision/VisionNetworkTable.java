@@ -108,6 +108,7 @@ public class VisionNetworkTable implements ITableListener {
 			try {
 				targetAngleError = visionMath.calculateTargetAngleError(selectTarget().centerX);
 				gyroOffset = targetAngleError - Robot.drivetrain.getGyroAngle();
+//				System.out.println("Updated gyro vision offset");
 
 			} catch (Exception e) {
 				if(e.getMessage().equals("No Targets")) {
@@ -210,5 +211,3 @@ public class VisionNetworkTable implements ITableListener {
 	   
 	}
 }
-
-

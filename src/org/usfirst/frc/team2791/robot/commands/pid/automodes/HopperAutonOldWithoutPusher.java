@@ -2,9 +2,9 @@ package org.usfirst.frc.team2791.robot.commands.pid.automodes;
 
 import org.usfirst.frc.team2791.robot.Robot;
 import org.usfirst.frc.team2791.robot.commands.DrivetrainDelay;
-import org.usfirst.frc.team2791.robot.commands.IntakeOff;
 import org.usfirst.frc.team2791.robot.commands.IntakeOn;
 import org.usfirst.frc.team2791.robot.commands.RunVisionShot;
+import org.usfirst.frc.team2791.robot.commands.RunWallShot;
 import org.usfirst.frc.team2791.robot.commands.SetShooterHoodAndHopperPusher;
 import org.usfirst.frc.team2791.robot.commands.SpinUpShooter;
 import org.usfirst.frc.team2791.robot.commands.pid.DriveEncoderBangBang;
@@ -16,13 +16,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *Hopper Auto
  */
-public class HopperAuton extends CommandGroup {
+public class HopperAutonOldWithoutPusher extends CommandGroup {
 
 	double direction = 1.0;
 	
-	public HopperAuton() {
+	public HopperAutonOldWithoutPusher() {
 		
-		super("Hopper Auton");
+		super("Hopper Auton OLD WITHOUT PUSHER");
 		
 		String color = Robot.teamColor.toString();
 		
@@ -36,45 +36,31 @@ public class HopperAuton extends CommandGroup {
 	
 		addParallel(new SpinUpShooter(3020)); //3050 was 3035
 		// ^ THIS CAN NOT BE NEXT TO SetShooterHoodAndHopperPusher NO IDEA WHY!
-
-		addSequential(new DriveEncoderBangBang(-.8, 0.0, -4.75, 3));
+		addSequential(new DriveEncoderBangBang(-.8, 0.0, -3.5, 3));
 		
+
 		// This is sketch as heck because we're counting on the drift from the first drive
 		// to get us to the 2nd	 distance and just using the drive train to slow down and turn a bit.
-		// although not really beacuse the 2nd drive SHOULD start instantly after the 1st so it'll start
-		// counting distance instantly
 //		addSequential(new DriveEncoderBangBang(0.0, 0.075, -1));
-		addSequential(new DriveEncoderBangBang(-0.3, 0.0, -1.75, 2)); //-3.5
-		addParallel(new SetShooterHoodAndHopperPusher(true)); // put hood down and pusher out
-		addSequential(new DrivetrainDelay(0.2));
+		addSequential(new DriveEncoderBangBang(-0.3, 0.0, -3.75+0.5, 2)); //-3.5
+		addParallel (new IntakeOn());
+		
+		addSequential(new TurnGyroBangBang(0.82*direction, (20+10)*direction)); //15 //adding 10 for IRI to make the kick more reliable
 
-		addSequential(new TurnGyroBangBang(-0.82 *direction, -15*direction)); //20 - 28 //also 10 for IRI
-		addParallel(new SetShooterHoodAndHopperPusher(false)); // put hood up and pusher in
-		addSequential(new DriveEncoderBangBang(0.5, 0.0, 1.1, 2)); //1.5 was too much
-		addParallel(new IntakeOn());
+		addSequential(new TurnGyroBangBang(-0.82 *direction, -(33+10)*direction)); //20 - 28 //also 10 for IRI
+		addSequential(new DriveEncoderBangBang(0.5, 0.0, 1.0, 2)); //1.5 was too much
 		
 		// wait to take a good image before using vision to turn
 		addSequential(new DrivetrainDelay(0.5));
-		
+		addParallel(new SetShooterHoodAndHopperPusher(false)); // put hood up and pusher in
 		addSequential(new DrivetrainDelay(0.25)); // give the hood an extra 0.25s to get up
 		
 		
-		addSequential(new StationaryVisionTurn(.5, 1.0, 4));
+		addSequential(new StationaryVisionTurn(.5, 1.0));
 //		addParallel(new SpinUpShooter(Robot.visionTable.getDistanceBasedRPM()));
 //		addSequential(new HopperOnOnceAtSpeed());
 
-		addParallel(new RunVisionShot());
-		// toggle the intake a few times
-		addSequential(new DrivetrainDelay(2.5));
-		addSequential(new IntakeOff());
-		addSequential(new DrivetrainDelay(0.5));
-		addParallel(new IntakeOn());
-		addSequential(new DrivetrainDelay(2.5));
-		addSequential(new IntakeOff());
-		addSequential(new DrivetrainDelay(0.5));
-		addParallel(new IntakeOn());
-		
-		
+		addSequential(new RunVisionShot());
     }
 	
 	

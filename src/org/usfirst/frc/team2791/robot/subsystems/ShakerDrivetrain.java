@@ -9,6 +9,7 @@ import org.usfirst.frc.team2791.robot.util.Util;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -25,8 +26,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShakerDrivetrain extends Subsystem{
 
 	//Spark speed controllers can be controlled with the WPI Talon class.
-	private Talon leftSpark;    
-	private Talon rightSpark;
+	private Spark leftSpark;    
+	private Spark rightSpark;
 	
 	protected Encoder leftDriveEncoder = null;
 	protected Encoder rightDriveEncoder = null;
@@ -62,9 +63,8 @@ public class ShakerDrivetrain extends Subsystem{
 	private double distancePerPulse = Util.tickToFeet(CONSTANTS.driveEncoderTicks, CONSTANTS.WHEEL_DIAMETER_IN_FEET);
 
 	public ShakerDrivetrain(){
-				
-		leftSpark = new Talon(RobotMap.DRIVE_SPARK_LEFT_PORT);
-		rightSpark = new Talon(RobotMap.DRIVE_SPARK_RIGHT_PORT);
+		leftSpark = new Spark(RobotMap.DRIVE_SPARK_LEFT_PORT);
+		rightSpark = new Spark(RobotMap.DRIVE_SPARK_RIGHT_PORT);
 
 		leftDriveEncoder = new Encoder(RobotMap.LEFT_DRIVE_ENCODER_PORT_A, RobotMap.LEFT_DRIVE_ENCODER_PORT_B);
 		rightDriveEncoder = new Encoder(RobotMap.RIGHT_DRIVE_ENCODER_PORT_A,RobotMap.RIGHT_DRIVE_ENCODER_PORT_B);

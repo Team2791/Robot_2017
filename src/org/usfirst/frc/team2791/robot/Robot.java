@@ -5,6 +5,7 @@ import org.usfirst.frc.team2791.robot.commands.pid.StationaryGyroTurn;
 import org.usfirst.frc.team2791.robot.commands.pid.TurnGyroBangBang;
 import org.usfirst.frc.team2791.robot.commands.pid.automodes.*;
 import org.usfirst.frc.team2791.robot.subsystems.*;
+import org.usfirst.frc.team2791.robot.util.CONSTANTS;
 import org.usfirst.frc.team2791.robot.util.CommandSelector;
 import org.usfirst.frc.team2791.robot.util.LightController;
 import org.usfirst.frc.team2791.robot.vision.VisionNetworkTable;
@@ -52,6 +53,8 @@ public class Robot extends IterativeRobot {
 	public static ShakerShooter shooter;
 	public static ShakerGear gearMechanism;
 	public static ShakerDrivetrain drivetrain;
+	
+	UsbCamera front_cam, gear_cam;
 
 	public static VisionNetworkTable visionTable; 
 	
@@ -94,7 +97,6 @@ public class Robot extends IterativeRobot {
 		visionTable = new VisionNetworkTable();
 		autoSelector = new CommandSelector("Auto Mode");
 		
-
 		drivetrain.setAutoPID();
 
 		/*
@@ -109,12 +111,24 @@ public class Robot extends IterativeRobot {
 		autoSelector.addName("Center Gear", 4);
 		autoSelector.addName("PID Drive Tuning", 5);
 		autoSelector.addName("PID Turn Tuning", 6);
-		//***When Adding a Command, Remember to add the Command in autonomousInit***
+		autoSelector.addCommand(new CenterGearAutonShooting(), 0);
+		autoSelector.addCommand(new BoilerGearAuton(), 1);
+		autoSelector.addCommand(new LoadingStationGearAuton(), 2);
+		autoSelector.addCommand(new HopperAuton(), 3);
+		autoSelector.addCommand(new CenterGearAuton(), 4);
+		autoSelector.addCommand(new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6), 5);
+		autoSelector.addCommand(new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1), 6);
+		//***When Adding a Command, Remember to add the Command's Name in robotInit***
+		
+		autonomousCommand = new HopperAuton();
 
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 		runUSBCameras();
 
 		debug();
+		
+		SmartDashboard.putNumber("Gear cam exposure int", CONSTANTS.GEAR_CAM_EXPOSURE); // TODO SUNDAY MAKE THIS GOOD
+		SmartDashboard.putNumber("Gear cam brightness int", CONSTANTS.GEAR_CAM_BRIGHTNESS);
 	}
 
 	//************************************************************
@@ -176,18 +190,8 @@ public class Robot extends IterativeRobot {
 
 		intake.disengageRatchetWing();
 		gearMechanism.setGearIntakeDown(false);
-		
-		autoSelector.addCommand(new CenterGearAutonShooting(), 0);
-		autoSelector.addCommand(new BoilerGearAuton(), 1);
-		autoSelector.addCommand(new LoadingStationGearAuton(), 2);
-		autoSelector.addCommand(new HopperAuton(), 3);
-		autoSelector.addCommand(new CenterGearAuton(), 4);
-		autoSelector.addCommand(new DriveStraightEncoderGyro(SmartDashboard.getNumber("TUNE PID Distance", 0.0), 0.7, 6), 5);
-		autoSelector.addCommand(new StationaryGyroTurn(SmartDashboard.getNumber("TUNE PID Stat Angle", 0.0), 1), 6);
 
-		//***When Adding a Command, Remember to add the Command's Name in robotInit***
-
-		autonomousCommand = autoSelector.getSelected();
+//		autonomousCommand = autoSelector.getSelected();
 
 		if(autonomousCommand.getName().equals("Center Gear & Shoot")){
 			visionTable.setVisionOffset(teamColor.visionOffset);
@@ -267,7 +271,8 @@ public class Robot extends IterativeRobot {
 	private void runUSBCameras() {
 
 		try{
-			UsbCamera gear_cam = CameraServer.getInstance().startAutomaticCapture("Gear Camera",1);
+			gear_cam = CameraServer.getInstance().startAutomaticCapture("Gear Camera",1);
+//			gear_cam.setExposureAuto();
 			gear_cam.setPixelFormat(PixelFormat.kMJPEG);
 			gear_cam.setFPS(10); //wont allow me to set above 10 //Set to 30 for game with high bandwidth, and demos
 			if(!gear_cam.setResolution(240, 180)){ //Set to 640 x 480 when at demos
@@ -283,7 +288,7 @@ public class Robot extends IterativeRobot {
 		}
 
 		try{
-			UsbCamera front_cam = CameraServer.getInstance().startAutomaticCapture("Front Camera", 0);
+			front_cam = CameraServer.getInstance().startAutomaticCapture("Front Camera", 0);
 			front_cam.setPixelFormat(PixelFormat.kMJPEG);
 			front_cam.setFPS(15); 
 
@@ -322,6 +327,9 @@ public class Robot extends IterativeRobot {
 		hopper.debug();
 		
 		visionTable.debug();
+		
+		gear_cam.setExposureManual((int) SmartDashboard.getNumber("Gear cam exposure int", CONSTANTS.GEAR_CAM_EXPOSURE)); // TODO SUNDAY MAKE THIS GOOD
+		gear_cam.setBrightness((int) SmartDashboard.getNumber("Gear cam brightness int", CONSTANTS.GEAR_CAM_BRIGHTNESS));
 
 	}
 
