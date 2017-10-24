@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public abstract class DrivetrainPIDTurn extends Command {
 	
-	private final double MIN_POWER_TO_TURN = 0.22; // WE NEED TO CHANGE THIS BACK TO 0.22 FOR COMP!!!!!!!!!!
+	private final double MIN_POWER_TO_TURN = 0.17;
 	protected double errorThreshold = 1;
 	protected static BasicPID stationaryAnglePID;
 	
@@ -23,15 +23,15 @@ public abstract class DrivetrainPIDTurn extends Command {
 	 */
     public DrivetrainPIDTurn(double maxOutput, double errorThreshold) {
     	super("Turning Base Class");
-
+    	SmartDashboard.putNumber("Stationary Angle Min Power To Turn", MIN_POWER_TO_TURN);
+    	SmartDashboard.getNumber("Stationary Angle Min Power To Turn", MIN_POWER_TO_TURN);
         requires(Robot.drivetrain);
         
         this.errorThreshold = errorThreshold;
-        
 		stationaryAnglePID = new BasicPID(CONSTANTS.STATIONARY_ANGLE_P, CONSTANTS.STATIONARY_ANGLE_I, CONSTANTS.STATIONARY_ANGLE_D);
 		stationaryAnglePID.setIZone(10);
-		stationaryAnglePID.setMaxOutput(maxOutput - MIN_POWER_TO_TURN);
-		stationaryAnglePID.setMinOutput(-maxOutput + MIN_POWER_TO_TURN);
+		stationaryAnglePID.setMaxOutput(maxOutput - SmartDashboard.getNumber("Stationary Angle Min Power To Turn", MIN_POWER_TO_TURN));
+		stationaryAnglePID.setMinOutput(-maxOutput + SmartDashboard.getNumber("Stationary Angle Min Power To Turn", MIN_POWER_TO_TURN));
 		
 		stationaryAnglePID.setInvertOutput(true);
 		
@@ -67,15 +67,16 @@ public abstract class DrivetrainPIDTurn extends Command {
     }
     
     public void setLeftRightMotorOutputsPIDTurning(double left, double right){
+    	double min_power = SmartDashboard.getNumber("Stationary Angle Min Power To Turn", MIN_POWER_TO_TURN);
 		if(left < 0) {
-			left -= MIN_POWER_TO_TURN;
+			left -= min_power;
 		} else {
-			left += MIN_POWER_TO_TURN;
+			left += min_power;
 		}
 		if(right < 0) {
-			right -= MIN_POWER_TO_TURN;
+			right -= min_power;
 		} else {
-			right += MIN_POWER_TO_TURN;
+			right += min_power;
 		}
 		SmartDashboard.putNumber("Stationary Angle PID Output", left);
 		Robot.drivetrain.setLeftRightMotorOutputs(left, right);
