@@ -20,6 +20,7 @@ public class ClimberOn extends Command{
 	
 	protected void execute(){
 		Robot.intake.isClimbing = true;
+		Robot.intake.setIntakePosition(true);
 
 		Robot.intake.engageRatchetWing();//TODO: put this in initialize and see if that fixes double climb bug
 		Robot.intake.debug();

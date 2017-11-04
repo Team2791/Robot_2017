@@ -121,12 +121,12 @@ public class Robot extends IterativeRobot {
 		//***When Adding a Command, Remember to add the Command's Name in robotInit***
 		
 		autonomousCommand = new HopperAuton();
+//		autonomousCommand = new CenterGearAutonShooting();
 
 		oi = new OI();//OI has to be initialized after all subsystems to prevent startCompetition() error
 		runUSBCameras();
 
 		debug();
-		
 		SmartDashboard.putNumber("Gear cam exposure int", CONSTANTS.GEAR_CAM_EXPOSURE); // TODO SUNDAY MAKE THIS GOOD
 		SmartDashboard.putNumber("Gear cam brightness int", CONSTANTS.GEAR_CAM_BRIGHTNESS);
 	}

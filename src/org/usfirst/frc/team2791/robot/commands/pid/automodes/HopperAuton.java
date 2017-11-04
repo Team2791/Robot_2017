@@ -42,7 +42,8 @@ public class HopperAuton extends CommandGroup {
 		// This is sketch as heck because we're counting on the drift from the first drive
 		// to get us to the 2nd	 distance and just using the drive train to slow down and turn a bit.
 		// although not really beacuse the 2nd drive SHOULD start instantly after the 1st so it'll start
-		// counting distance instantly
+		// counting distance instantl
+		
 //		addSequential(new DriveEncoderBangBang(0.0, 0.075, -1));
 		addSequential(new DriveEncoderBangBang(-0.3, 0.0, -1.75, 2)); //-3.5
 		addParallel(new SetShooterHoodAndHopperPusher(true)); // put hood down and pusher out

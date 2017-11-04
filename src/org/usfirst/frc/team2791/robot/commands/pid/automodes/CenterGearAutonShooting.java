@@ -1,11 +1,8 @@
 package org.usfirst.frc.team2791.robot.commands.pid.automodes;
 
 import org.usfirst.frc.team2791.robot.Robot;
-import org.usfirst.frc.team2791.robot.commands.AimAndShoot;
 import org.usfirst.frc.team2791.robot.commands.AutonGearScore;
 import org.usfirst.frc.team2791.robot.commands.DrivetrainDelay;
-import org.usfirst.frc.team2791.robot.commands.HopperOn;
-import org.usfirst.frc.team2791.robot.commands.IntakeOn;
 import org.usfirst.frc.team2791.robot.commands.RunVisionShot;
 import org.usfirst.frc.team2791.robot.commands.SpinUpShooter;
 import org.usfirst.frc.team2791.robot.commands.pid.DriveEncoderBangBang;
@@ -44,11 +41,12 @@ public class CenterGearAutonShooting extends CommandGroup {
 		addSequential(new TurnGyroBangBang(0.65 * direction , 62.0 * direction)); //65.0
 		addSequential(new DriveEncoderBangBang(0.7, 0.0, 4.5, 1.0)); //1.5, 1.0 was just a bit short
 				
-//		addSequential(new DrivetrainDelay(0.75));
-//		addSequential(new StationaryVisionTurn(0.5,1.5));//0.4,1.0
+		addSequential(new DrivetrainDelay(0.75));
+		addSequential(new StationaryVisionTurn(0.5,1.5));//0.4,1.0
 //		addSequential(new HopperOn());
 		
-		addSequential(new AimAndShoot());
+//		addSequential(new AimAndShoot());
+		addSequential(new RunVisionShot());
 
     }
 }
