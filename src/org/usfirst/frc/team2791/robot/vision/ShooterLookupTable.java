@@ -6,7 +6,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterLookupTable {
 
-	private static double rpmOffset = 12; //-40 //-15.0
+	private static double rpmOffset = 48; // RR start : 12 //Was 53, now is 48
+	// RR match 3 : 62
+	// RR match 4: 40
+	// RR finals: 65
+	// RR finals_Q_3: 53
+	// RR SF_2: 48
 	
 	/**
 	 *{double ndcY, double rpm}

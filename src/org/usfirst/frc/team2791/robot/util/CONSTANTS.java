@@ -66,7 +66,9 @@ public class CONSTANTS { //for constants ONLY; ports are in RobotMap
 	public static double DRIVE_DISTANCE_D = 0.03;
 	
 	public static double STATIONARY_ANGLE_P = 0.04;
-	public static double STATIONARY_ANGLE_I = 0.02;
+	public static double STATIONARY_ANGLE_I = 0.032;
+	// was 0.02, RR_FQ_3: 0.0275
+	// RR_SF_2: 0.032
 	public static double STATIONARY_ANGLE_D = 0.004; 
 	
 	public static double shootingDriveP = 0.025;

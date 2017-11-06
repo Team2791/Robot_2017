@@ -1,0 +1,185 @@
+<grip:Pipeline>
+  <sources>
+    <grip:Camera>
+      <property name="address" value="http://10.27.91.10"/>
+    </grip:Camera>
+    <grip:MultiImageFile>
+      <property name="path[2]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-28-31-210.jpeg"/>
+      <property name="path[5]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-28-33-555.jpeg"/>
+      <property name="path[8]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-28-35-946.jpeg"/>
+      <property name="path[20]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-29-24-900.jpeg"/>
+      <property name="path[23]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-29-27-272.jpeg"/>
+      <property name="path[26]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-29-29-821.jpeg"/>
+      <property name="path[12]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-29-17-596.jpeg"/>
+      <property name="path[15]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-29-20-089.jpeg"/>
+      <property name="index" value="26"/>
+      <property name="path[18]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-29-23-264.jpeg"/>
+      <property name="path[0]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-28-29-654.jpeg"/>
+      <property name="path[3]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-28-31-963.jpeg"/>
+      <property name="path[6]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-28-34-322.jpeg"/>
+      <property name="path[9]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-28-36-700.jpeg"/>
+      <property name="path[21]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-29-25-703.jpeg"/>
+      <property name="path[24]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-29-28-044.jpeg"/>
+      <property name="path[27]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-30-26-060.jpeg"/>
+      <property name="path[10]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-28-37-496.jpeg"/>
+      <property name="path[13]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-29-18-361.jpeg"/>
+      <property name="path[16]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-29-21-718.jpeg"/>
+      <property name="path[19]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-29-24-099.jpeg"/>
+      <property name="numImages" value="28"/>
+      <property name="path[1]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-28-30-425.jpeg"/>
+      <property name="path[4]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-28-32-795.jpeg"/>
+      <property name="path[7]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-28-35-147.jpeg"/>
+      <property name="path[22]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-29-26-476.jpeg"/>
+      <property name="path[25]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-29-29-014.jpeg"/>
+      <property name="path[11]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-29-07-392.jpeg"/>
+      <property name="path[14]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-29-19-172.jpeg"/>
+      <property name="path[17]" value="C:\Users\nynoa\GRIP\Robot Rumble P match\2017-11-04_09-29-22-496.jpeg"/>
+    </grip:MultiImageFile>
+  </sources>
+  <steps>
+    <grip:Step name="HSV Threshold">
+      <grip:Input step="0" socket="0"/>
+      <grip:Input step="0" socket="1">
+        <value>
+          <double>80.41701819777215</double>
+          <double>122.66212385262243</double>
+        </value>
+      </grip:Input>
+      <grip:Input step="0" socket="2">
+        <value>
+          <double>191.09713688171166</double>
+          <double>255.0</double>
+        </value>
+      </grip:Input>
+      <grip:Input step="0" socket="3">
+        <value>
+          <double>117.71582223528581</double>
+          <double>188.27645604520936</double>
+        </value>
+      </grip:Input>
+      <grip:Output step="0" socket="0" previewed="true"/>
+    </grip:Step>
+    <grip:Step name="Find Contours">
+      <grip:Input step="1" socket="0"/>
+      <grip:Input step="1" socket="1">
+        <value>false</value>
+      </grip:Input>
+      <grip:Output step="1" socket="0" previewed="false"/>
+    </grip:Step>
+    <grip:Step name="Filter Contours">
+      <grip:Input step="2" socket="0"/>
+      <grip:Input step="2" socket="1">
+        <value>50.0</value>
+      </grip:Input>
+      <grip:Input step="2" socket="2">
+        <value>0.0</value>
+      </grip:Input>
+      <grip:Input step="2" socket="3">
+        <value>25.0</value>
+      </grip:Input>
+      <grip:Input step="2" socket="4">
+        <value>50.0</value>
+      </grip:Input>
+      <grip:Input step="2" socket="5">
+        <value>0.0</value>
+      </grip:Input>
+      <grip:Input step="2" socket="6">
+        <value>25.0</value>
+      </grip:Input>
+      <grip:Input step="2" socket="7">
+        <value>
+          <double>64.7481887889423</double>
+          <int>100</int>
+        </value>
+      </grip:Input>
+      <grip:Input step="2" socket="8">
+        <value>10000.0</value>
+      </grip:Input>
+      <grip:Input step="2" socket="9">
+        <value>0.0</value>
+      </grip:Input>
+      <grip:Input step="2" socket="10">
+        <value>1.5</value>
+      </grip:Input>
+      <grip:Input step="2" socket="11">
+        <value>5.0</value>
+      </grip:Input>
+      <grip:Output step="2" socket="0" previewed="true"/>
+    </grip:Step>
+    <grip:Step name="NTPublish ContoursReport">
+      <grip:Input step="3" socket="0"/>
+      <grip:Input step="3" socket="1">
+        <value>myContoursReport</value>
+      </grip:Input>
+      <grip:Input step="3" socket="2">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="3" socket="3">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="3" socket="4">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="3" socket="5">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="3" socket="6">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="3" socket="7">
+        <value>true</value>
+      </grip:Input>
+    </grip:Step>
+    <grip:Step name="Save Images to Disk">
+      <grip:Input step="4" socket="0"/>
+      <grip:Input step="4" socket="1">
+        <value>JPEG</value>
+      </grip:Input>
+      <grip:Input step="4" socket="2">
+        <value>72.97297297297297</value>
+      </grip:Input>
+      <grip:Input step="4" socket="3">
+        <value>0.75</value>
+      </grip:Input>
+      <grip:Input step="4" socket="4">
+        <value>false</value>
+      </grip:Input>
+      <grip:Output step="4" socket="0" previewed="false"/>
+    </grip:Step>
+  </steps>
+  <connections>
+    <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="true"/>
+      <grip:Input step="0" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="0" socket="0" previewed="true"/>
+      <grip:Input step="1" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="2" socket="0" previewed="true"/>
+      <grip:Input step="3" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="1" socket="0" previewed="false"/>
+      <grip:Input step="2" socket="0"/>
+    </grip:Connection>
+  </connections>
+  <settings>
+    <teamNumber>2791</teamNumber>
+    <publishAddress>roboRIO-2791-FRC.local</publishAddress>
+    <deployAddress>roboRIO-2791-FRC.local</deployAddress>
+    <deployDir>/home/lvuser</deployDir>
+    <deployUser>lvuser</deployUser>
+    <deployJavaHome>/usr/local/frc/JRE/</deployJavaHome>
+    <deployJvmOptions>-Xmx50m -XX:-OmitStackTraceInFastThrow -XX:+HeapDumpOnOutOfMemoryError -XX:MaxNewSize=16m</deployJvmOptions>
+  </settings>
+  <codeGenerationSettings>
+    <language>Python</language>
+    <className>BoilerVision</className>
+    <implementWpilibPipeline>false</implementWpilibPipeline>
+    <saveDir>C:\Users\nynoa\GRIP</saveDir>
+    <packageName>org.frc.team2719</packageName>
+    <moduleName>grip</moduleName>
+  </codeGenerationSettings>
+</grip:Pipeline>

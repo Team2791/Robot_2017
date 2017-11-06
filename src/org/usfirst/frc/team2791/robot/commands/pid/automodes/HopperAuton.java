@@ -36,9 +36,9 @@ public class HopperAuton extends CommandGroup {
 	
 		addParallel(new SpinUpShooter(3020)); //3050 was 3035
 		// ^ THIS CAN NOT BE NEXT TO SetShooterHoodAndHopperPusher NO IDEA WHY!
-
-		addSequential(new DriveEncoderBangBang(-.8, 0.0, -4.75, 3));
 		
+		addSequential(new DriveEncoderBangBang(-.8, 0.0, -4.75-0.25, 3)); // WAS -4.75, RR elims -(+0.75)
+//		
 		// This is sketch as heck because we're counting on the drift from the first drive
 		// to get us to the 2nd	 distance and just using the drive train to slow down and turn a bit.
 		// although not really beacuse the 2nd drive SHOULD start instantly after the 1st so it'll start
@@ -47,11 +47,15 @@ public class HopperAuton extends CommandGroup {
 //		addSequential(new DriveEncoderBangBang(0.0, 0.075, -1));
 		addSequential(new DriveEncoderBangBang(-0.3, 0.0, -1.75, 2)); //-3.5
 		addParallel(new SetShooterHoodAndHopperPusher(true)); // put hood down and pusher out
-		addSequential(new DrivetrainDelay(0.2));
+		addSequential(new DrivetrainDelay(0.5)); // was 0.2 RR_SF_1
 
-		addSequential(new TurnGyroBangBang(-0.82 *direction, -15*direction)); //20 - 28 //also 10 for IRI
+		addSequential(new TurnGyroBangBang(-0.82 *direction, -18*direction)); // WAS -15, RR elims: 22, RR ELIMS_2: 18
 		addParallel(new SetShooterHoodAndHopperPusher(false)); // put hood up and pusher in
-		addSequential(new DriveEncoderBangBang(0.5, 0.0, 1.1, 2)); //1.5 was too much
+		
+		addSequential(new DriveEncoderBangBang(0.5, 0.0, 1.25, 2));
+		// RR_most: 1.1
+		// RR_SF_2: 1.25
+		
 		addParallel(new IntakeOn());
 		
 		// wait to take a good image before using vision to turn
