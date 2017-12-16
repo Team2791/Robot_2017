@@ -87,7 +87,7 @@ public class ShakerGear extends Subsystem{
 		
 		SmartDashboard.putBoolean("Gear Intake Gear Status", hasGear()); //Green when a gear is in the intake
 		
-		SmartDashboard.putBoolean("Gear Intake Down or Up", gearSolenoid.get()); //Green when intake is down
+		SmartDashboard.putBoolean("Gear_Intake_Down_or_Up", gearSolenoid.get()); //Green when intake is down
 		
 		SmartDashboard.putNumber("Gear Motor Output", gearSpark.get());
 		SmartDashboard.putNumber("Gear intake Current Usage", getCurrentUsage());
